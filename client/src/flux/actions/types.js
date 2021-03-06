@@ -1,0 +1,44 @@
+export const GET_EVENTS = 'GET_EVENTS';
+export const GET_EVENT = 'GET_EVENT';
+export const ADD_EVENT = 'ADD_EVENT';
+export const DELETE_EVENT = 'DELETE_EVENT';
+export const EVENTS_LOADING = 'EVENTS_LOADING';
+export const UPDATE_EVENT = 'UPDATE_EVENT';
+export const LOG_ARRIVAL = 'LOG_ARRIVAL';
+export const SET_CURRENT = 'SET_CURRENT';
+export const CLEAR_CURRENT = 'CLEAR_CURRENT';
+export const EVENT_ERROR = 'EVENT_ERROR';
+
+export const GET_INVITES = 'GET_INVITES';
+export const SET_CURRENTINVITE = 'SET_CURRENTINVITE';
+export const CLEAR_CURRENTINVITE = 'CLEAR_CURRENTINVITE';
+export const INVITES_LOADING = 'INVITES_LOADING';
+export const INVITE_ERROR = 'INVITE_ERROR';
+export const RESPONSE_INVITE = 'RESPONSE_INVITE';
+
+export const USER_LOADING = "USER_LOADING";
+export const USER_LOADED = "USER_LOADED";
+export const AUTH_ERROR = "AUTH_ERROR";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_FAIL = "LOGIN_FAIL";
+export const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const REGISTER_FAIL = "REGISTER_FAIL";
+export const USER_POINTS = "USER_POINTS";
+
+export const GET_ITEMS = "GET_ITEMS";
+export const ADD_ITEM = "ADD_ITEM";
+export const DELETE_ITEM = "DELETE_ITEM";
+export const ITEMS_LOADING = "ITEMS_LOADING";
+export const UPDATE_ITEM = "UPDATE_ITEM";
+export const SET_CURRENTITEM = "SET_CURRENTITEM";
+export const CLEAR_CURRENTITEM = "CLEAR_CURRENTITEM";
+export const ITEM_ERROR = "ITEM_ERROR";
+
+export const GET_PURCHASES = "GET_PURCHASES";
+export const ADD_PURCHASES = "ADD_PURCHASES";
+export const PURCHASES_LOADING = "PURCHASES_LOADING";
+export const PURCHASE_ERROR = "PURCHASE_ERROR";
+
+export const GET_ERRORS = 'GET_ERRORS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
