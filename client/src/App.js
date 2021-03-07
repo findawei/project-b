@@ -11,12 +11,17 @@ import Toolbar from '@material-ui/core/Toolbar';
 //Redux
 import { Provider } from 'react-redux';
 import store from './flux/store';
+import { loadUser } from './flux/actions/authActions';
 
 import './App.css';
 
 
 function App() {
   
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+
   return (
     <Provider store={store}>
       <CssBaseline />

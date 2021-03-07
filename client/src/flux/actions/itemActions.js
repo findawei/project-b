@@ -5,14 +5,16 @@ import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 
 
-export const getItems = () => (
-  dispatch, 
-  getState
+export const getItems = () => async (
+  dispatch, getState
   ) => {
+
+    const header = await tokenConfig();
+
     dispatch(setItemsLoading());
     axios
         .get('/api/items', 
-        // tokenConfig(getState)
+        header
         )
         .then(res=>
             dispatch({

@@ -5,10 +5,6 @@ const initialState = {
     currentItem: [],
     loading: false
 };
-
-// interface IState {
-//     items: IItem[];
-//   }
   
 export default function(state=initialState, action){
     switch(action.type){

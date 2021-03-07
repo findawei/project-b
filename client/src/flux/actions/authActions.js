@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { returnErrors } from './errorActions';
 import {
   USER_LOADED,
   USER_LOADING,
@@ -9,134 +8,237 @@ import {
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL
+  REGISTER_FAIL,
+  RESET_SUCCESS,
+  RESET_ERROR
 } from './types';
+import firebase from '../../firebase';
+import { config } from 'process';
 
+export var accessToken = '';
 // Check token & load user
-export const loadUser = () => (dispatch, getState) => {
+export const loadUser = () => async(dispatch, getState) => {
   // User loading
-  dispatch({ type: USER_LOADING });
-
-  axios
-    .get('/api/auth/user', tokenConfig(getState))
-    .then(res =>
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data
-      })
-    )
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: AUTH_ERROR
-      });
+  try{
+    dispatch({ type: USER_LOADING });
+    firebase.auth().onAuthStateChanged(async (user) => {
+      if(user) {
+        dispatch({
+                type: USER_LOADED,
+                payload: user
+              });
+        
+        // let accessToken = user
+        // console.log(accessToken)
+        
+        // Get mongodb userID and set as user
+        const header = await tokenConfig();
+        try{
+        axios
+        .get('/api/auth/user', header)
+        .then(res =>
+          dispatch({
+            type: USER_LOADED,
+            payload: res.data
+          })
+        )}
+        catch(err) {
+          dispatch((err.response.data, err.response.status));
+          dispatch({
+            type: AUTH_ERROR
+          });
+        };
+          }
+      else {
+        accessToken = 'five'
+      }
     });
-};
+} catch (err) {
+  dispatch({
+          type: AUTH_ERROR
+        });
+  console.log(err);
+}};
+
+
 
 // Log points to user profile
-export const logPoints = (user) => (dispatch, getState) => {
-  axios
-  .put('/api/auth/points', user, tokenConfig(getState))
-  .then(res=>
-    dispatch({
-      type: USER_POINTS,
-      payload: res.data
-    }))
-    .catch(err => {
-      dispatch(returnErrors(err.response.data, err.response.status));
+export const logPoints = (user) => async (dispatch) => {
+
+  const header = await tokenConfig();
+  try{
+    axios
+    .put('/api/auth/points', user, header)
+    .then(res=>
       dispatch({
-        type: AUTH_ERROR
+        type: USER_POINTS,
+        payload: res.data
+      }))
+  }
+  catch(err) {
+    dispatch({
+      type: AUTH_ERROR
       });
-    });
+    };
 }; 
 
 // Register User
-export const register = ({ name, email, password }) => (
+export const register = ({email, password }) => async(
   dispatch
 ) => {
-  // Headers
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
+  try {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then(dataBeforeEmail => {
+        firebase.auth().onAuthStateChanged(function(user) {
+          user.sendEmailVerification();
+        });
+          })
+      .then(dataAfterEmail => {
+        firebase.auth().onAuthStateChanged(async function(user) {
+          if (user) {
+            // Sign up successful
+            dispatch({
+              type: REGISTER_SUCCESS,
+              payload:user
+            });
 
-  // Request body
-  const body = JSON.stringify({ name, email, password });
+            const header = await tokenConfig();
+            // const uid = firebase.auth().currentUser!.uid
+              // Request body
+              // const body = JSON.stringify(_id);
+            try{
+              axios
+              .post('/api/auth/',{}, header)
+              .then(res=>
+                dispatch({
+                  type: REGISTER_SUCCESS,
+                  payload: res.data
+                }))
+            }
+            catch(err) {
+              dispatch({
+                type: REGISTER_FAIL,
+                payload:
+                    "Something went wrong, we couldn't create your account. Please try again."
+                });
+              };
 
-  axios
-    .post('/api/auth/register', body, config)
-    .then(res =>
-      dispatch({
-        type: REGISTER_SUCCESS,
-        payload: res.data
+          } else {
+            // Signup failed
+            dispatch({
+              type: REGISTER_FAIL,
+              payload:
+                "Something went wrong, we couldn't create your account. Please try again."
+            });
+          }
+        });
       })
-    )
-    .catch(err => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL')
-      );
-      dispatch({
-        type: REGISTER_FAIL
+      .catch(() => {
+        dispatch({
+          type: REGISTER_FAIL,
+          payload:
+            "Something went wrong, we couldn't create your account. Please try again."
+        });
       });
+  } catch(err) {
+    dispatch({
+      type: REGISTER_FAIL,
+      payload:
+        "Something went wrong, we couldn't create your account. Please try again."
     });
-};
+  }
+}
 
 // Login User
-export const login = ({ email, password }) => (
+export const login = ( {email, password}) => async(
   dispatch
 ) => {
-  // Headers
-  const config = {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-
-  // Request body
-  const body = JSON.stringify({ email, password });
-
-  axios
-    .post('/api/auth/login', body, config)
-    .then(res =>
+  try{
+    firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(data => {
+          if (data.user.emailVerified) {
+            console.log("IF", data.user.emailVerified);
+            dispatch({ type: LOGIN_SUCCESS });
+          } else {
+            console.log("ELSE", data.user.emailVerified);
+            dispatch({
+              type: REGISTER_FAIL,
+              payload: "You haven't verified your e-mail address."
+            });
+          }
+        })
+    .catch(err =>{
+      // dispatch(
+        // returnErrors(err.message, err.code, 'LOGIN_FAIL')
+    
       dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data
+        type: LOGIN_FAIL,
+        payload: "Invalid login credentials"
       })
-    )
-    .catch(err => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL')
-      );
-      dispatch({
-        type: LOGIN_FAIL
+    })
+  } catch(err) {
+        dispatch({
+        type: LOGIN_FAIL,
+        payload: "Invalid login credentials"
+          // returnErrors(err.message, err.code, 'LOGIN_FAIL')
+        });
+        // dispatch({
+        //   type: LOGIN_FAIL
+        // });
+      }
+};
+
+export const resetPassword = (email) => async (dispatch) => {
+  try {
+    firebase
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() =>
+        dispatch({
+          type: RESET_SUCCESS,
+          payload:
+            "Check your inbox. We've sent you a secured reset link by e-mail."
+        })
+      )
+      .catch(() => {
+        dispatch({
+          type: RESET_ERROR,
+          payload:
+            "Oops, something went wrong we couldn't send you the e-mail. Try again and if the error persists, contact admin."
+        });
       });
-    });
+  } catch (err) {
+    dispatch({ type: RESET_ERROR, payload: err });
+  }
 };
 
 // Logout User
-export const logout = () => {
-  return {
-    type: LOGOUT_SUCCESS
-  };
+export const logout = () => async (dispatch) =>{
+  try {
+    await firebase.auth().signOut();
+    dispatch({
+      type: LOGOUT_SUCCESS
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // Setup config/headers and token
-export const tokenConfig = (getState) => {
-  // Get token from localstorage
-  const token = getState().auth.token;
+export const tokenConfig = async () => {
+  const user = firebase.auth().currentUser;
+  const token = user && (await user.getIdToken());
 
-  // Headers
   const config = {
     headers: {
-      'Content-type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
   };
-
-  // If token, add to headers
-  if (token) {
-    config.headers['x-auth-token'] = token;
-  }
-
   return config;
 };
+

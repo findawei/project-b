@@ -7,7 +7,11 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
+import LoginModal from './auth/LoginModal';
+import { connect } from 'react-redux';
+import LoggedInMenu from './LoggedInMenu'
 
+const AppNavbar = ({auth}) =>{
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +29,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export default function AppNavbar() {
   const classes = useStyles();
 
   return (
@@ -37,9 +40,20 @@ export default function AppNavbar() {
             <img src="https://nowaitlist.co/wp-content/uploads/2021/02/Screen-Shot-2021-01-31-at-2.56.11-PM.png" alt="logo" className={classes.logo} />
           </Link>          
           </div>
-          <Button color="inherit">Sign In</Button>
+          {/* <Button color="inherit" >Sign In</Button> */}
+          {auth && auth.isAuthenticated ? 
+          <LoggedInMenu/> 
+          :
+          <LoginModal/>
+          }
         </Toolbar>
       </AppBar>
     </div>
   );
 }
+
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, null)(AppNavbar);
