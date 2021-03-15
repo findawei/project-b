@@ -12,10 +12,14 @@ import Input from "@material-ui/core/Input";
 import NumberFormat from "react-number-format";
 import Countdown, {zeroPad} from 'react-countdown';
 import Comments from './Comments'
+import { spacing } from '@material-ui/system';
+import {getItemById, setCurrentItem, updateItem} from '../flux/actions/itemActions'
 
-const ListingDetails = ({ currentItem
+
+const ListingDetails = ({ setCurrentItem, currentItem, getItemById, item, match, updateItem
 }) => {
- 
+  
+  const [_id, setId] = useState('');
   const [brand, setBrand] = useState('');
   const [model, setModel] = useState('');
   const [img, setImg] = useState('');
@@ -25,15 +29,20 @@ const ListingDetails = ({ currentItem
   const [case_diameter, setCase_diameter] = useState('');
   const [lug_width, setLug_width] = useState('');
   const [description, setDescription] = useState('');
-  const [bid, setBid] = useState(400)
+  const [reserve, setReserve] = useState('')
+  const [bid, setBid] = useState(0)
+  const [service, setService] = useState('')
+  const [endDate, setEndDate] = useState('')
+
   const [modalStyle] = useState(getModalStyle);
   const [count, setCount] = useState(0);
   const [open, setOpen] = useState(false);
   const { register, handleSubmit, errors } = useForm();
-//   const [points, setPoints] = useState(auth!.user.points);
 
 useEffect(() => {
     if(currentItem) {
+        setId(currentItem._id)
+        setBid(currentItem.bid)
         setBrand(currentItem.brand)
         setModel(currentItem.model)
         setImg(currentItem.img)
@@ -43,9 +52,19 @@ useEffect(() => {
         setCase_diameter(currentItem.case_diameter)
         setLug_width(currentItem.lug_width)
         setDescription(currentItem.description)
-    }
+        setReserve(currentItem.reserve)
+        setService(currentItem.service)
+        setEndDate(currentItem.endDate)
+    } 
   }, [currentItem]);  
 
+  useEffect(() => { 
+    console.log('Loop started')
+    if(currentItem.length === 0) {
+      console.log('Inside loop')
+      getItemById(match.params.id);
+    } 
+  }, [getItemById, match.params.id]);
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -70,9 +89,11 @@ useEffect(() => {
       display: 'flex',
       flexWrap: 'wrap',
       '& > *': {
-        width: "25%",
+        width: "50%",
         height: "100%",
-      }
+      },
+      // marginLeft: 8,
+      // marginRight: 8
     },
     bidbar: {
       padding: theme.spacing(1),
@@ -99,6 +120,10 @@ useEffect(() => {
     bidinput: {
       margin: theme.spacing(1),
       height: 38
+    },
+    chip: {
+      color: "white",
+      backgroundColor: "purple"
     }
 }));
 function getModalStyle() {
@@ -120,6 +145,9 @@ function getModalStyle() {
   };
   const onSubmit = (data) => {
     setBid(data.bid)
+    console.log(data)
+    updateItem(data)
+    console.log(data)
   };
 
     const classes = useStyles();
@@ -148,8 +176,6 @@ function getModalStyle() {
       }
     };
 
-    var auctionEnd = ('March 7, 2021 11:30:00')
-
     // Modal Body
     const body = (
       <div style={modalStyle} className={classes.papermodal}>
@@ -159,13 +185,13 @@ function getModalStyle() {
         {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
         </h2>
         <h4><Countdown
-          date={auctionEnd}
+          date={currentItem.endDate}
           renderer={renderer}
         /></h4>
         <h4>Current Bid</h4>
         <NumberFormat value={bid} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
         <p id="simple-modal-description">
-          Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          Something something
         </p>
         {/* <Box component="span"> */}
         <Grid
@@ -174,8 +200,15 @@ function getModalStyle() {
           justify="center"
           alignItems="center"
         >
-          <form onSubmit={handleSubmit(onSubmit)}
-          >
+          <form onSubmit={handleSubmit(onSubmit)}>
+          <div hidden="true">
+          <TextField          
+          name="_id"
+          id="_id"
+          defaultValue={currentItem._id}
+          inputRef={register}
+          />
+          </div>
           $
           <TextField          
           name="bid"
@@ -232,12 +265,29 @@ function getModalStyle() {
             </h1>
           </div>
           <div style={{ width: '100%' }}>
-            <Box display="flex" component="span" alignItems="center" mb={1}>
-              <Chip color="secondary" variant="outlined" size="small" label="No Reserve"/>&nbsp;&nbsp;
+            <Grid 
+            container 
+            spacing={1}
+            direction="row"
+            justify="left"
+            alignItems="center"
+            alignContent="center"
+            >
+              <Grid item>
+                {currentItem.reserve? 
+              ""
+              :
+               <Chip 
+               className={classes.chip}
+               size="small" label="No Reserve"/>
+              }
+              </Grid>
+              <Grid item>
               <Typography variant="h6" color="inherit" display="inline">
                 Serviced June 2019, second owner, California
               </Typography>
-            </Box>
+              </Grid>
+            </Grid>
           </div>
           <img src={currentItem.img} alt={currentItem.brand} 
           className={classes.image} 
@@ -266,7 +316,7 @@ function getModalStyle() {
                       className={classes.bidbartext}
                       display="inline">
                       <Countdown
-                          date={auctionEnd}
+                          date={currentItem.endDate}
                           renderer={renderer}
                         />
                       </Typography>
@@ -324,12 +374,52 @@ function getModalStyle() {
                 </Grid>
           <Grid item xs={12} md={10}>
             <Typography color="inherit" fontWeight="fontWeightBold">
-              Ending {format(Date.parse(auctionEnd),'MMM d, h:m aaa')}
+              {/* Ending {format(Date.parse(currentItem.endDate),'MMM d, h:m aaa')} */}
               </Typography>
           </Grid>
            {/* Description Table */}
-            <Grid item xs={12} md={10}>
-                 <div className={classes.paper}>
+          <Grid
+            container 
+            direction="row"
+            justify="left"
+            alignItems="center"
+            alignContent="center"
+          >
+            <Grid item xs={12} md={5}>  
+            <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline" fontWeight="fontWeightBold">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Seller
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                  {currentItem.user}
+                  Stew
+                  </Box>
+                </Typography>
+              </Paper>
+              </div>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                <Box fontWeight="fontWeightBold" m={0.5}>
+                    Location
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                <Box  m={0.5}>
+                  {currentItem.location}
+                  </Box>
+                </Typography>
+              </Paper>
+            </div>
+             <div className={classes.paper}>
               <Paper variant="outlined" square="true" className={classes.background}>
                 <Typography color="inherit" display="inline" fontWeight="fontWeightBold">
                   <Box fontWeight="fontWeightBold" m={0.5}>
@@ -344,21 +434,7 @@ function getModalStyle() {
                   </Box>
                 </Typography>
               </Paper>
-              <Paper variant="outlined" square="true" className={classes.background}>
-                <Typography color="inherit" display="inline">
-                <Box fontWeight="fontWeightBold" m={0.5}>
-                    Year
-                  </Box>
-                </Typography>
-              </Paper>
-              <Paper variant="outlined" square="true">
-                <Typography color="inherit" display="inline">
-                <Box  m={0.5}>
-                  {currentItem.year}
-                  </Box>
-                </Typography>
-              </Paper>
-            </div>
+              </div>
             <div className={classes.paper}>
             <Paper variant="outlined" square="true" className={classes.background}>
                <Typography color="inherit" display="inline">
@@ -372,20 +448,6 @@ function getModalStyle() {
                   <Box  m={0.5}>
                     {currentItem.model}
                   </Box>                
-                </Typography>
-              </Paper>
-              <Paper variant="outlined" square="true" className={classes.background}>
-                <Typography color="inherit" display="inline">
-                  <Box fontWeight="fontWeightBold" m={0.5}>
-                    Movement
-                  </Box>
-                </Typography>
-              </Paper>
-              <Paper variant="outlined" square="true">
-                <Typography color="inherit" display="inline">
-                  <Box  m={0.5}>
-                    {currentItem.movement}
-                  </Box> 
                 </Typography>
               </Paper>
               </div>
@@ -404,6 +466,109 @@ function getModalStyle() {
                   </Box>                
                 </Typography>
               </Paper>
+              </div>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                <Box fontWeight="fontWeightBold" m={0.5}>
+                    Year
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                <Box  m={0.5}>
+                  {currentItem.year}
+                  </Box>
+                </Typography>
+              </Paper>
+            </div>
+            <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Movement
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.movement}
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Case Material
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.material}
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Crystal
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.crystal}
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+              </Grid>
+
+{/* Grid Break */}
+
+              <Grid item xs={12} md={5}>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Crown
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.crown}
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Bezel
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.bezel}
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+              <div className={classes.paper}>
               <Paper variant="outlined" square="true" className={classes.background}>
                 <Typography color="inherit" display="inline">
                   <Box fontWeight="fontWeightBold" m={0.5}>
@@ -414,7 +579,23 @@ function getModalStyle() {
               <Paper variant="outlined" square="true">
                 <Typography color="inherit" display="inline">
                   <Box  m={0.5}>
-                    {currentItem.case_diameter}
+                    {currentItem.case_diameter} mm
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Thickness
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.thickness} mm
                   </Box> 
                 </Typography>
               </Paper>
@@ -430,27 +611,82 @@ function getModalStyle() {
               <Paper variant="outlined" square="true">
                 <Typography color="inherit" display="inline">
                   <Box  m={0.5}>
-                  {currentItem.lug_width}
+                  {currentItem.lug_width} mm
                   </Box>                
                 </Typography>
               </Paper>
+              </div>
+              <div className={classes.paper}>
               <Paper variant="outlined" square="true" className={classes.background}>
                 <Typography color="inherit" display="inline">
                   <Box fontWeight="fontWeightBold" m={0.5}>
-                    Empty
+                  Water Resistance
                   </Box>
                 </Typography>
               </Paper>
               <Paper variant="outlined" square="true">
                 <Typography color="inherit" display="inline">
                   <Box  m={0.5}>
-                    Empty
+                    {currentItem.wr} m
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div><div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                  Pressure Tested
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.tested}
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Serviced
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.service?
+                      format(new Date(currentItem.service), 'MMM Y')
+                      :
+                      "N/A"
+                    }
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+              <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                  Box & papers
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                    {currentItem.boxpapers}
                   </Box> 
                 </Typography>
               </Paper>
               </div>
             </Grid>
           </Grid>
+
+
           {/* Description */}
           <Grid item xs={12} md={10}>
             <h2>Description</h2>
@@ -458,6 +694,7 @@ function getModalStyle() {
             {currentItem.description}
             </p>
           </Grid>
+        </Grid> 
           {/* Comment Section */}
           <Grid item xs={12} md={10}>
             <Typography color="inherit" fontWeight="fontWeightBold">
@@ -471,7 +708,7 @@ function getModalStyle() {
               />
           </Grid>
           <Grid item xs={12} md={10}>
-             <Comments />
+             {/* <Comments /> */}
           </Grid>
           </div>
   );
@@ -479,8 +716,9 @@ function getModalStyle() {
 
 const mapStateToProps = (state) => ({
   currentItem: state.item.currentItem,
+  item: state.item
 //   auth: state.auth
 });
 
-export default connect(mapStateToProps, {})(ListingDetails);
+export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItem })(ListingDetails);
   

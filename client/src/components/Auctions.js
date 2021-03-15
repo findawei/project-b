@@ -21,15 +21,6 @@ const useStyles = makeStyles((theme) => ({
         flexGrow: 1,
         margin: 20,
     },
-    paper: {
-        padding: theme.spacing(2),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
-    image: {
-        borderRadius: 3,
-        height: 300
-        }
 }));
 
 const classes = useStyles();
@@ -44,7 +35,7 @@ const classes = useStyles();
     <div 
     className={classes.root}
     >
-    <Grid container spacing={1}>
+    <Grid container spacing={2}>
       {items.map(item => <Listing 
           item={item} 
           key={item._id}/>

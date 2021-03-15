@@ -36,6 +36,7 @@ router.get('/:id', async (req, res) => {
 // @access  Private
 router.post('/', async (req, res) => {
   const newItem = new Item({
+      user: req.currentUser.uid,
       brand: req.body.brand,
       model: req.body.model,
       img: req.body.img,
@@ -43,7 +44,21 @@ router.post('/', async (req, res) => {
       movement: req.body.movement,
       year: req.body.year,   
       case_diameter: req.body.case_diameter,
-      lug_width: req.body.lug_width,    description: req.body.description
+      lug_width: req.body.lug_width,
+      thickness: req.body.thickness,    
+      description: req.body.description,
+      bid: req.body.bid,
+      reserve: req.body.reserve,
+      endDate: req.body.endDate,
+      location: req.body.location,
+      service: req.body.service,
+      material: req.body.material,
+      boxpapers: req.body.boxpapers,
+      crystal: req.body.crystal,
+      crown: req.body.crown,
+      bezel: req.body.bezel,
+      wr: req.body.wr,
+      tested: req.body.tested,
   });
   try{ 
     const item = await newItem.save();
@@ -58,7 +73,7 @@ router.post('/', async (req, res) => {
 // @route   PUT api/items/:id
 // @desc    Update specific item
 // @access  Private
-router.put('/:id', async (req, res) => {
+router.put('/update/:id', async (req, res) => {
   try{ 
     const updateItem = await 
   Item.findOneAndUpdate({_id: req.params.id}, {
@@ -70,8 +85,38 @@ router.put('/:id', async (req, res) => {
     year: req.body.year,   
     case_diameter: req.body.case_diameter,
     lug_width: req.body.lug_width,
-    description: req.body.description
+    thickness: req.body.thickness,
+    description: req.body.description,
+    bid: req.body.bid,
+    reserve: req.body.reserve,
+    endDate: req.body.endDate,
+    location: req.body.location,
+    service: req.body.service,
+    material: req.body.material,
+    boxpapers: req.body.boxpapers,
+    crystal: req.body.crystal,
+    crown: req.body.crown,
+    bezel: req.body.bezel,
+    wr: req.body.wr,
+    tested: req.body.tested
     },{new: true});
+    return res.status(200).json(updateItem);
+  } catch(e){
+    res.status(400).json({ msg: e.message, success: false })
+    }
+  });
+
+// @route   PUT api/items/:id
+// @desc    Update item bid price
+// @access  Private
+router.put('/:id', async (req, res) => {
+  try{ 
+    const updateItem = await 
+  Item.findOneAndUpdate({_id: req.params.id}, {
+    $set:{
+    bid: req.body.bid,
+    }
+    },{upsert: true, new: true});
     return res.status(200).json(updateItem);
   } catch(e){
     res.status(400).json({ msg: e.message, success: false })

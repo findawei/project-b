@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const ItemSchema = new Schema ({
+    user: {
+        type: String,
+        ref: 'users'
+    },
     brand: {
         type: String,
         required: true
@@ -42,7 +46,59 @@ const ItemSchema = new Schema ({
     description: {
         type: String,
         required: true
-    }
+    },
+    bid: {
+        type: Number,
+        required: true
+    },
+    reserve: {
+        type: Boolean,
+        required: true
+    },
+    endDate: {
+        type: Date,
+        required: true
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    service: {
+        type: Date,
+        required: false
+    },
+    material: {
+        type: String,
+        required: true
+    },
+    boxpapers: {
+        type: String,
+        required: true
+    },
+    thickness: {
+        type: Number,
+        required: true
+    },
+    crystal: {
+        type: String,
+        required: true
+    },
+    crown: {
+        type: String,
+        required: true
+    },
+    bezel: {
+        type: String,
+        required: true
+    },
+    wr: {
+        type: Number,
+        required: true
+    },
+    tested: {
+        type: String,
+        required: true
+    },
 });
 
 module.exports = Item = mongoose.model('item', ItemSchema);
