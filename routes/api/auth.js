@@ -34,10 +34,10 @@ router.post('/login', async (req, res) => {
     // const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 });
     // if (!token) throw Error('Couldnt sign the token');
 
+    ITEM_ERROR;
     res.status(200).json({
       user: {
-        uid: user.uid,
-        points: user.points
+        uid: user.uid
       }
     });
   } catch (e) {
@@ -53,15 +53,20 @@ router.post('/login', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const auth = req.currentUser;
+  // const username = req.body
+  // console.log(`backend username: ${username}`)
+
 if(auth){
   const uid  = req.currentUser.uid;
   try {
     const user = await User.findOne({uid});
     if (user) throw Error('User already exists');
 
+    //ITS ONLY GETTING THE NAME WHEN LOGGING OUT AND LOGGING BACK IN, NOT ON SIGN UP.
+
     const newUser = new User({
       uid,
-      points: 0
+      // username: req.currentUser.name
     });
 
     const savedUser = await newUser.save();
@@ -70,7 +75,7 @@ if(auth){
     res.status(200).json({
       user: {
         uid: savedUser.uid,
-        points: savedUser.points
+        // username: savedUser.name
       }
     });
   } catch (e) {
@@ -98,26 +103,26 @@ if(auth){
 }
 });
 
-/**
- * @route   PUT api/users
- * @desc    Update user points
- * @access  Public
- */
+// /**
+//  * @route   PUT api/users
+//  * @desc    Update user points
+//  * @access  Public
+//  */
 
-router.put('/points', async (req, res) => {
-  const auth = req.currentUser;
-if(auth){
-  try {
-    const user = await User.findOneAndUpdate({uid:req.currentUser.uid},
-    {points: req.body.points}, {new:true}
-    )
-      if (!user) throw Error('Could not add points.');
-        res.json(user)
-      } catch (e) {
-        res.status(400).json({ msg: e.message });
-      }
-}
-});
+// router.put('/points', async (req, res) => {
+//   const auth = req.currentUser;
+// if(auth){
+//   try {
+//     const user = await User.findOneAndUpdate({uid:req.currentUser.uid},
+//     {points: req.body.points}, {new:true}
+//     )
+//       if (!user) throw Error('Could not add points.');
+//         res.json(user)
+//       } catch (e) {
+//         res.status(400).json({ msg: e.message });
+//       }
+// }
+// });
   
 
 module.exports = router;

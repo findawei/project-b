@@ -99,6 +99,25 @@ const ItemSchema = new Schema ({
         type: String,
         required: true
     },
+    bidHistory: [
+        {
+            user: {
+                type: String,
+                ref: 'users'
+            },
+            name: {
+                type: String
+              },
+            bid: {
+                type: Number,
+                required: true
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+    ]
 });
 
 module.exports = Item = mongoose.model('item', ItemSchema);

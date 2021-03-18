@@ -7,7 +7,7 @@ import {
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
-  USER_POINTS
+  USER_NAME
 } from '../actions/types';
 
 const initialState = {
@@ -32,7 +32,7 @@ export default function(state = initialState, action) {
         isLoading: false,
         user: action.payload
       };
-    case USER_POINTS:
+    case USER_NAME:
       return {
         ...state,
         isAuthenticated: true,

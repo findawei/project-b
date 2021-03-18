@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
   USER_LOADED,
   USER_LOADING,
-  USER_POINTS,
+  USER_NAME,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -62,28 +62,28 @@ export const loadUser = () => async(dispatch, getState) => {
 
 
 
-// Log points to user profile
-export const logPoints = (user) => async (dispatch) => {
+// // Add username points to user profile
+// export const addUsername = (user) => async (dispatch) => {
 
-  const header = await tokenConfig();
-  try{
-    axios
-    .put('/api/auth/points', user, header)
-    .then(res=>
-      dispatch({
-        type: USER_POINTS,
-        payload: res.data
-      }))
-  }
-  catch(err) {
-    dispatch({
-      type: AUTH_ERROR
-      });
-    };
-}; 
+//   const header = await tokenConfig();
+//   try{
+//     axios
+//     .put('/api/auth/', user, header)
+//     .then(res=>
+//       dispatch({
+//         type: USER_NAME,
+//         payload: res.data
+//       }))
+//   }
+//   catch(err) {
+//     dispatch({
+//       type: AUTH_ERROR
+//       });
+//     };
+// }; 
 
 // Register User
-export const register = ({email, password }) => async(
+export const register = ({email, password, displayName }) => async(
   dispatch
 ) => {
   try {
@@ -93,8 +93,9 @@ export const register = ({email, password }) => async(
       .then(dataBeforeEmail => {
         firebase.auth().onAuthStateChanged(function(user) {
           user.sendEmailVerification();
+          user.updateProfile({displayName: displayName})
         });
-          })
+      })
       .then(dataAfterEmail => {
         firebase.auth().onAuthStateChanged(async function(user) {
           if (user) {
@@ -107,7 +108,9 @@ export const register = ({email, password }) => async(
             const header = await tokenConfig();
             // const uid = firebase.auth().currentUser!.uid
               // Request body
-              // const body = JSON.stringify(_id);
+            // const body = JSON.stringify({displayName});
+            // console.log(displayName)
+            // console.log(body)
             try{
               axios
               .post('/api/auth/',{}, header)
@@ -115,7 +118,9 @@ export const register = ({email, password }) => async(
                 dispatch({
                   type: REGISTER_SUCCESS,
                   payload: res.data
-                }))
+                })
+                (console.log(res.data))
+                )
             }
             catch(err) {
               dispatch({
@@ -161,10 +166,10 @@ export const login = ( {email, password}) => async(
     .signInWithEmailAndPassword(email, password)
     .then(data => {
           if (data.user.emailVerified) {
-            console.log("IF", data.user.emailVerified);
+            // console.log("IF", data.user.emailVerified);
             dispatch({ type: LOGIN_SUCCESS });
           } else {
-            console.log("ELSE", data.user.emailVerified);
+            // console.log("ELSE", data.user.emailVerified);
             dispatch({
               type: REGISTER_FAIL,
               payload: "You haven't verified your e-mail address."

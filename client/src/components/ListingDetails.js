@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
 import {Button, Box, Typography, Paper, Chip, Grid} from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {format} from "date-fns";
+import {format, formatDistanceToNow} from "date-fns";
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
 import { useForm, Controller } from "react-hook-form";
@@ -16,7 +16,7 @@ import { spacing } from '@material-ui/system';
 import {getItemById, setCurrentItem, updateItem} from '../flux/actions/itemActions'
 
 
-const ListingDetails = ({ setCurrentItem, currentItem, getItemById, item, match, updateItem
+const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItem
 }) => {
   
   const [_id, setId] = useState('');
@@ -30,9 +30,10 @@ const ListingDetails = ({ setCurrentItem, currentItem, getItemById, item, match,
   const [lug_width, setLug_width] = useState('');
   const [description, setDescription] = useState('');
   const [reserve, setReserve] = useState('')
-  const [bid, setBid] = useState(0)
+  const [bid, setBid] = useState('')
   const [service, setService] = useState('')
   const [endDate, setEndDate] = useState('')
+  const [bidHistory, setBidHistory] = useState('')
 
   const [modalStyle] = useState(getModalStyle);
   const [count, setCount] = useState(0);
@@ -55,6 +56,7 @@ useEffect(() => {
         setReserve(currentItem.reserve)
         setService(currentItem.service)
         setEndDate(currentItem.endDate)
+        setBidHistory(currentItem.bidHistory)
     } 
   }, [currentItem]);  
 
@@ -185,7 +187,7 @@ function getModalStyle() {
         {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
         </h2>
         <h4><Countdown
-          date={currentItem.endDate}
+          date={new Date(currentItem.endDate)}
           renderer={renderer}
         /></h4>
         <h4>Current Bid</h4>
@@ -209,36 +211,37 @@ function getModalStyle() {
           inputRef={register}
           />
           </div>
-          $
-          <TextField          
-          name="bid"
-          id="bid"
-          // as={
-          //   <NumberFormat
-          //   customInput={TextField}
-          //   thousandSeparator={true}
-          //   onValueChange={(v) => {
-          //     //value without dollar signe
-          //     console.log(v.value);
-          //   }}
-          // />
-          // }
-          inputRef={register({
-            min: {
-              value: ((bid)+100),
-              message: 'You need to increase your bid'
-            },
-            valueAsNumber: true,
+        {auth && auth.isAuthenticated ? 
+        <div>
+         $ <TextField          
+        name="bid"
+        id="bid"
+        // as={
+        //   <NumberFormat
+        //   customInput={TextField}
+        //   thousandSeparator={true}
+        //   onValueChange={(v) => {
+        //     //value without dollar signe
+        //     console.log(v.value);
+        //   }}
+        // />
+        // }
+        inputRef={register({
+          min: {
+            value: ((currentItem.bid)+100),
+            message: 'You need to increase your bid'
+          },
+          valueAsNumber: true,
 
-          })}
-          variant="outlined" 
-          placeholder="Bid"
-          InputProps={{
-          className: classes.bidinput
-          }}
-          error={!!errors.bid}
-        />
-         <Button 
+        })}
+        variant="outlined" 
+        placeholder="Bid"
+        InputProps={{
+        className: classes.bidinput
+        }}
+        error={!!errors.bid}
+      />
+          <Button 
           variant="contained" 
           color="primary" 
           type="submit"
@@ -246,6 +249,19 @@ function getModalStyle() {
           className={classes.bidinput}
           >Bid
           </Button>
+          </div>
+
+          :
+          <Button
+          variant="contained" 
+          color="primary" 
+          // type="submit"
+          disabled={!!errors.bid}
+          className={classes.bidinput}
+          >
+            Register to Bid
+          </Button>
+          }
           </form>
         </Grid> 
         {errors.bid && (
@@ -256,6 +272,7 @@ function getModalStyle() {
         </div>
       </div>
     );
+
 
   return(
       <div className={classes.root}>
@@ -316,7 +333,7 @@ function getModalStyle() {
                       className={classes.bidbartext}
                       display="inline">
                       <Countdown
-                          date={currentItem.endDate}
+                          date={new Date(currentItem.endDate)}
                           renderer={renderer}
                         />
                       </Typography>
@@ -709,6 +726,20 @@ function getModalStyle() {
           </Grid>
           <Grid item xs={12} md={10}>
              {/* <Comments /> */}
+              {/* MAP the ATTENDEES */}
+             
+              {currentItem.bidHistory.map((bid, _id)=> (
+                  <div key={bid._id} >
+                    ${bid.bid} - 
+                     {formatDistanceToNow(
+                      new Date(bid.date),
+                      {includeSeconds: true})} ago
+                  </div>
+                  )
+                  )} 
+          
+
+
           </Grid>
           </div>
   );
@@ -716,8 +747,8 @@ function getModalStyle() {
 
 const mapStateToProps = (state) => ({
   currentItem: state.item.currentItem,
-  item: state.item
-//   auth: state.auth
+  item: state.item,
+  auth: state.auth
 });
 
 export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItem })(ListingDetails);

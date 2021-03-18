@@ -7,13 +7,14 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
+  name: {
+    type: String,
+    required: true,
+    unique: true
+  },
   date: {
     type: Date,
     default: Date.now
-  },
-  points:{
-    type: Number,
-    required: false
   },
   role:{
     type: String,

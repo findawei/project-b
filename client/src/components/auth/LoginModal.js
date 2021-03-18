@@ -16,7 +16,8 @@ const LoginModal = ({
 
   let initialValues = {
     email: "",
-    password: ""
+    password: "",
+    displayName: ""
   }
 
   const useStyles = makeStyles((theme) => ({
@@ -194,6 +195,34 @@ const body = (
             </div>
             )}
             </Box>
+
+            <Box  mb={1}>
+            {!pwreset && newUser &&(
+              <div>
+              <div>
+                <Controller
+                  as={TextField}
+                  size="small"
+                  fullWidth
+                  variant="outlined" 
+                  type="displayName"
+                  placeholder="Username"
+                  control={control}
+                  onChangeName="onIonChange"
+                  onChange={([selected]) => {
+                    return selected.detail.value;
+                  }}
+                  name="displayName"
+                  rules={{
+                    required: true
+                  }}
+                />
+              </div>
+              {showError("displayName")}
+              </div>
+              )}
+              </Box>
+
             <Box mb={1}>
             <Button
               type="submit"

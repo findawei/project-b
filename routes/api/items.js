@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-// const auth = require('../../middleware/auth')
-// const User = require('../../models/User');
+const auth = require('../../middleware/auth')
+const user = require('../../models/User');
 const Item = require('../../models/item');
 
 // @route   GET api/items/
@@ -77,6 +77,7 @@ router.put('/update/:id', async (req, res) => {
   try{ 
     const updateItem = await 
   Item.findOneAndUpdate({_id: req.params.id}, {
+    // user: req.body.user,
     brand: req.body.brand,
     model: req.body.model,
     img: req.body.img,
@@ -123,6 +124,39 @@ router.put('/:id', async (req, res) => {
     }
   });
   
+// @route    POST api/items/bidHistory/:id
+// @desc     Bid history on an auction
+// @access   Private
+router.post('/bids/:id', 
+  // auth,
+  // checkObjectId('id'),
+  // check('bid', 'Bid is required').notEmpty(),
+  async (req, res) => {
+    const auth = req.currentUser;
+    if(auth){
+      try {
+        const item = await Item.findById({_id: req.params.id});
+
+        const newBid = {
+          bid: req.body.bid,
+          name: req.currentUser.name,
+          user: req.currentUser.uid
+        };
+
+        item.bidHistory.unshift(newBid);
+
+        await item.save();
+
+        res.json(item.bidHistory);
+      } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+      }
+    }
+    return res.status(403).send('Not authorized');
+  }
+);
+
 // @route   DELETE api/items/:id
 // @desc    DELETE items
 // @access  Private
