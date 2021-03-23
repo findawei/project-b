@@ -81,7 +81,7 @@ export const loadUser = () => async(dispatch, getState) => {
 //       });
 //     };
 // }; 
-
+var registered;
 // Register User
 export const register = ({email, password, displayName }) => async(
   dispatch
@@ -104,13 +104,7 @@ export const register = ({email, password, displayName }) => async(
               type: REGISTER_SUCCESS,
               payload:user
             });
-
             const header = await tokenConfig();
-            // const uid = firebase.auth().currentUser!.uid
-              // Request body
-            // const body = JSON.stringify({displayName});
-            // console.log(displayName)
-            // console.log(body)
             try{
               axios
               .post('/api/auth/',{}, header)
@@ -118,9 +112,7 @@ export const register = ({email, password, displayName }) => async(
                 dispatch({
                   type: REGISTER_SUCCESS,
                   payload: res.data
-                })
-                (console.log(res.data))
-                )
+                }))
             }
             catch(err) {
               dispatch({
@@ -236,7 +228,13 @@ export const logout = () => async (dispatch) =>{
 // Setup config/headers and token
 export const tokenConfig = async () => {
   const user = firebase.auth().currentUser;
-  const token = user && (await user.getIdToken());
+  // const token = user && (await user.getIdToken());
+
+  // if(registered) {
+    const token = user && (await user.getIdToken(/* forceRefresh */ true))
+  // } else {
+  //   const token = user && (await user.getIdToken());
+  // }
 
   const config = {
     headers: {

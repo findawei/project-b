@@ -13,13 +13,15 @@ async function decodeIDToken(req, res, next) {
 
   try {
       const decodedToken = await admin.auth().verifyIdToken(idToken);
+
       req['currentUser'] = decodedToken;
       
       // console.log(
       // `decodeID username: ${decodedToken.name}`
       // )
+
   } catch (error) {
-    res.status(error.response.status)
+    res.status(error.response)
     return res.send(error.message);    
   }
   }

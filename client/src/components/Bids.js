@@ -3,7 +3,7 @@ import Comment from "./Comment";
 
 export default class Comments extends Component {
   state = {
-    comments: [],
+    bidHistory: [],
     isFetching: true
   };
 
@@ -16,11 +16,11 @@ export default class Comments extends Component {
   componentDidMount() {
     const url = "https://jsonplaceholder.typicode.com/posts/1/comments";
     let data = this.fetchData(url);
-    data.then(comments => {
-      let commentList = comments.slice(0, 10);
+    data.then(bidHistory => {
+      let commentList = bidHistory.slice(0, 10);
       this.setState(
         {
-          comments: commentList,
+          bidHistory: commentList,
           isFetching: false
         },
         // () => console.log("New State", this.state.comments)
@@ -29,7 +29,7 @@ export default class Comments extends Component {
   }
 
   render() {
-    const { comments, isFetching } = this.state;
-    return isFetching ? "Loading..." : <Comment comments={comments} />;
+    const { bidHistory, isFetching } = this.state;
+    return isFetching ? "Loading..." : <Comment bidHistory={bidHistory} />;
   }
 }

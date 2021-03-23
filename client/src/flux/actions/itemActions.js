@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ITEM_ERROR, GET_ITEMS, GET_ITEM, SET_CURRENTITEM, UPDATE_ITEM, CLEAR_CURRENTITEM, ITEMS_LOADING, ADD_ITEM, DELETE_ITEM 
+import {ITEM_ERROR, GET_ITEMS, GET_ITEM, SET_CURRENTITEM, UPDATE_ITEM, CLEAR_CURRENTITEM, ITEMS_LOADING, ADD_ITEM, DELETE_ITEM, BID_ITEM 
 } from './types';
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
@@ -85,6 +85,29 @@ export const updateItem = (item) => async(
     .then(res=>
       dispatch({
         type: UPDATE_ITEM,
+        payload: res.data
+      }))
+      .catch(err => {
+        dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
+        dispatch({
+          type: ITEM_ERROR
+        });
+      });
+  }; 
+
+
+  export const bidOnItem = (item) => async(
+    dispatch,
+    getState
+    ) => {
+
+    const header = await tokenConfig();
+
+    axios
+    .put(`/api/items/bid/${item._id}`, item, header)
+    .then(res=>
+      dispatch({
+        type: BID_ITEM,
         payload: res.data
       }))
       .catch(err => {

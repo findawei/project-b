@@ -18,7 +18,7 @@ import { logout } from '../flux/actions/authActions';
 const LoggedInMenu = ({logout}) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const openMenu = Boolean(anchorEl);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -29,6 +29,7 @@ const LoggedInMenu = ({logout}) => {
   };
 
   const logoutButton = () => {
+    setAnchorEl(null);
     logout();
   }
   return (
@@ -54,7 +55,7 @@ const LoggedInMenu = ({logout}) => {
                   vertical: 'top',
                   horizontal: 'right',
                 }}
-                open={open}
+                open={openMenu}
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
 import {Button, Box, Typography, Paper, Chip, Grid} from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {format, formatDistanceToNow} from "date-fns";
+import {format, isPast, formatDistanceToNow} from "date-fns";
 import TextField from '@material-ui/core/TextField';
 import Modal from '@material-ui/core/Modal';
 import { useForm, Controller } from "react-hook-form";
@@ -13,10 +13,11 @@ import NumberFormat from "react-number-format";
 import Countdown, {zeroPad} from 'react-countdown';
 import Comments from './Comments'
 import { spacing } from '@material-ui/system';
-import {getItemById, setCurrentItem, updateItem} from '../flux/actions/itemActions'
+import {getItemById, setCurrentItem, updateItem, bidOnItem} from '../flux/actions/itemActions'
+import BidHistoryComponent from './BidHistoryComponent'
+import LoginModalBid from './auth/LoginModalBid'
 
-
-const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItem
+const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItem, bidOnItem
 }) => {
   
   const [_id, setId] = useState('');
@@ -140,16 +141,17 @@ function getModalStyle() {
 }
 
   const handleOpen = () => {
-    setOpen(true);
+    setOpen(true)
   };
   const handleClose = () => {
     setOpen(false);
   };
   const onSubmit = (data) => {
     setBid(data.bid)
-    console.log(data)
     updateItem(data)
-    console.log(data)
+    bidOnItem(data)
+    setOpen(false)
+    getItemById(match.params.id) 
   };
 
     const classes = useStyles();
@@ -211,7 +213,6 @@ function getModalStyle() {
           inputRef={register}
           />
           </div>
-        {auth && auth.isAuthenticated ? 
         <div>
          $ <TextField          
         name="bid"
@@ -250,18 +251,6 @@ function getModalStyle() {
           >Bid
           </Button>
           </div>
-
-          :
-          <Button
-          variant="contained" 
-          color="primary" 
-          // type="submit"
-          disabled={!!errors.bid}
-          className={classes.bidinput}
-          >
-            Register to Bid
-          </Button>
-          }
           </form>
         </Grid> 
         {errors.bid && (
@@ -272,7 +261,6 @@ function getModalStyle() {
         </div>
       </div>
     );
-
 
   return(
       <div className={classes.root}>
@@ -364,13 +352,18 @@ function getModalStyle() {
                       className={classes.bidbartext}
                       display="inline"
                       >
-                      45
+                      {currentItem && currentItem.bidHistory? currentItem.bidHistory.length : <div></div>}
                       </Typography>
                     </Grid>
                   </Grid>
                   </Paper>
                 </Grid>
                 <Grid item xs={12} sm={3} md={2}>
+                    {isPast(new Date(currentItem.endDate)) ?
+                    <></>
+                    :
+                    <div>
+                    {(auth && auth.isAuthenticated) ?
                     <Button 
                       variant="contained" 
                       color="primary" 
@@ -378,8 +371,16 @@ function getModalStyle() {
                       onClick={handleOpen}
                       type="button"
                       size="large"
-                    >Place Bid
+                      disabled={auth && auth.isAuthenticated && (auth.user.uid == currentItem.user)}
+                    >
+                      Place Bid
                     </Button>
+                    :
+                    <LoginModalBid />
+                    }
+                    </div>
+
+                    } 
                     <Modal
                       open={open}
                       onClose={handleClose}
@@ -414,8 +415,7 @@ function getModalStyle() {
               <Paper variant="outlined" square="true">
                 <Typography color="inherit" display="inline">
                   <Box  m={0.5}>
-                  {currentItem.user}
-                  Stew
+                  {currentItem.name}
                   </Box>
                 </Typography>
               </Paper>
@@ -726,20 +726,7 @@ function getModalStyle() {
           </Grid>
           <Grid item xs={12} md={10}>
              {/* <Comments /> */}
-              {/* MAP the ATTENDEES */}
-             
-              {currentItem.bidHistory.map((bid, _id)=> (
-                  <div key={bid._id} >
-                    ${bid.bid} - 
-                     {formatDistanceToNow(
-                      new Date(bid.date),
-                      {includeSeconds: true})} ago
-                  </div>
-                  )
-                  )} 
-          
-
-
+             <BidHistoryComponent bidHistory = {bidHistory}/>            
           </Grid>
           </div>
   );
@@ -751,5 +738,5 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItem })(ListingDetails);
+export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItem, bidOnItem })(ListingDetails);
   

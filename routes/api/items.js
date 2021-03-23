@@ -10,7 +10,7 @@ const Item = require('../../models/item');
 router.get('/', async (req, res) => {
   try {
   const items = await Item.find().sort({
-    date: -1,});
+    endDate: 1,});
   if (!items) throw Error('No items');
     res.status(200).json(items);
     } catch (e) {
@@ -36,6 +36,7 @@ router.get('/:id', async (req, res) => {
 // @access  Private
 router.post('/', async (req, res) => {
   const newItem = new Item({
+      name: req.currentUser.name,
       user: req.currentUser.uid,
       brand: req.body.brand,
       model: req.body.model,
@@ -77,7 +78,8 @@ router.put('/update/:id', async (req, res) => {
   try{ 
     const updateItem = await 
   Item.findOneAndUpdate({_id: req.params.id}, {
-    // user: req.body.user,
+    name: req.currentUser.name,
+    user: req.currentUser.uid,
     brand: req.body.brand,
     model: req.body.model,
     img: req.body.img,
@@ -124,14 +126,10 @@ router.put('/:id', async (req, res) => {
     }
   });
   
-// @route    POST api/items/bidHistory/:id
+// @route    POST api/items/bid/:id
 // @desc     Bid history on an auction
 // @access   Private
-router.post('/bids/:id', 
-  // auth,
-  // checkObjectId('id'),
-  // check('bid', 'Bid is required').notEmpty(),
-  async (req, res) => {
+router.put('/bid/:id', async (req, res) => {
     const auth = req.currentUser;
     if(auth){
       try {
@@ -152,6 +150,7 @@ router.post('/bids/:id',
         console.error(err.message);
         res.status(500).send('Server Error');
       }
+      return
     }
     return res.status(403).send('Not authorized');
   }

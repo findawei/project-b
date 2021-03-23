@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid'
 import Box from '@material-ui/core/Grid'
 import {getItems} from '../flux/actions/itemActions'
 import Listing from './Listing'
+import {isFuture, isPast} from "date-fns";
+
 // import tileData from './tileData';
 
 const Auctions = ({getItems, item}) => {
@@ -36,11 +38,18 @@ const classes = useStyles();
     className={classes.root}
     >
     <Grid container spacing={2}>
-      {items.map(item => <Listing 
+      {items.filter(opt => isFuture(new Date(opt.endDate))).map(item => <Listing 
           item={item} 
           key={item._id}/>
           )}
-      </Grid>
+    </Grid>
+    <h1>Ended</h1>
+    <Grid container spacing={2}>
+      {items.filter(opt => isPast(new Date(opt.endDate))).map(item => <Listing 
+          item={item} 
+          key={item._id}/>
+          )}
+    </Grid>
     </div>
   );
 }

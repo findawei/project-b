@@ -8,10 +8,11 @@ import {
   ListItemAvatar,
   Avatar,
   Typography, 
-  Box
+  Box, Paper
 } from "@material-ui/core";
-import faker from "faker";
+// import faker from "faker";
 import {format, formatDistance, formatDistanceToNowStrict} from "date-fns";
+import NumberFormat from "react-number-format";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,36 +25,56 @@ const useStyles = makeStyles(theme => ({
   inline: {
     display: "inline"
   },
+  bidbar: {
+    padding: theme.spacing(0.5),
+    textAlign: 'left',
+    color: '#fff',
+    background: theme.palette.warning.dark,
+    display: 'inline',
+    // flexWrap: 'wrap',
+  },
+  bidbartext: {
+    color: "#FFFFFF"
+  },
   
 }));
 
-const Comment = ({ comments }) => {
+const BidHistoryComponent = ({ bidHistory }) => {
   const classes = useStyles();
   return (
     <List className={classes.root}>
-      {comments.map(comment => {
+      {bidHistory && bidHistory.map(bid => {
         // console.log("Comment", comment);
         return (
-          <React.Fragment key={comment.id}>
-            <ListItem key={comment.id} alignItems="flex-start">
+          <React.Fragment key={bid.id}>
+            <ListItem key={bid.id} alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar alt="avatar" src={faker.image.abstract()} />
+                <Avatar alt="avatar" 
+                // src={faker.image.abstract()} 
+                />
               </ListItemAvatar>
               <ListItemText
                 className={classes.inline}
                 primary={
                 <div>                 
                     <Typography component="span">
-                    {faker.internet.userName()}&nbsp;
+                    {bid.name}&nbsp;
                     </Typography>
                     <Typography color="textSecondary"                 component="span" variant="caption">
-                    {formatDistanceToNowStrict(Date.parse(faker.date.recent(1)))} ago
+                    {formatDistanceToNowStrict(Date.parse(bid.date))} ago
                     </Typography>
                 </div>
                 }
                 secondary={
                   <>
-                    {comment.body}
+                  <Paper className={classes.bidbar}>
+
+                     <NumberFormat thousandSeparator={true} prefix={'$'}
+                    displayType={'text'}
+                    value={bid.bid}
+                    />
+                  </Paper>
+                   
                   </>
                 }
               />
@@ -66,4 +87,4 @@ const Comment = ({ comments }) => {
   );
 };
 
-export default Comment;
+export default BidHistoryComponent;

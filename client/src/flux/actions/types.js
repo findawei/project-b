@@ -20,6 +20,7 @@ export const ADD_ITEM = "ADD_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
 export const ITEMS_LOADING = "ITEMS_LOADING";
 export const UPDATE_ITEM = "UPDATE_ITEM";
+export const BID_ITEM = "BID_ITEM";
 export const SET_CURRENTITEM = "SET_CURRENTITEM";
 export const CLEAR_CURRENTITEM = "CLEAR_CURRENTITEM";
 export const ITEM_ERROR = "ITEM_ERROR";

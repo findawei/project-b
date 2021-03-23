@@ -53,8 +53,8 @@ router.post('/login', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const auth = req.currentUser;
-  // const username = req.body
-  // console.log(`backend username: ${username}`)
+  const name = req.currentUser.name
+  // console.log(`backend username: ${name}`)
 
 if(auth){
   const uid  = req.currentUser.uid;
@@ -62,11 +62,9 @@ if(auth){
     const user = await User.findOne({uid});
     if (user) throw Error('User already exists');
 
-    //ITS ONLY GETTING THE NAME WHEN LOGGING OUT AND LOGGING BACK IN, NOT ON SIGN UP.
-
     const newUser = new User({
       uid,
-      // username: req.currentUser.name
+      name: req.currentUser.name
     });
 
     const savedUser = await newUser.save();
@@ -75,7 +73,7 @@ if(auth){
     res.status(200).json({
       user: {
         uid: savedUser.uid,
-        // username: savedUser.name
+        name: savedUser.name
       }
     });
   } catch (e) {
