@@ -1,4 +1,4 @@
-import {GET_ITEMS, GET_ITEM, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING, UPDATE_ITEM, SET_CURRENTITEM, BID_ITEM, CLEAR_CURRENT, ITEM_ERROR} from '../actions/types';
+import {GET_ITEMS, GET_ITEM, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING, UPDATE_ITEM, SET_CURRENTITEM, BID_ITEM, CLEAR_CURRENT, ITEM_ERROR, COMMENT_ITEM} from '../actions/types';
 
 const initialState = {
     items: [],
@@ -36,7 +36,12 @@ export default function(state=initialState, action){
             return {
                 ...state,
                 items: state.items.map(item => item._id === action.payload._id ? action.payload : item)
-            };   
+            }; 
+        case COMMENT_ITEM:
+            return {
+                ...state,
+                items: state.items.map(item => item._id === action.payload._id ? action.payload : item)
+            };    
         case BID_ITEM:
             return {
                 ...state,

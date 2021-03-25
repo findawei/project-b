@@ -2,10 +2,18 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { DataGrid } from '@material-ui/data-grid';
-import {Button, Box, Typography, Paper, Chip, Grid} from '@material-ui/core'
+import {Button, Box, Typography, Paper, Chip, Grid, IconButton,
+  List,
+  ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
+  Avatar,
+} from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {format, isPast, formatDistanceToNow} from "date-fns";
+import {format, isPast, formatDistanceToNowStrict} from "date-fns";
 import TextField from '@material-ui/core/TextField';
+import InputBase from '@material-ui/core/InputBase';
 import Modal from '@material-ui/core/Modal';
 import { useForm, Controller } from "react-hook-form";
 import Input from "@material-ui/core/Input";
@@ -13,11 +21,15 @@ import NumberFormat from "react-number-format";
 import Countdown, {zeroPad} from 'react-countdown';
 import Comments from './Comments'
 import { spacing } from '@material-ui/system';
-import {getItemById, setCurrentItem, updateItem, bidOnItem} from '../flux/actions/itemActions'
+import {getItemById, setCurrentItem, updateItem, bidOnItem, commentItem} from '../flux/actions/itemActions'
 import BidHistoryComponent from './BidHistoryComponent'
+import CommentsComponent from './CommentsComponent'
 import LoginModalBid from './auth/LoginModalBid'
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import CommentsAndBids from './CommentsAndBids';
+import LoginModalComment from './auth/LoginModalComment';
 
-const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItem, bidOnItem
+const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItem, bidOnItem, commentItem
 }) => {
   
   const [_id, setId] = useState('');
@@ -35,11 +47,19 @@ const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, 
   const [service, setService] = useState('')
   const [endDate, setEndDate] = useState('')
   const [bidHistory, setBidHistory] = useState('')
+  const [comments, setComments] = useState('')
+  const [commentsandbids, setCommentsandbids] = useState('')
 
   const [modalStyle] = useState(getModalStyle);
   const [count, setCount] = useState(0);
   const [open, setOpen] = useState(false);
+
   const { register, handleSubmit, errors } = useForm();
+  const {
+    register: register2,
+    errors: errors2,
+    handleSubmit: handleSubmit2
+  } = useForm()
 
 useEffect(() => {
     if(currentItem) {
@@ -58,7 +78,9 @@ useEffect(() => {
         setService(currentItem.service)
         setEndDate(currentItem.endDate)
         setBidHistory(currentItem.bidHistory)
+        setComments(currentItem.comments)
     } 
+      setCommentsandbids([].concat(currentItem.bidHistory, currentItem.comments))
   }, [currentItem]);  
 
   useEffect(() => { 
@@ -146,13 +168,19 @@ function getModalStyle() {
   const handleClose = () => {
     setOpen(false);
   };
-  const onSubmit = (data) => {
-    setBid(data.bid)
-    updateItem(data)
-    bidOnItem(data)
+  async function onSubmit (data) {
+    await setBid(data.bid)
+    await updateItem(data)
+    await bidOnItem(data)
     setOpen(false)
     getItemById(match.params.id) 
   };
+
+  async function commentSubmit (data, e) {
+    await commentItem(data)
+    getItemById(match.params.id) 
+    e.target.reset();
+  }
 
     const classes = useStyles();
     const Completionist = () => <span>Ended</span>;
@@ -717,16 +745,61 @@ function getModalStyle() {
             <Typography color="inherit" fontWeight="fontWeightBold">
               Comments & Bids
               </Typography>
-            <TextField 
-              id="outlined-basic" 
-              variant="outlined" 
-              placeholder="Add a Comment..."
-              fullWidth
-              />
+              <form onSubmit={handleSubmit2(commentSubmit)}>
+                <div hidden="true">
+                <TextField          
+                name="_id"
+                id="_id"
+                value={currentItem._id}
+                inputRef={register2}
+                />
+                </div>
+                <div>
+                <TextField
+                  name="text" 
+                  id="text" 
+                  variant="outlined" 
+                  placeholder="Add a Comment..."
+                  fullWidth
+                  inputRef={register2({
+                    min: {
+                      value: 1,
+                      message: 'Cannot enter an empty comment'
+                    },
+                    required: 'Comment cannot be empty 🤷🏻‍♂️'
+                  })}
+                  InputProps={
+                  {className: classes.textinput},
+                  {endAdornment: 
+                 <div>
+                 {(auth && auth.isAuthenticated) ?
+                 <IconButton 
+                 color="primary" 
+                 className={classes.iconButton}
+                 type="submit"
+                 disabled={!!errors2.text}
+                 >
+                 <ArrowDownwardIcon />
+                </IconButton>
+                 :
+                 <LoginModalComment />
+                 }
+                 </div>  
+                
+                }}
+                error={!!errors2.text}
+                />
+                </div>
+                </form>
+            {errors2.text && (
+            <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors2.text.message}</span>
+            )}
           </Grid>
           <Grid item xs={12} md={10}>
              {/* <Comments /> */}
-             <BidHistoryComponent bidHistory = {bidHistory}/>            
+             {/* <BidHistoryComponent bidHistory = {bidHistory}/>
+             <CommentsComponent comments = {comments}/> */}
+            <CommentsAndBids commentsandbids = {commentsandbids} />
           </Grid>
           </div>
   );
@@ -738,5 +811,5 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItem, bidOnItem })(ListingDetails);
+export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItem, bidOnItem, commentItem })(ListingDetails);
   

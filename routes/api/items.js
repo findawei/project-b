@@ -129,7 +129,7 @@ router.put('/:id', async (req, res) => {
 // @route    POST api/items/bid/:id
 // @desc     Bid history on an auction
 // @access   Private
-router.put('/bid/:id', async (req, res) => {
+router.post('/bid/:id', async (req, res) => {
     const auth = req.currentUser;
     if(auth){
       try {
@@ -154,6 +154,36 @@ router.put('/bid/:id', async (req, res) => {
     }
     return res.status(403).send('Not authorized');
   }
+);
+
+// @route    POST api/items/comment/:id
+// @desc     Bid history on an auction
+// @access   Private
+router.post('/comment/:id', async (req, res) => {
+  const auth = req.currentUser;
+  if(auth){
+    try {
+      const item = await Item.findById({_id: req.params.id});
+
+      const newComment = {
+        text: req.body.text,
+        name: req.currentUser.name,
+        user: req.currentUser.uid
+      };
+
+      item.comments.unshift(newComment);
+
+      await item.save();
+
+      res.json(item.comments);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+    return
+  }
+  return res.status(403).send('Not authorized');
+}
 );
 
 // @route   DELETE api/items/:id

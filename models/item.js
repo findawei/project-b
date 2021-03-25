@@ -121,7 +121,29 @@ const ItemSchema = new Schema ({
                 default: Date.now
             }
         }
-    ]
+    ],
+    comments: [
+        {
+            user: {
+                type: String,
+                ref: 'users'
+            },
+            name: {
+                type: String
+              },
+            text: {
+                type: String,
+                required: true
+            },
+            avatar: {
+                type: String
+            },
+            date: {
+                type: Date,
+                default: Date.now
+            }
+        }
+      ]
 });
 
 module.exports = Item = mongoose.model('item', ItemSchema);
