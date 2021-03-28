@@ -72,11 +72,11 @@ const useStyles = makeStyles((theme) => ({
       }
     };
 
-    return (
-            <Grid 
-            item xs={12} sm={6} lg={4}
-            onClick={ItemView}
-            >
+return (
+  <Grid 
+    item xs={12} sm={6} lg={4}
+    onClick={ItemView}
+    >
             <Card 
             className={classes.paper}
             onClick={ItemView}
@@ -89,7 +89,7 @@ const useStyles = makeStyles((theme) => ({
             <CardActionArea>
             <CardMedia
                 className={classes.media}
-                image={item.img}
+                image={item.img[0].url}
                 title={item.reference_number}
             >
             <Box
@@ -126,8 +126,8 @@ const useStyles = makeStyles((theme) => ({
             </CardActionArea>            
             </Link>
             </Card>
-            </Grid>
-    );
-  }
+    </Grid>
+  );
+}
 
   export default connect(null, { setCurrentItem })(Listing);

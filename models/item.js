@@ -19,10 +19,19 @@ const ItemSchema = new Schema ({
         type: String,
         required: true
     },
-    img: {
-        type: String,
-        required: true
-    },
+    img: [
+        {
+            url: {
+                type: String
+            },
+            original: {
+                type: String
+            },
+            name: {
+                type: String
+              }
+        }
+    ],
     reference_number: {
         type: String,
         required: true

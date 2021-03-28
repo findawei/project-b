@@ -11,7 +11,7 @@ import {Button, Box, Typography, Paper, Chip, Grid, IconButton,
   Avatar,
 } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {format, isPast, formatDistanceToNowStrict} from "date-fns";
+import {format, isPast, addMinutes, differenceInSeconds, formatDistanceToNowStrict} from "date-fns";
 import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
 import Modal from '@material-ui/core/Modal';
@@ -28,6 +28,9 @@ import LoginModalBid from './auth/LoginModalBid'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CommentsAndBids from './CommentsAndBids';
 import LoginModalComment from './auth/LoginModalComment';
+import Gallery from './Gallery'
+import ImageGallery from 'react-image-gallery';
+
 
 const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItem, bidOnItem, commentItem
 }) => {
@@ -81,6 +84,27 @@ useEffect(() => {
         setComments(currentItem.comments)
     } 
       setCommentsandbids([].concat(currentItem.bidHistory, currentItem.comments))
+
+      console.log(
+        currentItem.bidHistory &&
+        differenceInSeconds(
+          new Date(currentItem.endDate),
+          new Date(currentItem.bidHistory.[0].date)
+          )
+      )
+
+      if(currentItem.bidHistory &&
+        differenceInSeconds(
+          new Date(currentItem.endDate),
+          new Date(currentItem.bidHistory.[0].date)
+          ) > 120
+      ){
+        console.log('>1')
+        console.log(`Before added minute${currentItem.endDate}`)
+        setEndDate(addMinutes(new Date(currentItem.endDate), 1))
+        console.log(`After added minute${addMinutes(new Date(currentItem.endDate), 1)}`)
+      }
+
   }, [currentItem]);  
 
   useEffect(() => { 
@@ -173,7 +197,7 @@ function getModalStyle() {
     await updateItem(data)
     await bidOnItem(data)
     setOpen(false)
-    getItemById(match.params.id) 
+    getItemById(match.params.id)
   };
 
   async function commentSubmit (data, e) {
@@ -211,8 +235,9 @@ function getModalStyle() {
     // Modal Body
     const body = (
       <div style={modalStyle} className={classes.papermodal}>
-        <img src={currentItem.img} alt={currentItem.brand} 
-        className={classes.image}/>
+        {/* <img src={currentItem.img} alt={currentItem.brand} 
+        className={classes.image}/> */}
+        <Gallery />
         <h2 id="simple-modal-title">
         {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
         </h2>
@@ -322,9 +347,11 @@ function getModalStyle() {
               </Grid>
             </Grid>
           </div>
-          <img src={currentItem.img} alt={currentItem.brand} 
+          {/* <img src={currentItem.img} alt={currentItem.brand} 
           className={classes.image} 
-          />
+          /> */}
+          <Gallery img={img}/>
+          
               <Grid 
                 container 
                 spacing={2}
