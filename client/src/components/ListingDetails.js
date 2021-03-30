@@ -84,7 +84,37 @@ useEffect(() => {
         setComments(currentItem.comments)
     } 
       setCommentsandbids([].concat(currentItem.bidHistory, currentItem.comments))
-  }, [currentItem]);  
+
+      console.log(`Time left: ${differenceInMinutes(
+        new Date(currentItem.endDate),
+        new Date()
+        )}`
+    )
+    console.log(`Time between last bid and endDate: ${differenceInMinutes(
+      new Date(currentItem.endDate),
+      new Date(currentItem.bidHistory && currentItem.bidHistory.[0].date)
+      )}`)
+
+    if(currentItem.bidHistory &&
+      differenceInSeconds(
+        new Date(currentItem.endDate),
+        new Date(currentItem.bidHistory.[0].date)
+        ) < 60
+    ){
+      console.log(`Before added minute: ${currentItem.endDate}`)
+      let addOneMin = addMinutes(new Date(), 1)
+      setEndDate(addOneMin)
+
+      const updateEndTime = {
+        _id: currentItem._id,
+        endDate: addOneMin
+      }
+      updateItemEndDate(updateEndTime)
+      console.log(`After added minute: ${addOneMin}`)
+      getItemById(match.params.id)
+    }
+
+  }, [currentItem, getItemById]);  
 
   useEffect(() => { 
     console.log('Loop started')
@@ -175,34 +205,7 @@ function getModalStyle() {
 async function onSubmit(data) {
   try {
     const result = await setBid(data.bid);
-    const newResult = await (
-      bidOnItem(data), setOpen(false)
-      
-    //   console.log(`Time left: ${differenceInMinutes(
-    //     new Date(currentItem.endDate),
-    //     new Date()
-    //     )}`
-    // )
-    // console.log(`Time between last bid and endDate: ${differenceInMinutes(
-    //   new Date(currentItem.endDate),
-    //   new Date(currentItem.bidHistory && currentItem.bidHistory.[0].date)
-    //   )}`)
-
-    // if(currentItem.bidHistory &&
-    //   differenceInMinutes(
-    //     new Date(currentItem.endDate),
-    //     new Date(currentItem.bidHistory.[0].date)
-    //     ) < 15
-    // ){
-    //   console.log(`Before added minute: ${currentItem.endDate}`)
-    //   let addOneMin = addMinutes(new Date(currentItem.endDate), 1)
-    //   setEndDate(addOneMin)
-    //   updateItemEndDate(addOneMin)
-    //   console.log(`After added minute: ${addOneMin}`)
-    // }
-      
-      
-      );
+    const newResult = await (bidOnItem(data), setOpen(false))
     const finalResult = await getItemById(match.params.id);
   } catch(error) {
     console.log(error);
