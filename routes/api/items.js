@@ -114,13 +114,30 @@ router.put('/update/:id', async (req, res) => {
 // @access  Private
 router.put('/:id', async (req, res) => {
   try{ 
-    const updateItem = await 
+    const updateItemBid = await 
   Item.findOneAndUpdate({_id: req.params.id}, {
     $set:{
     bid: req.body.bid,
     }
     },{upsert: true, new: true});
-    return res.status(200).json(updateItem);
+    return res.status(200).json(updateItemBid);
+  } catch(e){
+    res.status(400).json({ msg: e.message, success: false })
+    }
+  });
+
+// @route   PUT api/items/:id
+// @desc    Update item endTime
+// @access  Private
+router.put('/endDate/:id', async (req, res) => {
+  try{ 
+    const updateItemEndDate = await 
+  Item.findOneAndUpdate({_id: req.params.id}, {
+    $set:{
+    endDate: req.body.endDate,
+    }
+    },{upsert: true, new: true});
+    return res.status(200).json(updateItemEndDate);
   } catch(e){
     res.status(400).json({ msg: e.message, success: false })
     }

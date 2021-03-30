@@ -11,7 +11,7 @@ import {Button, Box, Typography, Paper, Chip, Grid, IconButton,
   Avatar,
 } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress';
-import {format, isPast, addMinutes, differenceInSeconds, formatDistanceToNowStrict} from "date-fns";
+import {format, isPast, addMinutes, differenceInSeconds, differenceInMinutes, formatDistanceToNowStrict} from "date-fns";
 import TextField from '@material-ui/core/TextField';
 import InputBase from '@material-ui/core/InputBase';
 import Modal from '@material-ui/core/Modal';
@@ -21,7 +21,7 @@ import NumberFormat from "react-number-format";
 import Countdown, {zeroPad} from 'react-countdown';
 import Comments from './Comments'
 import { spacing } from '@material-ui/system';
-import {getItemById, setCurrentItem, updateItem, bidOnItem, commentItem} from '../flux/actions/itemActions'
+import {getItemById, setCurrentItem, updateItemBid, bidOnItem, commentItem, updateItemEndDate} from '../flux/actions/itemActions'
 import BidHistoryComponent from './BidHistoryComponent'
 import CommentsComponent from './CommentsComponent'
 import LoginModalBid from './auth/LoginModalBid'
@@ -32,7 +32,7 @@ import Gallery from './Gallery'
 import ImageGallery from 'react-image-gallery';
 
 
-const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItem, bidOnItem, commentItem
+const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItemBid, bidOnItem, commentItem, updateItemEndDate
 }) => {
   
   const [_id, setId] = useState('');
@@ -84,27 +84,6 @@ useEffect(() => {
         setComments(currentItem.comments)
     } 
       setCommentsandbids([].concat(currentItem.bidHistory, currentItem.comments))
-
-      console.log(
-        currentItem.bidHistory &&
-        differenceInSeconds(
-          new Date(currentItem.endDate),
-          new Date(currentItem.bidHistory.[0].date)
-          )
-      )
-
-      if(currentItem.bidHistory &&
-        differenceInSeconds(
-          new Date(currentItem.endDate),
-          new Date(currentItem.bidHistory.[0].date)
-          ) > 120
-      ){
-        console.log('>1')
-        console.log(`Before added minute${currentItem.endDate}`)
-        setEndDate(addMinutes(new Date(currentItem.endDate), 1))
-        console.log(`After added minute${addMinutes(new Date(currentItem.endDate), 1)}`)
-      }
-
   }, [currentItem]);  
 
   useEffect(() => { 
@@ -192,19 +171,53 @@ function getModalStyle() {
   const handleClose = () => {
     setOpen(false);
   };
-  async function onSubmit (data) {
-    await setBid(data.bid)
-    await updateItem(data)
-    await bidOnItem(data)
-    setOpen(false)
-    getItemById(match.params.id)
-  };
 
-  async function commentSubmit (data, e) {
-    await commentItem(data)
-    getItemById(match.params.id) 
-    e.target.reset();
+async function onSubmit(data) {
+  try {
+    const result = await setBid(data.bid);
+    const newResult = await (
+      bidOnItem(data), setOpen(false)
+      
+    //   console.log(`Time left: ${differenceInMinutes(
+    //     new Date(currentItem.endDate),
+    //     new Date()
+    //     )}`
+    // )
+    // console.log(`Time between last bid and endDate: ${differenceInMinutes(
+    //   new Date(currentItem.endDate),
+    //   new Date(currentItem.bidHistory && currentItem.bidHistory.[0].date)
+    //   )}`)
+
+    // if(currentItem.bidHistory &&
+    //   differenceInMinutes(
+    //     new Date(currentItem.endDate),
+    //     new Date(currentItem.bidHistory.[0].date)
+    //     ) < 15
+    // ){
+    //   console.log(`Before added minute: ${currentItem.endDate}`)
+    //   let addOneMin = addMinutes(new Date(currentItem.endDate), 1)
+    //   setEndDate(addOneMin)
+    //   updateItemEndDate(addOneMin)
+    //   console.log(`After added minute: ${addOneMin}`)
+    // }
+      
+      
+      );
+    const finalResult = await getItemById(match.params.id);
+  } catch(error) {
+    console.log(error);
   }
+}
+
+async function commentSubmit (data, e) {
+  try {
+    const result = await commentItem(data)
+    const newresult = await getItemById(match.params.id) 
+    const finalresult = await e.target.reset();
+  } catch(error){
+    console.log(error);
+  }  
+}
 
     const classes = useStyles();
     const Completionist = () => <span>Ended</span>;
@@ -235,9 +248,8 @@ function getModalStyle() {
     // Modal Body
     const body = (
       <div style={modalStyle} className={classes.papermodal}>
-        {/* <img src={currentItem.img} alt={currentItem.brand} 
-        className={classes.image}/> */}
-        <Gallery />
+        <img src={currentItem.img && currentItem.img[0].url} alt={currentItem.brand} 
+        className={classes.image}/>
         <h2 id="simple-modal-title">
         {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
         </h2>
@@ -246,10 +258,11 @@ function getModalStyle() {
           renderer={renderer}
         /></h4>
         <h4>Current Bid</h4>
-        <NumberFormat value={bid} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
-        <p id="simple-modal-description">
-          Something something
-        </p>
+        <NumberFormat value={currentItem.bidHistory?
+        currentItem.bidHistory[0].bid
+      :
+      '0'
+      } displayType={'text'} thousandSeparator={true} prefix={'$'}/>
         {/* <Box component="span"> */}
         <Grid
           container
@@ -282,7 +295,7 @@ function getModalStyle() {
         // }
         inputRef={register({
           min: {
-            value: ((currentItem.bid)+100),
+            value: ((currentItem.bidHistory && currentItem.bidHistory[0].bid)+100),
             message: 'You need to increase your bid'
           },
           valueAsNumber: true,
@@ -392,7 +405,7 @@ function getModalStyle() {
                       // variant="subtitle1" 
                       className={classes.bidbartext}
                       display="inline">
-                      <NumberFormat value={bid} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
+                      <NumberFormat value={currentItem.bidHistory && currentItem.bidHistory[0].bid} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>
@@ -838,5 +851,5 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItem, bidOnItem, commentItem })(ListingDetails);
+export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItemBid, bidOnItem, commentItem, updateItemEndDate })(ListingDetails);
   

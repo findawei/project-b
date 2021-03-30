@@ -62,7 +62,7 @@ const ItemSchema = new Schema ({
     },
     bid: {
         type: Number,
-        required: true
+        required: false
     },
     reserve: {
         type: Boolean,

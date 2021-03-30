@@ -73,7 +73,29 @@ export const addItem = (item) => (
         });
 };
 
-export const updateItem = (item) => async(
+export const updateItemEndDate = (item) => async(
+  dispatch,
+  getState
+  ) => {
+
+  const header = await tokenConfig();
+
+  axios
+  .put(`/api/items/endDate/${item._id}`, item, header)
+  .then(res=>
+    dispatch({
+      type: UPDATE_ITEM,
+      payload: res.data
+    }))
+    .catch(err => {
+      dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
+      dispatch({
+        type: ITEM_ERROR
+      });
+    });
+}; 
+
+export const updateItemBid = (item) => async(
     dispatch,
     getState
     ) => {
@@ -84,7 +106,7 @@ export const updateItem = (item) => async(
     .put(`/api/items/${item._id}`, item, header)
     .then(res=>
       dispatch({
-        type: UPDATE_ITEM,
+        type: BID_ITEM,
         payload: res.data
       }))
       .catch(err => {
