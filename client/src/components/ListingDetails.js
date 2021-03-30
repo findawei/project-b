@@ -206,7 +206,8 @@ async function onSubmit(data) {
   try {
     const result = await setBid(data.bid);
     const newResult = await (bidOnItem(data), setOpen(false))
-    const finalResult = await getItemById(match.params.id);
+    setTimeout(() => {getItemById(match.params.id)}, 500);
+    // const finalResult = await getItemById(match.params.id);
   } catch(error) {
     console.log(error);
   }
@@ -310,7 +311,17 @@ async function commentSubmit (data, e) {
         className: classes.bidinput
         }}
         error={!!errors.bid}
-      />
+      />  
+          {isPast(new Date(currentItem.endDate))?
+          <Button 
+          variant="contained" 
+          color="primary" 
+          type="submit"
+          disabled='true'
+          className={classes.bidinput}
+          >Auction has ended
+          </Button>
+        :
           <Button 
           variant="contained" 
           color="primary" 
@@ -319,6 +330,8 @@ async function commentSubmit (data, e) {
           className={classes.bidinput}
           >Bid
           </Button>
+        }
+          
           </div>
           </form>
         </Grid> 
@@ -431,7 +444,7 @@ async function commentSubmit (data, e) {
                 </Grid>
                 <Grid item xs={12} sm={3} md={2}>
                     {isPast(new Date(currentItem.endDate)) ?
-                    <></>
+                    ''
                     :
                     <div>
                     {(auth && auth.isAuthenticated) ?
