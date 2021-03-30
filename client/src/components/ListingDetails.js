@@ -92,10 +92,10 @@ useEffect(() => {
     )
     console.log(`Time between last bid and endDate: ${differenceInMinutes(
       new Date(currentItem.endDate),
-      new Date(currentItem.bidHistory && currentItem.bidHistory.[0].date)
+      new Date(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHistory.[0].date)
       )}`)
 
-    if(currentItem.bidHistory &&
+    if(currentItem.bidHistory && currentItem.bidHistory.length &&
       differenceInSeconds(
         new Date(currentItem.endDate),
         new Date(currentItem.bidHistory.[0].date)
@@ -262,7 +262,7 @@ async function commentSubmit (data, e) {
           renderer={renderer}
         /></h4>
         <h4>Current Bid</h4>
-        <NumberFormat value={currentItem.bidHistory?
+        <NumberFormat value={currentItem.bidHistory && currentItem.bidHistory.length?
         currentItem.bidHistory[0].bid
       :
       '0'
@@ -299,7 +299,11 @@ async function commentSubmit (data, e) {
         // }
         inputRef={register({
           min: {
-            value: ((currentItem.bidHistory && currentItem.bidHistory[0].bid)+100),
+            value: (currentItem.bidHistory && currentItem.bidHistory.length?
+              (currentItem.bidHistory && currentItem.bidHistory[0].bid)+100
+              :
+              0
+              ),
             message: 'You need to increase your bid'
           },
           valueAsNumber: true,
@@ -421,7 +425,10 @@ async function commentSubmit (data, e) {
                       // variant="subtitle1" 
                       className={classes.bidbartext}
                       display="inline">
-                      <NumberFormat value={currentItem.bidHistory && currentItem.bidHistory[0].bid} displayType={'text'} thousandSeparator={true} prefix={'$'}/>
+                      <NumberFormat value={
+                        currentItem.bidHistory && currentItem.bidHistory.length? 
+                         currentItem.bidHistory[0].bid : 0
+                        } displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                       </Typography>
                     </Grid>
                     <Grid item xs={3}>

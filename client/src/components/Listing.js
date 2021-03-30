@@ -104,7 +104,7 @@ return (
                 date={item.endDate}
                 renderer={renderer}
             />&nbsp;
-                Bid ${item.bid}
+                Bid ${item.bidHistory &&item.bidHistory.length? item.bidHistory[0].bid : 0}
             </Typography>
             </Box>
             </CardMedia>
