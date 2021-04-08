@@ -1,19 +1,10 @@
 import React , { useEffect } from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import GridList from '@material-ui/core/GridList';
-import GridListTile from '@material-ui/core/GridListTile';
-import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
-import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
-import Grid from '@material-ui/core/Grid'
-import Box from '@material-ui/core/Grid'
+import {Grid, Paper } from '@material-ui/core/'
 import {getItems} from '../flux/actions/itemActions'
 import Listing from './Listing'
 import {isFuture, isPast} from "date-fns";
-
-// import tileData from './tileData';
 
 const Auctions = ({getItems, item}) => {
 
@@ -32,6 +23,8 @@ const classes = useStyles();
   }, [getItems]);
  
   const { items } = item;
+
+
 
   return (
     <div 

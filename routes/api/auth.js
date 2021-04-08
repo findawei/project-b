@@ -7,6 +7,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 // User Model
 const User = require('../../models/User');
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 
 /**
@@ -53,10 +54,11 @@ router.post('/login', async (req, res) => {
 
 router.post('/', async (req, res) => {
   const auth = req.currentUser;
-  const name = req.currentUser.name
+  const name = req.currentUser.name;
+  const email = req.currentUser.email
   // console.log(`backend username: ${name}`)
 
-if(auth){
+if(auth && name){
   const uid  = req.currentUser.uid;
   try {
     const user = await User.findOne({uid});
@@ -64,7 +66,8 @@ if(auth){
 
     const newUser = new User({
       uid,
-      name: req.currentUser.name
+      name: req.currentUser.name,
+      email: req.currentUser.email
     });
 
     const savedUser = await newUser.save();
@@ -73,9 +76,11 @@ if(auth){
     res.status(200).json({
       user: {
         uid: savedUser.uid,
-        name: savedUser.name
+        name: savedUser.name,
+        email: savedUser.email
       }
     });
+    
   } catch (e) {
     res.status(400).json({ msg: e.message });
   }

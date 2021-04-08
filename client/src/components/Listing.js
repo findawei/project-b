@@ -12,7 +12,6 @@ import CardMedia from '@material-ui/core/CardMedia';
 import {Typography, Button, ButtonBase, Box, Link, Chip} from '@material-ui/core'
 import { positions } from '@material-ui/system';
 
-
 const Listing = ({ item, setCurrentItem }) => {
 
     const setCurrent = (item) => {setCurrentItem(item);};
@@ -37,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
         color: "black",
     "&:hover": {
         color: "#000000",
-        textDecoration: "underline #000000"
+        textDecoration: "none"
     }
     },
     chip: {

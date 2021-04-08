@@ -83,6 +83,7 @@ useEffect(() => {
         setBidHistory(currentItem.bidHistory)
         setComments(currentItem.comments)
     } 
+      window.scrollTo(0, 0)
       setCommentsandbids([].concat(currentItem.bidHistory, currentItem.comments))
 
       console.log(`Time left: ${differenceInMinutes(

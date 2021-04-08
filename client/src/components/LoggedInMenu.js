@@ -1,21 +1,41 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-
-import Switch from '@material-ui/core/Switch';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import {Menu, Link} from '@material-ui/core/';
 import WatchIcon from '@material-ui/icons/Watch';
 import { connect } from 'react-redux';
 import { logout } from '../flux/actions/authActions';
+import { Link as RouterLink} from 'react-router-dom';
+import { makeStyles } from '@material-ui/core/styles';
+
 
 const LoggedInMenu = ({logout}) => {
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        // margin: 3
+    },
+    // media: {
+    //     height: 300,
+    //   },
+    // paper: {
+    //     // padding: theme.spacing(1),
+    //     color: theme.palette.text.secondary,
+    // },
+    link: {
+        color: "black",
+    "&:hover": {
+        color: "#000000",
+        textDecoration: "none"
+    }
+    },
+    // chip: {
+    //     color: "white",
+    //     backgroundColor: "purple"
+    //   }
+}));
+  const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const openMenu = Boolean(anchorEl);
@@ -60,7 +80,13 @@ const LoggedInMenu = ({logout}) => {
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
                 <MenuItem onClick={handleClose}>My Listings</MenuItem>
-                <MenuItem onClick={handleClose}>Settings</MenuItem>
+                <MenuItem onClick={handleClose}><Link 
+                  className={classes.link}
+                  component={RouterLink}
+                  to='/settings'
+                >Settings
+                </Link>
+                </MenuItem>
                 <MenuItem onClick={logoutButton}>Sign Out</MenuItem>
               </Menu>
             </div>

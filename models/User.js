@@ -19,6 +19,10 @@ const UserSchema = new Schema({
   role:{
     type: String,
     required: false
+  },
+  email:{
+    type: String,
+    unique: true
   }
 });
 

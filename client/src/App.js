@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Button from '@material-ui/core/Button';
 import 'fontsource-roboto';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppNavbar from './components/AppNavbar'
@@ -12,6 +11,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import { Provider } from 'react-redux';
 import store from './flux/store';
 import { loadUser } from './flux/actions/authActions';
+import {Elements} from '@stripe/react-stripe-js';
+import {loadStripe} from '@stripe/stripe-js';
+
+const stripePromise = loadStripe('pk_test_51IarEuAFyb1kAVtidDxjDpeHAQ3DprarSyD2Iqw8SED8aHlfxw2Pq4PQDqVJgiljBON7g3iecBIyaMloukPVD9nx00au4jfT5a');
 
 function App() {
   
@@ -21,6 +24,7 @@ function App() {
 
   return (
     <Provider store={store}>
+      <Elements stripe={stripePromise}>
       <CssBaseline />
       <Router>
         <Fragment>
@@ -32,6 +36,7 @@ function App() {
           </Switch>
         </Fragment>
       </Router>
+      </Elements>
     </Provider>
   );
 }

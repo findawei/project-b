@@ -15,7 +15,6 @@ async function decodeIDToken(req, res, next) {
       const decodedToken = await admin.auth().verifyIdToken(idToken);
 
       req['currentUser'] = decodedToken;
-      
       // console.log(
       // `decodeID username: ${decodedToken.name}`
       // )

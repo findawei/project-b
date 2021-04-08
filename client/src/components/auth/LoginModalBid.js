@@ -204,6 +204,7 @@ const body = (
                   as={TextField}
                   size="small"
                   fullWidth
+                  defaultValue=''
                   variant="outlined" 
                   type="displayName"
                   placeholder="Username"

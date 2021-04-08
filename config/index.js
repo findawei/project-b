@@ -1,0 +1,10 @@
+const dotenv =require( 'dotenv');
+
+dotenv.config();
+
+module.exports = {
+    PORT: process.env.PORT,
+    MONGO_URI: process.env.MONGO_URI,
+    MONGO_DB_NAME: process.env.MONGO_DB_NAME,
+    STRIPE_SECRET_KEY: process.env.STRIPE_SECRET_KEY
+}
