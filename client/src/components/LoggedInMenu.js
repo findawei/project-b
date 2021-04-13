@@ -79,13 +79,23 @@ const useStyles = makeStyles((theme) => ({
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>Profile</MenuItem>
-                <MenuItem onClick={handleClose}>My Listings</MenuItem>
-                <MenuItem onClick={handleClose}><Link 
+                <MenuItem onClick={handleClose}>
+                <Link 
+                  className={classes.link}
+                  component={RouterLink}
+                  to='/mylistings'
+                  >
+                  My Listings
+                  </Link>
+                  </MenuItem>
+                <MenuItem onClick={handleClose}>
+                  <Link 
                   className={classes.link}
                   component={RouterLink}
                   to='/settings'
-                >Settings
-                </Link>
+                  >
+                  Settings
+                  </Link>
                 </MenuItem>
                 <MenuItem onClick={logoutButton}>Sign Out</MenuItem>
               </Menu>

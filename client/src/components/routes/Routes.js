@@ -2,7 +2,9 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ListingDetails from '../ListingDetails'
+import MyListings from '../MyListings';
 import Settings from '../Settings';
+import SubmitListing from '../SubmitListing';
 // import Register from '../auth/Register';
 // import Login from '../auth/Login';
 // import Alert from '../layout/Alert';
@@ -15,7 +17,7 @@ import Settings from '../Settings';
 // import Posts from '../posts/Posts';
 // import Post from '../post/Post';
 // import NotFound from '../layout/NotFound';
-// import PrivateRoute from '../routing/PrivateRoute';
+import PrivateRoute from './PrivateRoute';
 
 const Routes = props => {
   return (
@@ -26,7 +28,10 @@ const Routes = props => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/profiles" component={Profiles} /> */}
         <Route exact path="/item/:id" component={ListingDetails} />
-        <Route exact path="/settings" component={Settings} />
+        <PrivateRoute exact path="/settings" component={Settings} />
+        <PrivateRoute exact path="/mylistings" component={MyListings} />
+        <PrivateRoute exact path="/submit" component={SubmitListing} />
+
         {/* <PrivateRoute exact path="/dashboard" component={Dashboard} />
         <PrivateRoute exact path="/create-profile" component={ProfileForm} />
         <PrivateRoute exact path="/edit-profile" component={ProfileForm} />
