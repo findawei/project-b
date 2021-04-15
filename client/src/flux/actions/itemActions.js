@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {ITEM_ERROR, GET_ITEMS, GET_ITEM, SET_CURRENTITEM, UPDATE_ITEM, CLEAR_CURRENTITEM, ITEMS_LOADING, ADD_ITEM, DELETE_ITEM, BID_ITEM, COMMENT_ITEM 
+import {ITEM_ERROR, GET_ITEMS, GET_ITEM, SET_CURRENTITEM, UPDATE_ITEM, CLEAR_CURRENTITEM, ITEMS_LOADING, ADD_ITEM, DELETE_ITEM, BID_ITEM, COMMENT_ITEM, SUBMIT_ITEM 
 } from './types';
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
@@ -60,6 +60,31 @@ export const addItem = (item) => (
     .then(res=>
         dispatch({
             type: ADD_ITEM,
+            payload: res.data
+        })
+        )
+        .catch(err => {
+          dispatch(
+            returnErrors(err.response.data, err.response.status, 'ITEM_ERROR')
+            );
+          dispatch({
+            type: ITEM_ERROR
+          });
+        });
+};
+
+export const submitItem = (item) => async (
+  dispatch,
+  getState
+  ) => {
+
+    const header = await tokenConfig();
+
+    axios
+    .post('/api/items/submit', item, header)
+    .then(res=>
+        dispatch({
+            type: SUBMIT_ITEM,
             payload: res.data
         })
         )

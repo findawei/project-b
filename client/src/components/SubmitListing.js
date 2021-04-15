@@ -9,9 +9,11 @@ import Dropzone from './Dropzone'
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { green } from '@material-ui/core/colors';
 import PhoneInput from 'react-phone-input-2'
-import 'react-phone-input-2/lib/style.css'
+import 'react-phone-input-2/lib/bootstrap.css'
+import "./styles.css";
+import {submitItem} from './../flux/actions/itemActions'
 
-const SubmitListing = ({ item, auth}) => {
+const SubmitListing = ({ item, auth, submitItem}) => {
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
     paper: {
         padding: theme.spacing(2),
-        margin: theme.spacing(2),
-
+        marginTop: theme.spacing(2),
         // textAlign: 'center',
         // color: theme.palette.warning.light,
         background: 'rgba(0, 0, 0, 0.04)',
@@ -37,9 +38,7 @@ const useStyles = makeStyles((theme) => ({
     radio: {
         paddingBottom: theme.spacing(2)
     },
-    test: {
     
-    }
 }));
 
 const classes = useStyles();
@@ -50,6 +49,7 @@ const [forsale, setForSale] = useState('no');
 const [reserve, setReserve] = useState('no');
 const [year, setYear] = useState(null)
 const [service, setService] = useState(null)
+const [newItem, setNewItem] = useState('')
 
 const handleChange = (event) => {
     setInfo(event.target.value);
@@ -69,8 +69,9 @@ const handleClose = () => {
 
 const { register, control, handleSubmit, errors } = useForm();
 
-const listingSubmit = (data) => {
-    console.log(data)
+const listingSubmit = (newItem) => {
+    setNewItem(newItem)
+    submitItem(newItem)
     setOpen(true)
 }
 
@@ -241,7 +242,8 @@ return (
                 minLength: {
                   value: 11,
                   message: "You're missing some digits"
-                }
+                },
+                required: 'Phone number cannot be empty 🤷🏻‍♂️'
               }}
             /> 
             {errors.phone && (
@@ -389,8 +391,8 @@ return (
         <Typography>Reference Number</Typography>
           <Paper elevation={0}>
                 <TextField
-                  name="refnumber" 
-                  id="refnumber" 
+                  name="reference_number" 
+                  id="reference_number" 
                   variant="outlined"
                   size="small"
  
@@ -406,11 +408,11 @@ return (
                   InputProps={
                   {className: classes.textinput}
                   }
-                error={!!errors.refnumber}
+                error={!!errors.reference_number}
                 />
           </Paper>
-            {errors.refnumber && (
-                <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.refnumber.message}</span>
+            {errors.reference_number && (
+                <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.reference_number.message}</span>
                 )}
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -441,6 +443,29 @@ return (
                   <br/>
                   {errors.service && (
                 <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.service.message}</span>
+                )}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+        <Typography>Where is the watch located?</Typography> 
+          <Paper elevation={0}>
+                <TextField
+                  name="location" 
+                  id="location"
+                  placeholder="City & Country" 
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  inputRef={register({
+                    required: 'Location cannot be empty 🤷🏻‍♂️'
+                  })}
+                  InputProps={
+                  {className: classes.textinput}
+                  }
+                error={!!errors.location}
+                />
+          </Paper>
+            {errors.location && (
+                <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.location.message}</span>
                 )}
         </Grid>        
         </Grid>
@@ -505,8 +530,8 @@ return (
             <Grid item xs={12} sm={8}>
             <Paper elevation={0}>
                 <TextField
-                    name="price" 
-                    id="price" 
+                    name="referral" 
+                    id="referral" 
                     variant="outlined"          
                     size="small"
                     //   placeholder="Add a Comment..."
@@ -520,15 +545,16 @@ return (
                     InputProps={
                     {className: classes.textinput}
                     }
-                    error={!!errors.price}
+                    error={!!errors.referral}
                     />
             </Paper>
-                {errors.price && (
-                    <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.price.message}</span>
+                {errors.referral && (
+                    <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.referral.message}</span>
                     )}
         </Grid>
         </Grid>      
-        <Button variant="contained" color="primary" type="submit" className={classes.root}>Submit</Button>
+        <Button variant="contained" color="primary" type="submit" className={classes.root}
+        >Submit</Button>
     </Paper>
     </MuiPickersUtilsProvider>
     </form>
@@ -538,4 +564,8 @@ return (
 )
 }
 
-export default connect(null, { })(SubmitListing);
+const mapStateToProps = (state) => ({
+  item: state.item
+});
+
+export default connect(mapStateToProps, {submitItem})(SubmitListing);

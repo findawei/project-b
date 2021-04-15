@@ -71,6 +71,40 @@ router.post('/', async (req, res) => {
 }
 });
 
+// @route   POST api/items/
+// @desc    POST item
+// @access  Private
+router.post('/submit', async (req, res) => {
+
+  const auth = req.currentUser;
+    if(auth){
+
+  const newItem = new Item({
+      name: req.currentUser.name,
+      user: req.currentUser.uid,
+      brand: req.body.brand,
+      model: req.body.model,
+      // img: req.body.img,
+      reference_number: req.body.reference_number,
+      year: req.body.year,   
+      reserve: req.body.reserve,
+      location: req.body.location,
+      service: req.body.service,
+      phone: req.body.phone,
+      referral: req.body.referral,
+      approved: false
+  });
+  try{ 
+    const item = await newItem.save();
+    if (!item) throw Error('Something went wrong saving the item');
+    res.status(200).json(item);
+    } 
+  catch (e) {
+  res.status(400).json({ msg: e.message, success: false });
+}
+}}
+);
+
 // @route   PUT api/items/:id
 // @desc    Update specific item
 // @access  Private

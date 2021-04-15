@@ -39,9 +39,20 @@ const useStyles = makeStyles((theme) => ({
           <div  className={classes.title}>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
             <img src="https://nowaitlist.co/wp-content/uploads/2021/02/Screen-Shot-2021-01-31-at-2.56.11-PM.png" alt="logo" className={classes.logo} />
-          </Link>          
+          </Link>    
           </div>
-          {/* <Button color="inherit" >Sign In</Button> */}
+          <Link 
+              className={classes.link}
+              style={{ textDecoration: 'none' }}
+              to={'/submit'}
+              >
+          <Button
+            variant="contained"
+            color="primary"
+          >
+            Sell A Watch
+          </Button>
+          </Link>   
           {auth && auth.isAuthenticated ? 
           <LoggedInMenu/> 
           :         

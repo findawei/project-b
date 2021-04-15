@@ -38,7 +38,6 @@ const ItemSchema = new Schema ({
     },
     movement: {
         type: String,
-        required: true
     },
     year: {
         type: String,
@@ -46,11 +45,9 @@ const ItemSchema = new Schema ({
     },
     case_diameter: {
         type: Number,
-        required: true
     },
     lug_width: {
         type: Number,
-        required: true
     },
     date: {
         type: Date,
@@ -58,59 +55,59 @@ const ItemSchema = new Schema ({
     },
     description: {
         type: String,
-        required: true
     },
     bid: {
         type: Number,
-        required: false
     },
     reserve: {
-        type: Boolean,
-        required: true
+        type: Number,
     },
     endDate: {
         type: Date,
-        required: true
     },
     location: {
         type: String,
-        required: true
     },
     service: {
         type: Date,
-        required: false
     },
     material: {
         type: String,
-        required: true
     },
     boxpapers: {
         type: String,
-        required: true
     },
     thickness: {
         type: Number,
-        required: true
     },
     crystal: {
         type: String,
-        required: true
     },
     crown: {
         type: String,
-        required: true
+         
     },
     bezel: {
         type: String,
-        required: true
+         
     },
     wr: {
         type: Number,
-        required: true
+         
     },
     tested: {
         type: String,
+         
+    },
+    approved: {
+        type: Boolean,
         required: true
+    },
+    referral: {
+        type: String
+    },
+    phone: {
+        type: Number
     },
     bidHistory: [
         {
