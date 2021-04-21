@@ -68,22 +68,28 @@ export const getPublicStripeKey = () => async() => {
 export const getCard = () => async (
   dispatch, getState
   ) => {
-
     const header = await tokenConfig();
-
     dispatch(setStripeLoading());
     axios
         .get('/api/stripe/card', header)
-        .then(res=>
+        .then((res) => {
+          try{
             dispatch({
-                type: GET_CARD,
-                payload: res.data
-            })
-        )
-        .catch(err => {
-          dispatch(returnErrors(err.response.data, err.response.status, 'STRIPE_ERROR'));
+              type: GET_CARD,
+              payload: res.data
+          })
+          }
+          catch(e) {
+            console.log(res, e)
+          }
+        }).catch((err) =>{
+          dispatch(returnErrors(
+            err.response.data, 
+            err.response.status, 
+            'STRIPE_ERROR'));
           dispatch({
             type: STRIPE_ERROR
           });
-        });
+        })
 };
+

@@ -244,4 +244,3 @@ export const tokenConfig = async () => {
   };
   return config;
 };
-

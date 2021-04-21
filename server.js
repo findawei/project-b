@@ -8,13 +8,37 @@ const stripe = require('./routes/api/stripe')
 const items = require('./routes/api/items')
 const users = require("./routes/api/users");
 const authRoutes = require("./routes/api/auth");
+const companion = require('@uppy/companion')
+const session = require('express-session')
+const fs = require('fs')
+
+const DATA_DIR = path.join(__dirname, 'tmp')
 
 const app = express();
 
 //body parser
-app.use(cors());
+app.use(cors({
+    methods: ['OPTIONS', 'GET', 'POST', 'PATCH', 'PUT'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Uppy-Versions', 'Accept'],
+    exposedHeaders: ['Access-Control-Allow-Headers'],
+  }));
+
+app.use((req, res, next) => {
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Authorization, Origin, Content-Type, Accept'
+    )
+    next()
+  })
+
 app.use(express.json());
 app.use(decodeIDToken);
+
+app.use(session({
+  secret: 'some-secret',
+  resave: true,
+  saveUninitialized: true,
+}))
 
 //DB config
 const { MONGO_URI, MONGO_DB_NAME } = config;
@@ -37,7 +61,41 @@ app.use('/api/items', items)
 app.use('/api/auth', authRoutes);
 app.use('/api/stripe', stripe)
 
-
 //Connect on PORT
 const { PORT } = config;
-app.listen(PORT, ()=> console.log(`Server started on port ${PORT}`));
+const server = app.listen(PORT, ()=> console.log(`Server started on port ${PORT}`));
+
+//Uppy Companion
+const {key, secret, bucket, region, endpoint} = config
+
+const options = {
+    providerOptions: {
+      s3: {
+        getKey: (req, filename) =>`/${filename}`,
+        key,
+        secret,
+        bucket,
+        region,
+        endpoint,
+      },
+    },
+    server: { 
+        host: `localhost:${PORT}`, 
+        path: '/companion'
+    },
+    filePath: DATA_DIR,
+    secret: 'blah blah',
+    debug: true,
+  }
+
+try {
+  fs.accessSync(DATA_DIR)
+} catch (err) {
+  fs.mkdirSync(DATA_DIR)
+}
+process.on('exit', () => {
+  rimraf.sync(DATA_DIR)
+})
+
+app.use('/companion', companion.app(options))
+companion.socket(server, options)

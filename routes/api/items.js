@@ -9,7 +9,7 @@ const Item = require('../../models/item');
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-  const items = await Item.find().sort({
+  const items = await Item.find({approved: true}).sort({
     endDate: 1,});
   if (!items) throw Error('No items');
     res.status(200).json(items);

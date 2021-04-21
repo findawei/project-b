@@ -3,9 +3,9 @@ import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Divider, Box } from '@material-ui/core';
 import StripeBox from "./stripe/StripeBox"
-import GetCard from './stripe/GetCard';
+import {getCard} from '../flux/actions/stripeActions'
 
-const Settings = () => {
+const Settings = ({getCard, stripeRedux}) => {
 
 
 const useStyles = makeStyles(() => ({
@@ -17,28 +17,37 @@ const useStyles = makeStyles(() => ({
 
 const classes = useStyles();
 
+useEffect(() => { 
+    getCard(); 
+  }, [getCard]);
+
 return (
     <div className={classes.root}>
         <Typography component="div">
             <h1>Settings</h1>
             <Divider />
             <Box fontWeight="fontWeightBold" py={1}>Payment info for bidding</Box>
-            <Box py={1}>Your card on file</Box>
-
         </Typography>
-        <Divider />
-        <GetCard />
-        <Divider />
+        {stripeRedux.card.data ?
+          <div>
+          <Box py={1}>Your card on file</Box>
+          <Typography 
+          color="textSecondary"
+          component="span" 
+          // variant="caption"
+          >
+          **** **** ****{stripeRedux.card.data[0].card.last4}
+          </Typography>
+          </div>
+          :
         <StripeBox/>
-        <Divider />
-
+        }
     </div>
 )
 }
 
-// const mapStateToProps = (state) => ({
-//     // item: state.item
-//     auth: state.auth
-//   });
+const mapStateToProps = (state) => ({
+    stripeRedux: state.stripeRedux
+  });
 
-export default connect(null)(Settings);
+export default connect(mapStateToProps, {getCard})(Settings);

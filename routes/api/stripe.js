@@ -42,14 +42,14 @@ if(auth){
     //Customer doesn't Exists, create one & SetupIntents  
     if(customer.data.length === 0){
     //Create new Stripe Customer
-    const customer = await stripe.customers.create({
-      email: auth.email
-    });
-
-    const intent = await stripe.setupIntents.create({
-      customer: customer.id,
-    })
-    res.status(200).json(intent);
+      const customer = await stripe.customers.create({
+        email: auth.email
+      });
+      
+      const intent = await stripe.setupIntents.create({
+        customer: customer.id,
+      })
+      res.status(200).json(intent);
     } 
     //Customer Exists, check if setupIntents Exists
     else {
@@ -82,33 +82,46 @@ router.get('/card', async (req, res) => {
     const customer = await stripe.customers.list({
       email: auth.email,
     });
-    
-    const card = await stripe.customers.listSources(
-      customer.data[0].id,
-    );
 
-    res.json({card, customer})
-    // console.log(auth)
+    if(customer.data.length === 0){
+      res.json('no customer')
+    }   
+    
+    let card = await stripe.paymentMethods.list({
+      customer: customer.data[0].id,
+      type: 'card'
+    });
+
+    if(card.data.length === 0){
+      res.json('no card')
+    } else {
+      res.json(card)
+    }
+  
   }catch(e){
     console.log(e)
   }
   }
 });
   
+// router.get('/customer', async (req, res) => {
+//   const auth = req.currentUser;
+//   if(auth){
+//     try{
+//     const customer = await stripe.customers.list({
+//       email: auth.email,
+//     });
 
+//     if(customer.data.length === 0){
+//       res.json('no customer')
+//     } else {
+//           res.json(customer)
 
-// router.post("/create-setup-intent", async (req, res) => {
-//   try {// Create or use an existing Customer to associate with the SetupIntent.
-//   // The PaymentMethod will be stored to this Customer for later use.
-//   const customer = await stripe.customers.create();
-
-//   res.send(await stripe.setupIntents.create({
-//     customer: customer.id
-//   }));
-// }
-//   catch (error) {
-//     console.log(error);
-//     res.status(500).json({ statusCode: 500, message: error.message });
+//     }  
+  
+//   }catch(e){
+//     console.log(e)
+//   }
 //   }
 // });
 
