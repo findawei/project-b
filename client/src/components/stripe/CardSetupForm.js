@@ -32,20 +32,6 @@ const CardField = ({ onChange }) => (
 </div>
 )
 
-const SubmitButton = ({ processing, error, children, disabled }) => (
-  <Button
-    variant="contained"
-    color="primary"
-    // disabled={!stripe}
-    className={`SubmitButton ${error ? "SubmitButton--error" : ""}`}
-    type="submit"
-    disabled={processing || disabled}
-  >
-    {processing ? "Processing..." : children}
-  </Button>
-);
-
-
 const CardSetupForm = ({createIntent, getPublicStripeKey, stripeRedux, auth, createCustomer}) => {
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -69,26 +55,26 @@ const CardSetupForm = ({createIntent, getPublicStripeKey, stripeRedux, auth, cre
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
 
+// useEffect(()=>{
+//   if(paymentMethod){
+//       console.log(paymentMethod)
+//   }
+// },[paymentMethod])
+
 useEffect(()=>{
   if(auth.user && auth.user.stripe_id){
     console.log('stripe id exists')
+    if(stripeRedux && stripeRedux.intent === null){
+      createIntent()
+    } 
   } else {
     createCustomer(); 
+    if(stripeRedux && stripeRedux.intent === null){
+      createIntent()
+    } 
     console.log('create stripeid')
-  } 
-},[])
-
-// const handleSubmit = (event) =>{
-//   event.preventDefault();
-
-//   if(auth.user && auth.user.stripe_id){
-//     console.log('stripe id exists')
-//   } else {
-//     createCustomer(); 
-//     console.log('create stripeid')
-//   } 
-// }
-
+  }
+},[auth])
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -96,46 +82,53 @@ useEffect(()=>{
     if(!stripe || !elements) {
       return;
     }
-      // console.log(stripeRedux.intent)
-      if (error) {
-        elements.getElement("card").focus();
-        return;
-      }
-      
-      if (cardComplete) {
-        setProcessing(true);
-        setButtonMsg('Processing...')
-        console.log('card complete')
-      }
 
-      // if(stripeRedux && stripeRedux.intent === null){
-      //   createIntent()
-      // }
+    if (error) {
+      elements.getElement("card").focus();
+      return;
+    }
 
-      // if(stripeRedux && stripeRedux.intent && stripeRedux.intent.client_secret){
-      //   const result = await stripe.confirmCardSetup(stripeRedux.intent.client_secret, {
-      // payment_method: {
-      //   card: elements.getElement(CardElement),
-      // }})
-      //   if (result.error) {
-      //     setOpen(true)
-      //     setSeverity("error")
-      //   } else { 
-      //     // console.log("Stripe 23 | token generated!");
-      //     setOpen(true)
-      //     setSeverity("success")
-      //     setAlertMsg("Card added!")
-      //     setPaymentMethod(result.paymentMethod);
-      //     console.log(result)
-      //   }
-      // // setOpen(true)
-      // // setAlertMsg('Past if statement')
-      // // setSeverity("success")
-
-      // }
-      setProcessing(false);
+    // if(stripeRedux && stripeRedux.intent === null){
+    //   createIntent()
+    // }  
     
+    if (cardComplete) {
+      setProcessing(true);
+      setButtonMsg('Processing...')
+    }
+
+      if(stripeRedux && stripeRedux.intent && stripeRedux.intent.client_secret){
+        const result = await stripe.confirmCardSetup(stripeRedux.intent.client_secret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          }})
+        if (result.error) {
+          setOpen(true)
+          setSeverity("error")
+          setAlertMsg(result.error.message)
+        } else { 
+            setOpen(true)
+            setSeverity("success")
+            setAlertMsg("Card added!")
+            setPaymentMethod(true);
+        }
+      }
+      setProcessing(false);
   }
+
+
+  const SubmitButton = ({ processing, error, children, disabled }) => (
+    <Button
+      variant="contained"
+      color="primary"
+      // disabled={!stripe}
+      className={`SubmitButton ${error ? "SubmitButton--error" : ""}`}
+      type="submit"
+      disabled={processing || disabled}
+    >
+      {processing ? "Processing..." : children}
+    </Button>
+  );
 
   return (
     <div>

@@ -61,34 +61,29 @@ router.post('/createIntent', async (req, res) =>{
   const auth = req.currentUser;
     if(auth){
       try{
-        const customer = await stripe.customers.list({
-            email: auth.email
-          })
-        res.status(customer)
+        //Get stripe_id
+        const user = await User.findOne({uid: req.currentUser.uid})
+          if (!user.stripe_id) throw Error("User doesn't have a stripe id");
         //Customer Exists, check if setupIntents Exists
-        // const setupIntents = await stripe.setupIntents.list({
-        //     customer: customer.data[0].id
-        //   });
-        // res.status(setupIntents)
-          // //No Setupintents found, create one
-          // if(setupIntents.data.length === 0){
-          //   const intent = await stripe.setupIntents.create({
-          //     customer: customer.data[0].id
-          //   })
-          //   res.status(200).json(intent);
-          //   //Use 1st one in list and pass along client secret
-          // } else if (setupIntents.data.filter(status => 'requires_payment_method')
-          // ){
-          //   res.status(setupIntents)
-          // }
-          //   else {
-          //   res.status(200).json('Something went wrong in your logic');
-          // }
+        const setupIntents = await stripe.setupIntents.list({
+            customer: user.stripe_id
+          });
         
-        }catch(e){
-          console.log(e)
+            // if no Setupintents found, create one
+        if(setupIntents.data.length === 0){
+          const intent = await stripe.setupIntents.create({
+            customer: user.stripe_id
+          })
+          res.status(200).json(intent);
+        } else {
+          //Get the intent  
+          const foundIntent =  setupIntents.data.find(({status}) => status === 'requires_payment_method')
+          res.status(200).json(foundIntent)
         }
+      }catch(e){
+        console.log(e)
       }
+    }
 })
 
 
