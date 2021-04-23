@@ -23,6 +23,9 @@ const UserSchema = new Schema({
   email:{
     type: String,
     unique: true
+  },
+  stripe_id: {
+    type: String
   }
 });
 

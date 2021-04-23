@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {CREATE_SETUP_INTENT, STRIPE_ERROR, GET_CARD, STRIPE_LOADING} from './types'
+import {CREATE_SETUP_INTENT, STRIPE_ERROR, GET_CARD, STRIPE_LOADING, CREATE_NEW_CUSTOMER, USER_NAME} from './types'
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 import {
@@ -16,7 +16,7 @@ export const createIntent = () => async (
     dispatch(setStripeLoading());
     try{
         axios
-        .post('/api/stripe/newCustomer/',{}, header)
+        .post('/api/stripe/createIntent/',{}, header)
         .then(res=>
           dispatch({
             type: CREATE_SETUP_INTENT,
@@ -30,6 +30,41 @@ export const createIntent = () => async (
         });
       };
   };
+
+
+  export const createCustomer = () => async (
+    dispatch, getState
+    ) => {
+  
+    const header = await tokenConfig();
+    dispatch(setStripeLoading());
+    try{
+        axios
+        .post('/api/stripe/newCustomer/',{}, header)
+        .then((res)=>{
+          //  dispatch({
+          //   type: CREATE_NEW_CUSTOMER,
+          //   payload: res.data
+          // })
+          let stripe_customer = res.data;
+        axios
+        .put('/api/auth/addStripeId', {stripe_customer}, header)
+        .then(res=>
+          dispatch({
+            type: USER_NAME,
+            payload: res.data
+          }))
+        }
+        )  
+      }
+    catch(err) {
+      dispatch(returnErrors(err.response.data, err.response.status, 'STRIPE_ERROR'));
+      dispatch({
+        type: STRIPE_ERROR,
+        });
+      };
+  };
+
 
 export const setStripeLoading = () => {
     return {

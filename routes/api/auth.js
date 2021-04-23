@@ -106,26 +106,25 @@ if(auth){
 }
 });
 
-// /**
-//  * @route   PUT api/users
-//  * @desc    Update user points
-//  * @access  Public
-//  */
+/**
+ * @route   PUT api/users
+ * @desc    Update user points
+ * @access  Public
+ */
 
-// router.put('/points', async (req, res) => {
-//   const auth = req.currentUser;
-// if(auth){
-//   try {
-//     const user = await User.findOneAndUpdate({uid:req.currentUser.uid},
-//     {points: req.body.points}, {new:true}
-//     )
-//       if (!user) throw Error('Could not add points.');
-//         res.json(user)
-//       } catch (e) {
-//         res.status(400).json({ msg: e.message });
-//       }
-// }
-// });
+router.put('/addStripeId', async (req, res) => {
+  const auth = req.currentUser;
+if(auth){
+  try {
+    const updateUser = await User.findOneAndUpdate({uid:req.currentUser.uid},
+    {stripe_id: req.body.stripe_customer.id}, {new:true}
+    )
+      res.status(200).json(updateUser)
+  } catch (e) {
+      res.status(400).json({ msg: e.message });
+  }
+}
+});
   
 
 module.exports = router;

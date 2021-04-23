@@ -5,7 +5,7 @@ import { Typography, Divider, Box } from '@material-ui/core';
 import StripeBox from "./stripe/StripeBox"
 import {getCard} from '../flux/actions/stripeActions'
 
-const Settings = ({getCard, stripeRedux}) => {
+const Settings = ({getCard, stripeRedux, auth}) => {
 
 
 const useStyles = makeStyles(() => ({
@@ -18,7 +18,9 @@ const useStyles = makeStyles(() => ({
 const classes = useStyles();
 
 useEffect(() => { 
-    getCard(); 
+  if(auth.user.stripe_id){
+    getCard();
+  }  
   }, [getCard]);
 
 return (
@@ -47,7 +49,8 @@ return (
 }
 
 const mapStateToProps = (state) => ({
-    stripeRedux: state.stripeRedux
+    stripeRedux: state.stripeRedux,
+    auth: state.auth
   });
 
 export default connect(mapStateToProps, {getCard})(Settings);

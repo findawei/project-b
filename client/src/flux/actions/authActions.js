@@ -61,27 +61,6 @@ export const loadUser = () => async(dispatch, getState) => {
 }};
 
 
-
-// // Add username points to user profile
-// export const addUsername = (user) => async (dispatch) => {
-
-//   const header = await tokenConfig();
-//   try{
-//     axios
-//     .put('/api/auth/', user, header)
-//     .then(res=>
-//       dispatch({
-//         type: USER_NAME,
-//         payload: res.data
-//       }))
-//   }
-//   catch(err) {
-//     dispatch({
-//       type: AUTH_ERROR
-//       });
-//     };
-// }; 
-var registered;
 // Register User
 export const register = ({email, password, displayName }) => async(
   dispatch

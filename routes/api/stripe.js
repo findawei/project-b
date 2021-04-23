@@ -17,7 +17,7 @@ router.get('/secret', async (req, res) => {
   }
 });
 
-router.get('/stripe', async (req, res) => {
+router.get('/getCustomer', async (req, res) => {
   const auth = req.currentUser;
   if(auth){
     try{
@@ -39,39 +39,56 @@ if(auth){
     const customer = await stripe.customers.list({
         email: auth.email
       })
-    //Customer doesn't Exists, create one & SetupIntents  
+    //Customer doesn't Exists, create one  
     if(customer.data.length === 0){
     //Create new Stripe Customer
       const customer = await stripe.customers.create({
         email: auth.email
       });
-      
-      const intent = await stripe.setupIntents.create({
-        customer: customer.id,
-      })
-      res.status(200).json(intent);
-    } 
-    //Customer Exists, check if setupIntents Exists
-    else {
-      const setupIntents = await stripe.setupIntents.list({
-        customer: customer.data[0].id
-      });
-      //No Setupintents found, create one
-      if(setupIntents.data.length === 0){
-        const intent = await stripe.setupIntents.create({
-          customer: customer.data[0].id
-        })
-        res.status(200).json(intent);
-        //Use 1st one in list and pass along client secret
-      } else {
-        res.status(200).json(setupIntents.data[0]);
-      }
+      res.status(200).json(customer);
+    } else {
+      //customer exists
+      res.status(200).json(customer.data[0]);
     }
   }catch(e){
     console.log(e)
   }
   }
   return;
+})
+
+router.post('/createIntent', async (req, res) =>{
+  const auth = req.currentUser;
+    if(auth){
+      try{
+        const customer = await stripe.customers.list({
+            email: auth.email
+          })
+        res.status(customer)
+        //Customer Exists, check if setupIntents Exists
+        // const setupIntents = await stripe.setupIntents.list({
+        //     customer: customer.data[0].id
+        //   });
+        // res.status(setupIntents)
+          // //No Setupintents found, create one
+          // if(setupIntents.data.length === 0){
+          //   const intent = await stripe.setupIntents.create({
+          //     customer: customer.data[0].id
+          //   })
+          //   res.status(200).json(intent);
+          //   //Use 1st one in list and pass along client secret
+          // } else if (setupIntents.data.filter(status => 'requires_payment_method')
+          // ){
+          //   res.status(setupIntents)
+          // }
+          //   else {
+          //   res.status(200).json('Something went wrong in your logic');
+          // }
+        
+        }catch(e){
+          console.log(e)
+        }
+      }
 })
 
 
@@ -85,19 +102,17 @@ router.get('/card', async (req, res) => {
 
     if(customer.data.length === 0){
       res.json('no customer')
-    }   
-    
-    let card = await stripe.paymentMethods.list({
+    } else {
+      let card = await stripe.paymentMethods.list({
       customer: customer.data[0].id,
       type: 'card'
     });
-
-    if(card.data.length === 0){
-      res.json('no card')
-    } else {
-      res.json(card)
-    }
-  
+      if(card.data.length === 0){
+        res.json('no card')
+      } else {
+        res.json(card)
+      }
+    }   
   }catch(e){
     console.log(e)
   }
