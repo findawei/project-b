@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {CREATE_SETUP_INTENT, STRIPE_ERROR, GET_CARD, STRIPE_LOADING, CREATE_NEW_CUSTOMER, USER_NAME} from './types'
+import {CREATE_SETUP_INTENT, STRIPE_ERROR, GET_CARD, STRIPE_LOADING, CREATE_NEW_CUSTOMER, USER_UPDATE} from './types'
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
 import {
@@ -32,7 +32,7 @@ export const createIntent = () => async (
   };
 
 
-  export const createCustomer = () => async (
+export const createCustomer = () => async (
     dispatch, getState
     ) => {
   
@@ -51,7 +51,7 @@ export const createIntent = () => async (
         .put('/api/auth/addStripeId', {stripe_customer}, header)
         .then(res=>
           dispatch({
-            type: USER_NAME,
+            type: USER_UPDATE,
             payload: res.data
           }))
         }

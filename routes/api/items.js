@@ -112,8 +112,8 @@ router.put('/update/:id', async (req, res) => {
   try{ 
     const updateItem = await 
   Item.findOneAndUpdate({_id: req.params.id}, {
-    name: req.currentUser.name,
-    user: req.currentUser.uid,
+    name: req.body.name,
+    user: req.body.uid,
     brand: req.body.brand,
     model: req.body.model,
     img: req.body.img,

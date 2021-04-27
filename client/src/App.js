@@ -13,6 +13,7 @@ import store from './flux/store';
 import { loadUser } from './flux/actions/authActions';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
+import Faq from './components/faq/Faq';
 
 const stripePromise = loadStripe('pk_test_51IarEuAFyb1kAVtidDxjDpeHAQ3DprarSyD2Iqw8SED8aHlfxw2Pq4PQDqVJgiljBON7g3iecBIyaMloukPVD9nx00au4jfT5a');
 
@@ -32,6 +33,7 @@ function App() {
         <Toolbar />
           <Switch>
             <Route exact path="/" component={Auctions} />
+            <Route exact path="/faq" component={Faq} />
             <Route component={Routes} />
           </Switch>
         </Fragment>

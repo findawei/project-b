@@ -13,6 +13,7 @@ export const REGISTER_FAIL = "REGISTER_FAIL";
 export const USER_NAME = "USER_NAME";
 export const RESET_SUCCESS = "RESET_SUCCESS"
 export const RESET_ERROR = "RESET_ERROR"
+export const USER_UPDATE = "USER_UPDATE"
 
 export const GET_ITEMS = "GET_ITEMS";
 export const GET_ITEM = "GET_ITEM";

@@ -26,6 +26,9 @@ const UserSchema = new Schema({
   },
   stripe_id: {
     type: String
+  },
+  stripe_cc: {
+    type: String
   }
 });
 

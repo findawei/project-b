@@ -21,7 +21,7 @@ useEffect(() => {
   if(auth.user.stripe_id){
     getCard();
   }  
-  }, [getCard]);
+  }, [auth]);
 
 return (
     <div className={classes.root}>

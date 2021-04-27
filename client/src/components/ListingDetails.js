@@ -83,7 +83,7 @@ useEffect(() => {
         setBidHistory(currentItem.bidHistory)
         setComments(currentItem.comments)
     } 
-      window.scrollTo(0, 0)
+      // window.scrollTo(0, 0)
       setCommentsandbids([].concat(currentItem.bidHistory, currentItem.comments))
 
       console.log(`Time left: ${differenceInMinutes(
@@ -275,6 +275,7 @@ async function commentSubmit (data, e) {
           justify="center"
           alignItems="center"
         >
+          {auth.user && auth.user.stripe_cc ?
           <form onSubmit={handleSubmit(onSubmit)}>
           <div hidden="true">
           <TextField          
@@ -326,7 +327,7 @@ async function commentSubmit (data, e) {
           className={classes.bidinput}
           >Auction has ended
           </Button>
-        :
+        :  
           <Button 
           variant="contained" 
           color="primary" 
@@ -336,9 +337,13 @@ async function commentSubmit (data, e) {
           >Bid
           </Button>
         }
-          
           </div>
           </form>
+
+        :
+          "Please add a method of payment."
+        }
+
         </Grid> 
         {errors.bid && (
             <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.bid.message}</span>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import {
   USER_LOADED,
   USER_LOADING,
-  USER_NAME,
+  USER_UPDATE,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
@@ -14,6 +14,7 @@ import {
 } from './types';
 import firebase from '../../firebase';
 import { config } from 'process';
+import { returnErrors } from './errorActions';
 
 export var accessToken = '';
 // Check token & load user
@@ -202,6 +203,28 @@ export const logout = () => async (dispatch) =>{
   } catch (err) {
     console.log(err);
   }
+};
+
+//Add stripe_cc to user
+export const addStripeCC = (user) => async (dispatch, getState) => {
+  
+    const header = await tokenConfig();
+    try{
+    axios
+    .put('/api/auth/addStripeCC', user, header)
+    .then(res=>
+        dispatch({
+            type: USER_UPDATE,
+            payload: res.data
+        })
+    )
+    }
+    catch(err) {
+      dispatch(returnErrors(err.response.data, err.response.status, 'AUTH_ERROR'));
+      dispatch({
+        type: AUTH_ERROR,
+        });
+      };
 };
 
 // Setup config/headers and token

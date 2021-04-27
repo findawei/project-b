@@ -7,6 +7,8 @@ import {IconButton, Collapse, Button} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
 import {createIntent, createCustomer} from "../../flux/actions/stripeActions"
+import {addStripeCC} from "../../flux/actions/authActions"
+
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -32,7 +34,7 @@ const CardField = ({ onChange }) => (
 </div>
 )
 
-const CardSetupForm = ({createIntent, getPublicStripeKey, stripeRedux, auth, createCustomer}) => {
+const CardSetupForm = ({createIntent, getPublicStripeKey, stripeRedux, auth, createCustomer, addStripeCC}) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
@@ -111,11 +113,16 @@ useEffect(()=>{
             setSeverity("success")
             setAlertMsg("Card added!")
             setPaymentMethod(true);
+
+            //Save card result
+            let stripeCC = {
+              stripe_cc: result.setupIntent.payment_method
+            }
+            addStripeCC(stripeCC)
         }
       }
       setProcessing(false);
   }
-
 
   const SubmitButton = ({ processing, error, children, disabled }) => (
     <Button
@@ -199,4 +206,4 @@ const mapStateToProps = (state) => ({
   stripeRedux: state.stripeRedux
 });
 
-export default connect(mapStateToProps, {createIntent, createCustomer})(CardSetupForm);
+export default connect(mapStateToProps, {createIntent, createCustomer, addStripeCC})(CardSetupForm);

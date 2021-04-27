@@ -106,18 +106,26 @@ if(auth){
 }
 });
 
-/**
- * @route   PUT api/users
- * @desc    Update user points
- * @access  Public
- */
-
 router.put('/addStripeId', async (req, res) => {
   const auth = req.currentUser;
 if(auth){
   try {
     const updateUser = await User.findOneAndUpdate({uid:req.currentUser.uid},
     {stripe_id: req.body.stripe_customer.id}, {new:true}
+    )
+      res.status(200).json(updateUser)
+  } catch (e) {
+      res.status(400).json({ msg: e.message });
+  }
+}
+});
+
+router.put('/addStripeCC', async (req, res) => {
+  const auth = req.currentUser;
+if(auth){
+  try {
+    const updateUser = await User.findOneAndUpdate({uid:req.currentUser.uid},
+    {stripe_cc: req.body.stripe_cc}, {new:true}
     )
       res.status(200).json(updateUser)
   } catch (e) {
