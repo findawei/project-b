@@ -13,6 +13,7 @@ import 'react-phone-input-2/lib/bootstrap.css'
 import "./styles.css";
 import {submitItem} from './../flux/actions/itemActions'
 import UppyComp from './UppyComp';
+import FileUpload from './FileUpload';
 
 const SubmitListing = ({ item, auth, submitItem}) => {
 
@@ -522,7 +523,8 @@ return (
         <Typography>Please upload at least 6 photos of the watch showing all sides of the case.</Typography>
         <br/>
         {/* <Dropzone /> */}
-        <UppyComp />
+        <FileUpload />
+        {/* <UppyComp /> */}
         </Paper>
         <Paper className={classes.paper} elevation={0} color="primary">
 

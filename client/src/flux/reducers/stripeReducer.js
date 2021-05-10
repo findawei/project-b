@@ -1,4 +1,4 @@
-import {CREATE_SETUP_INTENT, STRIPE_ERROR, GET_CARD, STRIPE_LOADING, CREATE_NEW_CUSTOMER} from '../actions/types'
+import {CREATE_SETUP_INTENT, STRIPE_ERROR, GET_CARD, STRIPE_LOADING, CREATE_NEW_CUSTOMER, PAYMENT_INTENT} from '../actions/types'
 
 const initialState = {
     stripe: null,
@@ -23,6 +23,12 @@ export default function(state=initialState, action){
                 loading: false
             };
         case CREATE_SETUP_INTENT:
+            return{
+                ...state,
+                intent:action.payload,
+                loading: false
+            };
+        case PAYMENT_INTENT:
             return{
                 ...state,
                 intent:action.payload,

@@ -33,6 +33,7 @@ export const STRIPE_ERROR = "STRIPE_ERROR"
 export const STRIPE_LOADING = "STRIPE_LOADING"
 export const GET_CARD = "GET_CARD"
 export const CREATE_NEW_CUSTOMER = "CREATE_NEW_CUSTOMER"
+export const PAYMENT_INTENT = "PAYMENT_INTENT"
 
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

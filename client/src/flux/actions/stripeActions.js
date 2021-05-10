@@ -1,12 +1,8 @@
 import axios from 'axios';
-import {CREATE_SETUP_INTENT, STRIPE_ERROR, GET_CARD, STRIPE_LOADING, CREATE_NEW_CUSTOMER, USER_UPDATE} from './types'
+import {CREATE_SETUP_INTENT, STRIPE_ERROR, GET_CARD, STRIPE_LOADING, CREATE_NEW_CUSTOMER, USER_UPDATE, PAYMENT_INTENT} from './types'
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
-import {
-  useStripe,
-  useElements,
-  CardNumberElement
-} from '@stripe/react-stripe-js';
+
 
 export const createIntent = () => async (
     dispatch, getState
@@ -31,6 +27,28 @@ export const createIntent = () => async (
       };
   };
 
+export const paymentIntent = (intent) => async (
+    dispatch, getState
+    ) => {
+  
+    const header = await tokenConfig();
+    dispatch(setStripeLoading());
+    try{
+        axios
+        .post('/api/stripe/paymentIntent/',intent, header)
+        .then(res=>
+          dispatch({
+            type: PAYMENT_INTENT,
+            payload: res.data
+          }))
+      }
+    catch(err) {
+      dispatch(returnErrors(err.response.data, err.response.status, 'STRIPE_ERROR'));
+      dispatch({
+        type: STRIPE_ERROR,
+        });
+      };
+  };
 
 export const createCustomer = () => async (
     dispatch, getState

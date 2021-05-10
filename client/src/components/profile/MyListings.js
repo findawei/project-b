@@ -3,8 +3,8 @@ import {connect} from 'react-redux';
 import { Link as RouterLink} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Paper, Button, Link } from '@material-ui/core/'
-import {getItems} from '../flux/actions/itemActions'
-import Listing from './Listing'
+import {getItems} from '../../flux/actions/itemActions'
+import Listing from '../Listing'
 import {isFuture, isPast} from "date-fns";
 
 const MyListings = ({getItems, item, auth}) => {

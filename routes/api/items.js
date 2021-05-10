@@ -9,7 +9,7 @@ const Item = require('../../models/item');
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-  const items = await Item.find({approved: true}).sort({
+  const items = await Item.find({status: 'active'}).sort({
     endDate: 1,});
   if (!items) throw Error('No items');
     res.status(200).json(items);
@@ -92,7 +92,7 @@ router.post('/submit', async (req, res) => {
       service: req.body.service,
       phone: req.body.phone,
       referral: req.body.referral,
-      approved: false
+      // approved: false
   });
   try{ 
     const item = await newItem.save();

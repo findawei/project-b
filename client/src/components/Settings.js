@@ -1,7 +1,7 @@
 import React , { useEffect } from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Divider, Box } from '@material-ui/core';
+import { Typography, Divider, Box, Grid, Button } from '@material-ui/core';
 import StripeBox from "./stripe/StripeBox"
 import {getCard} from '../flux/actions/stripeActions'
 
@@ -23,12 +23,39 @@ useEffect(() => {
   }  
   }, [auth]);
 
-return (
-    <div className={classes.root}>
+return (     
+  <div className={classes.root}>
+  <Grid container
+    direction="inline"
+    justify="center"
+    alignItems="center">
+  <Grid item xs={12} md={10} lg={8}>
+    <Typography component="div" variant="h4">
+            Settings
+    </Typography>
+    <Divider/>
+    <Grid container alignItems="center">
+      <Grid item xs={12} sm={6}>
+        <Typography>
+        <Box fontWeight="fontWeightBold" py={1}>
+        Account
+        </Box>
+        </Typography>
+
+        <p>Password</p>
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Button variant="outlined">Change Password</Button>
+      </Grid>
+    </Grid>
+        
+       
+       
+        <br/>
+        
+        <Divider/>
         <Typography component="div">
-            <h1>Settings</h1>
-            <Divider />
-            <Box fontWeight="fontWeightBold" py={1}>Payment info for bidding</Box>
+        <Box fontWeight="fontWeightBold" py={1}>Payment info for bidding</Box>
         </Typography>
         {stripeRedux.card.data ?
           <div>
@@ -44,7 +71,9 @@ return (
           :
         <StripeBox/>
         }
-    </div>
+  </Grid> 
+  </Grid>
+  </div>
 )
 }
 

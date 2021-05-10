@@ -113,26 +113,45 @@ router.get('/card', async (req, res) => {
   }
   }
 });
-  
-// router.get('/customer', async (req, res) => {
-//   const auth = req.currentUser;
-//   if(auth){
-//     try{
-//     const customer = await stripe.customers.list({
-//       email: auth.email,
-//     });
 
-//     if(customer.data.length === 0){
-//       res.json('no customer')
-//     } else {
-//           res.json(customer)
 
-//     }  
-  
-//   }catch(e){
-//     console.log(e)
-//   }
-//   }
-// });
+router.post('/paymentIntent', async (req, res) =>{
+  const auth = req.currentUser;
+    if(auth){
+      try {
+        //Get stripe_id
+        const user = await User.findOne({uid: req.currentUser.uid})
+          if (!user.stripe_id) throw Error("User doesn't have a stripe id");
+         
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: 1099,
+          currency: 'usd',
+          customer: (user.stripe_id),
+          payment_method: (user.stripe_cc),
+          off_session: true,
+          confirm: true,
+        });
+
+        res.status(200).json(paymentIntent);
+
+      } catch (err) {
+        // Error code will be authentication_required if authentication is needed
+        console.log('Error code is: ', err.code);        
+        const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
+        console.log('PI retrieved: ', paymentIntentRetrieved.id);
+
+        res.status(400).json(paymentIntentRetrieved.id);
+      }  
+    }
+})
+
+router.post('/test', async (req, res) =>{
+  try {
+        console.log(req.body)
+        res.status(200).json(req.body);
+      } catch (err) {        
+        res.status(400).json(err);
+      }  
+})
 
 module.exports = router;

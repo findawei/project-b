@@ -30,10 +30,10 @@ import CommentsAndBids from './CommentsAndBids';
 import LoginModalComment from './auth/LoginModalComment';
 import Gallery from './Gallery'
 import ImageGallery from 'react-image-gallery';
+import { paymentIntent } from '../flux/actions/stripeActions';
 
 
-const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItemBid, bidOnItem, commentItem, updateItemEndDate
-}) => {
+const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItemBid, bidOnItem, commentItem, updateItemEndDate, paymentIntent}) => {
   
   const [_id, setId] = useState('');
   const [brand, setBrand] = useState('');
@@ -86,15 +86,15 @@ useEffect(() => {
       // window.scrollTo(0, 0)
       setCommentsandbids([].concat(currentItem.bidHistory, currentItem.comments))
 
-      console.log(`Time left: ${differenceInMinutes(
-        new Date(currentItem.endDate),
-        new Date()
-        )}`
-    )
-    console.log(`Time between last bid and endDate: ${differenceInMinutes(
-      new Date(currentItem.endDate),
-      new Date(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHistory.[0].date)
-      )}`)
+    //   console.log(`Time left: ${differenceInMinutes(
+    //     new Date(currentItem.endDate),
+    //     new Date()
+    //     )}`
+    // )
+    // console.log(`Time between last bid and endDate: ${differenceInMinutes(
+    //   new Date(currentItem.endDate),
+    //   new Date(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHistory.[0].date)
+    //   )}`)
 
     if(currentItem.bidHistory && currentItem.bidHistory.length &&
       differenceInSeconds(
@@ -102,7 +102,7 @@ useEffect(() => {
         new Date(currentItem.bidHistory.[0].date)
         ) < 60
     ){
-      console.log(`Before added minute: ${currentItem.endDate}`)
+      // console.log(`Before added minute: ${currentItem.endDate}`)
       let addOneMin = addMinutes(new Date(), 1)
       setEndDate(addOneMin)
 
@@ -111,16 +111,16 @@ useEffect(() => {
         endDate: addOneMin
       }
       updateItemEndDate(updateEndTime)
-      console.log(`After added minute: ${addOneMin}`)
+      // console.log(`After added minute: ${addOneMin}`)
       getItemById(match.params.id)
     }
 
   }, [currentItem, getItemById]);  
 
   useEffect(() => { 
-    console.log('Loop started')
+    // console.log('Loop started')
     if(currentItem.length === 0) {
-      console.log('Inside loop')
+      // console.log('Inside loop')
       getItemById(match.params.id);
     } 
   }, [getItemById, match.params.id]);
@@ -159,7 +159,7 @@ useEffect(() => {
       textAlign: 'center',
       color: theme.palette.warning.light,
       background: theme.palette.warning.dark,
-      height: 42
+      height: 40
     },
     bidbartext: {
       color: "#FFFFFF"
@@ -183,6 +183,9 @@ useEffect(() => {
     chip: {
       color: "white",
       backgroundColor: "purple"
+    },
+    info: {
+      padding: theme.spacing(1),
     }
 }));
 function getModalStyle() {
@@ -222,6 +225,18 @@ async function commentSubmit (data, e) {
   } catch(error){
     console.log(error);
   }  
+}
+
+if(isPast(new Date(currentItem.endDate))){
+  var smBar = 12;
+  var mdBar = 12;
+  var smButton = 0;
+  var mdButton = 0;
+} else {
+  var smBar = 9;
+  var mdBar = 8;
+  var smButton = 3;
+  var mdButton = 2;
 }
 
     const classes = useStyles();
@@ -399,7 +414,7 @@ async function commentSubmit (data, e) {
                 alignItems="center"
                 alignContent="center"
               >
-                <Grid item xs={12} sm={9} md={8}>
+                <Grid item xs={12} sm={smBar} md={mdBar}>
                   <Paper className={classes.bidbar}>
 
                   <Grid container spacing={0}>
@@ -455,7 +470,7 @@ async function commentSubmit (data, e) {
                   </Grid>
                   </Paper>
                 </Grid>
-                <Grid item xs={12} sm={3} md={2}>
+                <Grid item xs={12} sm={smButton} md={mdButton}>
                     {isPast(new Date(currentItem.endDate)) ?
                     ''
                     :
@@ -745,7 +760,8 @@ async function commentSubmit (data, e) {
                   </Box> 
                 </Typography>
               </Paper>
-              </div><div className={classes.paper}>
+              </div>
+              <div className={classes.paper}>
               <Paper variant="outlined" square="true" className={classes.background}>
                 <Typography color="inherit" display="inline">
                   <Box fontWeight="fontWeightBold" m={0.5}>
@@ -809,11 +825,84 @@ async function commentSubmit (data, e) {
             </p>
           </Grid>
         </Grid> 
+          <Grid item xs={12} md={10}>
+            <Paper variant="outlined" className={classes.info}>
+            <Grid container>
+            <Grid item xs={6}>
+              <Typography fontWeight="fontWeightBold" variant="h5" display="inline">
+              
+              {isPast(new Date(currentItem.endDate))?
+              <b>Sold to</b>
+              :
+              <b>Current bid</b>
+              }
+              &nbsp;
+              {currentItem.bidHistory && currentItem.bidHistory.length? currentItem.bidHistory[0].name : 0}
+              </Typography>
+              <br/>
+              <Typography variant="h2" display="inline">
+                <NumberFormat value={
+                  currentItem.bidHistory && currentItem.bidHistory.length? 
+                  currentItem.bidHistory[0].bid : 0
+                } displayType={'text'} thousandSeparator={true} prefix={'$'}/>
+              </Typography>
+            </Grid>
+            
+            <Grid xs={6}>
+              <div className={classes.paper}>
+              <Paper elevation="0" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Seller
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper elevation="0">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                  {currentItem.name}
+                  </Box> 
+                </Typography>
+              </Paper>
+              <Paper elevation="0" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Ending
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper elevation="0">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                  {currentItem && currentItem.endDate? 
+              <>{format(new Date(currentItem.endDate),'E, MMM d hh:mm aaa')}</>
+              : <div></div>}
+                  </Box> 
+                </Typography>
+              </Paper>
+              <Paper elevation="0" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                  <Box fontWeight="fontWeightBold" m={0.5}>
+                    Bids
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper elevation="0">
+                <Typography color="inherit" display="inline">
+                  <Box  m={0.5}>
+                  {currentItem && currentItem.bidHistory? currentItem.bidHistory.length : <div></div>}
+                  </Box> 
+                </Typography>
+              </Paper>
+              </div>
+            </Grid>
+            </Grid>
+            </Paper>
+          </Grid>
+          <br/>
           {/* Comment Section */}
           <Grid item xs={12} md={10}>
-            <Typography color="inherit" fontWeight="fontWeightBold">
-              Comments & Bids
-              </Typography>
+            <h2>Comments & Bids</h2>
               <form onSubmit={handleSubmit2(commentSubmit)}>
                 <div hidden="true">
                 <TextField          
@@ -880,5 +969,5 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItemBid, bidOnItem, commentItem, updateItemEndDate })(ListingDetails);
+export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItemBid, bidOnItem, commentItem, updateItemEndDate, paymentIntent })(ListingDetails);
   

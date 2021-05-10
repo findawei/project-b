@@ -5,6 +5,7 @@ import {Grid, Paper } from '@material-ui/core/'
 import {getItems} from '../flux/actions/itemActions'
 import Listing from './Listing'
 import {isFuture, isPast} from "date-fns";
+import FileUpload from './FileUpload';
 
 const Auctions = ({getItems, item}) => {
 
@@ -43,6 +44,7 @@ const classes = useStyles();
           key={item._id}/>
           )}
     </Grid>
+    {/* <FileUpload /> */}
     </div>
   );
 }

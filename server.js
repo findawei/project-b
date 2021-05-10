@@ -11,34 +11,47 @@ const authRoutes = require("./routes/api/auth");
 const companion = require('@uppy/companion')
 const session = require('express-session')
 const fs = require('fs')
+const AWS = require('aws-sdk');
+const multiparty = require('multiparty');
+const fileType = require('file-type');
+
 
 const DATA_DIR = path.join(__dirname, 'tmp')
 
 const app = express();
 
 //body parser
-app.use(cors({
-    methods: ['OPTIONS', 'GET', 'POST', 'PATCH', 'PUT'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'Uppy-Versions', 'Accept'],
-    exposedHeaders: ['Access-Control-Allow-Headers'],
-  }));
-
-app.use((req, res, next) => {
-    res.setHeader(
-      'Access-Control-Allow-Headers',
-      'Authorization, Origin, Content-Type, Accept'
-    )
-    next()
-  })
+// app.use(require('cors')({
+//   origin: true,
+//   credentials: true,
+// }))
 
 app.use(express.json());
 app.use(decodeIDToken);
 
-app.use(session({
-  secret: 'some-secret',
-  resave: true,
-  saveUninitialized: true,
-}))
+// app.use(session({
+//   secret: 'some-secret',
+//   resave: true,
+//   saveUninitialized: true,
+// }))
+
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*')
+//   res.setHeader(
+//     'Access-Control-Allow-Methods',
+//     'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+//   )
+//   res.setHeader(
+//     'Access-Control-Allow-Headers',
+//     'Authorization, Origin, Content-Type, Accept'
+//   )
+//   next()
+// })
+
+// app.get('/companion', (req, res) => {
+//   res.setHeader('Content-Type', 'text/plain')
+//   res.send('Welcome to Companion')
+// })
 
 //DB config
 const { MONGO_URI, MONGO_DB_NAME } = config;
@@ -66,36 +79,36 @@ const { PORT } = config;
 const server = app.listen(PORT, ()=> console.log(`Server started on port ${PORT}`));
 
 //Uppy Companion
-const {key, secret, bucket, region, endpoint} = config
+// const {AWS_KEY, AWS_SECRET, AWS_BUCKET, AWS_REGION, endpoint} = config
 
-const options = {
-    providerOptions: {
-      s3: {
-        getKey: (req, filename) =>`/${filename}`,
-        key,
-        secret,
-        bucket,
-        region,
-        endpoint,
-      },
-    },
-    server: { 
-        host: `localhost:${PORT}`, 
-        path: '/companion'
-    },
-    filePath: DATA_DIR,
-    secret: 'blah blah',
-    debug: true,
-  }
+// const options = {
+//     providerOptions: {
+//       s3: {
+//         getKey: (req, filename) =>`/${filename}`,
+//         key: AWS_KEY,
+//         secret: AWS_SECRET,
+//         bucket: AWS_BUCKET,
+//         region: AWS_REGION,
+//         endpoint
+//       },
+//     },
+//     server: { 
+//         host: `localhost:${PORT}`, 
+//         path: '/companion'
+//     },
+//     filePath: DATA_DIR,
+//     secret: 'blah blah',
+//     debug: true,
+//   }
 
-try {
-  fs.accessSync(DATA_DIR)
-} catch (err) {
-  fs.mkdirSync(DATA_DIR)
-}
-process.on('exit', () => {
-  rimraf.sync(DATA_DIR)
-})
+// try {
+//   fs.accessSync(DATA_DIR)
+// } catch (err) {
+//   fs.mkdirSync(DATA_DIR)
+// }
+// process.on('exit', () => {
+//   rimraf.sync(DATA_DIR)
+// })
 
-app.use('/companion', companion.app(options))
-companion.socket(server, options)
+// app.use('/companion', companion.app(options))
+// companion.socket(server, options)
