@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import { Link as RouterLink} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Paper, Button, Link } from '@material-ui/core/'
+import {Grid, Paper, Button, Link, Typography } from '@material-ui/core/'
 import {getItems} from '../../flux/actions/itemActions'
 import Listing from '../Listing'
 import {isFuture, isPast} from "date-fns";
@@ -43,8 +43,15 @@ useEffect(() => {
     <div 
     className={classes.root}
     >
-    <h1>My Listings</h1>
+    <Grid container
+    direction="inline"
+    justify="center"
+    alignItems="center">
+    <Grid item xs={12} md={10} lg={8}>
 
+    <Typography component="div" variant="h4">
+    My Listings
+    </Typography>
     {haveListings ?
         <div>
         <Grid container spacing={2}>
@@ -77,7 +84,8 @@ useEffect(() => {
         >Get Started</Button></Link>
         </div>
     }
-    
+    </Grid>
+    </Grid>
     </div>
   );
 }

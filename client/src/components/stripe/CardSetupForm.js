@@ -3,7 +3,7 @@ import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import {connect} from 'react-redux';
 import CardSection from './CardSection';
 import { makeStyles } from '@material-ui/core/styles';
-import {IconButton, Collapse, Button} from '@material-ui/core'
+import {IconButton, Collapse, Button, Grid, Box, TextField} from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close';
 import Alert from '@material-ui/lab/Alert';
 import {createIntent, createCustomer} from "../../flux/actions/stripeActions"
@@ -180,21 +180,19 @@ useEffect(()=>{
           </IconButton>
         }
         >
-          {alertMsg}
+          {/* {alertMsg} */}
           {error && <div>{error.message}</div>}
         </Alert>
         </Collapse>
         </div>
-        {/* {error && <div>{error.message}</div>} */}
-
-      <SubmitButton 
+        <SubmitButton
         processing={processing} 
         error={error} 
         disabled={!stripe || error}
       >
         {/* {buttonMsg} */}
         Submit Card
-      </SubmitButton>
+      </SubmitButton>      
     </form>
     }
     </div>

@@ -19,11 +19,9 @@ import { useForm, Controller } from "react-hook-form";
 import Input from "@material-ui/core/Input";
 import NumberFormat from "react-number-format";
 import Countdown, {zeroPad} from 'react-countdown';
-import Comments from './Comments'
 import { spacing } from '@material-ui/system';
 import {getItemById, setCurrentItem, updateItemBid, bidOnItem, commentItem, updateItemEndDate} from '../flux/actions/itemActions'
 import BidHistoryComponent from './BidHistoryComponent'
-import CommentsComponent from './CommentsComponent'
 import LoginModalBid from './auth/LoginModalBid'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CommentsAndBids from './CommentsAndBids';
@@ -31,6 +29,7 @@ import LoginModalComment from './auth/LoginModalComment';
 import Gallery from './Gallery'
 import ImageGallery from 'react-image-gallery';
 import { paymentIntent } from '../flux/actions/stripeActions';
+
 
 
 const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItemBid, bidOnItem, commentItem, updateItemEndDate, paymentIntent}) => {
@@ -157,8 +156,8 @@ useEffect(() => {
     bidbar: {
       padding: theme.spacing(1),
       textAlign: 'center',
-      color: theme.palette.warning.light,
-      background: theme.palette.warning.dark,
+      color: theme.palette.success.light,
+      background: theme.palette.success.dark,
       height: 40
     },
     bidbartext: {
@@ -232,11 +231,13 @@ if(isPast(new Date(currentItem.endDate))){
   var mdBar = 12;
   var smButton = 0;
   var mdButton = 0;
+  var bidBarColor = 'black';
 } else {
   var smBar = 9;
   var mdBar = 8;
   var smButton = 3;
   var mdButton = 2;
+  var bidBarColor = 'warning.dark';
 }
 
     const classes = useStyles();
@@ -270,19 +271,28 @@ if(isPast(new Date(currentItem.endDate))){
       <div style={modalStyle} className={classes.papermodal}>
         <img src={currentItem.img && currentItem.img[0].url} alt={currentItem.brand} 
         className={classes.image}/>
-        <h2 id="simple-modal-title">
-        {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
-        </h2>
-        <h4><Countdown
+        <Typography variant="h5">
+        {currentItem.brand} {currentItem.model}, {currentItem.reference_number} - {currentItem.year}
+        </Typography>
+        <Box display="flex" justifyContent="center" className={classes.info}>
+          <Typography>
+          <Countdown
           date={new Date(currentItem.endDate)}
           renderer={renderer}
-        /></h4>
-        <h4>Current Bid</h4>
-        <NumberFormat value={currentItem.bidHistory && currentItem.bidHistory.length?
-        currentItem.bidHistory[0].bid
-      :
-      '0'
-      } displayType={'text'} thousandSeparator={true} prefix={'$'}/>
+        />&nbsp;-&nbsp;<b>Current Bid</b>&nbsp;
+          <NumberFormat 
+          value={currentItem.bidHistory && currentItem.bidHistory.length?
+          currentItem.bidHistory[0].bid
+          :
+          '0'
+          }
+          displayType={'text'} 
+          thousandSeparator={true} 
+          prefix={'$'}/>
+        </Typography>         
+        </Box>
+        
+      <Divider />
         {/* <Box component="span"> */}
         <Grid
           container
@@ -371,11 +381,9 @@ if(isPast(new Date(currentItem.endDate))){
 
   return(
       <div className={classes.root}>
-          <div>
-            <h1>
-              {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
-            </h1>
-          </div>
+            <Typography variant="h4">
+              {currentItem.brand} {currentItem.model}, {currentItem.reference_number} - {currentItem.year}
+            </Typography>
           <div style={{ width: '100%' }}>
             <Grid 
             container 
@@ -396,7 +404,14 @@ if(isPast(new Date(currentItem.endDate))){
               </Grid>
               <Grid item>
               <Typography variant="h6" color="inherit" display="inline">
-                Serviced June 2019, second owner, California
+              {currentItem.service?
+                <> 
+                Serviced&nbsp;
+                {format(new Date(currentItem.service), 'MMM Y')}
+                </>
+                :
+                ''
+              }, {currentItem.location}
               </Typography>
               </Grid>
             </Grid>
@@ -954,9 +969,6 @@ if(isPast(new Date(currentItem.endDate))){
             )}
           </Grid>
           <Grid item xs={12} md={10}>
-             {/* <Comments /> */}
-             {/* <BidHistoryComponent bidHistory = {bidHistory}/>
-             <CommentsComponent comments = {comments}/> */}
             <CommentsAndBids commentsandbids = {commentsandbids} />
           </Grid>
           </div>

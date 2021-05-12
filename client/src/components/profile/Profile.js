@@ -1,9 +1,11 @@
 import React from 'react';
 import {connect} from 'react-redux';
-
-import {Grid, Paper, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Typography,InputLabel, Box, NativeSelect, Select, Dialog, DialogTitle, DialogActions, DialogContentText } from '@material-ui/core/'
+import {format} from "date-fns";
+import {Grid, Paper, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Typography,InputLabel, Box, NativeSelect, Select, Dialog, DialogTitle, DialogActions, DialogContentText, Icon } from '@material-ui/core/'
 import { makeStyles } from '@material-ui/core/styles';
 import MyListings from './MyListings';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import { green } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,36 +26,52 @@ const Profile =({auth}) => {
   return (
     <div className={classes.root}>
     <Grid container
-    direction="column"
+    direction="inline"
     justify="center"
     alignItems="center">
     <Grid item xs={12} md={10} lg={8}>
-    
-        {/* <Grid container direction="inline"> */}
-            <Grid item>
-                <Typography variant="h4" className={classes.radio}>
+        <Grid 
+        container 
+        jalignItems="center" alignContent="space-between" alignItems="space-between" justify="space-between">
+            <Grid item >
+            <Typography variant="h4" className={classes.radio}>
             {auth && auth.user?
             auth.user.name
             :
             'User loaded'
             }
             </Typography>
+
+            {auth && auth.user.stripe_cc ?
+              <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                flexWrap: 'wrap',
+              }}>
+                <CheckCircleIcon color="primary"/>
+                &nbsp;
+                <Typography className={classes.radio}>
+                  Registered Bidder 
+                </Typography>
+              </div> 
+              :
+              <></>
+            }
+
+            
             <Typography className={classes.radio}>
-            Registered Bidder {}
-            </Typography>
-            <Typography className={classes.radio}>
-            Joined {}
+            Joined {format(new Date(auth.user.date),'MMM Y')}
             </Typography>
             </Grid>
             <Grid item>
-                 <Button variant="contained" color="primary">
+                 <Button variant="outlined">
             Edit Profile
             </Button>
             </Grid>
                
                 
         </Grid>
-    {/* </Grid> */}
+    </Grid>
     </Grid>
      
       
