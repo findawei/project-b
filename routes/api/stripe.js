@@ -3,6 +3,8 @@ const router = express.Router();
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const User = require('../../models/User');
 const auth = require('../../middleware/auth');
+const Item = require('../../models/item');
+
 
 router.get("/public-key", (req, res) => {
   res.send({ publicKey: process.env.STRIPE_PUBLISHABLE_KEY });
@@ -114,24 +116,67 @@ router.get('/card', async (req, res) => {
   }
 });
 
+router.post('/test', async (req, res) =>{
+  try {
+    const newItem = req.body.results
+    const auctions = newItem.map(x =>({
+          auction_id: x._id.$oid,
+          status: x.status,
+          bid: x.bidHistory.bid.$numberInt,
+          name: x.bidHistory.name,
+          user_id: x.bidHistory.user
+        }))
+    if(auctions){
+      
+      // const passed = (list, prop) => {
+      //   return list.map(item => {
+      //     const obj = Object.assign({}, item);
+      //     obj[prop] = 'farts';
+      //     return obj;
+      //   });
+      // }
+      // const paid = passed(auctions, 'status')
+
+      console.log(names)
+      res.status(200).json(names);
+      }   
+
+  } catch (err) {        
+    res.status(400).json(err);
+  }  
+})
 
 router.post('/paymentIntent', async (req, res) =>{
   const auth = req.currentUser;
     if(auth){
       try {
-        //Get stripe_id
-        const user = await User.findOne({uid: req.currentUser.uid})
-          if (!user.stripe_id) throw Error("User doesn't have a stripe id");
+        const newItem = req.body.results
+        const auctions = newItem.map(x =>({
+          auction_id: x._id.$oid,
+          status: x.status,
+          bid: x.bidHistory.bid.$numberInt,
+          name: x.bidHistory.name,
+          user_id: x.bidHistory.user
+        }))
+        const passed = auctions.forEach(async function(paymentIntent)
+          {
+            //charge cc
+            //if success, change status to completed 
          
-        const paymentIntent = await stripe.paymentIntents.create({
-          amount: 1099,
-          currency: 'usd',
-          customer: (user.stripe_id),
-          payment_method: (user.stripe_cc),
-          off_session: true,
-          confirm: true,
-        });
-
+            //Get stripe_id
+            const user = await User.findOne({uid: user_id})
+              if (!user.stripe_id) throw Error("User doesn't have a stripe id");
+            
+            var paymentIntent = await stripe.paymentIntents.create({
+              amount: bid,
+              currency: 'usd',
+              customer: (user.stripe_id),
+              payment_method: (user.stripe_cc),
+              off_session: true,
+              confirm: true,
+            });
+      }
+      )
         res.status(200).json(paymentIntent);
 
       } catch (err) {
@@ -143,15 +188,6 @@ router.post('/paymentIntent', async (req, res) =>{
         res.status(400).json(paymentIntentRetrieved.id);
       }  
     }
-})
-
-router.post('/test', async (req, res) =>{
-  try {
-        console.log(req.body)
-        res.status(200).json(req.body);
-      } catch (err) {        
-        res.status(400).json(err);
-      }  
 })
 
 module.exports = router;

@@ -6,6 +6,7 @@ import AppNavbar from './components/AppNavbar'
 import Auctions from './components/Auctions'
 import Routes from './components/routes/Routes';
 import Toolbar from '@material-ui/core/Toolbar';
+import Footer from './components/Footer'
 
 //Redux
 import { Provider } from 'react-redux';
@@ -36,6 +37,7 @@ function App() {
             <Route exact path="/faq" component={Faq} />
             <Route component={Routes} />
           </Switch>
+        <Footer />
         </Fragment>
       </Router>
       </Elements>
