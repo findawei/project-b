@@ -118,29 +118,52 @@ router.get('/card', async (req, res) => {
 
 router.post('/test', async (req, res) =>{
   try {
-    const newItem = req.body.results
-    const auctions = newItem.map(x =>({
+    const newItem = req.body.results;
+    const auctions = newItem
+        .map(x =>({
           auction_id: x._id.$oid,
           status: x.status,
           bid: x.bidHistory.bid.$numberInt,
           name: x.bidHistory.name,
           user_id: x.bidHistory.user
         }))
-    if(auctions){
-      
-      // const passed = (list, prop) => {
-      //   return list.map(item => {
-      //     const obj = Object.assign({}, item);
-      //     obj[prop] = 'farts';
-      //     return obj;
-      //   });
-      // }
-      // const paid = passed(auctions, 'status')
+    const results = Promise.all(auctions    
+        .map(async (y) =>{
+          //Perform charge here
+          
+          try {
+            //Get stripe_id
+            // const user = await User.findOne({uid: y.user_id})
+            //   if (user && !user.stripe_id) {
+            //     throw Error("User doesn't have a stripe id");
+            //   } else if(user && user.stripe_id){
+            //     const paymentIntent = await stripe.paymentIntents.create({
+            //       amount: y.bid*100,
+            //       currency: 'usd',
+            //       customer: (user.stripe_id),
+            //       payment_method: (user.stripe_cc),
+            //       off_session: true,
+            //       confirm: true,
+            //     });
+    
+            //     res.status(200).json(paymentIntent);
+            // }
+            y.bid= y.bid+1;
+            res.status(200).json(y.bid)
+          } catch (err) {
+            // Error code will be authentication_required if authentication is needed
+            // console.log('Error code is: ', err.code);        
+            // const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
+            // console.log('PI retrieved: ', paymentIntentRetrieved.id);
+            // res.status(400).json(paymentIntentRetrieved.id);
 
-      console.log(names)
-      res.status(200).json(names);
-      }   
-
+            res.status(400).json(err);
+            console.log(err)
+          }  
+           
+        }) 
+        )  
+       return results    
   } catch (err) {        
     res.status(400).json(err);
   }  
@@ -150,33 +173,19 @@ router.post('/paymentIntent', async (req, res) =>{
   const auth = req.currentUser;
     if(auth){
       try {
-        const newItem = req.body.results
-        const auctions = newItem.map(x =>({
-          auction_id: x._id.$oid,
-          status: x.status,
-          bid: x.bidHistory.bid.$numberInt,
-          name: x.bidHistory.name,
-          user_id: x.bidHistory.user
-        }))
-        const passed = auctions.forEach(async function(paymentIntent)
-          {
-            //charge cc
-            //if success, change status to completed 
+        //Get stripe_id
+        const user = await User.findOne({uid: req.currentUser.uid})
+          if (!user.stripe_id) throw Error("User doesn't have a stripe id");
          
-            //Get stripe_id
-            const user = await User.findOne({uid: user_id})
-              if (!user.stripe_id) throw Error("User doesn't have a stripe id");
-            
-            var paymentIntent = await stripe.paymentIntents.create({
-              amount: bid,
-              currency: 'usd',
-              customer: (user.stripe_id),
-              payment_method: (user.stripe_cc),
-              off_session: true,
-              confirm: true,
-            });
-      }
-      )
+        const paymentIntent = await stripe.paymentIntents.create({
+          amount: 1099,
+          currency: 'usd',
+          customer: (user.stripe_id),
+          payment_method: (user.stripe_cc),
+          off_session: true,
+          confirm: true,
+        });
+
         res.status(200).json(paymentIntent);
 
       } catch (err) {
