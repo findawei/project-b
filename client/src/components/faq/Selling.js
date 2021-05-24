@@ -19,36 +19,45 @@ return(
         <Typography variant="h5">Selling a Watch</Typography>
         <br/>
         <Typography>
-        <b>1. Register</b>
+        Selling on No Wait List is uber easy; we&rsquo;ve designed it that way.
         <br/><br/>
-        In order to place bids and contact sellers directly, you must first Register to Bid using a valid credit card and phone number. Auction winners pay No Wait List a 5% buyer&rsquo;s fee on top of the winning bid amount (minimum of $250, maximum of $5,000).
+        <b>1. Submit Your Watch</b>
         <br/><br/>
-        <b>2. Know what you're buying</b>
+        It&rsquo;s free to submit your watch. Send us a bit of info on your watch including some photos, and a brief description of the watch. You can list with or without a reserve. A reserve price is a minimum amount you&rsquo;ll accept to sell your watch. An interesting finding shows that auctions (no matter the item being sold) offered with no reserve get more bids, more interest, and more attention. The reason being is that the item will sell no matter what and this seems to have a positive effect on perspective buyers.
         <br/><br/>
-        Perform your own due diligence and make sure that the watch you&rsquo;re considering is right for you before placing a bid.&nbsp;
+        If you choose to have a reserve on your auction; we&rsquo;ll ask you to suggest a reserve price based on market conditions. We might ask for a lower price before accepting your watch. All of our auctions start from $0, regardless of whether or not there is a reserve.
+        Our knowledgeable team will review your submission and may ask you some follow-up questions. We aim to respond to you within a business day. No Wait List is a focused auction site, so not every watch will be accepted, but we always appreciate you taking the time to submit your watch to us!
+        <br/><br/>
+        <b>2. Prep Your Listing
+        </b>
+        <br/><br/>
+        After your watch is accepted, we&rsquo;ll ask for a bit more details from you: photos, service, ownership history, etc. We are just a click away if you have any questions or concerns.
         <ul>
-            <li>Review the listing thoroughly, including known flaws, service history, photos, etc.&nbsp;</li>
-            <li>Ask the seller &ndash; via comments, Seller Q&amp;A, or the &ldquo;Contact&rdquo; feature &ndash; any questions that you may have about the watch.</li>
+            <li>If you decide to sell on No Wait List, your watch must not be for sale elsewhere. That means you&rsquo;ll have to remove any other ads for your watch. Also, you cannot accept offers outside of the auction.</li>
+            <br/>
+            <li>Excellent pictures will fetch a higher sales price. Either do it yourself (here are some guides) or hire a pro. Make sure to review our guide before submitting your pictures.</li>
+            <br/>
+            <li>Taking a quick video of your watch is recommended. You can use your phone in landscape mode and upload to YouTube or Vimeo.</li>
+            <br/>
+            <li>If you have a loan on the watch, review the process and timeline for paying it off with your lender.</li>
+            <br/>
+            <li>Finally, if you&rsquo;re listing without a reserve, we will put your listing together for FREE. However, if you require a &ldquo;Reserve Price&rdquo;, you&rsquo;ll pay No Wait List a non-refundable listing fee of $49.</li>
         </ul>
-        <br/>
-        <b>3. Figure out Logistics & Shipping</b>
+        <b>3. Before Going Live</b>
         <br/><br/>
-        To make sure there are no surprises, organize the following prior to placing a bid.&nbsp;
-        <ul>
-            <li>If you&rsquo;re financing this purchase, get your financing approved ahead of time.&nbsp;</li>
-            <li>Discuss shipping with the seller</li>
-        </ul>
-        <br/>
-        <b>4. Place a Bid</b>
-        <ul>
-            <li>A hold is placed on your credit card for the buyer&apos;s fee (5%) when you make a bid. Your card will be charged only if you win the auction and you will pay the seller directly for the watch. If you don&rsquo;t win the auction, the hold will be released at the auction&rsquo;s end.</li>
-            <li>Only bid if you fully intend to purchase the watch and have performed your due diligence. There are no refunds.&nbsp;</li>
-            <li>The auction goes on if bids keep coming in. Bids placed within the final minute of the auction will extend the end of the auction time by 1 minute &ndash; giving others the opportunity to bid.</li>
-        </ul>
-        <br/>
-        <b>5. Winning</b>
+        After all you&rsquo;ve sent us all the required information, plus payment (if required), we&rsquo;ll draft up your listing for your approval. Once you review and sign off on the draft, we&rsquo;ll work together to figure out when to take your auction live.&nbsp;
         <br/><br/>
-        In the case of a &ldquo;No Reserve&rdquo; auction, you&rsquo;ll win if your bid is the highest. In the case of an auction having a reserve, you must meet or exceed the seller&rsquo;s hidden &ldquo;Reserve&rdquo; price. Once the auction ends, you&rsquo;ll be electronically introduced to the seller in order to finalize the details and logistics of the transaction. You must pay the seller for the watch in-full within a week of the auction closing.
+        <b>4. Participate in the Auction</b>
+        <br/>
+        <ul>
+            <li>Active participation in your auction will lead to more interest, increased bidding and a higher sale price. Make sure to respond to comments and questions in a timely and positive manner. You can also provide additional pictures or videos if requested.</li>
+            <li>Bidders can contact you directly using the &ldquo;Contact Seller&rdquo; feature, if they wish to ask questions.</li>
+        </ul>
+        <b>5. Auction Close</b>
+        <br/><br/>
+        After your auction has closed, you&rsquo;ll receive the buyer&rsquo;s contact information and vice-versa, to finalize the sale.
+        Reserve Price: If your auction had a reserve and it wasn&rsquo;t met, we&rsquo;ll reach out to you and the highest bidder to see if we can help make a deal!
+        <br/><br/>
         </Typography>
     </div>
 )

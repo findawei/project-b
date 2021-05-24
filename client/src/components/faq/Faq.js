@@ -1,15 +1,19 @@
-import React , { useEffect } from 'react';
+import React , { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Divider, Box, Grid } from '@material-ui/core';
+import { Typography, Divider, Box, Grid, Button, Menu } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
 import About from './About';
-import Questions from './Questions';
+import BuyFaq from './BuyFaq';
+import SellFaq from './SellFaq';
 import Buying from './Buying';
 import Selling from './Selling'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { HashLink as Link } from 'react-router-hash-link';
 import './Faq.css';
+import HowToMenu from './HowToMenu';
+import FAQMenu from './FAQMenu';
 
 const Faq = () => {
 
@@ -23,6 +27,13 @@ const useStyles = makeStyles(() => ({
     bgcolor: {
         backgroundColor:"lightgrey",
         color:"black"
+    },
+    link: {
+        textDecoration: "none",
+        color: "black",
+    "&:hover": {
+        color: "#000000",
+    }
     }
 }));
 
@@ -35,17 +46,17 @@ return (
         <Typography variant="body1" className={classes.title}>
         <Grid container justify="center" direction="row" spacing={2}>
             <Grid item>
-                <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#about'}>About
+                <Button>
+                    <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#about'}>About
                 </Link>
+                </Button>
             </Grid>
             <Grid item>
-                <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#buying'}>Buying
-                </Link>
+                 <HowToMenu />
             </Grid>
             <Grid item>
-                <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#selling'}>Selling
-                </Link>
-            </Grid>    
+                <FAQMenu />
+            </Grid>
         </Grid>
         </Typography>
         </Toolbar>
@@ -76,12 +87,16 @@ return (
         <a id="selling" class="anchor" />
         <Selling/>
         <Divider/>
-        <div id="questions">
-            <Questions/>
-        </div>
+        <a id="buyfaq" class="anchor" />
+        <h1>FAQ</h1>
+            <BuyFaq />
+            <a id="sellfaq" class="anchor" />
+            <SellFaq />
         </div>
         </Grid>
     </Grid>
+    <Divider/>
+    <br/>
     </div>
 )
 }

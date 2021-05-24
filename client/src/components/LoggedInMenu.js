@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
     //     color: theme.palette.text.secondary,
     // },
     link: {
+      textDecoration: "none",
         color: "black",
     "&:hover": {
         color: "#000000",
-        textDecoration: "none"
     }
     },
     // chip: {

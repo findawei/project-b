@@ -28,6 +28,7 @@ return(
         Perform your own due diligence and make sure that the watch you&rsquo;re considering is right for you before placing a bid.&nbsp;
         <ul>
             <li>Review the listing thoroughly, including known flaws, service history, photos, etc.&nbsp;</li>
+            <br/>
             <li>Ask the seller &ndash; via comments, Seller Q&amp;A, or the &ldquo;Contact&rdquo; feature &ndash; any questions that you may have about the watch.</li>
         </ul>
         <br/>
@@ -36,13 +37,16 @@ return(
         To make sure there are no surprises, organize the following prior to placing a bid.&nbsp;
         <ul>
             <li>If you&rsquo;re financing this purchase, get your financing approved ahead of time.&nbsp;</li>
+            <br/>
             <li>Discuss shipping with the seller</li>
         </ul>
         <br/>
         <b>4. Place a Bid</b>
         <ul>
             <li>A hold is placed on your credit card for the buyer&apos;s fee (5%) when you make a bid. Your card will be charged only if you win the auction and you will pay the seller directly for the watch. If you don&rsquo;t win the auction, the hold will be released at the auction&rsquo;s end.</li>
+            <br/>
             <li>Only bid if you fully intend to purchase the watch and have performed your due diligence. There are no refunds.&nbsp;</li>
+            <br/>
             <li>The auction goes on if bids keep coming in. Bids placed within the final minute of the auction will extend the end of the auction time by 1 minute &ndash; giving others the opportunity to bid.</li>
         </ul>
         <br/>
