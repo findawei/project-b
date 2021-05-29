@@ -64,11 +64,11 @@ return(
                 onClose={handleClose}
               >
                 <MenuItem onClick={handleClose}>
-                    <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#buying'}>Buying
+                    <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#buying'}>Buy
                     </Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose}>
-                    <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#selling'}>Selling
+                    <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#selling'}>Sell
                     </Link>
                 </MenuItem>
               </Menu>

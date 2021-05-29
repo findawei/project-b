@@ -1,7 +1,7 @@
 import React , { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Divider, Box, Grid, Button, Menu } from '@material-ui/core';
+import { Typography, Divider, Box, Grid, Button, Menu, useScrollTrigger } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import About from './About';
 import BuyFaq from './BuyFaq';
@@ -14,6 +14,8 @@ import { HashLink as Link } from 'react-router-hash-link';
 import './Faq.css';
 import HowToMenu from './HowToMenu';
 import FAQMenu from './FAQMenu';
+import { positions } from '@material-ui/system';
+
 
 const Faq = () => {
 
@@ -39,6 +41,15 @@ const useStyles = makeStyles(() => ({
 
 const classes = useStyles();
 
+const trigger = useScrollTrigger()
+
+// if(positions.top==0){
+//     //user scrolled to the top of the page
+//     var ButtonText = 'Sell A Watch';
+// } else {
+//     var ButtonText = 'Farts';
+// }
+
 return (
     <div className={classes.root}>
       <AppBar position="sticky" className={classes.root}>
@@ -57,6 +68,11 @@ return (
             <Grid item>
                 <FAQMenu />
             </Grid>
+            {/* <Grid item>
+                <Button>
+                    {ButtonText}
+                </Button>
+            </Grid> */}
         </Grid>
         </Typography>
         </Toolbar>
@@ -68,17 +84,18 @@ return (
     alignItems="center">
         <Grid item xs={12} md={10} lg={8}>
         <div className={classes.body}>
-            <Typography component="div">
+            {/* <Typography component="div">
                 <h1>What's No Wait List?</h1>
                 <Divider />
                 <Box fontWeight="fontWeightBold" py={1}>Cool Watch Auctions</Box>
-            </Typography>
-        <Divider/>
+            </Typography> */}
+        {/* <Divider/> */}
         <br/>
         <a id="about" class="anchor" />
         <About/>
+        <br/>
         <Divider/>
-        <h1>How It Works</h1>
+        <h1>How To</h1>
         <a id="buying" class="anchor" />
         <Buying/>
         <br/>

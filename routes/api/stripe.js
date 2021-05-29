@@ -4,7 +4,11 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const User = require('../../models/User');
 const auth = require('../../middleware/auth');
 const Item = require('../../models/item');
+const config =require( '../../config');
+const sgMail = require('@sendgrid/mail')
 
+const { SENDGRID_API_KEY } = config;
+sgMail.setApiKey(SENDGRID_API_KEY)
 
 router.get("/public-key", (req, res) => {
   res.send({ publicKey: process.env.STRIPE_PUBLISHABLE_KEY });
@@ -116,7 +120,7 @@ router.get('/card', async (req, res) => {
   }
 });
 
-router.post('/test', async (req, res) =>{
+router.post('/processPayment', async (req, res) =>{
   try {
     const newItem = req.body.results;
     const auctions = newItem
@@ -127,76 +131,123 @@ router.post('/test', async (req, res) =>{
           name: x.bidHistory.name,
           user_id: x.bidHistory.user
         }))
-    const results = Promise.all(auctions    
-        .map(async (y) =>{
-          //Perform charge here
-          
+    const single = auctions[0]
+          // //Perform charge here
+        if(single){
           try {
             //Get stripe_id
-            // const user = await User.findOne({uid: y.user_id})
-            //   if (user && !user.stripe_id) {
-            //     throw Error("User doesn't have a stripe id");
-            //   } else if(user && user.stripe_id){
-            //     const paymentIntent = await stripe.paymentIntents.create({
-            //       amount: y.bid*100,
-            //       currency: 'usd',
-            //       customer: (user.stripe_id),
-            //       payment_method: (user.stripe_cc),
-            //       off_session: true,
-            //       confirm: true,
-            //     });
-    
-            //     res.status(200).json(paymentIntent);
-            // }
-            y.bid= y.bid+1;
-            res.status(200).json(y.bid)
+            const user = await User.findOne({uid: single.user_id})
+              if (user && !user.stripe_id) {
+                throw Error("User doesn't have a stripe id");
+              } else if(user && user.stripe_id){              
+                const paymentIntent = await stripe.paymentIntents.create({
+                  amount: single.bid*100,
+                  currency: 'usd',
+                  customer: (user.stripe_id),
+                  payment_method: (user.stripe_cc),
+                  off_session: true,
+                  confirm: true,
+                });
+                //Update item status
+                if(paymentIntent.status === 'succeeded'){
+                  //Find auction
+                  const updateItem = await 
+                  Item.findOneAndUpdate({_id: single.auction_id}, {
+                    status: "completed",
+                    },{ new: true});
+                  console.log("*** Item Updated ***")
+                  //Send email to buyer
+                }
+                res.status(200).json(paymentIntent);
+            } else {
+              res.status(400).json('Something went wrong.')
+            }
           } catch (err) {
             // Error code will be authentication_required if authentication is needed
-            // console.log('Error code is: ', err.code);        
-            // const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
-            // console.log('PI retrieved: ', paymentIntentRetrieved.id);
-            // res.status(400).json(paymentIntentRetrieved.id);
-
-            res.status(400).json(err);
+            console.log('Error code is: ', err.code);        
+            const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
+            console.log('PI retrieved: ', paymentIntentRetrieved.id);
+            res.status(400).json(paymentIntentRetrieved.id);
             console.log(err)
           }  
-           
-        }) 
-        )  
-       return results    
+        } 
   } catch (err) {        
     res.status(400).json(err);
   }  
 })
 
-router.post('/paymentIntent', async (req, res) =>{
-  const auth = req.currentUser;
-    if(auth){
-      try {
-        //Get stripe_id
-        const user = await User.findOne({uid: req.currentUser.uid})
-          if (!user.stripe_id) throw Error("User doesn't have a stripe id");
-         
-        const paymentIntent = await stripe.paymentIntents.create({
-          amount: 1099,
-          currency: 'usd',
-          customer: (user.stripe_id),
-          payment_method: (user.stripe_cc),
-          off_session: true,
-          confirm: true,
-        });
+router.post('/test', async (req, res) =>{
+  const auction = 
+        ({
+          _id: req.body._id,
+          status: req.body.status,
+          bid: req.body.bid,
+          name: req.body.name,
+          user_id: req.body.user_id
+        })
+  try {  
+          // //Perform charge here
+        if(auction){
+          try {
+            //Get stripe_id
+            const user = await User.findOne({uid: auction.user_id})
+              if (user && !user.stripe_id) {
+                throw Error("User doesn't have a stripe id");
+              } else if(user && user.stripe_id){
+                const auctionFound = await Item.findOne({_id: auction._id})
+                const msg = {
+                  to: `${user.email}`, // Change to your recipient
+                  from: 'alex@nowaitlist.co', // Change to your verified sender
+                  subject: `Hey ${user.name}, you won the ${auctionFound.brand} ${auctionFound.reference_number} - ${auctionFound.year}`,
+                  text: 'You won the auction!',
+                  html: '<strong>You won the auction!</strong>',
+                }
+                sgMail
+                  .send(msg)
+                  .then(() => {
+                    console.log('Email sent')
+                    res.status(200).json('Email sent')
+                  })
+                  .catch((error) => {
+                    console.error(error)
+                    res.status(400).json('Something went wrong.')
+                  })
+              
 
-        res.status(200).json(paymentIntent);
-
-      } catch (err) {
-        // Error code will be authentication_required if authentication is needed
-        console.log('Error code is: ', err.code);        
-        const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
-        console.log('PI retrieved: ', paymentIntentRetrieved.id);
-
-        res.status(400).json(paymentIntentRetrieved.id);
-      }  
-    }
+                // const paymentIntent = await stripe.paymentIntents.create({
+                //   amount: single.bid*100,
+                //   currency: 'usd',
+                //   customer: (user.stripe_id),
+                //   payment_method: (user.stripe_cc),
+                //   off_session: true,
+                //   confirm: true,
+                // });
+                // //Update item status
+                // if(paymentIntent.status === 'succeeded'){
+                //   //Find auction
+                //   const updateItem = await 
+                //   Item.findOneAndUpdate({_id: single.auction_id}, {
+                //     status: "completed",
+                //     },{ new: true});
+                //   console.log("*** Item Updated ***")
+                //   //Send email to buyer
+                // }
+                // res.status(200).json(paymentIntent);
+            } else {
+              res.status(400).json('Something went wrong.')
+            }
+          } catch (err) {
+            // Error code will be authentication_required if authentication is needed
+            console.log('Error code is: ', err.code);        
+            const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
+            console.log('PI retrieved: ', paymentIntentRetrieved.id);
+            res.status(400).json(paymentIntentRetrieved.id);
+            console.log(err)
+          }  
+        } 
+  } catch (err) {        
+    res.status(400).json(err);
+  }  
 })
 
 module.exports = router;

@@ -16,7 +16,7 @@ const classes = useStyles();
 
 return(
     <div>
-        <Typography variant="h5">Selling a Watch</Typography>
+        <Typography variant="h5">Sell a Watch</Typography>
         <br/>
         <Typography>
         Selling on No Wait List is uber easy; we&rsquo;ve designed it that way.

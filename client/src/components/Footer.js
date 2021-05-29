@@ -37,15 +37,15 @@ export default function Footer() {
             alignItems="flex-start"
             alignContent="center">
                 <Grid item xs={4} sm={3}>
-                    <Typography variant="overline">How it works</Typography>
+                    <Typography variant="overline">How To</Typography>
                     <Typography variant="subtitle2">
                       <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#buying'}>
-                        Buying a Watch
+                        Buy a Watch
                       </Link>
                     </Typography>
                     <Typography variant="subtitle2">
                       <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#selling'}>
-                        Selling a Watch
+                        Sell a Watch
                       </Link>
                     </Typography>
                     <Typography variant="subtitle2">
@@ -54,7 +54,7 @@ export default function Footer() {
                       </Link>
                     </Typography>
                     <Typography variant="subtitle2">
-                      <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#questions'}>
+                      <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#buyfaq'}>
                         FAQ
                       </Link>
                     </Typography>

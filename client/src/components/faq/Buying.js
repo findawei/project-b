@@ -16,7 +16,7 @@ const classes = useStyles();
 
 return(
     <div>
-        <Typography variant="h5">Buying a Watch</Typography>
+        <Typography variant="h5">Buy a Watch</Typography>
         <br/>
         <Typography>
         <b>1. Register</b>

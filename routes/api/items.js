@@ -9,7 +9,7 @@ const Item = require('../../models/item');
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-  const items = await Item.find({status: 'active'}).sort({
+  const items = await Item.find().sort({
     endDate: 1,});
   if (!items) throw Error('No items');
     res.status(200).json(items);
@@ -253,5 +253,21 @@ router.delete('/:id', async (req, res) => {
   res.status(400).json({ msg: e.message, success: false });
 }
 });
+
+
+
+// router.put('/test/:id', async (req, res) => {
+//   try{ 
+//     const updateItem = await 
+//   Item.findOneAndUpdate({_id: req.params.id}, {
+    
+//     status: "active",
+    
+//     },{ new: true});
+//     return res.status(200).json(updateItem);
+//   } catch(e){
+//     res.status(400).json({ msg: e.message, success: false })
+//     }
+//   });
 
 module.exports = router;

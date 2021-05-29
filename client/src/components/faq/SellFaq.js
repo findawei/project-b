@@ -30,12 +30,11 @@ export default function SellFaq() {
           aria-controls="panel2a-content"
           id="panel2a-header"
         >
-          <Typography className={classes.heading}>How do I bid?</Typography>
+          <Typography className={classes.heading}>Does it cost anything to sell on No Wait List?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            You must be registered and provide a valid credit card to be able to place a bid. <b>Please note you cannot withdraw your bid once placed.</b>
-            {/* We place a hold on each bidder’s credit card until the conclusion of the auction. */}
+            No, it's <b>FREE</b> to sell on No Wait List if your listing has "No Reserve". If you wish to have a "Reserve" price, there's a fee of $49.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -45,13 +44,13 @@ export default function SellFaq() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>What are the buying fees?</Typography>
+          <Typography className={classes.heading}>How does No Wait List pick watches?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Once you have won the auction, you will be charged a 5% buyer's fee. You will then have to pay the purchase price to the seller. The minimum buyer's fee charge is $250 to a maximum of $5,000.
+            We are open to all types and eras, as long as they have a cool factor.
             <br/><br/>
-            The fees don't include shipping or any other charges.
+            No Wait List is a focused auction site, so not every watch will be accepted, but we always appreciate you taking the time to submit your watch to us!
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -61,19 +60,139 @@ export default function SellFaq() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>Bid increments</Typography>
+          <Typography className={classes.heading}>Can I sell from anywhere?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            The bid increments are as follows:
+            Yes! We do not have any restrictions on where you are located.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>How do I submit my watch?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Click the "Sell A Watch" link in the header.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>What info do you need about my watch?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            To start off, we ask for the basics: make, model, reference number, serial number, year, service history and a few pictures. We aim to ensure transparency. The more details you provide, the better we will be able to craft your listing. This includes any flaws or faults. We will contact you should we need more information.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>How do I increase the sale price of my watch?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Great pictures heavily influence the sale price of your watch.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>Do I get to sign off on the listing?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Of course! Before the listing is live, we will send you a draft for approval. Only once you are happy with the listing does it go live.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>Can I pick when my auction goes live?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            We have an internal rolling schedule for auctions. If you have a preference for a certain week or start date we will try to accommodate you.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>How long will my auction be up?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            All our auctions are for 7 days.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>Can I edit my auction after it's live?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            You can't directly edit your auction after it's live. Let us know what needs to be changed and we will take care of it. You can also add supplemental information in the comments.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>Should I bother answering the comments?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Yes, you should. Actively participating in the comments section has a positive effect on the sales price of the auction. The buyers are watch enthusiasts like yourself and are probably interested in purchasing your watch.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography className={classes.heading}>Can I have a reserve price on my auction?</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Yes, you can. This option has a fee of $49. It is possible that when you submit your <b>reserve</b> price we ask that you lower it. If we can't agree on a reserve price, we won't be able to list your watch.
             <br/><br/>
-            <b>Minimum</b> bid of $100 to start the auction
-            <br/>
-            <b>$100</b> increments up to $14,999
-            <br/>
-            <b>$250</b> increments from $15,000 to $49,999
-            <br/>
-            <b>$500</b> increments after $50,000
+            If you decide to go <b>no reserve</b>, then you can list your watch <b>for FREE</b>.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -83,11 +202,11 @@ export default function SellFaq() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>What currency does No Wait List use?</Typography>
+          <Typography className={classes.heading}>Do I reveal my reserve price?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            No Wait List uses United States Dollars (USD) for all auctions.
+            It is recommended not to reveal your reserve price. Revealing a reserve price usually slows down bidding as it reaches the known reserve.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -97,39 +216,11 @@ export default function SellFaq() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>Can I bid on a watch outside my country?</Typography>
+          <Typography className={classes.heading}>Can I make a deal outside No Wait List?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Yes! Bidding is open internationally. However, please remember to factor in import fees, taxes and any other duties when importing the watch to your country. Familiarize yourself with any charges or restriction relevant to your country before placing a bid.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      {/* <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Can I contact the seller directly?</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Yes! Click on the "Contact Seller" on the auction page.
-          </Typography>
-        </AccordionDetails>
-      </Accordion> */}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Do you allow proxy bidding (max bid)?</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            No. You do not have the option to set a maximum price. Whatever amount you bid will be applied to the auction immediately. Ie. if the current high-bid is $15,000 and you input a $17,000 bid, the current high bid will immediately go to $17,000.
+            No. Watches listed on No Wait List are for sale only through the auction. If a buyer or seller tries to deal outside the auction, they will be <b>permanently banned</b> from No Wait List.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -139,39 +230,11 @@ export default function SellFaq() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>Can other bidders 'snipe' at the end of an auction to outbid me?</Typography>
+          <Typography className={classes.heading}>What happens if my reserve isn't reached?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            No. We have setup a system to counter this problem. If a bid is placed within the final minute of the auction, an extra minute is added to the auction – giving others the opportunity to bid. As long as bids are coming in, the auction will stay open.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      {/* <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Why is there a hold on my card?</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-          We place a hold on your credit card when you bid in order to account for the possibility that you may have to pay the buyer’s fee, should you end up as the winning bidder. The hold is for 5% of your initial bid amount, with a minimum of $250 and a maximum of $5,000. If you aren’t the winning bidder, the hold is released from your credit card at the conclusion of the auction.
-          </Typography>
-        </AccordionDetails>
-      </Accordion> */}
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>What's the reserve price of the watch?</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Unless being sold at ‘No Reserve’, all auction lots have a reserve. Reserve prices are not public. Please don't ask sellers about reserve pricing during the auction. You’ll know if the reserve is met if the watch sells at auction close.
+            We will reach out to you with the highest bidder to see if we can work out a deal. If we can facilitate a deal between you and buyer, we will then introduce both parties to complete the deal.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -181,11 +244,13 @@ export default function SellFaq() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>What if the reserve isn't met?</Typography>
+          <Typography className={classes.heading}>How do I get paid for my watch?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            If you’re the high bidder on a watch where the reserve isn’t met, we’ll work with you & the seller in an attempt to find a sale price that’s suitable for both parties. If we can reach an agreement, we’ll put you and seller in contact – and our fee drops to 2.5%.
+            Once the auction has ended, we will introduce you and the buyer to complete the transaction. Read more about Finalizing the Transaction.
+            <br/><br/>
+            Whatever payment method you decide on, be sure to perform your due diligence. 
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -195,25 +260,13 @@ export default function SellFaq() {
           aria-controls="panel1a-content"
           id="panel1a-header"
         >
-          <Typography className={classes.heading}>How do I complete the transaction after the auction?</Typography>
+          <Typography className={classes.heading}>What if the buyer backs out?</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            We will introduce you and seller to complete the transaction. Read more about Finalizing the Transaction.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography className={classes.heading}>Does the buying fee inlude Shipping?</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            No, the buyer's fee is for using No Wait List only and does not include shipping, duties, insurance or any other costs associated.
+            In the unlikely event that the buyer fails to complete the transaction, please notify us. The user will be permanently banned from No Wait List. They will also forfeit the buyer's fee.
+            <br/><br/>
+            In this event, we will work with you to sell your watch. We will reach out to the next highest bidder to work out a deal. If that fails, we can offer to relist your watch.
           </Typography>
         </AccordionDetails>
       </Accordion>

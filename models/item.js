@@ -99,10 +99,9 @@ const ItemSchema = new Schema ({
         type: String,
          
     },
-    // approved: {
-    //     type: Boolean,
-    //     required: true
-    // },
+    status: {
+        type: String
+    },
     referral: {
         type: String
     },

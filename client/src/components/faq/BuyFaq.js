@@ -185,7 +185,7 @@ export default function BuyFaq() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            If you’re the high bidder on a watch where the reserve isn’t met, we’ll work with you & the seller in an attempt to find a sale price that’s suitable for both parties. If we can reach an agreement, we’ll put you and seller in contact – and our fee drops to 2.5%.
+            If you’re the high bidder on a watch where the reserve isn’t met, we’ll work with you & the seller in an attempt to find a sale price that’s suitable for both parties. If we can reach an agreement, we’ll put you and seller in contact.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -199,7 +199,7 @@ export default function BuyFaq() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            We will introduce you and seller to complete the transaction. Read more about Finalizing the Transaction.
+            We will introduce you and the seller to complete the transaction. Read more about Finalizing the Transaction.
           </Typography>
         </AccordionDetails>
       </Accordion>

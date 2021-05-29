@@ -9,6 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
 import LoginModal from './auth/LoginModal';
+import SellLoginModal from './auth/SellLoginModal';
 import { connect } from 'react-redux';
 import LoggedInMenu from './LoggedInMenu'
 
@@ -26,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
   },
   logo: {
     maxWidth: 100,
-   
   }
 }));
 
@@ -41,18 +41,23 @@ const useStyles = makeStyles((theme) => ({
             <img src="https://nowaitlist.co/wp-content/uploads/2021/02/Screen-Shot-2021-01-31-at-2.56.11-PM.png" alt="logo" className={classes.logo} />
           </Link>    
           </div>
-          <Link 
-              className={classes.link}
-              style={{ textDecoration: 'none' }}
-              to={'/submit'}
-              >
-          <Button
-            variant="contained"
-            color="primary"
-          >
-            Sell A Watch
-          </Button>
-          </Link>   
+          {auth && auth.isAuthenticated ? 
+           <div> <Link 
+           className={classes.link}
+           style={{ textDecoration: 'none' }}
+           to={'/submit'}
+           >
+       <Button
+         variant="contained"
+         color="primary"
+       >
+         Sell A Watch
+       </Button>
+       </Link></div>
+          :         
+          <SellLoginModal/>
+          }
+            
           {auth && auth.isAuthenticated ? 
           <LoggedInMenu/> 
           :         
