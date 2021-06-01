@@ -176,6 +176,19 @@ router.post('/processPayment', async (req, res) =>{
   }  
 })
 
+router.post('/test2', async (req, res) =>{
+  const auction = 
+        ({
+          _id: req.body._id,
+          status: req.body.status,
+          bid: req.body.bid,
+          name: req.body.name,
+          user_id: req.body.user_id
+        })
+        let fee = auction.bid*0.05
+        res.status(200).json(fee)
+})
+
 router.post('/test', async (req, res) =>{
   const auction = 
         ({
@@ -195,12 +208,33 @@ router.post('/test', async (req, res) =>{
                 throw Error("User doesn't have a stripe id");
               } else if(user && user.stripe_id){
                 const auctionFound = await Item.findOne({_id: auction._id})
+
+                templates = {
+                  Auction_Won: "d-e5d27a992b014284aa678ea222d843de"
+              };
                 const msg = {
                   to: `${user.email}`, // Change to your recipient
                   from: 'alex@nowaitlist.co', // Change to your verified sender
-                  subject: `Hey ${user.name}, you won the ${auctionFound.brand} ${auctionFound.reference_number} - ${auctionFound.year}`,
-                  text: 'You won the auction!',
-                  html: '<strong>You won the auction!</strong>',
+                  name: "Alex from No Wait List",
+                  
+                  template_id:"d-e5d27a992b014284aa678ea222d843de",
+        
+                  dynamic_template_data: {
+                    subject: `Hey ${user.name}, you won the ${auctionFound.brand} ${auctionFound.reference_number} - ${auctionFound.year} 🎉`,
+                    name: user.name,
+                    email: user.email,
+                    brand: auctionFound.brand,
+                    model: auctionFound.model,
+                    year: auctionFound.year,
+                    fee: `$${auction.bid*0.05}`,
+                    auction_id: auction._id,
+                    amount_due: `$${auction.bid}`,
+                    receipt_details: [{
+                      description: `${auctionFound.brand} ${auctionFound.reference_number} - ${auctionFound.year}`,
+                      amount: `$${auction.bid}`,
+                    }]
+
+                   }
                 }
                 sgMail
                   .send(msg)
@@ -213,7 +247,6 @@ router.post('/test', async (req, res) =>{
                     res.status(400).json('Something went wrong.')
                   })
               
-
                 // const paymentIntent = await stripe.paymentIntents.create({
                 //   amount: single.bid*100,
                 //   currency: 'usd',
