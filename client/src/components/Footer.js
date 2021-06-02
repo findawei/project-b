@@ -72,7 +72,9 @@ export default function Footer() {
                       </Link></Typography>
                 </Grid>
             <Grid item xs={12} sm={3}>
-                <InstagramIcon />
+                <a style={{ textDecoration: 'none', color: 'inherit'}} href="https://www.instagram.com/nowaitlist.co" target="_blank">
+                  <InstagramIcon />
+                </a>
                 <br/>
                 <Typography variant="h8" color="inherit">
                 Copyright © {new Date().getFullYear()} NoWaitList. All Rights Reserved
