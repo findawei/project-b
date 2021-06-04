@@ -8,7 +8,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   USER_NAME,
-  USER_UPDATE
+  USER_UPDATE,
+  CAPTCHA_ERROR,
+  CAPTCHA_SUBMIT
 } from '../actions/types';
 
 const initialState = {
@@ -16,7 +18,8 @@ const initialState = {
   isAuthenticated: null,
   isLoading: false,
   user: null,
-  authMsg: null
+  authMsg: null,
+  captcha: null
 };
 
 export default function(state = initialState, action) {
@@ -25,6 +28,12 @@ export default function(state = initialState, action) {
       return {
         ...state,
         isLoading: true
+      };
+    case CAPTCHA_SUBMIT:
+      return {
+        ...state,
+        isLoading: false,
+        captcha: action.payload
       };
     case USER_LOADED:
       return {
@@ -60,6 +69,7 @@ export default function(state = initialState, action) {
     case LOGIN_FAIL:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
+    case CAPTCHA_ERROR:
       localStorage.removeItem('token');
       return {
         ...state,

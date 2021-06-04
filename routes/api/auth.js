@@ -8,6 +8,8 @@ const auth = require('../../middleware/auth');
 // User Model
 const User = require('../../models/User');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+const captchaKey = (process.env.CAPTCHA_SECRET_KEY);
+const fetch = require("node-fetch");
 
 
 /**
@@ -133,6 +135,36 @@ if(auth){
   }
 }
 });
+
+//captcha submit
+router.post('/captcha', async (req, res) => {
   
+const humanKey = req.body.captcha
+  // Validate Human
+  try{ 
+    const isHuman = await fetch(`https://www.google.com/recaptcha/api/siteverify`, {
+      method: "post",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+      },
+      body: `secret=${captchaKey}&response=${humanKey}`
+    })
+      .then(res => res.json())
+      .then(json => json.success)
+      .catch(err => {
+        throw new Error(`Error in Google Siteverify API. ${err.message}`)
+      })
+
+    if (humanKey === null || !isHuman) {
+      throw new Error(`YOU ARE NOT A HUMAN.`)
+    }
+    // The code below will run only after the reCAPTCHA is succesfully validated.
+    console.log("SUCCESS!")
+    res.status(200).json('success')
+  } catch (e){
+    res.status(400).json({ msg: e.message });
+  }
+});
 
 module.exports = router;

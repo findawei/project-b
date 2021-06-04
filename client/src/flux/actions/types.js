@@ -35,5 +35,9 @@ export const GET_CARD = "GET_CARD"
 export const CREATE_NEW_CUSTOMER = "CREATE_NEW_CUSTOMER"
 export const PAYMENT_INTENT = "PAYMENT_INTENT"
 
+export const CAPTCHA_SUBMIT = "CAPTCHA_SUBMIT"
+export const CAPTCHA_ERROR = "CAPTCHA_ERROR"
+
+
 export const GET_ERRORS = 'GET_ERRORS';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

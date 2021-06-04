@@ -25,6 +25,7 @@
     "firebase-admin": "^9.9.0",
     "mongoose": "^5.12.12",
     "multiparty": "^4.2.2",
+    "node-fetch": "^2.6.1",
     "stripe": "^8.150.0"
   },
   "devDependencies": {

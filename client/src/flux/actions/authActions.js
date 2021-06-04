@@ -10,7 +10,9 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   RESET_SUCCESS,
-  RESET_ERROR
+  RESET_ERROR,
+  CAPTCHA_SUBMIT,
+  CAPTCHA_ERROR
 } from './types';
 import firebase from '../../firebase';
 import { config } from 'process';
@@ -204,6 +206,30 @@ export const logout = () => async (dispatch) =>{
     console.log(err);
   }
 };
+
+//Captcha Submit
+
+export const captchaSubmit = (captcha) => async (dispatch, getState) => {
+  
+  // const header = await tokenConfig();
+  try{
+  axios
+  .post('/api/auth/captcha', captcha)
+  .then(res=>
+      dispatch({
+          type: CAPTCHA_SUBMIT,
+          payload: res.data
+      })
+  )
+  }
+  catch(err) {
+    dispatch(returnErrors(err.response.data, err.response.status, 'CAPTCHA_ERROR'));
+    dispatch({
+      type: CAPTCHA_ERROR,
+      });
+    };
+};
+
 
 //Add stripe_cc to user
 export const addStripeCC = (user) => async (dispatch, getState) => {
