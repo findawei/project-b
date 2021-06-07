@@ -3,13 +3,19 @@ const router = express.Router();
 const auth = require('../../middleware/auth')
 const user = require('../../models/User');
 const Item = require('../../models/item');
+const config =require( '../../config');
+const sgMail = require('@sendgrid/mail')
+const { SENDGRID_API_KEY } = config;
+sgMail.setApiKey(SENDGRID_API_KEY)
+
+const { formatDistance, subDays } = require ('date-fns')
 
 // @route   GET api/items/
 // @desc    Get all items for a specific user
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-  const items = await Item.find().sort({
+  const items = await Item.find({status: "active"}).sort({
     endDate: 1,});
   if (!items) throw Error('No items');
     res.status(200).json(items);
@@ -78,13 +84,15 @@ router.post('/submit', async (req, res) => {
 
   const auth = req.currentUser;
     if(auth){
-
   const newItem = new Item({
       name: req.currentUser.name,
       user: req.currentUser.uid,
+      dealership: req.body.dealership,
+      dealerwebsite: req.body.dealerwebsite,
+      fees: req.body.fees,
+      link: req.body.link,
       brand: req.body.brand,
       model: req.body.model,
-      // img: req.body.img,
       reference_number: req.body.reference_number,
       year: req.body.year,   
       reserve: req.body.reserve,
@@ -92,17 +100,63 @@ router.post('/submit', async (req, res) => {
       service: req.body.service,
       phone: req.body.phone,
       referral: req.body.referral,
-      // approved: false
+      status: 'for_review'
   });
+  //  console.log(newItem)
   try{ 
     const item = await newItem.save();
-    if (!item) throw Error('Something went wrong saving the item');
-    res.status(200).json(item);
+    if (!item) return res.status(400).json('Something went wrong saving the item');
+
+    //Send email to site admin
+      templates = {
+        Watch_submission: "d-b739df9df01445b5bbca796bf0b1b37d"
+      };
+    const msg = {
+      to:'alex@nowaitlist.co',
+      cc: `${req.currentUser.email}`, // Change to your recipient
+      from: 'alex@nowaitlist.co', // Change to your verified sender
+      name: "Alex from No Wait List",
+      
+      template_id:"d-b739df9df01445b5bbca796bf0b1b37d",
+
+      dynamic_template_data: {
+        date: format(new Date(), 'PP - ppp'),
+        name: newItem.name,
+        email: req.currentUser.email,
+        dealership: newItem.dealership,
+        dealerwebsite: newItem.dealerwebsite,
+        fees: newItem.fees,
+        link: newItem.link,
+        brand: newItem.brand,
+        model: newItem.model,
+        reference_number: newItem.reference_number,
+        year: newItem.year,   
+        reserve: (newItem.reserve === null? 0 : newItem.reserve),
+        location: newItem.location,
+        service: newItem.service,
+        phone: newItem.phone,
+        referral: newItem.referral,
+       }
+    }
+    sgMail
+      .send(msg)
+      .then(() => {
+        console.log('Email sent')
+        res.status(200).json(item)
+      })
+      .catch((error) => {
+        console.error(error)
+        res.status(400).json('Something went wrong.')
+      })
+    
+    return
     } 
   catch (e) {
   res.status(400).json({ msg: e.message, success: false });
 }
-}}
+}
+return res.status(403).send('Not authorized');
+}
 );
 
 // @route   PUT api/items/:id

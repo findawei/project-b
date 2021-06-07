@@ -160,7 +160,7 @@ const humanKey = req.body.captcha
       throw new Error(`YOU ARE NOT A HUMAN.`)
     }
     // The code below will run only after the reCAPTCHA is succesfully validated.
-    console.log("SUCCESS!")
+    // console.log("SUCCESS!")
     res.status(200).json('success')
   } catch (e){
     res.status(400).json({ msg: e.message });

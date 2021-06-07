@@ -42,18 +42,20 @@ const useStyles = makeStyles((theme) => ({
           </Link>    
           </div>
           {auth && auth.isAuthenticated ? 
-           <div> <Link 
-           className={classes.link}
-           style={{ textDecoration: 'none' }}
-           to={'/submit'}
-           >
-       <Button
-         variant="contained"
-         color="primary"
-       >
-         Sell A Watch
-       </Button>
-       </Link></div>
+           <div>
+            <Link 
+            className={classes.link}
+            style={{ textDecoration: 'none' }}
+            to={'/submit'}
+            >
+              <Button
+                variant="contained"
+                color="primary"
+              >
+                Sell A Watch
+              </Button>
+            </Link>
+          </div>
           :         
           <SellLoginModal/>
           }

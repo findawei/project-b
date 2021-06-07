@@ -77,9 +77,7 @@ export const submitItem = (item) => async (
   dispatch,
   getState
   ) => {
-
     const header = await tokenConfig();
-
     axios
     .post('/api/items/submit', item, header)
     .then(res=>

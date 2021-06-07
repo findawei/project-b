@@ -1,7 +1,8 @@
 import React, { useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Paper, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Typography,InputLabel, Box, NativeSelect, Select, Dialog, DialogTitle, DialogActions, DialogContentText } from '@material-ui/core/'
+import {Grid, Paper, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Typography,InputLabel, Box, NativeSelect, Select, Dialog, DialogTitle, DialogActions, DialogContentText, DialogContent } from '@material-ui/core/'
+import { Link } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 import DateFnsUtils from "@date-io/date-fns"
 import { DatePicker,   MuiPickersUtilsProvider } from "@material-ui/pickers";
@@ -77,11 +78,16 @@ const listingSubmit = (newItem) => {
     setOpen(true)
 }
 
+const handleOpen1 = () => {
+  setOpen(true);
+};
+
 return (
     <Grid container
     direction="column"
     justify="center"
     alignItems="center"> 
+    <Button onClick={handleOpen1} color="primary">Open dialogue</Button>
     <Dialog
         open={open}
         onClose={handleClose}
@@ -91,12 +97,29 @@ return (
         <Typography align="center" className={classes.input}>
           <CheckCircleIcon style={{ color: green[500], fontSize: 50 }}/>      
         </Typography>
-      <DialogTitle id="alert-dialog-title">{"Your submission has been sent!"}</DialogTitle>
-
+      <DialogTitle id="alert-dialog-title" align="center">{"Your submission has been sent!"}</DialogTitle>
+      <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            We've sent you an email with a summary of your submission. We should get back to you within 1 business day.
+          </DialogContentText>
+        </DialogContent>
       <DialogActions> 
-        <Button onClick={handleClose} fullWidth color="primary" variant="outlined">
-      Ok
-      </Button></DialogActions>
+        <Grid container justify="flex-end">
+          <Grid item xs={4} sm={4}>
+            <Link 
+              // className={classes.link}
+              style={{ textDecoration: 'none' }}
+              to={'/'}
+              >
+              <Button fullWidth color="primary">
+              Ok
+              </Button>
+            </Link>
+          </Grid>
+        </Grid>
+        
+        
+      </DialogActions>
      
     </Dialog>
     <Grid item xs={12} md={10} lg={8}>
@@ -301,9 +324,9 @@ return (
         :
         <></>
         }
-        <Grid item xs={12} sm={8}>
+        <Grid item xs={12} sm={6}>
             {/* <FormControl variant="outlined" className={classes.formControl}> */}
-            <Typography>Year</Typography> 
+            <Typography>Production Year</Typography> 
                   <DatePicker
                     name="year"
                     id="year"
@@ -312,6 +335,7 @@ return (
                     views={["year"]}
                     // label="Service"
                     value={year}
+                    fullWidth
                     onChange={setYear}
                     minDate={new Date("1940")}
                     disableFuture
@@ -332,6 +356,37 @@ return (
                 <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.year.message}</span>
                 )}
             {/* </FormControl> */}
+        </Grid>
+        <Grid item xs={12} sm={6}>
+        <Typography>Last Service Date</Typography>
+                <DatePicker
+                    name="service"
+                    id="service"
+                    inputVariant="outlined"
+                    size="small"
+                    views={["year","month"]}
+                    fullWidth
+                    // label="Service"
+                    value={service}
+                    onChange={setService}
+                    minDate={year}
+                    disableFuture
+                    inputRef={register({
+                      // max: {
+                      //   value: "year",
+                      //   message: 'Service date cannot be before production year.'
+                      // },
+                      // required: 'Service number cannot be empty 🤷🏻‍♂️'
+                    })}
+                    InputProps={
+                    {className: classes.textinput}
+                    }
+                  error={!!errors.service}
+                  />
+                  <br/>
+                  {errors.service && (
+                <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.service.message}</span>
+                )}
         </Grid>   
         <Grid item xs={12} sm={6}>
         <Typography>Brand</Typography> 
@@ -417,36 +472,7 @@ return (
                 <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.reference_number.message}</span>
                 )}
         </Grid>
-        <Grid item xs={12} sm={6}>
-        <Typography>Last Service Date</Typography>
-                <DatePicker
-                    name="service"
-                    id="service"
-                    inputVariant="outlined"
-                    size="small"
-                    views={["year","month"]}
-                    // label="Service"
-                    value={service}
-                    onChange={setService}
-                    minDate={new Date("1940")}
-                    disableFuture
-                    inputRef={register({
-                      // min: {
-                      //   value: 7,
-                      //   message: 'Cannot enter an empty phone number'
-                      // },
-                      // required: 'Service number cannot be empty 🤷🏻‍♂️'
-                    })}
-                    InputProps={
-                    {className: classes.textinput}
-                    }
-                  error={!!errors.service}
-                  />
-                  <br/>
-                  {errors.service && (
-                <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.service.message}</span>
-                )}
-        </Grid>
+        
         <Grid item xs={12} sm={6}>
         <Typography>Where is the watch located?</Typography> 
           <Paper elevation={0}>
@@ -469,7 +495,30 @@ return (
             {errors.location && (
                 <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.location.message}</span>
                 )}
-        </Grid>        
+        </Grid>
+        <Grid item xs={12} sm={12}>
+        <Typography>Any special details?</Typography> 
+          <Paper elevation={0}>
+                <TextField
+                  name="details" 
+                  id="details"
+                  placeholder="The more you can tell us, the better!" 
+                  variant="outlined"
+                  size="small"
+                  fullWidth
+                  inputRef={register({
+                    // required: 'Details cannot be empty 🤷🏻‍♂️'
+                  })}
+                  InputProps={
+                  {className: classes.textinput}
+                  }
+                error={!!errors.details}
+                />
+          </Paper>
+            {errors.details && (
+                <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.details.message}</span>
+                )}
+        </Grid>         
         </Grid>
         </Paper>    
         <Paper className={classes.paper} elevation={0} color="primary">
@@ -485,7 +534,7 @@ return (
         <Grid container spacing={3}>
         {reserve === 'yes'?
             <>
-            {/* <Typography color="secondary" className={classes.input}>If we accept your car, all other listings will need to be taken down before it can be listed on our site.</Typography> */}
+            <Typography color="secondary" className={classes.input}>Please note there is a $49 fee for having a reserve price.</Typography>
             <Grid item xs={12} sm={8}>
             <Typography>What reserve price would you like (USD)?</Typography>
             <Paper elevation={0}>
@@ -518,16 +567,15 @@ return (
         }
         </Grid>
         </Paper>
-        <Paper className={classes.paper} elevation={0} color="primary">
+        {/* <Paper className={classes.paper} elevation={0} color="primary">
         <h1>Photos</h1>
         <Typography>Please upload at least 6 photos of the watch showing all sides of the case.</Typography>
         <br/>
-        {/* <Dropzone /> */}
+        <Dropzone />
+        <UppyComp />
         <FileUpload />
-        {/* <UppyComp /> */}
-        </Paper>
+        </Paper> */}
         <Paper className={classes.paper} elevation={0} color="primary">
-
         <h1>Referral</h1>
         <Typography>How did you hear about us? If a user referred you please leave their username/email.</Typography>
         <Grid container spacing={3}>
@@ -556,9 +604,14 @@ return (
                     <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.referral.message}</span>
                     )}
         </Grid>
+        </Grid>
+        <br/>
+        <Grid item xs={12} sm={4}>
+          <Button variant="contained" color="primary" type="submit" fullWidth 
+        >
+            Submit
+          </Button>
         </Grid>      
-        <Button variant="contained" color="primary" type="submit" className={classes.root}
-        >Submit</Button>
     </Paper>
     </MuiPickersUtilsProvider>
     </form>

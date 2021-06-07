@@ -19,6 +19,18 @@ const ItemSchema = new Schema ({
         type: String,
         required: true
     },
+    dealership: {
+        type: String
+    },
+    dealerwebsite: {
+        type: String
+    },
+    fees: {
+        type: String
+    },
+    link: {
+        type: String
+    },
     img: [
         {
             url: {
