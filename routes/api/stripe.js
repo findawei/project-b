@@ -141,7 +141,7 @@ router.post('/processPayment', async (req, res) =>{
                 throw Error("User doesn't have a stripe id");
               } else if(user && user.stripe_id){              
                 const paymentIntent = await stripe.paymentIntents.create({
-                  amount: single.bid*100,
+                  amount: (single.bid >= 100000? 100000 : (single.bid <= 5000? 5000 : single.bid))*100*0.05,
                   currency: 'usd',
                   customer: (user.stripe_id),
                   payment_method: (user.stripe_cc),
@@ -221,122 +221,19 @@ router.post('/processPayment', async (req, res) =>{
   }  
 })
 
-router.post('/test2', async (req, res) =>{
-  const auction = 
-        ({
-          _id: req.body._id,
-          status: req.body.status,
-          bid: req.body.bid,
-          name: req.body.name,
-          user_id: req.body.user_id
-        })
-        const auctionFound = await Item.findOne({_id: auction._id})
-        const auctionSeller = await User.findOne({uid: auctionFound.user})
-        const newDate = auctionFound.endDate.toISOString().substring(0, 10)
-
-        res.status(200).json(newDate)
-})
-
 router.post('/test', async (req, res) =>{
-  //Highest bidder returned from mongoRealm
-  const auction = 
-        ({
-          _id: req.body._id,
-          status: req.body.status,
-          bid: req.body.bid,
-          name: req.body.name,
-          user_id: req.body.user_id
-        })
-  try {  
-          // //Perform charge here
-        if(auction){
-          try {
-            //Get stripe_id from highest bidder
-            const user = await User.findOne({uid: auction.user_id})
-              if (user && !user.stripe_id) {
-                throw Error("User doesn't have a stripe id");
-              } else if(user && user.stripe_id){
-                const auctionFound = await Item.findOne({_id: auction._id})
-                const auctionSeller = await User.findOne({uid: auctionFound.user})
-
-                templates = {
-                  Auction_Won: "d-e5d27a992b014284aa678ea222d843de"
-              };
-                const msg = {
-                  to: `${user.email}`, // Change to your recipient
-                  from: 'alex@nowaitlist.co', // Change to your verified sender
-                  name: "Alex from No Wait List",
-                  
-                  template_id:"d-e5d27a992b014284aa678ea222d843de",
-        
-                  dynamic_template_data: {
-                    subject: `Hey ${user.name}, you won the ${auctionFound.brand} ${auctionFound.reference_number} - ${auctionFound.year} 🎉`,
-                    name: user.name,
-                    email: user.email,
-                    brand: auctionFound.brand,
-                    model: auctionFound.model,
-                    reference: auctionFound.reference_number,
-                    year: auctionFound.year,
-                    endDate: auctionFound.endDate.toISOString().substring(0, 10),
-                    fee: `$${auction.bid*0.05}`,
-                    receipt_id: auction._id.substring(0,8),
-                    auction_id: auction._id,
-                    amount_due: `$${auction.bid}`,
-                    seller_username: auctionSeller.name,
-                    seller_email: auctionSeller.email,
-                    seller_phone: auctionSeller.phone,
-                    receipt_details: [{
-                      description: `${auctionFound.brand} ${auctionFound.reference_number} ${auctionFound.reference_number} - ${auctionFound.year}`,
-                      amount: `$${auction.bid}`,
-                    }]
-
-                   }
-                }
-                sgMail
-                  .send(msg)
-                  .then(() => {
-                    console.log('Email sent')
-                    res.status(200).json('Email sent')
-                  })
-                  .catch((error) => {
-                    console.error(error)
-                    res.status(400).json('Something went wrong.')
-                  })
-              
-                // const paymentIntent = await stripe.paymentIntents.create({
-                //   amount: single.bid*100,
-                //   currency: 'usd',
-                //   customer: (user.stripe_id),
-                //   payment_method: (user.stripe_cc),
-                //   off_session: true,
-                //   confirm: true,
-                // });
-                // //Update item status
-                // if(paymentIntent.status === 'succeeded'){
-                //   //Find auction
-                //   const updateItem = await 
-                //   Item.findOneAndUpdate({_id: single.auction_id}, {
-                //     status: "completed",
-                //     },{ new: true});
-                //   console.log("*** Item Updated ***")
-                //   //Send email to buyer
-                // }
-                // res.status(200).json(paymentIntent);
-            } else {
-              res.status(400).json('Something went wrong.')
-            }
-          } catch (err) {
-            // Error code will be authentication_required if authentication is needed
-            console.log('Error code is: ', err.code);        
-            const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
-            console.log('PI retrieved: ', paymentIntentRetrieved.id);
-            res.status(400).json(paymentIntentRetrieved.id);
-            console.log(err)
-          }  
-        } 
-  } catch (err) {        
-    res.status(400).json(err);
-  }  
+  const newBid = {
+    bid: req.body.bid,
+    name: req.currentUser.name,
+    user: req.currentUser.uid
+  };
+        // const auctionFound = await Item.findOne({_id: auction._id})
+        // const auctionSeller = await User.findOne({uid: auctionFound.user})
+        // const newDate = auctionFound.endDate.toISOString().substring(0, 10)
+      
+        res.status(200).json(newBid)
 })
+
+
 
 module.exports = router;

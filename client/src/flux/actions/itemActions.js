@@ -150,11 +150,19 @@ export const updateItemBid = (item) => async(
 
     axios
     .post(`/api/items/bid/${item._id}`, item, header)
-    .then(res=>
-      dispatch({
-        type: BID_ITEM,
-        payload: res.data
-      }))
+    .then(res=>{
+      // dispatch({
+      //   type: BID_ITEM,
+      //   payload: res.data
+      // }))
+        let stripe_test = item;
+        axios
+        .post('/api/stripe/test', stripe_test, header)
+          dispatch({
+            type: BID_ITEM,
+            payload: res.data
+          })
+      })
       .catch(err => {
         dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
         dispatch({

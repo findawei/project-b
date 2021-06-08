@@ -240,6 +240,17 @@ if(isPast(new Date(currentItem.endDate))){
   var bidBarColor = 'warning.dark';
 }
 
+let bidIncrement;
+if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHistory[0].bid){
+  if (currentItem.bidHistory[0].bid <= 14999) {
+    bidIncrement = 100
+  } else if (currentItem.bidHistory[0].bid <= 49999){
+    bidIncrement = 250
+  } else if(currentItem.bidHistory[0].bid >= 50000){
+    bidIncrement = 500
+  }
+}
+
     const classes = useStyles();
     const Completionist = () => <span>Ended</span>;
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -292,7 +303,7 @@ if(isPast(new Date(currentItem.endDate))){
         </Typography>         
         </Box>
         
-      <Divider />
+      {/* <Divider /> */}
         {/* <Box component="span"> */}
         <Grid
           container
@@ -327,7 +338,7 @@ if(isPast(new Date(currentItem.endDate))){
         inputRef={register({
           min: {
             value: (currentItem.bidHistory && currentItem.bidHistory.length?
-              (currentItem.bidHistory && currentItem.bidHistory[0].bid)+100
+              (currentItem.bidHistory && currentItem.bidHistory[0].bid)+bidIncrement
               :
               0
               ),
@@ -373,9 +384,9 @@ if(isPast(new Date(currentItem.endDate))){
         {errors.bid && (
             <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors.bid.message}</span>
           )}
-        <div className={classes.center}>
-        Minimum bid increment is $100. All bids in USD.
-        </div>
+        <Typography align="center" variant="subtitle2">
+        Minimum bid increment is ${bidIncrement}. All bids in USD.
+        </Typography>
       </div>
     );
 

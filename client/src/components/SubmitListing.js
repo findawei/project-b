@@ -78,16 +78,11 @@ const listingSubmit = (newItem) => {
     setOpen(true)
 }
 
-const handleOpen1 = () => {
-  setOpen(true);
-};
-
 return (
     <Grid container
     direction="column"
     justify="center"
     alignItems="center"> 
-    <Button onClick={handleOpen1} color="primary">Open dialogue</Button>
     <Dialog
         open={open}
         onClose={handleClose}
@@ -117,10 +112,7 @@ return (
             </Link>
           </Grid>
         </Grid>
-        
-        
       </DialogActions>
-     
     </Dialog>
     <Grid item xs={12} md={10} lg={8}>
     <div className={classes.root}>
