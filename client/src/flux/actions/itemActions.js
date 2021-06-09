@@ -155,9 +155,9 @@ export const updateItemBid = (item) => async(
       //   type: BID_ITEM,
       //   payload: res.data
       // }))
-        let stripe_test = item;
+        let stripe_bid = item;
         axios
-        .post('/api/stripe/test', stripe_test, header)
+        .post('/api/stripe/bid', stripe_bid, header)
           dispatch({
             type: BID_ITEM,
             payload: res.data

@@ -139,15 +139,15 @@ router.post('/processPayment', async (req, res) =>{
             const user = await User.findOne({uid: single.user_id})
               if (user && !user.stripe_id) {
                 throw Error("User doesn't have a stripe id");
-              } else if(user && user.stripe_id){              
-                const paymentIntent = await stripe.paymentIntents.create({
-                  amount: (single.bid >= 100000? 100000 : (single.bid <= 5000? 5000 : single.bid))*100*0.05,
-                  currency: 'usd',
-                  customer: (user.stripe_id),
-                  payment_method: (user.stripe_cc),
-                  off_session: true,
-                  confirm: true,
+              } else if(user && user.stripe_id){    
+
+                const paymentIntents = await stripe.paymentIntents.list({
+                  customer: user.stripe_id
                 });
+                //Get the intent  
+                const foundIntent = paymentIntents.data.find(({status}) => status === 'requires_capture')
+                //Charge the intent
+                const paymentIntent = await stripe.paymentIntents.capture(`${foundIntent.id}`);
                 //Update item status
                 if(paymentIntent.status === 'succeeded'){
                   //Find auction
@@ -220,20 +220,75 @@ router.post('/processPayment', async (req, res) =>{
     res.status(400).json(err);
   }  
 })
-
-router.post('/test', async (req, res) =>{
+//Place hold on cc with bid amount
+router.post('/bid', async (req, res) =>{
+  const auth = req.currentUser;
+  if(auth){
   const newBid = {
     bid: req.body.bid,
     name: req.currentUser.name,
-    user: req.currentUser.uid
+    user_uid: req.currentUser.uid
   };
-        // const auctionFound = await Item.findOne({_id: auction._id})
-        // const auctionSeller = await User.findOne({uid: auctionFound.user})
-        // const newDate = auctionFound.endDate.toISOString().substring(0, 10)
-      
-        res.status(200).json(newBid)
-})
+    try{
+      //  res.status(200).json(newBid)
+       const user = await User.findOne({uid: newBid.user_uid})
+              if (user && !user.stripe_id) {
+                throw Error("User doesn't have a stripe id");
+              } else if(user && user.stripe_id){              
+                const paymentIntent = await stripe.paymentIntents.create({
+                  amount: (newBid.bid >= 100000? 100000 : (newBid.bid <= 5000? 5000 : newBid.bid))*100*0.05,
+                  currency: 'usd',
+                  customer: (user.stripe_id),
+                  payment_method: (user.stripe_cc),
+                  off_session: true,
+                  confirm: true,
+                  capture_method: 'manual',
+                });
+                if(paymentIntent.status === 'requires_capture'){
+                  res.status(200).json(paymentIntent);
+                } 
+              }         
+      } catch (err) {
+        // Error code will be authentication_required if authentication is needed
+        console.log('Error code is: ', err.code);        
+        const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
+        console.log('PI retrieved: ', paymentIntentRetrieved.id);
+        res.status(400).json(paymentIntentRetrieved.id);
+        console.log(err)
+    }
+}})
 
+// //Retrieve paymentIntent & charge -> used for auction winner
+// router.post('/test', async (req, res) =>{
+//   const auth = req.currentUser;
+//     if(auth){
+//       try{
+//         //Get stripe_id
+//         const user = await User.findOne({uid: req.currentUser.uid})
+//           if (!user.stripe_id) throw Error("User doesn't have a stripe id");
+//         //Customer Exists, check if paymentIntent Exists
+//         const paymentIntents = await stripe.paymentIntents.list({
+//             customer: user.stripe_id
+//           });
+       
+//           //Get the intent  
+//           const foundIntent = paymentIntents.data.find(({status}) => status === 'requires_capture')
+//           //Charge the intent
+//           const paymentIntent = await stripe.paymentIntents.capture(`${foundIntent.id}`);
+//           //Update item status
+//           if(paymentIntent.status === 'succeeded'){
+//           res.status(200).json(paymentIntent)
+//           }
+//         }
+//         catch (err) {
+//           // Error code will be authentication_required if authentication is needed
+          
+//           res.status(400).json(err);
+//           console.log(err)
+//       }
+//     }
+// })
 
+        
 
 module.exports = router;
