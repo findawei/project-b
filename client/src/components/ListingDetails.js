@@ -29,6 +29,7 @@ import LoginModalComment from './auth/LoginModalComment';
 import Gallery from './Gallery'
 import ImageGallery from 'react-image-gallery';
 import { paymentIntent } from '../flux/actions/stripeActions';
+import EndingSoon from './EndingSoon';
 
 
 
@@ -236,7 +237,7 @@ if(isPast(new Date(currentItem.endDate))){
   var smBar = 9;
   var mdBar = 8;
   var smButton = 3;
-  var mdButton = 2;
+  var mdButton = 4;
   var bidBarColor = 'warning.dark';
 }
 
@@ -432,7 +433,16 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
           /> */}
           <Gallery img={img}/>
           
-              <Grid 
+          <Grid container 
+            direction="row"
+            justify="flex-start"
+            alignItems="space-evenly"
+            spacing={2}
+          >
+            
+            <Grid item md={9}>
+              <Grid item xs={12}>
+            <Grid 
                 container 
                 spacing={2}
                 direction="row"
@@ -528,11 +538,9 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                       {body}
                     </Modal>
                 </Grid>
-          <Grid item xs={12} md={10}>
-            <Typography color="inherit" fontWeight="fontWeightBold">
-              {/* Ending {format(Date.parse(currentItem.endDate),'MMM d, h:m aaa')} */}
-              </Typography>
-          </Grid>
+          
+          
+
            {/* Description Table */}
           <Grid
             container 
@@ -541,7 +549,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             alignItems="center"
             alignContent="center"
           >
-            <Grid item xs={12} md={5}>  
+            <Grid item xs={12} md={6} >  
             <div className={classes.paper}>
               <Paper variant="outlined" square="true" className={classes.background}>
                 <Typography color="inherit" display="inline" fontWeight="fontWeightBold">
@@ -690,7 +698,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
 
 {/* Grid Break */}
 
-              <Grid item xs={12} md={5}>
+              <Grid item xs={12} md={6}>
               <div className={classes.paper}>
               <Paper variant="outlined" square="true" className={classes.background}>
                 <Typography color="inherit" display="inline">
@@ -841,17 +849,15 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
               </div>
             </Grid>
           </Grid>
-
-
           {/* Description */}
-          <Grid item xs={12} md={10}>
+          <Grid item xs={12}>
             <h2>Description</h2>
             <p>
             {currentItem.description}
             </p>
           </Grid>
         </Grid> 
-          <Grid item xs={12} md={10}>
+          <Grid item xs={12}>
             <Paper variant="outlined" className={classes.info}>
             <Grid container>
             <Grid item xs={6}>
@@ -927,7 +933,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
           </Grid>
           <br/>
           {/* Comment Section */}
-          <Grid item xs={12} md={10}>
+          <Grid item xs={12}>
             <h2>Comments & Bids</h2>
               <form onSubmit={handleSubmit2(commentSubmit)}>
                 <div hidden="true">
@@ -979,9 +985,19 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors2.text.message}</span>
             )}
           </Grid>
-          <Grid item xs={12} md={10}>
+          <Grid item xs={12}>
+            </Grid>
+          </Grid>
+            
+            
             <CommentsAndBids commentsandbids = {commentsandbids} />
           </Grid>
+          <Grid item md={3}>
+              <EndingSoon/>
+            </Grid>
+          </Grid>
+
+              
           </div>
   );
 };

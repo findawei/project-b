@@ -15,7 +15,7 @@ const { formatDistance, subDays } = require ('date-fns')
 // @access  Private
 router.get('/', async (req, res) => {
   try {
-  const items = await Item.find({status: "active"}).sort({
+  const items = await Item.find({$or:[{status: "active"},{status:"completed"}]}).sort({
     endDate: 1,});
   if (!items) throw Error('No items');
     res.status(200).json(items);
