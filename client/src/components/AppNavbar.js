@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -12,8 +12,11 @@ import LoginModal from './auth/LoginModal';
 import SellLoginModal from './auth/SellLoginModal';
 import { connect } from 'react-redux';
 import LoggedInMenu from './LoggedInMenu'
+import {Dialog, DialogTitle, DialogActions, DialogContentText, DialogContent } from '@material-ui/core/'
+import firebase from '../firebase';
+import { verifyEmail } from '../flux/actions/authActions';
 
-const AppNavbar = ({auth}) =>{
+const AppNavbar = ({auth, verifyEmail}) =>{
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +34,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
   const classes = useStyles();
+
+  const [open, setOpen] = React.useState(false);
+
+  useEffect(() => { 
+    if(auth.authMsg == "You haven't verified your e-mail address."){
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  }, [auth]);
+
+
+  const handleClose = () => {
+    setOpen(false);
+  }
+
+  const sendConfirmation = () => {
+    verifyEmail()
+    setOpen(false)
+  }
+
+  const refreshPage = () => {
+    window.location.reload()
+  }
 
   return (
     <div className={classes.root}>
@@ -65,6 +92,31 @@ const useStyles = makeStyles((theme) => ({
           :         
           <LoginModal/>
           }
+          {/* <Button onClick={handleClickOpen}>Test</Button> */}
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            disableBackdropClick
+            disableEscapeKeyDown
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">{"Email Verification"}</DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                Please verify your email before continuing. Check you emails (spam folder included) for a confirmation email or send another one.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              {/* <Button  onClick={refreshPage} color="primary">
+                Refresh Once Confirmed
+              </Button> */}
+              <Button  onClick={sendConfirmation} color="primary" autoFocus>
+                Send Confirmation Email
+              </Button>
+            </DialogActions>
+          </Dialog>
+
         </Toolbar>
       </AppBar>
     </div>
@@ -75,4 +127,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, null)(AppNavbar);
+export default connect(mapStateToProps, {verifyEmail})(AppNavbar);

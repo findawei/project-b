@@ -25,12 +25,18 @@ export const loadUser = () => async(dispatch, getState) => {
   try{
     dispatch({ type: USER_LOADING });
     firebase.auth().onAuthStateChanged(async (user) => {
-      if(user) {
+      if(user && !user.emailVerified) {
         dispatch({
-                type: USER_LOADED,
-                payload: user
-              });
-        
+          type: REGISTER_FAIL,
+          payload: "You haven't verified your e-mail address."
+        });
+      }
+      else if (user && user.emailVerified){
+        dispatch({
+          type: USER_LOADED,
+          payload: user
+        });
+  
         // let accessToken = user
         // console.log(accessToken)
         
@@ -51,9 +57,11 @@ export const loadUser = () => async(dispatch, getState) => {
             type: AUTH_ERROR
           });
         };
-          }
-      else {
-        accessToken = 'five'
+      } else {
+        dispatch({
+          type: AUTH_ERROR,
+          payload: "No user signed in."
+        })
       }
     });
 } catch (err) {
@@ -63,6 +71,19 @@ export const loadUser = () => async(dispatch, getState) => {
   console.log(err);
 }};
 
+//Re-send email verification email
+export const verifyEmail = () => async(dispatch, getState) => {
+  // User loading
+  try{
+    firebase.auth().onAuthStateChanged(function(user) {
+      user.sendEmailVerification()
+    })
+} catch (err) {
+  dispatch({
+          type: AUTH_ERROR
+        });
+  console.log(err);
+}};
 
 // Register User
 export const register = ({email, password, displayName }) => async(

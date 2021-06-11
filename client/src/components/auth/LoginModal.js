@@ -77,7 +77,8 @@ const LoginModal = ({
   const [newUser, setNewUser] = useState(false);
   const [showToast1, setShowToast1] = useState(false);
   const [pwreset, SetReset] = useState(false);
-
+  const [resetButton, setButton] = useState('Reset Password')
+  const [buttonDisabled, setButtonDisabled] = useState(false)
   /**
    *
    * @param _fieldName
@@ -100,10 +101,12 @@ const LoginModal = ({
           if (pwreset) {
             // reset password
             resetPassword(user.email);
+            setButton('An email was sent')
+            setButtonDisabled(true)
           } else {
             // signin
                 login(user);
-
+                setOpen(false)
             ;
           }
         }
@@ -275,15 +278,15 @@ const body = (
               color="primary"
               variant="contained"
               fullWidth
-              disabled={newUser && auth.captcha != 'success'}
+              disabled={newUser && auth.captcha != 'success' || buttonDisabled}
             >
                 {
             //     loading ? (
             //   <IonSpinner />
             // ) : 
-            pwreset ? (
-              "Reset password"
-            ) : newUser ? (
+            pwreset ? 
+              resetButton
+             : newUser ? (
               "Create account"
             ) : (
               "Sign in"

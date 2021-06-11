@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { login, register, resetPassword } from '../../flux/actions/authActions';
+import { login, register, resetPassword, captchaSubmit } from '../../flux/actions/authActions';
 import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import {Button, Box, Typography, Paper, Chip, Grid, TextField} from '@material-ui/core'
+import {Button, Box, Typography, Paper, Chip, Grid, TextField, Link} from '@material-ui/core'
+import ReCAPTCHA from "react-google-recaptcha";
+
 
 const SellLoginModal = ({
   isAuthenticated,
   authMsg,
+  auth,
   login,
   register,
-  resetPassword
+  resetPassword,
+  captchaSubmit
 }) => {
 
   let initialValues = {
@@ -34,6 +38,10 @@ const SellLoginModal = ({
       padding: theme.spacing(2, 4, 3),
       outline: 0,
     },
+    logo: {
+      maxWidth: 100,
+      
+    }
   }))
 
   function getModalStyle() {
@@ -69,7 +77,8 @@ const SellLoginModal = ({
   const [newUser, setNewUser] = useState(false);
   const [showToast1, setShowToast1] = useState(false);
   const [pwreset, SetReset] = useState(false);
-
+  const [resetButton, setButton] = useState('Reset Password')
+  const [buttonDisabled, setButtonDisabled] = useState(false)
   /**
    *
    * @param _fieldName
@@ -92,17 +101,32 @@ const SellLoginModal = ({
           if (pwreset) {
             // reset password
             resetPassword(user.email);
+            setButton('An email was sent')
+            setButtonDisabled(true)
           } else {
             // signin
                 login(user);
-
+                setOpen(false)
             ;
           }
         }
       }
+  
+function onChange(value) {
+  const key = {captcha: value}
+  captchaSubmit(key)
+}
 
 const body = (   
   <div style={modalStyle} className={classes.papermodal}>   
+        <Grid 
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        >
+              <img src="https://nowaitlist.co/wp-content/uploads/2021/02/Screen-Shot-2021-01-31-at-2.56.11-PM.png" alt="logo" className={classes.logo} />
+        </Grid>
     <form onSubmit={handleSubmit(handleOnSubmit)}>
           {/* <Button
           onClick={() => {
@@ -112,12 +136,32 @@ const body = (
         >
           {newUser ? "Sign in" : "Create an account"}
         </Button> */}
+        <Grid 
+        container
+        direction="row"
+        justify="center"
+        alignItems="center"
+        >
     <Box mb={1}>
           {!pwreset && (
           <div 
           value={newUser ? "signup" : "signin"}
           >
-          <Button 
+          <div hidden={newUser}>
+            New here?&nbsp;
+          <Link 
+            value="signup"
+            onClick={() => {
+            setNewUser(!newUser);
+            if (pwreset) SetReset(false);
+          }}
+          > 
+            Create an account
+          </Link>
+          </div>
+          <div hidden={!newUser}>
+          Already have an account?&nbsp; 
+          <Link 
             value="signin"
             onClick={() => {
             setNewUser(!newUser);
@@ -125,19 +169,13 @@ const body = (
           }}        
           >
             Sign in
-          </Button>
-          <Button 
-            value="signup"
-            onClick={() => {
-            setNewUser(!newUser);
-            if (pwreset) SetReset(false);
-          }}
-          > 
-            Sign up
-          </Button>
+          </Link>
+          </div>
+          
         </div>
         )}
         </Box>
+        </Grid>
         <Box  mb={1}>
         {pwreset && (
             <Button onClick={() => SetReset(false)} className="btn-link" fill="outline">
@@ -225,19 +263,30 @@ const body = (
               </Box>
 
             <Box mb={1}>
+            {pwreset ? (
+              ""
+            ) : newUser ? (
+              <ReCAPTCHA
+                sitekey="6LfSlQ0bAAAAADhIQ3yfMYRZAmh2EDBJzywO1B48"
+                onChange={onChange}
+              />
+            ) : (
+              ""
+            )}  
             <Button
               type="submit"
               color="primary"
               variant="contained"
               fullWidth
-            >
+              disabled={newUser && auth.captcha != 'success' || buttonDisabled}
+                          >
                 {
             //     loading ? (
             //   <IonSpinner />
             // ) : 
-            pwreset ? (
-              "Reset password"
-            ) : newUser ? (
+            pwreset ? 
+              resetButton
+             : newUser ? (
               "Create account"
             ) : (
               "Sign in"
@@ -275,7 +324,8 @@ return (
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  authMsg: state.authMsg
+  authMsg: state.authMsg,
+  auth: state.auth
 });
 
-export default connect(mapStateToProps, { login, resetPassword, register })(SellLoginModal);
+export default connect(mapStateToProps, { login, resetPassword, register, captchaSubmit })(SellLoginModal);

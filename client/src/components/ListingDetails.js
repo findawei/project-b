@@ -154,12 +154,16 @@ useEffect(() => {
       // marginLeft: 8,
       // marginRight: 8
     },
+    sticky: {
+      position: "sticky",
+      top: "calc(1rem + 60px)",
+    },
     bidbar: {
       padding: theme.spacing(1),
       textAlign: 'center',
       color: theme.palette.success.light,
       background: theme.palette.success.dark,
-      height: 40
+      height: 40,
     },
     bidbartext: {
       color: "#FFFFFF"
@@ -450,7 +454,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                 alignItems="center"
                 alignContent="center"
               >
-                <Grid item xs={12} sm={smBar} md={mdBar}>
+                <Grid item xs={12} sm={smBar} md={mdBar} className={classes.sticky}>
                   <Paper className={classes.bidbar}>
 
                   <Grid container spacing={0}>
@@ -506,7 +510,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                   </Grid>
                   </Paper>
                 </Grid>
-                <Grid item xs={12} sm={smButton} md={mdButton}>
+                <Grid item xs={12} sm={smButton} md={mdButton}className={classes.sticky}>
                     {isPast(new Date(currentItem.endDate)) ?
                     ''
                     :
@@ -985,17 +989,17 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             <span style={{ color: "red", fontWeight: "bold" }} className={classes.error}>{errors2.text.message}</span>
             )}
           </Grid>
-          <Grid item xs={12}>
-            </Grid>
-          </Grid>
-            
-            
+          {/* <Grid item xs={12}>
+            </Grid> */}
+          </Grid> 
+          <Grid>
             <CommentsAndBids commentsandbids = {commentsandbids} />
+          </Grid>   
           </Grid>
           <Grid item md={3}>
               <EndingSoon/>
-            </Grid>
           </Grid>
+        </Grid>
 
               
           </div>
