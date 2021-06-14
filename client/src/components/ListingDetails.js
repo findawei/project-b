@@ -124,6 +124,7 @@ useEffect(() => {
       getItemById(match.params.id);
     } 
   }, [getItemById, match.params.id]);
+  
 
   const useStyles = makeStyles((theme) => ({
     root: {
@@ -515,7 +516,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                     ''
                     :
                     <div>
-                    {(auth && auth.isAuthenticated) ?
+                    {(auth && auth.isAuthenticated && auth.user && auth.user.uid) ?
                     <Button 
                       variant="contained" 
                       color="primary" 
@@ -523,7 +524,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                       onClick={handleOpen}
                       type="button"
                       size="large"
-                      disabled={auth && auth.isAuthenticated && (auth.user.uid == currentItem.user)}
+                      disabled={auth.user.uid !== null && (auth.user.uid == currentItem.user)}
                     >
                       Place Bid
                     </Button>
