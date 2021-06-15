@@ -1,10 +1,8 @@
 const express = require('express');
 const router = express.Router();
-
-// const bcrypt = require('bcryptjs');
-// const config = require('../../config');
-// const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
+const {usersLogger, transactionLogger} = require('../../logger/user_logger');
+
 // User Model
 const User = require('../../models/User');
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
@@ -29,10 +27,16 @@ router.post('/login', async (req, res) => {
   try {
     // Check for existing user
     const user = await User.findOne({ email });
-    if (!user) throw Error('User Does not exist');
+    if (!user) {
+      throw Error('User Does not exist'),
+      usersLogger.error('Login', {error: `${e.message}`}, {email: `${email}`});
+    }
 
     const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) throw Error('Invalid credentials');
+    if (!isMatch) {
+      throw Error('Invalid credentials'),
+      usersLogger.error('Login', {error: `${e.message}`}, {email: `${email}`});
+    }
 
     // const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 });
     // if (!token) throw Error('Couldnt sign the token');
@@ -45,6 +49,7 @@ router.post('/login', async (req, res) => {
     });
   } catch (e) {
     res.status(400).json({ msg: e.message });
+    usersLogger.error(`Login: ${e.message}, for ${email}`);
   }
 });
 
@@ -64,7 +69,10 @@ if(auth && name){
   const uid  = req.currentUser.uid;
   try {
     const user = await User.findOne({uid});
-    if (user) throw Error('User already exists');
+    if (user) {
+      throw Error('User already exists'),
+      usersLogger.error(`Register: ${email} & ${uid} already exists`);
+    };
 
     const newUser = new User({
       uid,
@@ -73,7 +81,10 @@ if(auth && name){
     });
 
     const savedUser = await newUser.save();
-    if (!savedUser) throw Error('Something went wrong saving the user');
+    if (!savedUser) {
+      throw Error('Something went wrong saving the user'),
+      usersLogger.error(`Register: Something went wrong saving ${email}`);
+    };
 
     res.status(200).json({
       user: {
@@ -82,9 +93,16 @@ if(auth && name){
         email: savedUser.email
       }
     });
+    usersLogger.info('User created!',
+    {uid: user.uid,
+    name: user.name,
+    email: user.email,
+    })
+    
     
   } catch (e) {
     res.status(400).json({ msg: e.message });
+    usersLogger.error(`Register: ${e.message} for user ${uid}`);
   }
 }
 });
@@ -100,10 +118,14 @@ router.get('/user', async (req, res) => {
 if(auth){
   try {
     const user = await User.findOne({uid: req.currentUser.uid})
-    if (!user) throw Error('User Does not exist');
+    if (!user) {
+      throw Error('User Does not exist'),
+      usersLogger.error(`Loading: ${req.currentUser.uid} does not exist`);
+    };
     res.json(user);
   } catch (e) {
     res.status(400).json({ msg: e.message });
+    usersLogger.error(`Loading: ${e.message} for user ${req.currentUser.uid}`);
   }
 }
 });
@@ -118,6 +140,7 @@ if(auth){
       res.status(200).json(updateUser)
   } catch (e) {
       res.status(400).json({ msg: e.message });
+      transactionLogger.error(`Stripe: ${e.message} for user ${req.currentUser.uid}`);
   }
 }
 });
@@ -132,6 +155,7 @@ if(auth){
       res.status(200).json(updateUser)
   } catch (e) {
       res.status(400).json({ msg: e.message });
+      transactionLogger.error(`Stripe: ${e.message} for user ${req.currentUser.uid}`);
   }
 }
 });
@@ -153,17 +177,20 @@ const humanKey = req.body.captcha
       .then(res => res.json())
       .then(json => json.success)
       .catch(err => {
-        throw new Error(`Error in Google Siteverify API. ${err.message}`)
+        throw new Error(`Error in Google Siteverify API. ${err.message}`),
+        usersLogger.error(`Captcha: ${err.message}`);
       })
 
     if (humanKey === null || !isHuman) {
-      throw new Error(`YOU ARE NOT A HUMAN.`)
+      throw new Error(`YOU ARE NOT A HUMAN.`),
+      usersLogger.error(`Captcha: YOU ARE NOT A HUMAN.`);
     }
     // The code below will run only after the reCAPTCHA is succesfully validated.
     // console.log("SUCCESS!")
     res.status(200).json('success')
   } catch (e){
     res.status(400).json({ msg: e.message });
+    usersLogger.error(`Captcha: ${e.message}`);
   }
 });
 

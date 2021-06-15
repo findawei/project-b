@@ -6,6 +6,7 @@ const auth = require('../../middleware/auth');
 const Item = require('../../models/item');
 const config =require( '../../config');
 const sgMail = require('@sendgrid/mail')
+const {usersLogger, transactionLogger} = require('../../logger/user_logger');
 
 const { SENDGRID_API_KEY } = config;
 sgMail.setApiKey(SENDGRID_API_KEY)
@@ -20,6 +21,8 @@ router.get('/secret', async (req, res) => {
   }
   catch(e){
     console.log(e)
+    transactionLogger.info('Stripe', { error: `${e}`}, {uid: `${res.currentUser.uid}`});
+
   }
 });
 
@@ -120,6 +123,7 @@ router.get('/card', async (req, res) => {
   }
 });
 
+//Coming from outside API -> MongoDB
 router.post('/processPayment', async (req, res) =>{
   try {
     const newItem = req.body.results;
@@ -220,6 +224,7 @@ router.post('/processPayment', async (req, res) =>{
     res.status(400).json(err);
   }  
 })
+
 //Place hold on cc with bid amount
 router.post('/bid', async (req, res) =>{
   const auth = req.currentUser;

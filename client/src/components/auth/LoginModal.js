@@ -106,7 +106,9 @@ const LoginModal = ({
           } else {
             // signin
                 login(user);
-                setOpen(false)
+                if(auth.isAuthenticated){
+                  setOpen(false)
+                }
             ;
           }
         }
