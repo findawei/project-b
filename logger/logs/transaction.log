@@ -1,0 +1,69 @@
+info: Jun-15-2021 16:49:54: 	Process Payment
+info: Jun-15-2021 16:49:58: 	Process Payment
+info: Jun-15-2021 16:49:58: 	Process Payment
+info: Jun-16-2021 13:00:19: 	Bid
+{"level":"info","message":"Bid"}
+{"level":"info","message":"Bid"}
+{"level":"info","message":"Bid"}
+info: Jun-16-2021 14:23:25: 	Bid: undefined
+info: Jun-16-2021 14:24:26: 	Bid Successful: 
+info|Jun-16-2021 14:25:15|	Bid Successful: 412
+info | Jun-16-2021 14:25:35|	Bid Successful: 412
+info: Jun-16-2021 14:27:46: 	Bid Successful: undefined
+info: Jun-16-2021 14:28:12: 	Bid Successful: 41
+info: Jun-16-2021 14:29:31: 	Bid Successful: 41: undefined
+info: Jun-16-2021 14:30:27: 	Bid Successful: 41: undefined
+info: Jun-16-2021 14:37:45: 	Bid Successful: 41: undefined
+info: Jun-16-2021 14:38:00: 	Bid Successful: 41: undefined
+info: Jun-16-2021 14:38:20: 	Bid Successful: 41: undefined
+info: Jun-16-2021 14:39:07: 	Bid Successful: 41: undefined: undefined
+{"bid":"41","level":"info","message":"Bid Successful"}
+{"bid":"41","level":"info","message":"Bid Successful"}
+info: Jun-16-2021 14:56:39: 	Bid Successful: 41: undefined: undefined
+info: Jun-16-2021 14:59:26: 	Bid Successful: [object Object]: undefined: undefined
+info: Jun-16-2021 14:59:48: 	Bid Successful: [object Object]: undefined: undefined
+info: Jun-16-2021 15:00:28: 	Bid Successful: undefined: undefined: undefined
+info: Jun-16-2021 15:01:07: 	Bid Successful: 41: undefined: undefined
+info: Jun-16-2021 15:01:38: 	Bid Successful: $41: undefined: undefined
+info: Jun-16-2021 17:12:17: 	Bid Successful: 41: undefined: undefined
+{"bid":"41","level":"info","message":"Bid Successful"}
+{"bid":"41","level":"info","message":"Bid Successful"}
+{"bid":"41","level":"info","message":"Bid Successful"}
+{"bid":"41","level":"info","message":"Bid Successful"}
+{"bid":"41","level":"info","message":"Bid Successful"}
+info: Jun-16-2021 17:15:04: 	Bid Successful: 41: undefined: undefined
+info: Jun-16-2021 17:16:33: 	Bid Successful: 41: undefined: undefined
+info: Jun-16-2021 17:32:28: 	Bid Successful: 41: 12345: h7ikrjAsPUh6uUtkVs7evGVyFU23
+{"level":"info","message":"Bid Successful","bid":"41","auction_id":"12345","uid":"h7ikrjAsPUh6uUtkVs7evGVyFU23"}
+info: Jun-16-2021 17:35:23: 	Bid Successful bid:41 auction_id:12345 uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-16-2021 17:35:56: 	Bid Successful bid:$41 auction_id:12345 uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-16-2021 17:36:48: 	Bid Successful bid:$41 auction_id:12345: uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-16-2021 17:36:56: 	Bid Successful bid:$41 auction_id:12345 : uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-16-2021 17:37:07: 	Bid Successful bid:$41 auction_id:12345  uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:39:48: 	Bid Successful bid:$400 auction_id:12345 uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:40:16: 	Bid Successful bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:40:24: 	Bid Successful bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:40:25: 	Bid Successful bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:40:25: 	Bid Successful bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:40:25: 	Bid Successful bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:40:25: 	Bid Successful bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:40:26: 	Bid Successful bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:40:26: 	Bid Successful bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-17-2021 12:42:21: 	Something went wrong bid:$undefined auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-17-2021 12:45:35: 	Something went wrong bid:$ auction_id:undefined uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jun-17-2021 12:46:16: 	Bid Successful bid:400 auction_id:12345 uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-17-2021 12:52:48: 	Something went wrong bid: auction_id:12345 uid:h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-17-2021 12:52:48: 	Bad Request - /api/stripe/test - POST - ::ffff:127.0.0.1 - undefined - 12345 - h7ikrjAsPUh6uUtkVs7evGVyFU23 bid:undefined auction_id:undefined uid:undefined
+error: Jun-17-2021 12:57:48: 	Something went wrong
+error: Jun-17-2021 12:57:48: 	Bad Request - /api/stripe/test - POST - ::ffff:127.0.0.1 - undefined - 12345 - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-17-2021 12:59:26: 	Bad Request - /api/stripe/test - POST - Bid: undefined - 12345 - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-17-2021 13:00:15: 	Bad Request - /api/stripe/test - POST - Bid: undefined - Auction_ID: 12345 - UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-06-17T17:07:14.852Z: 	Bad Request - /api/stripe/test - POST - Bid: undefined - Auction_ID: 12345 - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-17-2021 13:11:00 -04:00: 	Bad Request - /api/stripe/test - POST - Bid: undefined - Auction_ID: 12345 - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jun-17 13:11:34 -04:00: 	Bad Request - /api/stripe/test - POST - Bid: undefined - Auction_ID: 12345 - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-17 13:21:32 -04:00: 	Bid Successful
+info: 2021-Jun-17 13:21:50 -04:00: 	Bid Successful
+info: 2021-Jun-17 13:21:50 -04:00: 	OK - /api/stripe/test - POST - Bid: 400 - Auction_ID: 12345 - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-17 13:23:29 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: 400 - Auction_ID: 12345 - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jun-17 14:44:49 -04:00: 	Bad Request - /api/stripe/test - POST - ::ffff:127.0.0.1 - Bid: undefined - Auction_ID: 12345 - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jun-17 15:08:44 -04:00: 	Bad Request - /api/stripe/test - POST - ::ffff:127.0.0.1 - Bid: undefined - Auction_ID: 12345 - Email: hayhoky@gmail.com - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23

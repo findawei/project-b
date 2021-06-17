@@ -8,33 +8,20 @@ const stripe = require('./routes/api/stripe')
 const items = require('./routes/api/items')
 const users = require("./routes/api/users");
 const authRoutes = require("./routes/api/auth");
-const companion = require('@uppy/companion')
+// const companion = require('@uppy/companion')
 const session = require('express-session')
 const fs = require('fs')
-const AWS = require('aws-sdk');
-const multiparty = require('multiparty');
+// const AWS = require('aws-sdk');
+// const multiparty = require('multiparty');
 const fileType = require('file-type');
 const sgMail = require('@sendgrid/mail')
 const DATA_DIR = path.join(__dirname, 'tmp')
-const logger = require('./logger/logger')
-const user_logger = require('./logger/user_logger')
+const {serverLogger} = require('./logger/logger')
 
 const app = express();
 
-//body parser
-// app.use(require('cors')({
-//   origin: true,
-//   credentials: true,
-// }))
-
 app.use(express.json());
 app.use(decodeIDToken);
-
-// app.use(session({
-//   secret: 'some-secret',
-//   resave: true,
-//   saveUninitialized: true,
-// }))
 
 // app.use((req, res, next) => {
 //   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*')
@@ -78,14 +65,14 @@ app.use('/api/stripe', stripe)
 
 // Capture 500 errors
 app.use((err,req,res,next) => {
-res.status(500).send('Could not perform the calculation!');
-   logger.error(`${err.status || 500} - ${res.statusMessage} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+res.status(500).send('Something went wrong.');
+serverLogger.error(`${err.status || 500} - ${res.statusMessage} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 })
 
 // Capture 404 erors
 app.use((req,res,next) => {
 res.status(404).send("PAGE NOT FOUND");
-    logger.error(`400 || ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+serverLogger.error(`400 || ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 })
 
 //Uppy Companion
@@ -127,5 +114,5 @@ res.status(404).send("PAGE NOT FOUND");
 const { PORT, HOST} = config;
 const server = app.listen(PORT, ()=> {
     console.log(`Server started and running on http://${HOST}:${PORT}`);
-    logger.info(`Server started and running on http://${HOST}:${PORT}`);
+    serverLogger.info(`Server started and running on http://${HOST}:${PORT}`);
 });

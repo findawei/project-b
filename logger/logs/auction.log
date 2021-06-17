@@ -1,0 +1,2 @@
+error: Jun-17-2021 17:58:17: 	Forbidden - /api/items/comment/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized
+error: Jun-17-2021 17:58:50: 	Forbidden - /api/items/bid/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized

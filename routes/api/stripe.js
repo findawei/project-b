@@ -6,7 +6,7 @@ const auth = require('../../middleware/auth');
 const Item = require('../../models/item');
 const config =require( '../../config');
 const sgMail = require('@sendgrid/mail')
-const {usersLogger, transactionLogger} = require('../../logger/user_logger');
+const {usersLogger, transactionLogger} = require('../../logger/logger');
 
 const { SENDGRID_API_KEY } = config;
 sgMail.setApiKey(SENDGRID_API_KEY)
@@ -21,7 +21,7 @@ router.get('/secret', async (req, res) => {
   }
   catch(e){
     console.log(e)
-    transactionLogger.info('Stripe', { error: `${e}`}, {uid: `${res.currentUser.uid}`});
+    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e}`);
 
   }
 });
@@ -37,6 +37,7 @@ router.get('/getCustomer', async (req, res) => {
     // console.log(auth)
   }catch(e){
     console.log(e)
+    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e} - ${auth.email} - ${auth.uid}`);
   }
   }
 });
@@ -61,6 +62,7 @@ if(auth){
     }
   }catch(e){
     console.log(e)
+    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e} - ${auth.email} - ${auth.uid}`);
   }
   }
   return;
@@ -72,7 +74,10 @@ router.post('/createIntent', async (req, res) =>{
       try{
         //Get stripe_id
         const user = await User.findOne({uid: req.currentUser.uid})
-          if (!user.stripe_id) throw Error("User doesn't have a stripe id");
+          if (!user.stripe_id) {
+            throw Error("User doesn't have a stripe id"),
+            transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User doesn't have a stripe id - ${auth.email} - ${auth.uid}`);
+          };
         //Customer Exists, check if setupIntents Exists
         const setupIntents = await stripe.setupIntents.list({
             customer: user.stripe_id
@@ -91,6 +96,7 @@ router.post('/createIntent', async (req, res) =>{
         }
       }catch(e){
         console.log(e)
+        transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e} - ${auth.email} - ${auth.uid}`);
       }
     }
 })
@@ -119,6 +125,7 @@ router.get('/card', async (req, res) => {
     }   
   }catch(e){
     console.log(e)
+    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e} - ${auth.email} - ${auth.uid}`);
   }
   }
 });
@@ -137,12 +144,14 @@ router.post('/processPayment', async (req, res) =>{
         }))
     const single = auctions[0]
           // //Perform charge here
-        if(single){
+        if(typeof(single) != "undefined"){
           try {
             //Get stripe_id
             const user = await User.findOne({uid: single.user_id})
               if (user && !user.stripe_id) {
-                throw Error("User doesn't have a stripe id");
+                throw Error("User doesn't have a stripe id"),
+                transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User doesn't have a stripe id - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${single.user_id}`);
+
               } else if(user && user.stripe_id){    
 
                 const paymentIntents = await stripe.paymentIntents.list({
@@ -160,6 +169,7 @@ router.post('/processPayment', async (req, res) =>{
                     status: "completed",
                     },{ new: true});
                   console.log("*** Item Updated ***")
+                  transactionLogger.info(`Payment Successful - ${req.originalUrl} - ${req.method} - Fee(/100): ${paymentIntent.amount_received} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`)
                   //Send email to buyer
                 const auctionSeller = await User.findOne({uid: updateItem.user})
 
@@ -205,11 +215,13 @@ router.post('/processPayment', async (req, res) =>{
                   .catch((error) => {
                     console.error(error)
                     res.status(400).json('Something went wrong.')
+                    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`)
                   })
                 }
                 res.status(200).json(paymentIntent);
             } else {
               res.status(400).json('Something went wrong.')
+              transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`);
             }
           } catch (err) {
             // Error code will be authentication_required if authentication is needed
@@ -217,11 +229,12 @@ router.post('/processPayment', async (req, res) =>{
             const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
             console.log('PI retrieved: ', paymentIntentRetrieved.id);
             res.status(400).json(paymentIntentRetrieved.id);
-            console.log(err)
+            transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err} - paymentIntent: ${paymentIntentRetrieved.id} - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`);
           }  
         } 
   } catch (err) {        
     res.status(400).json(err);
+    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err} - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`);
   }  
 })
 
@@ -230,6 +243,7 @@ router.post('/bid', async (req, res) =>{
   const auth = req.currentUser;
   if(auth){
   const newBid = {
+    auction_id: req.body._id,
     bid: req.body.bid,
     name: req.currentUser.name,
     user_uid: req.currentUser.uid
@@ -251,6 +265,7 @@ router.post('/bid', async (req, res) =>{
                 });
                 if(paymentIntent.status === 'requires_capture'){
                   res.status(200).json(paymentIntent);
+                  transactionLogger.info(`Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
                 } 
               }         
       } catch (err) {
@@ -259,41 +274,28 @@ router.post('/bid', async (req, res) =>{
         const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
         console.log('PI retrieved: ', paymentIntentRetrieved.id);
         res.status(400).json(paymentIntentRetrieved.id);
-        console.log(err)
-    }
+        transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
+      }
 }})
 
-// //Retrieve paymentIntent & charge -> used for auction winner
-// router.post('/test', async (req, res) =>{
-//   const auth = req.currentUser;
-//     if(auth){
-//       try{
-//         //Get stripe_id
-//         const user = await User.findOne({uid: req.currentUser.uid})
-//           if (!user.stripe_id) throw Error("User doesn't have a stripe id");
-//         //Customer Exists, check if paymentIntent Exists
-//         const paymentIntents = await stripe.paymentIntents.list({
-//             customer: user.stripe_id
-//           });
-       
-//           //Get the intent  
-//           const foundIntent = paymentIntents.data.find(({status}) => status === 'requires_capture')
-//           //Charge the intent
-//           const paymentIntent = await stripe.paymentIntents.capture(`${foundIntent.id}`);
-//           //Update item status
-//           if(paymentIntent.status === 'succeeded'){
-//           res.status(200).json(paymentIntent)
-//           }
-//         }
-//         catch (err) {
-//           // Error code will be authentication_required if authentication is needed
-          
-//           res.status(400).json(err);
-//           console.log(err)
-//       }
-//     }
-// })
-
-        
+//Place hold on cc with bid amount
+router.post('/test', async (req, res) =>{
+  const auth = req.currentUser;
+  if(auth){
+  const newBid = {
+    auction_id: req.body._id,
+    bid: req.body.bid,
+    name: req.currentUser.name,
+    user_uid: req.currentUser.uid
+  };
+  if (newBid.bid && newBid.auction_id){
+    res.status(200).json(newBid)
+    transactionLogger.info(`Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
+  } else {
+    res.status(400).json('Something went wrong');
+    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
+  }
+}
+});
 
 module.exports = router;

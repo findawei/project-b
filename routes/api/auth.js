@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
-const {usersLogger, transactionLogger} = require('../../logger/user_logger');
+const {usersLogger, transactionLogger} = require('../../logger/logger');
 
 // User Model
 const User = require('../../models/User');
@@ -29,19 +29,17 @@ router.post('/login', async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       throw Error('User Does not exist'),
-      usersLogger.error('Login', {error: `${e.message}`}, {email: `${email}`});
+      usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${user.email} - ${user.uid}`);
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       throw Error('Invalid credentials'),
-      usersLogger.error('Login', {error: `${e.message}`}, {email: `${email}`});
+      usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Invalid credentials - ${user.email} - ${user.uid}`);
     }
 
     // const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: 3600 });
     // if (!token) throw Error('Couldnt sign the token');
-
-    ITEM_ERROR;
     res.status(200).json({
       user: {
         uid: user.uid
@@ -49,7 +47,7 @@ router.post('/login', async (req, res) => {
     });
   } catch (e) {
     res.status(400).json({ msg: e.message });
-    usersLogger.error(`Login: ${e.message}, for ${email}`);
+    usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${user.email} - ${user.uid}`);
   }
 });
 
@@ -71,7 +69,7 @@ if(auth && name){
     const user = await User.findOne({uid});
     if (user) {
       throw Error('User already exists'),
-      usersLogger.error(`Register: ${email} & ${uid} already exists`);
+      usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User already exists - ${user.email} - ${user.uid}`);
     };
 
     const newUser = new User({
@@ -93,16 +91,11 @@ if(auth && name){
         email: savedUser.email
       }
     });
-    usersLogger.info('User created!',
-    {uid: user.uid,
-    name: user.name,
-    email: user.email,
-    })
-    
-    
+    usersLogger.info(`User created - ${req.originalUrl} - ${req.method} - ${user.email} - ${user.uid}`)
+
   } catch (e) {
     res.status(400).json({ msg: e.message });
-    usersLogger.error(`Register: ${e.message} for user ${uid}`);
+    usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`);
   }
 }
 });
@@ -120,12 +113,12 @@ if(auth){
     const user = await User.findOne({uid: req.currentUser.uid})
     if (!user) {
       throw Error('User Does not exist'),
-      usersLogger.error(`Loading: ${req.currentUser.uid} does not exist`);
+      usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User does not exist - ${auth.email} - ${auth.uid}`);
     };
     res.json(user);
   } catch (e) {
     res.status(400).json({ msg: e.message });
-    usersLogger.error(`Loading: ${e.message} for user ${req.currentUser.uid}`);
+    usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`);
   }
 }
 });
@@ -140,7 +133,7 @@ if(auth){
       res.status(200).json(updateUser)
   } catch (e) {
       res.status(400).json({ msg: e.message });
-      transactionLogger.error(`Stripe: ${e.message} for user ${req.currentUser.uid}`);
+      transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`);
   }
 }
 });
@@ -155,8 +148,8 @@ if(auth){
       res.status(200).json(updateUser)
   } catch (e) {
       res.status(400).json({ msg: e.message });
-      transactionLogger.error(`Stripe: ${e.message} for user ${req.currentUser.uid}`);
-  }
+      transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`);
+    }
 }
 });
 
@@ -178,20 +171,37 @@ const humanKey = req.body.captcha
       .then(json => json.success)
       .catch(err => {
         throw new Error(`Error in Google Siteverify API. ${err.message}`),
-        usersLogger.error(`Captcha: ${err.message}`);
+        usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message}`)
       })
 
-    if (humanKey === null || !isHuman) {
-      throw new Error(`YOU ARE NOT A HUMAN.`),
-      usersLogger.error(`Captcha: YOU ARE NOT A HUMAN.`);
-    }
+    if (humanKey === null || !isHuman) 
+      throw new Error(`YOU ARE NOT A HUMAN.`)
     // The code below will run only after the reCAPTCHA is succesfully validated.
     // console.log("SUCCESS!")
     res.status(200).json('success')
   } catch (e){
     res.status(400).json({ msg: e.message });
-    usersLogger.error(`Captcha: ${e.message}`);
+    usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`);
   }
+});
+
+router.post('/test', async (req, res) =>{
+  const auth = req.currentUser;
+  if(auth){
+  const newBid = {
+    auction_id: req.body._id,
+    bid: req.body.bid,
+    name: req.currentUser.name,
+    user_uid: req.currentUser.uid
+  };
+  if (newBid.bid && newBid.auction_id){
+    res.status(200).json(newBid)
+    usersLogger.info(`Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
+  } else {
+    res.status(400).json('Something went wrong');
+    usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
+  }
+}
 });
 
 module.exports = router;
