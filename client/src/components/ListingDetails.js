@@ -27,7 +27,6 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CommentsAndBids from './CommentsAndBids';
 import LoginModalComment from './auth/LoginModalComment';
 import Gallery from './Gallery'
-import ImageGallery from 'react-image-gallery';
 import { paymentIntent } from '../flux/actions/stripeActions';
 import EndingSoon from './EndingSoon';
 

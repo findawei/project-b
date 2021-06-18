@@ -1,4 +1,5 @@
 const express = require('express');
+const { RateLimiterMongo } = require('rate-limiter-flexible');
 const mongoose = require('mongoose');
 const decodeIDToken = require('./middleware/auth');
 const path =require('path');
@@ -8,7 +9,6 @@ const stripe = require('./routes/api/stripe')
 const items = require('./routes/api/items')
 const users = require("./routes/api/users");
 const authRoutes = require("./routes/api/auth");
-// const companion = require('@uppy/companion')
 const session = require('express-session')
 const fs = require('fs')
 // const AWS = require('aws-sdk');
@@ -17,29 +17,17 @@ const fileType = require('file-type');
 const sgMail = require('@sendgrid/mail')
 const DATA_DIR = path.join(__dirname, 'tmp')
 const {serverLogger} = require('./logger/logger')
+const helmet = require("helmet");
+var toobusy = require('toobusy-js');
+
 
 const app = express();
 
 app.use(express.json());
 app.use(decodeIDToken);
+app.use(helmet());
 
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', req.headers.origin || '*')
-//   res.setHeader(
-//     'Access-Control-Allow-Methods',
-//     'GET, POST, OPTIONS, PUT, PATCH, DELETE'
-//   )
-//   res.setHeader(
-//     'Access-Control-Allow-Headers',
-//     'Authorization, Origin, Content-Type, Accept'
-//   )
-//   next()
-// })
 
-// app.get('/companion', (req, res) => {
-//   res.setHeader('Content-Type', 'text/plain')
-//   res.send('Welcome to Companion')
-// })
 
 //DB config
 const { MONGO_URI, MONGO_DB_NAME } = config;
@@ -56,12 +44,31 @@ mongoose
     .then(()=> console.log('MongoDB connected...'))
     .catch(err => console.log(err));
 
+const mongoConn = mongoose.connection;
+
+const opts = {
+  storeClient: mongoConn,
+  points: 10, // Number of points
+  duration: 1, // Per second(s)
+};
+const rateLimiterMongo = new RateLimiterMongo(opts);
+const rateLimiterMiddleware = (req, res, next, err) => {
+  rateLimiterMongo.consume(req.ip)
+      .then(() => {
+        next();
+      })
+      .catch(() => {
+        res.status(429).send('Too Many Requests');
+        serverLogger.error(`${err.status || 429} - ${res.statusMessage} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+      });
+  };
+app.use(rateLimiterMiddleware)
+
 //Use Routes
 app.use('/api/items', items)
 // app.use('/api/users', users)
 app.use('/api/auth', authRoutes);
 app.use('/api/stripe', stripe)
-
 
 // Capture 500 errors
 app.use((err,req,res,next) => {
@@ -71,44 +78,9 @@ serverLogger.error(`${err.status || 500} - ${res.statusMessage} - ${err.message}
 
 // Capture 404 erors
 app.use((req,res,next) => {
-res.status(404).send("PAGE NOT FOUND");
+res.status(404).send("Page not found.");
 serverLogger.error(`400 || ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 })
-
-//Uppy Companion
-// const {AWS_KEY, AWS_SECRET, AWS_BUCKET, AWS_REGION, endpoint} = config
-
-// const options = {
-//     providerOptions: {
-//       s3: {
-//         getKey: (req, filename) =>`/${filename}`,
-//         key: AWS_KEY,
-//         secret: AWS_SECRET,
-//         bucket: AWS_BUCKET,
-//         region: AWS_REGION,
-//         endpoint
-//       },
-//     },
-//     server: { 
-//         host: `localhost:${PORT}`, 
-//         path: '/companion'
-//     },
-//     filePath: DATA_DIR,
-//     secret: 'blah blah',
-//     debug: true,
-//   }
-
-// try {
-//   fs.accessSync(DATA_DIR)
-// } catch (err) {
-//   fs.mkdirSync(DATA_DIR)
-// }
-// process.on('exit', () => {
-//   rimraf.sync(DATA_DIR)
-// })
-
-// app.use('/companion', companion.app(options))
-// companion.socket(server, options)
 
 //Connect on PORT
 const { PORT, HOST} = config;

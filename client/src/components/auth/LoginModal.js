@@ -84,7 +84,7 @@ const LoginModal = ({
    * @param _fieldName
    */
   const showError = (_fieldName) => {
-    let error = (errors)[_fieldName];
+    let error = (!!errors)[_fieldName];
     return error ? (
       <div style={{ color: "red", fontWeight: "bold" }}>
         {error.message || "Field Is Required"}
