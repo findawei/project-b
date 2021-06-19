@@ -50,7 +50,8 @@ const [open, setOpen] = useState(false);
 const [info, setInfo] = useState('');
 const [forsale, setForSale] = useState('no');
 const [reserve, setReserve] = useState('no');
-const [year, setYear] = useState(null)
+const [year, setYear] = useState(null);
+const [phone, setPhone] = useState(null);
 const [service, setService] = useState(null)
 const [newItem, setNewItem] = useState('')
 
@@ -255,6 +256,7 @@ return (
               name="phone"
               id="phone"
               country={'us'}
+              defaultValue={''}
               rules={{
                 minLength: {
                   value: 11,

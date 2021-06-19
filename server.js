@@ -19,6 +19,7 @@ const DATA_DIR = path.join(__dirname, 'tmp')
 const {serverLogger} = require('./logger/logger')
 const helmet = require("helmet");
 var toobusy = require('toobusy-js');
+var hpp = require('hpp');
 
 
 const app = express();
@@ -27,6 +28,8 @@ app.use(express.json());
 app.use(decodeIDToken);
 app.use(helmet());
 
+app.use(express.urlencoded({ extended: false }))
+app.use(hpp()); // <- THIS IS THE NEW LINE
 
 
 //DB config
@@ -82,9 +85,34 @@ res.status(404).send("Page not found.");
 serverLogger.error(`400 || ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
 })
 
+// Have grace under load
+app.use(function(req, res, next, err) {
+  if (toobusy()) {
+    res.send(503, "I'm busy right now, sorry.");
+    serverLogger.error(`${err.status || 503} - ${res.statusMessage} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+
+  } else {
+    next();
+  }
+});
+
+app.get('/', function(req, res) {
+  // processing the request requires some work!
+  var i = 0;
+  while (i < 1e5) i++;
+  res.send("I counted to " + i);
+});
+
 //Connect on PORT
 const { PORT, HOST} = config;
 const server = app.listen(PORT, ()=> {
     console.log(`Server started and running on http://${HOST}:${PORT}`);
     serverLogger.info(`Server started and running on http://${HOST}:${PORT}`);
+});
+
+process.on('SIGINT', function() {
+  console.log( "\nGracefully shutting down from SIGINT (Ctrl-C)" );
+  server.close();
+  toobusy.shutdown();
+  process.exit(1);
 });

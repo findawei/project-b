@@ -9,7 +9,7 @@ const {usersLogger, transactionLogger, auctionsLogger} = require('../../logger/l
 const { SENDGRID_API_KEY } = config;
 sgMail.setApiKey(SENDGRID_API_KEY)
 
-const { formatDistance, subDays } = require ('date-fns')
+const { formatDistance, subDays, format } = require ('date-fns')
 
 // @route   GET api/items/
 // @desc    Get all items for a specific user
@@ -108,13 +108,10 @@ router.post('/submit', async (req, res) => {
   //  console.log(newItem)
   try{ 
     const item = await newItem.save();
-    auctionsLogger.info(`Submitted successfully - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${user.email} - ${user.uid}`);
-
-    if (!item) {
+    if(!item) {
       res.status(400).json('Something went wrong saving the item');
-      auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Something went wrong saving the item - ${user.email} - ${user.uid}`);
+      auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Something went wrong saving the item - ${auth.email} - ${auth.uid}`);
     }
-
     //Send email to site admin
       templates = {
         Watch_submission: "d-b739df9df01445b5bbca796bf0b1b37d"
@@ -141,7 +138,7 @@ router.post('/submit', async (req, res) => {
         year: newItem.year,   
         reserve: (newItem.reserve === null? 0 : newItem.reserve),
         location: newItem.location,
-        service: newItem.service,
+        service: format(new Date(newItem.service), 'yyyy/MM/dd'),
         phone: newItem.phone,
         referral: newItem.referral,
        }
@@ -151,18 +148,19 @@ router.post('/submit', async (req, res) => {
       .then(() => {
         console.log('Email sent')
         res.status(200).json(item)
+        auctionsLogger.info(`Submitted successfully - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${auth.email} - ${auth.uid}`);
       })
       .catch((error) => {
         console.error(error)
         res.status(400).json('Something went wrong.')
-        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${user.email} - ${user.uid}`);
+        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`);
       })
     
     return
     } 
   catch (e) {
   res.status(400).json({ msg: e.message, success: false });
-  auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${user.email} - ${user.uid}`);
+  auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`);
 }
 }
 return(res.status(403).send('Not authorized'),
