@@ -116,3 +116,10 @@ process.on('SIGINT', function() {
   toobusy.shutdown();
   process.exit(1);
 });
+
+process.on("uncaughtException", function(req, origin, err) {
+  // clean up allocated resources
+  // log necessary error details to log files
+  serverLogger.error(`${err.status || 503} - 'uncaughtException' - ${err.message} - ${req.originalUrl} - ${req.method} - ${origin} - ${req.ip}`);
+  process.exit(); // exit the process to avoid unknown state
+});

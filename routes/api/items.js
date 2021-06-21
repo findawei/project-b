@@ -9,7 +9,7 @@ const {usersLogger, transactionLogger, auctionsLogger} = require('../../logger/l
 const { SENDGRID_API_KEY } = config;
 sgMail.setApiKey(SENDGRID_API_KEY)
 
-const { formatDistance, subDays, format } = require ('date-fns')
+const { formatDistance, subDays, format, isPast, isFuture } = require ('date-fns')
 
 // @route   GET api/items/
 // @desc    Get all items for a specific user
@@ -148,7 +148,7 @@ router.post('/submit', async (req, res) => {
       .then(() => {
         console.log('Email sent')
         res.status(200).json(item)
-        auctionsLogger.info(`Submitted successfully - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${auth.email} - ${auth.uid}`);
+        auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Submitted successfully - ${auth.email} - ${auth.uid}`);
       })
       .catch((error) => {
         console.error(error)
@@ -164,7 +164,7 @@ router.post('/submit', async (req, res) => {
 }
 }
 return(res.status(403).send('Not authorized'),
-auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Not authorized`))
+auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
 }
 );
 
@@ -229,10 +229,13 @@ auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} 
 // @access   Private
 router.post('/bid/:id', async (req, res) => {
     const auth = req.currentUser;
-    if(auth){
-      try {
-        const item = await Item.findById({_id: req.params.id});
 
+    if(auth){
+      const item = await Item.findById({_id: req.params.id});
+      
+      try {
+        if (isFuture(item.endDate)){
+         
         const newBid = {
           bid: req.body.bid,
           name: req.currentUser.name,
@@ -245,17 +248,21 @@ router.post('/bid/:id', async (req, res) => {
 
         res.json(item.bidHistory);
 
-        auctionsLogger.info(`Bid successfully - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${user.email} - ${user.uid}`);
-
+        auctionsLogger.info(`Bid successfully - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
+      } else {
+        console.log('Cannot bid on closed auction.')
+        res.status(400).send('Cannot bid on closed auction.')
+        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Cannot bid on closed auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
+      }
       } catch (err) {
         console.error(err.message);
         res.status(400).send('Server Error');
-        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${user.email} - ${user.uid}`);
+        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
       }
       return
     }
     return (res.status(403).send('Not authorized'),
-    auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Not authorized`)
+    auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
     )
   }
 );
@@ -278,16 +285,16 @@ router.post('/comment/:id', async (req, res) => {
       item.comments.unshift(newComment);
       await item.save();
       res.json(item.comments);
-      auctionsLogger.info(`Comment successfully - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${user.email} - ${user.uid}`);
+      auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Comment successfully - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
     } catch (err) {
       console.error(err.message);
       res.status(400).send('Server Error');
-      auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${user.email} - ${user.uid}`);
+      auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
     }
     return
   }
   return (res.status(403).send('Not authorized'),
-  auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Not authorized`))
+  auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
 }
 );
 

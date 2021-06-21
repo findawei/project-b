@@ -15,3 +15,16 @@ error: Jun-19-2021 18:13:28: 	Bad Request - /api/items/submit - POST - ::ffff:12
 error: Jun-19-2021 18:16:43: 	Bad Request - /api/items/submit - POST - ::ffff:127.0.0.1 - format is not defined - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 info: Jun-19-2021 18:22:29: 	Submitted successfully - OK - /api/items/submit - POST - ::ffff:127.0.0.1 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 info: Jun-19-2021 18:27:08: 	Submitted successfully - OK - /api/items/submit - POST - ::ffff:127.0.0.1 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-21-2021 08:43:29: 	Forbidden - /api/items/bid/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized
+error: Jun-21-2021 08:43:31: 	Forbidden - /api/items/bid/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized
+error: Jun-21-2021 08:43:32: 	Forbidden - /api/items/bid/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized
+error: Jun-21-2021 08:43:32: 	Forbidden - /api/items/bid/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized
+error: Jun-21-2021 08:43:32: 	Forbidden - /api/items/bid/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized
+error: Jun-21-2021 08:43:32: 	Forbidden - /api/items/bid/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized
+error: Jun-21-2021 08:43:33: 	Forbidden - /api/items/bid/6050c9bd7eade8231fb9d76a - POST - ::ffff:127.0.0.1 - Not authorized
+error: Jun-21-2021 08:43:50: 	Forbidden - /api/items/bid/60ad3c31784b24f7835895e5 - POST - ::ffff:127.0.0.1 - Not authorized
+info: Jun-21-2021 08:45:58: 	Bid successfully - OK - /api/items/bid/60ad3c31784b24f7835895e5 - POST - ::ffff:127.0.0.1 - Bid: 2331 - Auction_ID: 60ad3c31784b24f7835895e5 - undefined - undefined
+error: Jun-21-2021 12:47:46: 	Bad Request - /api/items/bid/60ad3c31784b24f7835895e5 - POST - ::ffff:127.0.0.1 - 
+error: Jun-21-2021 12:48:33: 	Bad Request - /api/items/bid/60ad3c31784b24f7835895e5 - POST - ::ffff:127.0.0.1 - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-21-2021 12:48:48: 	Bad Request - /api/items/bid/60ad3c31784b24f7835895e5 - POST - ::ffff:127.0.0.1 - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jun-21-2021 12:50:28: 	Bad Request - /api/items/bid/60ad3c31784b24f7835895e5 - POST - ::ffff:127.0.0.1 - Cannot bid on closed auction. - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
