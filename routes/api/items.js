@@ -223,6 +223,32 @@ auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} 
 //     }
 //   });
 
+// @route   PUT api/items/:id
+// @desc    Update item endTime
+// @access  Private
+router.put('/endDate/:id', async (req, res) => {
+  const auth = req.currentUser;
+
+  if(auth){
+    try{ 
+    const updateItemEndDate = await 
+  Item.findOneAndUpdate({_id: req.params.id}, {
+    $set:{
+    endDate: req.body.endDate,
+    }
+    },{upsert: true, new: true});
+    return (
+      res.status(200).json(updateItemEndDate), 
+      auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Extended Auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`));
+    } catch(e){
+    res.status(400).json({ msg: e.message, success: false })
+    auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
+    }
+  }
+  return (
+    res.status(403).send('Not authorized'),
+    auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
+  });
   
 // @route    POST api/items/bid/:id
 // @desc     Bid history on an auction
@@ -248,7 +274,7 @@ router.post('/bid/:id', async (req, res) => {
 
         res.json(item.bidHistory);
 
-        auctionsLogger.info(`Bid successfully - ${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
+        auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid successfully - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
       } else {
         console.log('Cannot bid on closed auction.')
         res.status(400).send('Cannot bid on closed auction.')

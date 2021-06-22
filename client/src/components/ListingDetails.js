@@ -20,7 +20,7 @@ import Input from "@material-ui/core/Input";
 import NumberFormat from "react-number-format";
 import Countdown, {zeroPad} from 'react-countdown';
 import { spacing } from '@material-ui/system';
-import {getItemById, setCurrentItem, updateItemBid, bidOnItem, commentItem, updateItemEndDate} from '../flux/actions/itemActions'
+import {getItemById, setCurrentItem, bidOnItem, commentItem, updateItemEndDate} from '../flux/actions/itemActions'
 import BidHistoryComponent from './BidHistoryComponent'
 import LoginModalBid from './auth/LoginModalBid'
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -32,7 +32,7 @@ import EndingSoon from './EndingSoon';
 
 
 
-const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, updateItemBid, bidOnItem, commentItem, updateItemEndDate, paymentIntent}) => {
+const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, bidOnItem, commentItem, updateItemEndDate, paymentIntent}) => {
   
   const [_id, setId] = useState('');
   const [brand, setBrand] = useState('');
@@ -347,8 +347,17 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
               :
               0
               ),
-            message: 'You need to increase your bid'
+          message: `You need to increase your bid ${<NumberFormat 
+              value={currentItem.bidHistory && currentItem.bidHistory.length?
+              currentItem.bidHistory[0].bid
+              :
+              '0'
+              }
+              displayType={'text'} 
+              thousandSeparator={true} 
+              prefix={'$'}/>}`
           },
+          required: 'Bid cannot be empty 🤷🏻‍♂️',
           valueAsNumber: true,
 
         })}
@@ -1012,5 +1021,5 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { getItemById, setCurrentItem, updateItemBid, bidOnItem, commentItem, updateItemEndDate, paymentIntent })(ListingDetails);
+export default connect(mapStateToProps, { getItemById, setCurrentItem, bidOnItem, commentItem, updateItemEndDate, paymentIntent })(ListingDetails);
   

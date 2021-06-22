@@ -55,6 +55,10 @@ const [phone, setPhone] = useState(null);
 const [service, setService] = useState(null)
 const [newItem, setNewItem] = useState('')
 
+useEffect(() => {
+  window.scrollTo(0, 0)
+}, [])
+
 const handleChange = (event) => {
     setInfo(event.target.value);
   };
