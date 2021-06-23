@@ -541,3 +541,46 @@ info: Jun-22-2021 12:51:13: 	Server started and running on http://localhost:5000
 info: Jun-22-2021 13:00:18: 	Server started and running on http://localhost:5000
 info: Jun-22-2021 13:01:55: 	Server started and running on http://localhost:5000
 info: Jun-22-2021 13:02:24: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:03:29: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+info: Jun-22-2021 21:03:38: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:05:46: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:06:51: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:07:40: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:15:47: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:17:38: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:26:05: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:26:25: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:26:41: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:27:00: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:27:40: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:28:19: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:29:18: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:30:04: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:30:09: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:32:30: 	Server started and running on http://localhost:5000
+error: Jun-22-2021 21:32:36: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Jun-22-2021 21:32:37: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+info: Jun-22-2021 21:33:16: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:33:21: 	Server started and running on http://localhost:5000
+error: Jun-22-2021 21:33:31: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Jun-22-2021 21:33:31: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+info: Jun-22-2021 21:34:01: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:35:12: 	Server started and running on http://localhost:5000
+error: Jun-22-2021 21:35:19: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Jun-22-2021 21:35:19: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+info: Jun-22-2021 21:36:25: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:38:10: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:40:55: 	Server started and running on http://localhost:5000
+info: Jun-22-2021 21:41:50: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:28:29: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:29:19: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:31:48: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:32:16: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:32:44: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:37:22: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:37:35: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:37:43: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:37:52: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:39:04: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:39:14: 	Server started and running on http://localhost:5000
+info: Jun-23-2021 08:39:24: 	Server started and running on http://localhost:5000

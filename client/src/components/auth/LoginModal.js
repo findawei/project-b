@@ -4,8 +4,9 @@ import { login, register, resetPassword, captchaSubmit } from '../../flux/action
 import { useForm, Controller } from "react-hook-form";
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
-import {Button, Box, Typography, Paper, Chip, Grid, TextField, Link} from '@material-ui/core'
+import {IconButton, Button, Box, Typography, Paper, Chip, Grid, TextField, Link} from '@material-ui/core'
 import ReCAPTCHA from "react-google-recaptcha";
+import Alert from '@material-ui/lab/Alert';
 
 
 const LoginModal = ({
@@ -79,6 +80,7 @@ const LoginModal = ({
   const [pwreset, SetReset] = useState(false);
   const [resetButton, setButton] = useState('Reset Password')
   const [buttonDisabled, setButtonDisabled] = useState(false)
+
   /**
    *
    * @param _fieldName
@@ -299,6 +301,14 @@ const body = (
               Forgot password?
             </div>
           )}
+          {auth.authMsg == 'Invalid login credentials'?
+          <Alert
+          severity={'error'}
+          >
+          Invalid login credentials
+          </Alert>
+          : ''
+          }
           </Box>
              {/* <p>
           {newUser ? "Already have an account?" : "Don't have an account yet?"}

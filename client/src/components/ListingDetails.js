@@ -340,6 +340,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
         //   }}
         // />
         // }
+        type="number"
         inputRef={register({
           min: {
             value: (currentItem.bidHistory && currentItem.bidHistory.length?
@@ -347,15 +348,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
               :
               0
               ),
-          message: `You need to increase your bid ${<NumberFormat 
-              value={currentItem.bidHistory && currentItem.bidHistory.length?
-              currentItem.bidHistory[0].bid
-              :
-              '0'
-              }
-              displayType={'text'} 
-              thousandSeparator={true} 
-              prefix={'$'}/>}`
+          message: 'You need to increase your bid'
           },
           required: 'Bid cannot be empty 🤷🏻‍♂️',
           valueAsNumber: true,

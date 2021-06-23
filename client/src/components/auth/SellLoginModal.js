@@ -6,6 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import {Button, Box, Typography, Paper, Chip, Grid, TextField, Link} from '@material-ui/core'
 import ReCAPTCHA from "react-google-recaptcha";
+import Alert from '@material-ui/lab/Alert';
 
 
 const SellLoginModal = ({
@@ -106,7 +107,9 @@ const SellLoginModal = ({
           } else {
             // signin
                 login(user);
-                setOpen(false)
+                if(auth.isAuthenticated){
+                  setOpen(false)
+                }
             ;
           }
         }
@@ -297,6 +300,14 @@ const body = (
               Forgot password?
             </div>
           )}
+          {auth.authMsg == 'Invalid login credentials'?
+          <Alert
+          severity={'error'}
+          >
+          Invalid login credentials
+          </Alert>
+          : ''
+          }
           </Box>
              {/* <p>
           {newUser ? "Already have an account?" : "Don't have an account yet?"}
