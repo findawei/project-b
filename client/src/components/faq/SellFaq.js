@@ -48,7 +48,7 @@ export default function SellFaq() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            We are open to all types and eras, as long as they have a cool factor.
+            We are focused on watches from 1980s and beyond. If you think your watch is special and cool even if it doesn't fit this criteria, try submitting your watch and we'll see if an exception can be made.
             <br/><br/>
             No Wait List is a focused auction site, so not every watch will be accepted, but we always appreciate you taking the time to submit your watch to us!
           </Typography>
@@ -92,7 +92,17 @@ export default function SellFaq() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            To start off, we ask for the basics: make, model, reference number, serial number, year, service history and a few pictures. We aim to ensure transparency. The more details you provide, the better we will be able to craft your listing. This includes any flaws or faults. We will contact you should we need more information.
+            To start off, we ask for the basics: 
+            <ul>
+            <li>Make</li>
+            <li>Model</li>
+            <li>Reference number</li>
+            <li>Serial number</li>
+            <li>Year</li>
+            <li>Service history</li>
+            <li>Pictures</li>
+            </ul>
+            We aim to ensure transparency. The more details you provide, the better we will be able to craft your listing. This includes any flaws or faults. We will contact you should we need more information.
           </Typography>
         </AccordionDetails>
       </Accordion>
@@ -248,7 +258,7 @@ export default function SellFaq() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Once the auction has ended, we will introduce you and the buyer to complete the transaction. Read more about Finalizing the Transaction.
+            Once the auction has ended, we will introduce you and the buyer to complete the transaction. Payment can be made via wire transfer, paypal, escrow etc.
             <br/><br/>
             Whatever payment method you decide on, be sure to perform your due diligence. 
           </Typography>

@@ -35,7 +35,7 @@ return(
         <ul>
             <li>If you decide to sell on No Wait List, your watch must not be for sale elsewhere. That means you&rsquo;ll have to remove any other ads for your watch. Also, you cannot accept offers outside of the auction.</li>
             <br/>
-            <li>Excellent pictures will fetch a higher sales price. Either do it yourself (here are some guides) or hire a pro. Make sure to review our guide before submitting your pictures.</li>
+            <li>Excellent pictures will fetch a higher sales price. Either do it yourself or hire a pro. Make sure to review our guide before submitting your pictures.</li>
             <br/>
             <li>Taking a quick video of your watch is recommended. You can use your phone in landscape mode and upload to YouTube or Vimeo.</li>
             <br/>

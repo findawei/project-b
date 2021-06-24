@@ -52,7 +52,7 @@ return(
         <br/>
         <b>5. Winning</b>
         <br/><br/>
-        In the case of a &ldquo;No Reserve&rdquo; auction, you&rsquo;ll win if your bid is the highest. In the case of an auction having a reserve, you must meet or exceed the seller&rsquo;s hidden &ldquo;Reserve&rdquo; price. Once the auction ends, you&rsquo;ll be electronically introduced to the seller in order to finalize the details and logistics of the transaction. You must pay the seller for the watch in-full within a week of the auction closing.
+        In the case of a &ldquo;No Reserve&rdquo; auction, you&rsquo;ll win if your bid is the highest. In the case of an auction having a reserve, you must meet or exceed the seller&rsquo;s hidden &ldquo;Reserve&rdquo; price. Once the auction ends, you&rsquo;ll be electronically introduced to the seller in order to finalize the details and logistics of the transaction. You must pay the seller in-full for the watch within a week of the auction closing.
         </Typography>
     </div>
 )

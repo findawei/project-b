@@ -147,7 +147,7 @@ export default function BuyFaq() {
           </Typography>
         </AccordionDetails>
       </Accordion>
-      {/* <Accordion>
+      <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"
@@ -160,7 +160,7 @@ export default function BuyFaq() {
           We place a hold on your credit card when you bid in order to account for the possibility that you may have to pay the buyer’s fee, should you end up as the winning bidder. The hold is for 5% of your initial bid amount, with a minimum of $250 and a maximum of $5,000. If you aren’t the winning bidder, the hold is released from your credit card at the conclusion of the auction.
           </Typography>
         </AccordionDetails>
-      </Accordion> */}
+      </Accordion>
       <Accordion>
         <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
@@ -199,7 +199,9 @@ export default function BuyFaq() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            We will introduce you and the seller to complete the transaction. Read more about Finalizing the Transaction.
+            We will introduce you and the seller to complete the transaction. Payment can be made via wire transfer, paypal, escrow etc. Make sure you and the seller agree on the method of payment before bidding.
+            <br/><br/>
+            You must pay the seller in-full for the watch within a week of the auction closing.
           </Typography>
         </AccordionDetails>
       </Accordion>
