@@ -68,3 +68,5 @@ info: 2021-Jun-17 13:23:29 -04:00: 	Bid Successful - /api/stripe/test - POST - B
 error: 2021-Jun-17 14:44:49 -04:00: 	Bad Request - /api/stripe/test - POST - ::ffff:127.0.0.1 - Bid: undefined - Auction_ID: 12345 - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
 error: 2021-Jun-17 15:08:44 -04:00: 	Bad Request - /api/stripe/test - POST - ::ffff:127.0.0.1 - Bid: undefined - Auction_ID: 12345 - Email: hayhoky@gmail.com - User_UID: h7ikrjAsPUh6uUtkVs7evGVyFU23
 info: 2021-Jun-19 17:59:19 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 10000 - Auction_ID: 6050c9bd7eade8231fb9d76a - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-27 21:31:36 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: undefined - Auction_ID: undefined - undefined - undefined
+info: 2021-Jun-27 21:32:34 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: undefined - Auction_ID: [object Object] - undefined - undefined

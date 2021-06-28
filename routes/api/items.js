@@ -269,7 +269,7 @@ router.post('/bid/:id', async (req, res) => {
         };
 
         item.bidHistory.unshift(newBid);
-
+        
         await item.save();
 
         res.json(item.bidHistory);

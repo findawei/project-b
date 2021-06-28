@@ -280,22 +280,22 @@ router.post('/bid', async (req, res) =>{
 
 //Place hold on cc with bid amount
 router.post('/test', async (req, res) =>{
-  const auth = req.currentUser;
-  if(auth){
+  // const auth = req.currentUser;
+  // if(auth){
   const newBid = {
-    auction_id: req.body._id,
-    bid: req.body.bid,
-    name: req.currentUser.name,
-    user_uid: req.currentUser.uid
+    auction_id: req.body.result._id
+    // bid: req.body.bidHistory.bid,
+    // name: req.currentUser.name,
+    // user_uid: req.currentUser.uid
   };
-  if (newBid.bid && newBid.auction_id){
+  if (newBid){
     res.status(200).json(newBid)
     transactionLogger.info(`Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
   } else {
     res.status(400).json('Something went wrong');
     transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
   }
-}
+//}
 });
 
 module.exports = router;
