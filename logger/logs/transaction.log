@@ -70,3 +70,29 @@ error: 2021-Jun-17 15:08:44 -04:00: 	Bad Request - /api/stripe/test - POST - ::f
 info: 2021-Jun-19 17:59:19 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 10000 - Auction_ID: 6050c9bd7eade8231fb9d76a - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 info: 2021-Jun-27 21:31:36 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: undefined - Auction_ID: undefined - undefined - undefined
 info: 2021-Jun-27 21:32:34 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: undefined - Auction_ID: [object Object] - undefined - undefined
+info: 2021-Jun-28 08:06:50 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: undefined - Auction_ID: [object Object] - undefined - undefined
+info: 2021-Jun-28 08:12:03 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: undefined - Auction_ID: [object Object] - undefined - undefined
+info: 2021-Jun-28 08:18:55 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: [object Object] - Auction_ID: [object Object] - hayhoky - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-28 08:21:06 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: 2331 - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-28 08:23:22 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: 2331 - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-28 08:41:19 -04:00: 	Bid Successful - /api/stripe/test - POST - Bid: 2331 - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jun-28 08:54:02 -04:00: 	Bad Request - /api/stripe/processPayment - POST - ::1 - TypeError: Cannot read property 'payment_intent' of undefined
+error: 2021-Jun-28 08:55:40 -04:00: 	Bad Request - /api/stripe/processPayment - POST - ::1 - TypeError: Cannot read property 'payment_intent' of undefined
+error: 2021-Jun-28 08:58:01 -04:00: 	Bad Request - /api/stripe/processPayment - POST - ::1 - TypeError: Cannot read property 'payment_intent' of undefined
+error: 2021-Jun-28 08:59:33 -04:00: 	Bad Request - /api/stripe/processPayment - POST - ::1 - TypeError: Cannot read property 'payment_intent' of undefined
+error: 2021-Jun-28 19:54:28 -04:00: 	Bad Request - /api/stripe/processPayment - POST - ::1 - TypeError: Cannot read property 'payment_intent' of undefined
+info: 2021-Jun-28 20:03:29 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 3000 - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-28 20:05:57 -04:00: 	Payment Successful - /api/stripe/processPayment - POST - Fee(/100): 25000 - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jun-28 20:05:57 -04:00: 	Bad Request - /api/stripe/processPayment - POST - ::1 - TypeError: Cannot read property 'payment_intent' of undefined
+error: 2021-Jun-28 20:37:26 -04:00: 	Bad Request - /api/stripe/processPayment - POST - ::1 - TypeError: Cannot read property 'payment_intent' of undefined
+error: 2021-Jun-29 08:17:38 -04:00: 	Bad Request - /api/stripe/processPayment - POST - ::1 - No payment intent found - Bid: 1400 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:21:25 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1500 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:22:18 -04:00: 	Payment Successful - /api/stripe/processPayment - POST - Fee(/100): 25000 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:30:18 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1600 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:32:20 -04:00: 	Payment Successful - /api/stripe/processPayment - POST - Fee(/100): 25000 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:34:47 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1700 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:35:25 -04:00: 	Payment Successful - /api/stripe/processPayment - POST - Fee(/100): 25000 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:42:16 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1800 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:42:46 -04:00: 	Payment Successful - /api/stripe/processPayment - POST - Fee(/100): 25000 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:58:00 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1800 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: 2021-Jun-29 08:58:18 -04:00: 	Payment Successful - /api/stripe/processPayment - POST - Fee(/100): 25000 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23

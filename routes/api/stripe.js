@@ -133,24 +133,21 @@ router.get('/card', async (req, res) => {
 //Coming from outside API -> MongoDB
 router.post('/processPayment', async (req, res) =>{
   try {
-    const newItem = req.body.results;
-    const auctions = newItem
-        .map(x =>({
-          auction_id: x._id.$oid,
-          status: x.status,
-          bid: x.bidHistory.bid.$numberInt,
-          name: x.bidHistory.name,
-          user_id: x.bidHistory.user
-        }))
-    const single = auctions[0]
+    const auction = {
+      auction_id: req.body.result._id.$oid,
+      status: req.body.result.status,
+      bid: req.body.result.bidHistory[0].bid.$numberInt,
+      name: req.body.result.bidHistory[0].name,
+      user_id: req.body.result.bidHistory[0].user
+    };
           // //Perform charge here
-        if(typeof(single) != "undefined"){
+        if(typeof(auction) != "undefined"){
           try {
             //Get stripe_id
-            const user = await User.findOne({uid: single.user_id})
+            const user = await User.findOne({uid: auction.user_id})
               if (user && !user.stripe_id) {
                 throw Error("User doesn't have a stripe id"),
-                transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User doesn't have a stripe id - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${single.user_id}`);
+                transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User doesn't have a stripe id - Bid: ${auction.bid} - Auction_ID: ${auction.auction_id} - ${user.email} - ${auction.user_id}`);
 
               } else if(user && user.stripe_id){    
 
@@ -159,17 +156,19 @@ router.post('/processPayment', async (req, res) =>{
                 });
                 //Get the intent  
                 const foundIntent = paymentIntents.data.find(({status}) => status === 'requires_capture')
+                // if(!foundIntent) {
+                //   res.status(400).json('No payment intent found.')
+                //   transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - No payment intent found - Bid: ${auction.bid} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`);
+                // }
                 //Charge the intent
                 const paymentIntent = await stripe.paymentIntents.capture(`${foundIntent.id}`);
+
                 //Update item status
                 if(paymentIntent.status === 'succeeded'){
                   //Find auction
-                  const updateItem = await 
-                  Item.findOneAndUpdate({_id: single.auction_id}, {
-                    status: "completed",
-                    },{ new: true});
+                  const updateItem = await Item.findOneAndUpdate({_id: auction.auction_id}, {status: "completed"},{ new: true});
                   console.log("*** Item Updated ***")
-                  transactionLogger.info(`Payment Successful - ${req.originalUrl} - ${req.method} - Fee(/100): ${paymentIntent.amount_received} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`)
+                  transactionLogger.info(`Payment Successful - ${req.originalUrl} - ${req.method} - Fee(/100): ${paymentIntent.amount_received} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`)
                   //Send email to buyer
                 const auctionSeller = await User.findOne({uid: updateItem.user})
 
@@ -189,12 +188,13 @@ router.post('/processPayment', async (req, res) =>{
                     email: user.email,
                     brand: updateItem.brand,
                     model: updateItem.model,
+                    item_image: updateItem.img[0].url,
                     reference: updateItem.reference_number,
                     year: updateItem.year,
                     endDate: updateItem.endDate.toISOString().substring(0, 10),
                     fee: `$${auction.bid*0.05}`,
-                    receipt_id: auction._id.substring(0,8),
-                    auction_id: auction._id,
+                    receipt_id: auction.auction_id.substring(0,8),
+                    auction_id: auction.auction_id,
                     amount_due: `$${auction.bid}`,
                     seller_username: auctionSeller.name,
                     seller_email: auctionSeller.email,
@@ -210,31 +210,31 @@ router.post('/processPayment', async (req, res) =>{
                   .send(msg)
                   .then(() => {
                     console.log('Email sent')
-                    res.status(200).json('Email sent')
+                    // res.status(200).json('Email sent')
                   })
                   .catch((error) => {
                     console.error(error)
                     res.status(400).json('Something went wrong.')
-                    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`)
+                    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${auction.bid} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`)
                   })
                 }
                 res.status(200).json(paymentIntent);
             } else {
               res.status(400).json('Something went wrong.')
-              transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`);
+              transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${auction.bid} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`);
             }
           } catch (err) {
             // Error code will be authentication_required if authentication is needed
-            console.log('Error code is: ', err.code);        
-            const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
-            console.log('PI retrieved: ', paymentIntentRetrieved.id);
-            res.status(400).json(paymentIntentRetrieved.id);
-            transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err} - paymentIntent: ${paymentIntentRetrieved.id} - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`);
+            console.log('Error code is: ', err);        
+            // const paymentIntentRetrieved = await stripe.paymentIntents.retrieve(err.raw.payment_intent.id);
+            // console.log('PI retrieved: ', paymentIntentRetrieved.id);
+            res.status(400).json(err);
+            transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err} - Bid: ${auction.bid} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`);
           }  
         } 
   } catch (err) {        
     res.status(400).json(err);
-    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err} - Bid: ${single.bid} - Auction_ID: ${single.auction_id} - ${user.email} - ${user.uid}`);
+    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err}`);
   }  
 })
 
@@ -283,14 +283,14 @@ router.post('/test', async (req, res) =>{
   // const auth = req.currentUser;
   // if(auth){
   const newBid = {
-    auction_id: req.body.result._id
-    // bid: req.body.bidHistory.bid,
-    // name: req.currentUser.name,
-    // user_uid: req.currentUser.uid
+    auction_id: req.body.result._id.$oid,
+    bid: req.body.result.bidHistory[0].bid.$numberInt,
+    name: req.body.result.bidHistory[0].name,
+    user_uid: req.body.result.bidHistory[0].user
   };
   if (newBid){
     res.status(200).json(newBid)
-    transactionLogger.info(`Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
+    transactionLogger.info(`Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${newBid.name} - ${newBid.user_uid}`)
   } else {
     res.status(400).json('Something went wrong');
     transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
