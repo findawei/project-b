@@ -52,29 +52,14 @@ const trigger = useScrollTrigger()
 
 return (
     <div className={classes.root}>
-      <AppBar position="sticky" className={classes.root}>
+      <AppBar position="sticky">
         <Toolbar className={classes.bgcolor}>
-        <Typography variant="body1" className={classes.title}>
-        <Grid container justify="center" direction="row" spacing={2}>
-            <Grid item>
-                <Button>
-                    <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#about'}>About
-                </Link>
-                </Button>
-            </Grid>
-            <Grid item>
-                 <HowToMenu />
-            </Grid>
-            <Grid item>
-                <FAQMenu />
-            </Grid>
-            {/* <Grid item>
-                <Button>
-                    {ButtonText}
-                </Button>
-            </Grid> */}
-        </Grid>
-        </Typography>
+        <Button edge="start">
+            <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#about'}>About
+            </Link>
+        </Button>
+        <HowToMenu />
+        <FAQMenu />
         </Toolbar>
       </AppBar>
     <Grid 

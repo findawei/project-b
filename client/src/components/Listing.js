@@ -11,6 +11,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import {Typography, Button, ButtonBase, Box, Link, Chip} from '@material-ui/core'
 import { positions } from '@material-ui/system';
+import isPast from 'date-fns/isPast'
 
 const Listing = ({ item, setCurrentItem }) => {
 
@@ -71,6 +72,13 @@ const useStyles = makeStyles((theme) => ({
       }
     };
 
+let boxColor
+if (isPast(new Date(item.endDate))){
+  boxColor = "black"
+} else {
+  boxColor = "green"
+}
+
 return (
   <Grid 
     item xs={12} sm={6} lg={4}
@@ -92,7 +100,7 @@ return (
                 title={item.reference_number}
             >
             <Box
-            bgcolor="green"
+            bgcolor={boxColor}
             color="white"
             p={1}
             position="absolute"
@@ -111,16 +119,27 @@ return (
                 <Typography gutterBottom variant="h5" component="h2">
                 {item.year} {item.brand} {item.reference_number} 
                 </Typography>
-                {item.reserve? 
-                ""
-                :
-                <Chip 
-                className={classes.chip}
-                size="small" label="No Reserve"/>
-                }
-                <Typography variant="body2" color="textSecondary" component="p">
-                {item.location}
-                </Typography>
+
+                <Grid content direction="row"       justify="center"
+                alignItems="center">
+                  <Grid item>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                    {item.location}
+                    </Typography>
+                  </Grid>
+                  <Grid item>
+                    {item.reserve? 
+                    ""
+                    :
+                    <Chip 
+                    className={classes.chip}
+                    size="small" label="No Reserve"/>
+                    }
+                  </Grid>
+                </Grid>
+                
+
+                
             </CardContent>
             </CardActionArea>            
             </Link>

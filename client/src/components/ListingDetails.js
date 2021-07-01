@@ -330,16 +330,6 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
          $ <TextField          
         name="bid"
         id="bid"
-        // as={
-        //   <NumberFormat
-        //   customInput={TextField}
-        //   thousandSeparator={true}
-        //   onValueChange={(v) => {
-        //     //value without dollar signe
-        //     console.log(v.value);
-        //   }}
-        // />
-        // }
         type="number"
         inputRef={register({
           min: {
