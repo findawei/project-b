@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {format} from "date-fns";
-import {Grid, Paper, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Typography,InputLabel, Box, NativeSelect, Select, Dialog, DialogTitle, DialogActions, DialogContentText, Icon } from '@material-ui/core/'
+import {Grid, Paper, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Typography,InputLabel, Box, NativeSelect, Select, Dialog, DialogTitle, DialogActions, DialogContentText, Container } from '@material-ui/core/'
 import { makeStyles } from '@material-ui/core/styles';
 import MyListings from './MyListings';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexGrow: 1,
-    margin: 20,
+    margin: 10,
   },
   paper: {
     // marginRight: theme.spacing(2),
@@ -25,16 +25,8 @@ const Profile =({auth}) => {
 
   return (
     <div className={classes.root}>
-    <Grid container
-    direction="inline"
-    justify="center"
-    alignItems="center">
-    <Grid item xs={12} md={10} lg={8}>
-        <Grid 
-        container 
-        jalignItems="center" alignContent="space-between" alignItems="space-between" justify="space-between">
-            <Grid item >
-            <Typography variant="h4" className={classes.radio}>
+    <Container>
+       <Typography variant="h4" className={classes.radio}>
             {auth && auth.user?
             auth.user.name
             :
@@ -62,18 +54,11 @@ const Profile =({auth}) => {
             <Typography className={classes.radio}>
             Joined {format(new Date(auth.user.date),'MMM Y')}
             </Typography>
-            </Grid>
-            <Grid item>
-                 <Button variant="outlined">
+            <Button variant="outlined">
             Edit Profile
             </Button>
-            </Grid>
-               
-                
-        </Grid>
-    </Grid>
-    </Grid>
-     
+    </Container>
+   
       
     </div>
   );

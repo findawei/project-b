@@ -40,14 +40,30 @@ const useStyles = makeStyles((theme) => ({
         textDecoration: "none"
     }
     },
-    chip: {
-        color: "white",
-        backgroundColor: "purple"
-      }
+    // chip: {
+    //     color: "white",
+    //     backgroundColor: "purple"
+    //   }
 }));
     const classes = useStyles();
 
-    const Completionist = () => <span>Ended</span>;
+let barText
+if(isPast(new Date(item.endDate)) && (item.status === "reserve_not_met")) {
+  barText = "Bid to "
+} else {
+  barText = "Sold for "
+}
+
+let boxColor
+if (isPast(new Date(item.endDate)) && (item.status === "completed")){
+  boxColor = "black"
+} else if(isPast(new Date(item.endDate)) && (item.status === "reserve_not_met")){
+  boxColor = "gray"
+}
+else if((item.status === "active")){
+  boxColor = "green"
+}
+    const Completionist = () => <span>{barText}</span>;
     const renderer = ({ days, hours, minutes, seconds, completed }) => {
       if (completed) {
         // Render a completed state
@@ -55,29 +71,22 @@ const useStyles = makeStyles((theme) => ({
       } else {
         // Render a countdown
           if (days == 0 && hours == 0 && minutes == 0){
-            return <span>{zeroPad(seconds)}</span>;
+            return <span>{zeroPad(seconds)} </span>;
           }
           else if (days ==0 && hours == 0){
-            return <span>{zeroPad(minutes)}:{zeroPad(seconds)}</span>; 
+            return <span>{zeroPad(minutes)}:{zeroPad(seconds)} </span>; 
           }
           else if (days ==0){
-            return <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)}</span>;
+            return <span>{hours}:{zeroPad(minutes)}:{zeroPad(seconds)} </span>;
           }
           else if (days ==1){
-            return <span>{days} Day</span>;
+            return <span>{days} Day </span>;
           }
           else {
-            return <span>{days} Days</span>;
+            return <span>{days} Days </span>;
           }
       }
     };
-
-let boxColor
-if (isPast(new Date(item.endDate))){
-  boxColor = "black"
-} else {
-  boxColor = "green"
-}
 
 return (
   <Grid 
@@ -110,36 +119,34 @@ return (
                 <Countdown
                 date={item.endDate}
                 renderer={renderer}
-            />&nbsp;
-                Bid ${item.bidHistory &&item.bidHistory.length? item.bidHistory[0].bid : 0}
+            />
+                ${item.bidHistory &&item.bidHistory.length? item.bidHistory[0].bid : 0}
             </Typography>
+            </Box>
+            <Box
+            p={0}
+            position="absolute"
+            top={10}
+            right={10}
+            >
+            {item.reserve? "" :
+              <Chip 
+                className={classes.chip}
+                size="small" 
+                label="No Reserve"
+                // variant="outlined"
+                color="secondary"
+              />
+            }
             </Box>
             </CardMedia>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                 {item.year} {item.brand} {item.reference_number} 
                 </Typography>
-
-                <Grid content direction="row"       justify="center"
-                alignItems="center">
-                  <Grid item>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                <Typography variant="body2" color="textSecondary" component="p">
                     {item.location}
                     </Typography>
-                  </Grid>
-                  <Grid item>
-                    {item.reserve? 
-                    ""
-                    :
-                    <Chip 
-                    className={classes.chip}
-                    size="small" label="No Reserve"/>
-                    }
-                  </Grid>
-                </Grid>
-                
-
-                
             </CardContent>
             </CardActionArea>            
             </Link>

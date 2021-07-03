@@ -8,7 +8,7 @@ import {Button, Box, Typography, Paper, Chip, Grid, IconButton,
   Divider,
   ListItemText,
   ListItemAvatar,
-  Avatar,
+  Avatar, Container
 } from '@material-ui/core'
 import LinearProgress from '@material-ui/core/LinearProgress';
 import {format, isPast, addMinutes, differenceInSeconds, differenceInMinutes, formatDistanceToNowStrict} from "date-fns";
@@ -124,11 +124,39 @@ useEffect(() => {
     } 
   }, [getItemById, match.params.id]);
   
+  let bidBarBg
+  let bidBarText
+  let auctionEndText
+  if(isPast(new Date(currentItem.endDate))){
+    var smBar = 12;
+    var mdBar = 12;
+    var smButton = 0;
+    var mdButton = 0;
+    if(currentItem.status === "completed"){
+      bidBarBg = 'black';
+      bidBarText = "grey"
+      auctionEndText = <b>Sold to</b>
+    }
+    else {
+      bidBarBg = 'grey';
+      bidBarText = "white"
+      auctionEndText = <b>Highest bidder</b>
+    }
+
+  } else {
+    var smBar = 9;
+    var mdBar = 8;
+    var smButton = 3;
+    var mdButton = 4;
+    bidBarBg = 'green';
+    bidBarText = 'white'
+    auctionEndText = <b>Highest bidder</b>
+  }
 
   const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        margin: 20,
+        margin: 10,
     },
     progressbar: {
       width: "70%"
@@ -161,8 +189,8 @@ useEffect(() => {
     bidbar: {
       padding: theme.spacing(1),
       textAlign: 'center',
-      color: theme.palette.success.light,
-      background: theme.palette.success.dark,
+      color: bidBarText,
+      background: bidBarBg,
       height: 40,
     },
     bidbartext: {
@@ -229,20 +257,6 @@ async function commentSubmit (data, e) {
   } catch(error){
     console.log(error);
   }  
-}
-
-if(isPast(new Date(currentItem.endDate))){
-  var smBar = 12;
-  var mdBar = 12;
-  var smButton = 0;
-  var mdButton = 0;
-  var bidBarColor = 'black';
-} else {
-  var smBar = 9;
-  var mdBar = 8;
-  var smButton = 3;
-  var mdButton = 4;
-  var bidBarColor = 'warning.dark';
 }
 
 let bidIncrement;
@@ -389,6 +403,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
 
   return(
       <div className={classes.root}>
+        <Container>
             <Typography variant="h4">
               {currentItem.brand} {currentItem.model}, {currentItem.reference_number} - {currentItem.year}
             </Typography>
@@ -448,14 +463,13 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
               >
                 <Grid item xs={12} sm={smBar} md={mdBar} className={classes.sticky}>
                   <Paper className={classes.bidbar}>
-
                   <Grid container spacing={0}>
                     <Grid item xs>
                       <Typography 
                       // variant="bold" 
                       color="inherit" 
                       display="inline">
-                        Time Left &nbsp;
+                        <b>Time Left &nbsp;</b>
                       </Typography>
                       <Typography 
                       // variant="subtitle1" 
@@ -472,7 +486,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                       // variant="h6" 
                       color="inherit" 
                       display="inline">
-                      High Bid &nbsp;
+                      <b>High Bid &nbsp;</b>
                       </Typography>
                       <Typography 
                       // variant="subtitle1" 
@@ -489,7 +503,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                       // variant="h6" 
                       color="inherit" 
                       display="inline">
-                      Bids &nbsp;
+                      <b>Bids &nbsp;</b>
                       </Typography>
                       <Typography 
                       // variant="subtitle1" 
@@ -858,12 +872,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             <Grid container>
             <Grid item xs={6}>
               <Typography fontWeight="fontWeightBold" variant="h5" display="inline">
-              
-              {isPast(new Date(currentItem.endDate))?
-              <b>Sold to</b>
-              :
-              <b>Current bid</b>
-              }
+              {auctionEndText}
               &nbsp;
               {currentItem.bidHistory && currentItem.bidHistory.length? currentItem.bidHistory[0].name : 0}
               </Typography>
@@ -993,8 +1002,8 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
           </Grid>
         </Grid>
 
-              
-          </div>
+        </Container>
+    </div>
   );
 };
 

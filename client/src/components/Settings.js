@@ -1,7 +1,7 @@
 import React , { useEffect } from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Divider, Box, Grid, Button, Paper, Switch } from '@material-ui/core';
+import { Typography, Divider, Box, Grid, Button, Container, Switch } from '@material-ui/core';
 import StripeBox from "./stripe/StripeBox"
 import {getCard} from '../flux/actions/stripeActions'
 
@@ -11,7 +11,7 @@ const Settings = ({getCard, stripeRedux, auth}) => {
 const useStyles = makeStyles(() => ({
     root: {
         flexGrow: 1,
-        margin: 20,
+        margin: 10,
     },
 }));
 
@@ -34,11 +34,7 @@ const handleChange = (event) => {
 
 return (     
   <div className={classes.root}>
-  <Grid container
-    direction="inline"
-    justify="center"
-    alignItems="center">
-  <Grid item xs={12} md={10} lg={8}>
+  <Container>
     <Typography component="div" variant="h4">
             Settings
     </Typography>
@@ -137,8 +133,7 @@ return (
       </Grid>
 
     </Grid>
-  </Grid> 
-  </Grid>
+    </Container>
   </div>
 )
 }

@@ -40,3 +40,9 @@ info: Jun-29-2021 08:30:16: 	OK - /api/items/bid/60c13861f23cea020c192b03 - POST
 info: Jun-29-2021 08:34:45: 	OK - /api/items/bid/60c13861f23cea020c192b03 - POST - ::ffff:127.0.0.1 - Bid successfully - Bid: 1700 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 info: Jun-29-2021 08:42:15: 	OK - /api/items/bid/60c13861f23cea020c192b03 - POST - ::ffff:127.0.0.1 - Bid successfully - Bid: 1800 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 info: Jun-29-2021 08:57:58: 	OK - /api/items/bid/60c13861f23cea020c192b03 - POST - ::ffff:127.0.0.1 - Bid successfully - Bid: 1800 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jul-02-2021 12:42:57: 	OK - /api/items/endDate/60ad3c31784b24f7835895e5 - PUT - ::ffff:127.0.0.1 - Extended Auction - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jul-02-2021 12:42:57: 	OK - /api/items/endDate/60ad3c31784b24f7835895e5 - PUT - ::ffff:127.0.0.1 - Extended Auction - Auction_ID: 60ad3c31784b24f7835895e5 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jul-02-2021 15:34:07: 	OK - /api/items/endDate/60c13861f23cea020c192b03 - PUT - ::ffff:127.0.0.1 - Extended Auction - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+info: Jul-02-2021 15:34:08: 	OK - /api/items/endDate/60c13861f23cea020c192b03 - PUT - ::ffff:127.0.0.1 - Extended Auction - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jul-03-2021 14:18:38: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms
+error: Jul-03-2021 14:19:07: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms

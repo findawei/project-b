@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import {Grid, Paper, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Typography,InputLabel, Box, NativeSelect, Select, Dialog, DialogTitle, DialogActions, DialogContentText, DialogContent } from '@material-ui/core/'
+import {Grid, Paper, Button, Radio, RadioGroup, FormControlLabel, FormControl, FormLabel, TextField, Typography,InputLabel, Box, NativeSelect, Select, Dialog, DialogTitle, DialogActions, DialogContentText, DialogContent, Container } from '@material-ui/core/'
 import { Link } from 'react-router-dom';
 import { useForm, Controller } from "react-hook-form";
 import DateFnsUtils from "@date-io/date-fns"
@@ -21,7 +21,7 @@ const SubmitListing = ({ item, auth, submitItem}) => {
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
-        margin: 20,
+        margin: 10,
     },
     paper: {
         padding: theme.spacing(2),
@@ -84,6 +84,7 @@ const listingSubmit = (newItem) => {
 }
 
 return (
+  <Container>
     <Grid container
     direction="column"
     justify="center"
@@ -119,7 +120,7 @@ return (
         </Grid>
       </DialogActions>
     </Dialog>
-    <Grid item xs={12} md={10} lg={8}>
+    <Grid item>
     <div className={classes.root}>
     <form onSubmit={handleSubmit(listingSubmit)}>
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -616,6 +617,7 @@ return (
     </div>
     </Grid>
     </Grid>
+  </Container>
 )
 }
 

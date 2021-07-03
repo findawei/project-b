@@ -3,9 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'fontsource-roboto';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Routes from './components/routes/Routes';
-
 import Toolbar from '@material-ui/core/Toolbar';
-
 //Redux
 import { Provider } from 'react-redux';
 import store from './flux/store';
@@ -13,6 +11,8 @@ import { loadUser } from './flux/actions/authActions';
 import {Elements} from '@stripe/react-stripe-js';
 import {loadStripe} from '@stripe/stripe-js';
 import Loading from './components/Loading'
+import Terms from './components/legal/Terms';
+import Privacy from './components/legal/Privacy';
 
 const AppNavbar = React.lazy(() => import('./components/AppNavbar'));
 const Auctions = React.lazy(() => import('./components/Auctions'));
@@ -39,6 +39,8 @@ function App() {
           <Switch>
             <Route exact path="/" component={Auctions} />
             <Route exact path="/faq" component={Faq} />
+            <Route exact path="/terms-of-use" component={Terms} />
+            <Route exact path="/privacy-policy" component={Privacy} />
             <Route component={Routes} />
           </Switch>
         <Footer />

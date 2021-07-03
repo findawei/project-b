@@ -1,7 +1,7 @@
 import React , { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography, Divider, Box, Grid, Button, Menu, useScrollTrigger } from '@material-ui/core';
+import { Typography, Divider, Box, Grid, Button, Menu, useScrollTrigger, Container } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import About from './About';
 import BuyFaq from './BuyFaq';
@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
         flexGrow: 1,
     },
     body: {
-        margin: 20,
+        margin: 10,
     },
     bgcolor: {
         backgroundColor:"lightgrey",
@@ -62,6 +62,7 @@ return (
         <FAQMenu />
         </Toolbar>
       </AppBar>
+    <Container>
     <Grid 
     container
     // direction="column"
@@ -97,8 +98,7 @@ return (
         </div>
         </Grid>
     </Grid>
-    <Divider/>
-    <br/>
+    </Container>  
     </div>
 )
 }

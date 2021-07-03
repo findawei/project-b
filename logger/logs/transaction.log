@@ -96,3 +96,7 @@ info: 2021-Jun-29 08:42:16 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bi
 info: 2021-Jun-29 08:42:46 -04:00: 	Payment Successful - /api/stripe/processPayment - POST - Fee(/100): 25000 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 info: 2021-Jun-29 08:58:00 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1800 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 info: 2021-Jun-29 08:58:18 -04:00: 	Payment Successful - /api/stripe/processPayment - POST - Fee(/100): 25000 - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jul-03 14:18:38 -04:00: 	undefined - /api/stripe/createIntent/ - POST - ::ffff:127.0.0.1 - MongooseError: Operation `users.findOne()` buffering timed out after 10000ms - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jul-03 14:18:43 -04:00: 	Bad Request - /api/auth/addStripeId - PUT - ::ffff:127.0.0.1 - Operation `users.findOneAndUpdate()` buffering timed out after 10000ms - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jul-03 14:19:07 -04:00: 	undefined - /api/stripe/createIntent/ - POST - ::ffff:127.0.0.1 - MongooseError: Operation `users.findOne()` buffering timed out after 10000ms - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: 2021-Jul-03 14:19:17 -04:00: 	Bad Request - /api/auth/addStripeId - PUT - ::ffff:127.0.0.1 - Operation `users.findOneAndUpdate()` buffering timed out after 10000ms - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23

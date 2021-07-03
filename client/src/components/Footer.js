@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import {AppBar, Typography, Container, Toolbar, Grid} from '@material-ui/core/'
-import { makeStyles } from "@material-ui/core/styles";
+import {Divider, Typography, Container, Toolbar, Grid} from '@material-ui/core/'
+import { makeStyles } from "@material-ui/styles";
 import InstagramIcon from '@material-ui/icons/Instagram';
 // import { Link as RouterLink} from 'react-router-dom';
 import { HashLink as Link } from 'react-router-hash-link';
@@ -8,17 +8,9 @@ import { HashLink as Link } from 'react-router-hash-link';
 const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
+      margin: 10,
     },
-    toolbar: {
-      minHeight: '200px',
-      marginBottom: '40px'
-    },
-    stickToBottom: {
-      // top: 'auto',
-      bottom: 0,
-      // minHeight: '200px',
-      // marginBottom: '40px',
-    },
+
   }));
 
 export default function Footer() {
@@ -26,9 +18,11 @@ export default function Footer() {
     const classes = useStyles();
 
     return (
-        // <AppBar position="fixed" color="gray" className={classes.stickToBottom}>
-          <Container maxWidth="100%" className={classes.stickToBottom} >
-            {/* <Toolbar> */}
+      <div className={classes.root}>
+          <Container>
+            <br/> 
+            <Divider />
+            <br/>
             <Grid 
             container 
             spacing={3}
@@ -79,14 +73,15 @@ export default function Footer() {
                   <InstagramIcon />
                 </a>
                 <br/>
-                <Typography variant="h8" color="inherit">
+                <Typography variant="subtitle2" color="inherit">
                 Copyright © {new Date().getFullYear()} NoWaitList. All Rights Reserved
-            </Typography>
+                </Typography> <br/>
+                <Typography variant="subtitle2" color="inherit">
+                Terms of Use
+                </Typography>
             </Grid>
             </Grid>
-            {/* </Toolbar> */}
           </Container>
-        // </AppBar>
-
+        </div>
     )
 }
