@@ -19,10 +19,10 @@ export default function Footer() {
 
     return (
       <div className={classes.root}>
+          <br/> 
+          <Divider/>
+          <br/>
           <Container>
-            <br/> 
-            <Divider />
-            <br/>
             <Grid 
             container 
             spacing={3}
@@ -75,9 +75,16 @@ export default function Footer() {
                 <br/>
                 <Typography variant="subtitle2" color="inherit">
                 Copyright © {new Date().getFullYear()} NoWaitList. All Rights Reserved
+
                 </Typography> <br/>
                 <Typography variant="subtitle2" color="inherit">
-                Terms of Use
+                  <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/terms-of-use'}>
+                    Terms of Use
+                  </Link>
+                  &nbsp;-&nbsp;
+                  <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/privacy-policy'}>
+                    Privacy Policy
+                  </Link>
                 </Typography>
             </Grid>
             </Grid>

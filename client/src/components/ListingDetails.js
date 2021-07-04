@@ -214,7 +214,7 @@ useEffect(() => {
     },
     chip: {
       color: "white",
-      backgroundColor: "purple"
+      backgroundColor: "#f50057"
     },
     info: {
       padding: theme.spacing(1),

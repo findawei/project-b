@@ -48,12 +48,18 @@ return (
     <p>We shall not be liable to you or to any third-party for any modification, price change, suspension or discontinuance of the Service.
     </p>
     <p><br/></p>
-    SECTION 5 - PRODUCTS OR SERVICES
-    <p>Certain products or services may be available exclusively online through the website. These products or services may have limited quantities and are subject to return or exchange only according to our Return Policy.</p>
+    SECTION 5 - PRODUCTS & SERVICES
     <p>We have made every effort to display as accurately as possible the colors and images of our products that appear on our platform. We cannot guarantee that your computer monitor&apos;s display of any color will be accurate. We reserve the right, but are not obligated, to limit the sales of our products or Services to any person, geographic region or jurisdiction. We may exercise this right on a case-by-case basis. We reserve the right to limit the quantities of any products or services that we offer. All descriptions of products or product pricing are subject to change at anytime without notice, at the sole discretion of us. We reserve the right to discontinue any product at any time. Any offer for any product or service made on this site is void where prohibited.</p>
     <p>We do not warrant that the quality of any products, services, information, or other material purchased or obtained by you will meet your expectations, or that any errors in the Service will be corrected.</p>
+    <p>Buyer Fees</p>
+    <p>
+    If you are the winning bidder for a watch listed on NoWaitList, you shall pay us a fee (a “Buyer’s Fee”) equal to 5% of the winning bid amount listed on NoWaitList. Notwithstanding the foregoing, for each winning bid on NoWaitList, the minimum Buyer’s Fee is $250 and the maximum Buyer’s Fee is $5,000. All Buyer’s Fees are non-refundable.</p>
+    <p>
+    If you place a bid on NoWaitList, we will place a hold on your credit card in an amount equal to 5% of your bid amount (a minimum of $250, up to a maximum of $5,000). We will remove all such holds – except the hold on the winning Bidder’s credit card – after the auction is completed. The hold on the winning Bidder’s credit card will be charged as payment for the Buyer’s Fee immediately after the auction listing ends.</p>
+    <p>Seller Fees</p>
+    <p>Non-reserve auctions are free. Reserve auctions are $49/listing. All listing fees are charged prior to seller listing their watch and all such fees are non-refundable.</p>
     <p><br/></p>
-    SECTION 6 - ACCURACY OF BILLING AND ACCOUNT INFORMATION
+    SECTION 6 - ACCURACY OF BILLING AND ACCOUNT INFORMATION ------- remove "order"
     <p>We reserve the right to refuse any order you place with us. We may, in our sole discretion, limit or cancel quantities purchased per person, per household or per order. These restrictions may include orders placed by or under the same customer account, the same credit card, and/or orders that use the same billing and/or shipping address. In the event that we make a change to or cancel an order, we may attempt to notify you by contacting the e-mail and/or billing address/phone number provided at the time the order was made. We reserve the right to limit or prohibit orders that, in our sole judgment, appear to be placed by dealers, resellers or distributors. You agree to provide current, complete and accurate purchase and account information for all purchases made on our website. You agree to promptly update your account and other information, including your email address and credit card numbers and expiration dates, so that we can complete your transactions and contact you as needed.</p>
     <p>For more detail, please review our Returns Policy.
     </p>
