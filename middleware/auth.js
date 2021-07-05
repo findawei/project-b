@@ -1,8 +1,16 @@
 const admin = require('firebase-admin');
-const serviceAccount = require('../serviceAccount.json');
+// const serviceAccount = require('../serviceAccount.json');
+const config =require( '../config');
+
+const {private_key, client_email, project_id} = config;
+
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
+  credential: admin.credential.cert({
+    "project_id": project_id,
+    "private_key": private_key.replace(/\\n/g, '\n'),
+    "client_email": client_email,
+  }),
   databaseURL: "https://nowaitlist-7f026.firebaseio.com"
 });
 

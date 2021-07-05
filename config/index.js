@@ -14,4 +14,7 @@ module.exports = {
     bucket: process.env.COMPANION_AWS_BUCKET,
     region: process.env.COMPANION_AWS_REGION,
     endpoint: process.env.COMPANION_AWS_ENDPOINT,
+    private_key: process.env.private_key,
+    client_email: process.env.client_email,
+    project_id: process.env.project_id
 }
