@@ -13,6 +13,7 @@ import {loadStripe} from '@stripe/stripe-js';
 import Loading from './components/Loading'
 import Terms from './components/legal/Terms';
 import Privacy from './components/legal/Privacy';
+import SubmitExplainer from './components/SubmitExplainer';
 
 const AppNavbar = React.lazy(() => import('./components/AppNavbar'));
 const Auctions = React.lazy(() => import('./components/Auctions'));
@@ -41,6 +42,7 @@ function App() {
             <Route exact path="/faq" component={Faq} />
             <Route exact path="/terms-of-use" component={Terms} />
             <Route exact path="/privacy-policy" component={Privacy} />
+            <Route exact path="/sell-a-watch" component={SubmitExplainer} />
             <Route component={Routes} />
           </Switch>
         <Footer />

@@ -15,7 +15,7 @@
   "license": "ISC",
   "dependencies": {
     "@sendgrid/mail": "^7.4.4",
-    "aws-sdk": "^2.936.0",
+    "aws-sdk": "^2.941.0",
     "concurrently": "^6.2.0",
     "cors": "^2.8.5",
     "date-fns": "^2.22.1",
@@ -26,16 +26,16 @@
     "firebase-admin": "^9.10.0",
     "helmet": "^3.23.1",
     "hpp": "^0.2.3",
-    "mongoose": "^5.13.0",
+    "mongoose": "^5.13.2",
     "multiparty": "^4.2.2",
     "node-fetch": "^2.6.1",
     "rate-limiter-flexible": "^2.2.2",
-    "stripe": "^8.157.0",
+    "stripe": "^8.160.0",
     "toobusy-js": "^0.5.1",
     "winston": "^3.3.3",
     "winston-mongodb": "^5.0.7"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.9"
   }
 }
