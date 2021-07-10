@@ -450,7 +450,6 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             alignItems="space-evenly"
             spacing={2}
           >
-            
             <Grid item md={9}>
               <Grid item xs={12}>
             <Grid 

@@ -1,5 +1,5 @@
-import React,{Component, useState} from 'react'
-import {Divider, Typography, Container, Card, CardActions, CardContent, Grid, Button, Box} from '@material-ui/core/'
+import React,{Component, useState, useEffect} from 'react'
+import {Divider, Typography, Container, Card, CardActions, CardContent, Grid, Button, Box, Paper} from '@material-ui/core/'
 import { makeStyles } from "@material-ui/styles";
 import { HashLink as Link } from 'react-router-hash-link';
 import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
@@ -7,11 +7,10 @@ import MoneyOutlinedIcon from '@material-ui/icons/MoneyOutlined';
 import MonetizationOnOutlinedIcon from '@material-ui/icons/MonetizationOnOutlined';
 import { connect } from 'react-redux';
 import SellLoginModal from './auth/SellLoginModal';
-
-
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
+import picture from "../images/dive-watches-dark.jpg";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
     },
     card: {
         // maxWidth: 350,
-        height: 220
+        height: 170
       },
       title: {
         fontSize: 14,
@@ -28,15 +27,29 @@ const useStyles = makeStyles((theme) => ({
       pos: {
         marginBottom: 12,
       },
-      text: {
-        color: "#1769aa"
+      textTitle: {
+        color: "white"
       },
-      // instructions: {
-      //   marginTop: theme.spacing(1),
-      //   marginBottom: theme.spacing(1),
-      // },
+      text: {
+        color: "green"
+      },
+      background: {
+        maxWidth: '100%',
+        // maxHeight: 200,
+      },
+      paperContainer: {
+        width:"100%",
+        height: "100%",
+        objectFit: 'cover',
+        backgroundImage: `url(${picture})`,
+        // minHeight: 300,
+        // maxHeight:500,
+        
+      }
 
   }));
+
+ 
 
   const steps = getSteps();
   function getSteps() {
@@ -45,26 +58,34 @@ const useStyles = makeStyles((theme) => ({
 
   const SubmitExplainer = ({auth}) =>{
 
+ useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const [activeStep, setActiveStep] = useState(0,0);
 
     const classes = useStyles();
 
     return (
-      <div className={classes.root}>
-          <Container>
-              <br/>
-              <Typography variant="h3">
+      <div>
+            <Paper className={classes.paperContainer}>              
+              <br/><br/><br/><br/>
+              <Typography variant="h3" align="center" className={classes.textTitle}>
                   Sell on NoWaitList!
               </Typography>
-              <Typography variant="h5">
+              <Typography variant="h5" align="center" className={classes.textTitle}>
                   Made by enthusiasts for enthusiasts.
               </Typography>
-              <br/><br/>              <br/><br/>
+              <br/><br/><br/><br/>
+              </Paper>
 
-              <Typography variant="h4">
-                <u>Why sell with us?</u>
-              </Typography>
+              <div className={classes.root}>
+              <Container >
               <br/>
+              <Typography variant="h4" align="center">
+                Why sell with us?
+              </Typography>
+              <br/><br/>
                 <Grid 
                 container
                 spacing={2}
@@ -78,15 +99,16 @@ const useStyles = makeStyles((theme) => ({
                             <Grid container direction="row" alignItems="center">
                               <CheckCircleOutlineIcon className={classes.text}/>
                               &nbsp;
-                            <Typography variant="h5" component="h2" className={classes.text}> List for FREE          
+                            <Typography variant="h5" component="h2" className={classes.text}> <b>List for FREE          </b>
                             </Typography>
                           </Grid>
                             <br/>
-                            <Typography variant="h6" component="p">
+                            <Typography variant="body" component="p">
                             FREE to list without reserve! 
-                            <br/>
+                            </Typography>
+                            
+                            <Typography variant="subtitle2" component="p">
                             Only $49 with reserve.
-                            <br />
                             </Typography>
                             </CardContent>
                         </Card>
@@ -98,12 +120,12 @@ const useStyles = makeStyles((theme) => ({
                             <Grid container direction="row" alignItems="center">
                               <MonetizationOnOutlinedIcon className={classes.text}/>
                               &nbsp;
-                            <Typography variant="h5" component="h2" className={classes.text}> Get top dollar           
+                            <Typography variant="h5" component="h2" className={classes.text}> <b>Get top dollar</b>   
                             </Typography>
                           </Grid>
                             <br/>
                             
-                            <Typography variant="h6" component="p">
+                            <Typography variant="body" component="p">
                             With our anti-snipe system, your auction will stay active as long as people keep bidding.
                             </Typography>
                             </CardContent>
@@ -114,7 +136,7 @@ const useStyles = makeStyles((theme) => ({
               <br/>
               <br/><br/>
 
-              <Typography variant="h4">
+              <Typography variant="h4" align="center">
                 How it works
               </Typography>
               <br/>
@@ -152,6 +174,7 @@ const useStyles = makeStyles((theme) => ({
           </div>         
           }
           </Container>
+        </div>
         </div>
     )
 }

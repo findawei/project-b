@@ -41,7 +41,7 @@ useEffect(()=>{
       <Grid 
        container
        direction="row"
-       justify="space-around"
+       justify="space-between"
        alignItems="center"
       >
            {img && img.map(tile => (
