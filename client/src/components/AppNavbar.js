@@ -67,7 +67,7 @@ const useStyles = makeStyles((theme) => ({
             <img src="https://nowaitlist.co/wp-content/uploads/2021/02/Screen-Shot-2021-01-31-at-2.56.11-PM.png" alt="logo" className={classes.logo}/>
           </Link>    
           </div>
-          {auth && auth.isAuthenticated ? 
+          {/* {auth && auth.isAuthenticated ? 
            <div>
             <Link 
             className={classes.link}
@@ -84,8 +84,13 @@ const useStyles = makeStyles((theme) => ({
           </div>
           :         
           <SellLoginModal/>
-          }
-            
+          } */}
+          <Button variant="contained"
+            color="primary">
+            <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/sell-a-watch'}>
+                          Sell your Watch
+            </Link>
+          </Button>
           {auth && auth.isAuthenticated ? 
           <LoggedInMenu/> 
           :         

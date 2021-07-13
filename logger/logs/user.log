@@ -2,3 +2,5 @@ error: Jun-17-2021 15:33:38: 	Bad Request - /api/auth/test - POST - ::ffff:127.0
 error: Jun-17-2021 15:37:15: 	undefined - /api/auth/captcha - POST - ::ffff:127.0.0.1 - YOU ARE NOT A HUMAN.
 error: Jun-17-2021 15:37:15: 	Bad Request - /api/auth/captcha - POST - ::ffff:127.0.0.1 - undefined
 error: Jun-17-2021 15:40:51: 	Bad Request - /api/auth/captcha - POST - ::ffff:127.0.0.1 - YOU ARE NOT A HUMAN.
+error: Jul-13-2021 12:47:58: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
+error: Jul-13-2021 12:47:58: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23

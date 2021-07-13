@@ -29,7 +29,7 @@ import LoginModalComment from './auth/LoginModalComment';
 import Gallery from './Gallery'
 import { paymentIntent } from '../flux/actions/stripeActions';
 import EndingSoon from './EndingSoon';
-
+import TimerIcon from '@material-ui/icons/Timer';
 
 
 const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, match, bidOnItem, commentItem, updateItemEndDate, paymentIntent}) => {
@@ -464,21 +464,19 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                   <Paper className={classes.bidbar}>
                   <Grid container spacing={0}>
                     <Grid item xs>
-                      <Typography 
-                      // variant="bold" 
-                      color="inherit" 
-                      display="inline">
-                        <b>Time Left &nbsp;</b>
-                      </Typography>
+                      <Grid container  justifyContent="center"
+                        alignItems="center">
+                      <TimerIcon/>&nbsp;
                       <Typography 
                       // variant="subtitle1" 
                       className={classes.bidbartext}
-                      display="inline">
+                      >
                       <Countdown
                           date={new Date(currentItem.endDate)}
                           renderer={renderer}
                         />
-                      </Typography>
+                      </Typography>    
+                      </Grid>
                     </Grid>
                     <Grid item xs>
                       <Typography 

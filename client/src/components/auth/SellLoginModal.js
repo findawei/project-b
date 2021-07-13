@@ -321,7 +321,7 @@ return (
   <div>
     <Button type="button" variant="contained"
             color="primary" onClick={handleOpen}>
-        Sell A Watch
+        Submit Your Watch
     </Button>
       <Modal
         open={open}

@@ -39,12 +39,11 @@ const useStyles = makeStyles((theme) => ({
       },
       paperContainer: {
         width:"100%",
-        height: "100%",
-        objectFit: 'cover',
+        // height: "50%",
         backgroundImage: `url(${picture})`,
-        // minHeight: 300,
-        // maxHeight:500,
-        
+        backgroundRepeat: "no-repeat",
+        backgroundPosition: "center center",
+        backgroundSize: "cover",
       }
 
   }));
@@ -160,7 +159,7 @@ const useStyles = makeStyles((theme) => ({
                 variant="contained"
                 color="primary"
               >
-                Sell A Watch
+                Submit your Watch
               </Button>
               </Box>
               

@@ -71,7 +71,7 @@ useEffect(() => {
                 <Link 
                     className={classes.link}
                     component={RouterLink}
-                    to='/submit'
+                    to='/sell-a-watch'
                     >
                 <Button
                     variant="contained"
@@ -81,9 +81,6 @@ useEffect(() => {
                 >Get Started</Button></Link>
                 </div>
             }
-        </Grid>
-        <Grid>
-            Test
         </Grid>
     </Grid>
     </Container>

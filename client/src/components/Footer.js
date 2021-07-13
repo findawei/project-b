@@ -56,7 +56,7 @@ export default function Footer() {
                 <Grid item xs={4} sm={3}>
                     <Typography variant="overline">For Sellers</Typography>
                     <Typography variant="subtitle2"><Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/sell-a-watch'}>
-                      Submit your Watch
+                      Sell your Watch
                     </Link>
                     </Typography>
                     {/* <Typography variant="subtitle2">Photography Guide</Typography> */}
