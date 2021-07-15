@@ -46,3 +46,9 @@ info: Jul-02-2021 15:34:07: 	OK - /api/items/endDate/60c13861f23cea020c192b03 - 
 info: Jul-02-2021 15:34:08: 	OK - /api/items/endDate/60c13861f23cea020c192b03 - PUT - ::ffff:127.0.0.1 - Extended Auction - Auction_ID: 60c13861f23cea020c192b03 - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 error: Jul-03-2021 14:18:38: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms
 error: Jul-03-2021 14:19:07: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms
+error: Jul-14-2021 21:08:15: 	Bad Request - /api/items - GET - undefined - Operation `items.find()` buffering timed out after 10000ms
+error: Jul-14-2021 21:08:25: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms
+error: Jul-14-2021 21:10:32: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms
+error: Jul-14-2021 21:10:58: 	Bad Request - /api/items - GET - undefined - Operation `items.find()` buffering timed out after 10000ms
+error: Jul-14-2021 21:26:21: 	Bad Request - /api/items/60ef8870b801f2221ea4a8fb - GET - ::ffff:127.0.0.1 - No item
+error: Jul-14-2021 21:44:11: 	Bad Request - /api/items/60ef8f2c6efa046d7ce3efd8 - GET - ::ffff:127.0.0.1 - No item

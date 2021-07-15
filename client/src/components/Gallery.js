@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     hero: {
         borderRadius: 3,
         minHeight: 300,
-        maxHeight:500,
+        maxHeight:600,
         width:"100%",
         height: "100%",
         objectFit: 'cover'

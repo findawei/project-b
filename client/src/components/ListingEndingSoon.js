@@ -38,11 +38,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#000000",
         textDecoration: "none"
     }
-    },
-    chip: {
-        color: "white",
-        backgroundColor: "purple"
-      }
+    }
 }));
     const classes = useStyles();
 
@@ -111,18 +107,26 @@ return (
                 Bid ${item.bidHistory &&item.bidHistory.length? item.bidHistory[0].bid : 0}
             </Typography>
             </Box>
+            <Box
+            p={0}
+            position="absolute"
+            top={10}
+            right={10}
+            >
+            {item.reserve? "" :
+              <Chip 
+                size="small" 
+                label="No Reserve"
+                // variant="outlined"
+                color="secondary"
+              />
+            }
+            </Box>
             </CardMedia>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                 {item.year} {item.brand} {item.reference_number} 
                 </Typography>
-                {item.reserve? 
-                ""
-                :
-                <Chip 
-                className={classes.chip}
-                size="small" label="No Reserve"/>
-                }
                 <Typography variant="body2" color="textSecondary" component="p">
                 {item.location}
                 </Typography>

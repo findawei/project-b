@@ -39,11 +39,7 @@ const useStyles = makeStyles((theme) => ({
         color: "#000000",
         textDecoration: "none"
     }
-    },
-    // chip: {
-    //     color: "white",
-    //     backgroundColor: "purple"
-    //   }
+    }
 }));
     const classes = useStyles();
 
@@ -131,7 +127,6 @@ return (
             >
             {item.reserve? "" :
               <Chip 
-                className={classes.chip}
                 size="small" 
                 label="No Reserve"
                 // variant="outlined"
