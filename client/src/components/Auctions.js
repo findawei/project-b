@@ -26,12 +26,8 @@ const classes = useStyles();
  
   const { items } = item;
 
-
-
   return (
-    <div 
-    className={classes.root}
-    >
+    <div className={classes.root}>
     <Container> 
     <Grid container spacing={2}>
       {items.filter(opt => isFuture(new Date(opt.endDate))).map(item => <Listing 
@@ -39,6 +35,10 @@ const classes = useStyles();
           key={item._id}/>
           )}
     </Grid>
+    {items.filter(opt => isPast(new Date(opt.endDate))).length === 0 ?
+    ''
+    :
+    <div>
     <h1>Ended</h1>
     <Grid container spacing={2}>
       {items.filter(opt => isPast(new Date(opt.endDate))).map(item => <Listing 
@@ -46,6 +46,8 @@ const classes = useStyles();
           key={item._id}/>
           )}
     </Grid>
+    </div>
+    }
     </Container>
     </div>
   );

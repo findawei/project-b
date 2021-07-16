@@ -41,11 +41,6 @@ useEffect(() => {
   return (
     <div className={classes.root}>
     <Container>
-    <Grid container
-    direction="row"
-    justify="flex-start"
-    alignItems="stretch">
-        <Grid item>
             <Typography component="div" variant="h4">
             My Listings
             </Typography>
@@ -57,6 +52,11 @@ useEffect(() => {
                     key={item._id}/>
                     )}
                 </Grid>
+
+                {items.filter(opt => isPast(new Date(opt.endDate))).length === 0 ?
+                ''
+                :
+                <div>
                 <h1>Ended</h1>
                 <Grid container spacing={2}>
                 {items.filter(opt => isPast(new Date(opt.endDate))& auth.user.uid === opt.user).map(item => <Listing 
@@ -65,6 +65,8 @@ useEffect(() => {
                     )}
                 </Grid>
                 </div>
+                }
+                </div>
                 :
                 <div>
                 <p>You have not submitted any watches yet. Want to sell your watch?</p>
@@ -72,17 +74,16 @@ useEffect(() => {
                     className={classes.link}
                     component={RouterLink}
                     to='/sell-a-watch'
-                    >
+                >
                 <Button
                     variant="contained"
-                    color="primary"
-                    
-                    
-                >Get Started</Button></Link>
+                    color="primary"  
+                >
+                    Get Started
+                </Button>
+                </Link>
                 </div>
             }
-        </Grid>
-    </Grid>
     </Container>
     </div>
   );

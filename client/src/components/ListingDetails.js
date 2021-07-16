@@ -302,7 +302,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
         <img src={currentItem.img && currentItem.img[0].url} alt={currentItem.brand} 
         className={classes.image}/>
         <Typography variant="h5">
-        {currentItem.brand} {currentItem.model}, {currentItem.reference_number} - {currentItem.year}
+        {currentItem.brand} {currentItem.model} - {currentItem.reference_number} - {currentItem.year}
         </Typography>
         <Box display="flex" justifyContent="center" className={classes.info}>
           <Typography>
@@ -405,7 +405,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
       <div className={classes.root}>
         <Container>
             <Typography variant="h4">
-              {currentItem.brand} {currentItem.model}, {currentItem.reference_number} - {currentItem.year}
+              {currentItem.brand} {currentItem.model} - {currentItem.reference_number} - {currentItem.year}
             </Typography>
           <div style={{ width: '100%' }}>
             <Grid 
@@ -430,11 +430,11 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
               {currentItem.service?
                 <> 
                 Serviced&nbsp;
-                {format(new Date(currentItem.service), 'MMM Y')}
+                {format(new Date(currentItem.service), 'MMM Y')},
                 </>
                 :
                 ''
-              }, {currentItem.location}
+              } {currentItem.location}
               </Typography>
               </Grid>
             </Grid>
