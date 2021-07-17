@@ -4,6 +4,9 @@ import 'fontsource-roboto';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Routes from './components/routes/Routes';
 import Toolbar from '@material-ui/core/Toolbar';
+import { createBrowserHistory } from 'history';
+import ReactGA from 'react-ga';
+
 //Redux
 import { Provider } from 'react-redux';
 import store from './flux/store';
@@ -21,7 +24,12 @@ const Footer = React.lazy(() => import('./components/Footer'));
 const Faq = React.lazy(() => import('./components/faq/Faq'));
 
 const stripePromise = loadStripe('pk_test_51IarEuAFyb1kAVtidDxjDpeHAQ3DprarSyD2Iqw8SED8aHlfxw2Pq4PQDqVJgiljBON7g3iecBIyaMloukPVD9nx00au4jfT5a');
-
+const history = createBrowserHistory();
+// Initialize google analytics page view tracking
+history.listen(location => {
+  ReactGA.set({ page: location.pathname }); // Update the user's current page
+  ReactGA.pageview(location.pathname); // Record a pageview for the given page
+});
 function App() {
   
   useEffect(() => {
@@ -32,7 +40,7 @@ function App() {
     <Provider store={store}>
       <Elements stripe={stripePromise}>
       <CssBaseline />
-      <Router>
+      <Router history={history}>
         <Fragment>
           <Suspense fallback={<div><Loading /></div>}>
           <AppNavbar />

@@ -63,6 +63,10 @@ const ListingDetails = ({ auth, setCurrentItem, currentItem, getItemById, item, 
     handleSubmit: handleSubmit2
   } = useForm()
 
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
 useEffect(() => {
     if(currentItem) {
         setId(currentItem._id)
@@ -98,7 +102,7 @@ useEffect(() => {
     if(currentItem.bidHistory && currentItem.bidHistory.length &&
       differenceInSeconds(
         new Date(currentItem.endDate),
-        new Date(currentItem.bidHistory.[0].date)
+        new Date(currentItem.bidHistory[0].date)
         ) < 60
     ){
       // console.log(`Before added minute: ${currentItem.endDate}`)
@@ -302,7 +306,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
         <img src={currentItem.img && currentItem.img[0].url} alt={currentItem.brand} 
         className={classes.image}/>
         <Typography variant="h5">
-        {currentItem.brand} {currentItem.model} - {currentItem.reference_number} - {currentItem.year}
+        {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
         </Typography>
         <Box display="flex" justifyContent="center" className={classes.info}>
           <Typography>
@@ -405,7 +409,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
       <div className={classes.root}>
         <Container>
             <Typography variant="h4">
-              {currentItem.brand} {currentItem.model} - {currentItem.reference_number} - {currentItem.year}
+              {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
             </Typography>
           <div style={{ width: '100%' }}>
             <Grid 

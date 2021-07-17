@@ -72,8 +72,8 @@ const useStyles = makeStyles((theme) => ({
       };
     
 return (
-  <Grid 
-    item  
+  <Grid
+    item  xs={6} sm={4} md={12} lg={12}
     onClick={ItemView}
     >
             <Card 

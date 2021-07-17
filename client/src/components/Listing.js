@@ -137,7 +137,7 @@ return (
             </CardMedia>
             <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
-                {item.brand} {item.model} - {item.reference_number} - {item.year}
+                {item.brand} {item.model} {item.reference_number} - {item.year}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                     {item.location}

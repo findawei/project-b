@@ -3,7 +3,7 @@ import {ITEM_ERROR, GET_ITEMS, GET_ITEM, SET_CURRENTITEM, UPDATE_ITEM, CLEAR_CUR
 } from './types';
 import { tokenConfig } from './authActions';
 import { returnErrors } from './errorActions';
-
+import ReactGA from 'react-ga';
 
 export const getItems = () => async (
   dispatch, getState
@@ -84,6 +84,10 @@ export const submitItem = (item) => async (
         dispatch({
             type: SUBMIT_ITEM,
             payload: res.data
+        }),
+        ReactGA.event({
+          category: "Auction",
+          action: "User submitted a watch",
         })
         )
         .catch(err => {
@@ -151,16 +155,16 @@ export const updateItemEndDate = (item) => async(
     axios
     .post(`/api/items/bid/${item._id}`, item, header)
     .then(res=>{
-      // dispatch({
-      //   type: BID_ITEM,
-      //   payload: res.data
-      // }))
         let stripe_bid = item;
         axios
         .post('/api/stripe/bid', stripe_bid, header)
           dispatch({
             type: BID_ITEM,
             payload: res.data
+          })
+          ReactGA.event({
+            category: "Auction",
+            action: "User placed a bid",
           })
       })
       .catch(err => {
@@ -184,7 +188,12 @@ export const updateItemEndDate = (item) => async(
       dispatch({
         type: COMMENT_ITEM,
         payload: res.data
-      }))
+      }),
+      ReactGA.event({
+        category: "Auction",
+        action: "User commented on auction",
+      })
+      )
       .catch(err => {
         dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
         dispatch({

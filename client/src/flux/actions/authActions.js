@@ -17,6 +17,8 @@ import {
 import firebase from '../../firebase';
 import { config } from 'process';
 import { returnErrors } from './errorActions';
+import ReactGA from 'react-ga';
+
 
 export var accessToken = '';
 // Check token & load user
@@ -107,6 +109,13 @@ export const register = ({email, password, displayName }) => async(
               type: REGISTER_SUCCESS,
               payload:user
             });
+            ReactGA.event({
+              category: "User",
+              action: "Signed up",
+            })
+            ReactGA.set({
+              userId: user.uid
+            })
             const header = await tokenConfig();
             try{
               axios
@@ -163,6 +172,13 @@ export const login = ( {email, password}) => async(
           if (data.user.emailVerified) {
             // console.log("IF", data.user.emailVerified);
             dispatch({ type: LOGIN_SUCCESS });
+            ReactGA.event({
+              category: "User",
+              action: "User logged in",
+            });
+            ReactGA.set({
+              userId: data.user.uid
+            });
           } else {
             // console.log("ELSE", data.user.emailVerified);
             dispatch({
@@ -259,12 +275,16 @@ export const addStripeCC = (user) => async (dispatch, getState) => {
     try{
     axios
     .put('/api/auth/addStripeCC', user, header)
-    .then(res=>
+    .then(res=> (
         dispatch({
             type: USER_UPDATE,
             payload: res.data
+        }),
+        ReactGA.event({
+          category: "Stripe",
+          action: "User added cc",
         })
-    )
+    ))
     }
     catch(err) {
       dispatch(returnErrors(err.response.data, err.response.status, 'AUTH_ERROR'));
