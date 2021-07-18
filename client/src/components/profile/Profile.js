@@ -49,14 +49,12 @@ const Profile =({auth}) => {
               :
               <></>
             }
-
-            
             <Typography className={classes.radio}>
             Joined {format(new Date(auth.user.date),'MMM Y')}
             </Typography>
-            <Button variant="outlined">
+            {/* <Button variant="outlined">
             Edit Profile
-            </Button>
+            </Button> */}
     </Container>
    
       

@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React,{Component, useEffect} from 'react'
 import {Divider, Typography, Container, Toolbar, Grid} from '@material-ui/core/'
 import { makeStyles } from "@material-ui/core/styles";
 // import { Link as RouterLink} from 'react-router-dom';
@@ -11,7 +11,13 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
+  
+
 export default function Terms() {
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+      }, [])
 
     const classes = useStyles();
 

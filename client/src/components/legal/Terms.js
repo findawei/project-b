@@ -1,4 +1,4 @@
-import React,{Component} from 'react'
+import React,{Component, useEffect} from 'react'
 import {Divider, Typography, Container, Toolbar, Grid} from '@material-ui/core/'
 import { makeStyles } from "@material-ui/core/styles";
 // import { Link as RouterLink} from 'react-router-dom';
@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Terms() {
 
+ useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
     const classes = useStyles();
 
 return (
@@ -23,7 +27,7 @@ return (
     <p>----</p>
     <p>OVERVIEW</p>
     <p>This website is operated by NoWaitList. Throughout the site, the terms &ldquo;we&rdquo;, &ldquo;us&rdquo; and &ldquo;our&rdquo; refer to NoWaitList. NoWaitList offers this website, including all information, tools and services available from this site to you, the user, conditioned upon your acceptance of all terms, conditions, policies and notices stated here.</p>
-    <p>By visiting our site and/ or bidding on our auctions, you engage in our &ldquo;Service&rdquo; and agree to be bound by the following terms and conditions (&ldquo;Terms of Service&rdquo;, &ldquo;Terms&rdquo;), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms of Service apply &nbsp;to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content. Please read these Terms of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service.</p>
+    <p>By visiting our site and/ or bidding on our auctions, you engage in our &ldquo;Service&rdquo; and agree to be bound by the following terms and conditions (&ldquo;Terms of Service&rdquo;, &ldquo;Terms&rdquo;), including those additional terms and conditions and policies referenced herein and/or available by hyperlink. These Terms of Service apply to all users of the site, including without limitation users who are browsers, vendors, customers, merchants, and/ or contributors of content. Please read these Terms of Service carefully before accessing or using our website. By accessing or using any part of the site, you agree to be bound by these Terms of Service. If you do not agree to all the terms and conditions of this agreement, then you may not access the website or use any services. If these Terms of Service are considered an offer, acceptance is expressly limited to these Terms of Service.</p>
     <p>Any new features or tools which are added to the current website shall also be subject to the Terms of Service. You can review the most current version of the Terms of Service at any time on this page. We reserve the right to update, change or replace any part of these Terms of Service by posting updates and/or changes to our website. It is your responsibility to check this page periodically for changes. Your continued use of or access to the website following the posting of any changes constitutes acceptance of those changes.</p>
     <p><br/></p>
     <p>SECTION 1 - ONLINE WEBSITE TERMS</p>
@@ -49,7 +53,7 @@ return (
     </p>
     <p><br/></p>
     SECTION 5 - PRODUCTS & SERVICES
-    <p>We have made every effort to display as accurately as possible the colors and images of our products that appear on our platform. We cannot guarantee that your computer monitor&apos;s display of any color will be accurate. We reserve the right, but are not obligated, to limit the sales of our products or Services to any person, geographic region or jurisdiction. We may exercise this right on a case-by-case basis. We reserve the right to limit the quantities of any products or services that we offer. All descriptions of products or product pricing are subject to change at anytime without notice, at the sole discretion of us. We reserve the right to discontinue any product at any time. Any offer for any product or service made on this site is void where prohibited.</p>
+    <p>We have made every effort to display as accurately as possible the colors and images of our products that appear on our platform. We cannot guarantee that your computer monitor's display of any color will be accurate. We reserve the right, but are not obligated, to limit the sales of our products or Services to any person, geographic region or jurisdiction. We may exercise this right on a case-by-case basis. We reserve the right to limit the quantities of any products or services that we offer. All descriptions of products or product pricing are subject to change at anytime without notice, at the sole discretion of us. We reserve the right to discontinue any product at any time. Any offer for any product or service made on this site is void where prohibited.</p>
     <p>We do not warrant that the quality of any products, services, information, or other material purchased or obtained by you will meet your expectations, or that any errors in the Service will be corrected.</p>
     <p>Buyer Fees</p>
     <p>

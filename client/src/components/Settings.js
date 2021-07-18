@@ -41,7 +41,7 @@ return (
     <br/>
     <Divider/>
       <Grid container alignItems="center" alignContent="space-between" alignItems="space-between" justify="space-between">
-        <Grid item xs={12}>
+        {/* <Grid item xs={12}>
           <Typography>
             <Box fontWeight="fontWeightBold" py={1}>
             Account
@@ -58,7 +58,7 @@ return (
       <Grid item xs={12}>
       <br/>
       <Divider />
-      </Grid>
+      </Grid> */}
       <Grid item xs={12}>
       <Typography component="div">
           <Box fontWeight="fontWeightBold" py={1}>Payment info for bidding</Box>
@@ -89,7 +89,7 @@ return (
       <br/>
       {/* <Divider /> */}
       </Grid>
-      <Grid item xs={6} sm={6}>
+      {/* <Grid item xs={6} sm={6}>
           <Typography>Your phone number
             <br />
           514-542-2551</Typography>
@@ -129,9 +129,7 @@ return (
             </Grid>
             <Grid item>On</Grid>
           </Grid>
-
-      </Grid>
-
+      </Grid> */}
     </Grid>
     </Container>
   </div>

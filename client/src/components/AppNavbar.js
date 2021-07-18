@@ -15,6 +15,7 @@ import LoggedInMenu from './LoggedInMenu'
 import {Dialog, DialogTitle, DialogActions, DialogContentText, DialogContent } from '@material-ui/core/'
 import firebase from '../firebase';
 import { verifyEmail } from '../flux/actions/authActions';
+import logo from "../images/logo.png";
 
 const AppNavbar = ({auth, verifyEmail}) =>{
 
@@ -64,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
         <Toolbar>
           <div  className={classes.title}>
             <Link to={'/'} style={{ textDecoration: 'none' }}>
-            <img src="https://nowaitlist.co/wp-content/uploads/2021/02/Screen-Shot-2021-01-31-at-2.56.11-PM.png" alt="logo" className={classes.logo}/>
+            <img src={logo} alt="logo" className={classes.logo}/>
           </Link>    
           </div>
           {/* {auth && auth.isAuthenticated ? 
