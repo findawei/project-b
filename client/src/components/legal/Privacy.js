@@ -46,8 +46,8 @@ return (
     <p>We share your Personal Information with third parties to help us use your Personal Information, as described above. &nbsp;We use Google Analytics to help us understand how our customers use the Site--you can read more about how Google uses your Personal Information here: &nbsp;https://www.google.com/intl/en/policies/privacy/. &nbsp;You can also opt-out of Google Analytics here: &nbsp;https://tools.google.com/dlpage/gaoptout.</p>
     <p>Finally, we may also share your Personal Information to comply with applicable laws and regulations, to respond to a subpoena, search warrant or other lawful request for information we receive, or to otherwise protect our rights.</p>
     <p><br/></p>
-    <p>BEHAVIOURAL ADVERTISING</p>
-    <p>As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. &nbsp;For more information about how targeted advertising works, you can visit the Network Advertising Initiative&rsquo;s (&ldquo;NAI&rdquo;) educational page at http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work.</p>
+    {/* <p>BEHAVIOURAL ADVERTISING</p>
+    <p>As described above, we use your Personal Information to provide you with targeted advertisements or marketing communications we believe may be of interest to you. &nbsp;For more information about how targeted advertising works, you can visit the Network Advertising Initiative&rsquo;s (&ldquo;NAI&rdquo;) educational page at http://www.networkadvertising.org/understanding-online-advertising/how-does-it-work.</p> */}
     {/* <p>You can opt out of targeted advertising by:</p>
     <p>Additionally, you can opt out of some of these services by visiting the Digital Advertising Alliance&rsquo;s opt-out portal at: &nbsp;http://optout.aboutads.info/.</p> */}
     <p><br/></p>

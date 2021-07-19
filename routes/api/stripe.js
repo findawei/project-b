@@ -255,7 +255,10 @@ router.post('/bid', async (req, res) =>{
                 throw Error("User doesn't have a stripe id");
               } else if(user && user.stripe_id){              
                 const paymentIntent = await stripe.paymentIntents.create({
-                  amount: (newBid.bid >= 100000? 100000 : (newBid.bid <= 5000? 5000 : newBid.bid))*100*0.05,
+                  //max $5000, min $250
+                  // amount: (newBid.bid >= 100000? 100000 : (newBid.bid <= 5000? 5000 : newBid.bid))*100*0.05,
+                  //max $5000, no min
+                  amount: ((newBid.bid >= 100000? 100000 : newBid.bid)*100*0.05),
                   currency: 'usd',
                   customer: (user.stripe_id),
                   payment_method: (user.stripe_cc),

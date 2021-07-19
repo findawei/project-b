@@ -21,7 +21,8 @@ return(
         <Typography>
         <b>1. Register</b>
         <br/><br/>
-        In order to place bids and contact sellers directly, you must first Register to Bid using a valid credit card and phone number. Auction winners pay No Wait List a 5% buyer&rsquo;s fee on top of the winning bid amount (minimum of $250, maximum of $5,000).
+        In order to place bids and contact sellers directly, you must first Register to Bid using a valid credit card and phone number. Auction winners pay No Wait List a 5% buyer&rsquo;s fee on top of the winning bid amount, capped at $5,000. 
+        {/* (minimum of $250, maximum of $5,000). */}
         <br/><br/>
         <b>2. Know what you're buying</b>
         <br/><br/>
