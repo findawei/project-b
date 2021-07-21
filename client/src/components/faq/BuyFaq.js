@@ -49,7 +49,7 @@ export default function BuyFaq() {
         </AccordionSummary>
         <AccordionDetails>
           <Typography>
-            Once you have won the auction, you will be charged a 5% buyer's fee. You will then have to pay the purchase price to the seller. The minimum buyer's fee charge is $250 to a maximum of $5,000.
+            Once you have won the auction, you will be charged a 5% buyer's fee. You will then have to pay the purchase price to the seller. There's a maximum fee of $5,000, with no minimum.
             <br/><br/>
             The fees don't include shipping or any other charges.
           </Typography>
