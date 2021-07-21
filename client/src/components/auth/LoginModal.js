@@ -7,6 +7,7 @@ import Modal from '@material-ui/core/Modal';
 import {IconButton, Button, Box, Typography, Paper, Chip, Grid, TextField, Link} from '@material-ui/core'
 import ReCAPTCHA from "react-google-recaptcha";
 import Alert from '@material-ui/lab/Alert';
+import logo from "../images/logo.png";
 
 
 const LoginModal = ({
@@ -129,7 +130,8 @@ const body = (
         justify="center"
         alignItems="center"
         >
-              <img src="https://nowaitlist.co/wp-content/uploads/2021/02/Screen-Shot-2021-01-31-at-2.56.11-PM.png" alt="logo" className={classes.logo} />
+              
+              <img src={logo} alt="logo" className={classes.logo}/>
         </Grid>
     <form onSubmit={handleSubmit(handleOnSubmit)}>
           {/* <Button
