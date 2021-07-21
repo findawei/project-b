@@ -23,7 +23,7 @@ const Auctions = React.lazy(() => import('./components/Auctions'));
 const Footer = React.lazy(() => import('./components/Footer'));
 const Faq = React.lazy(() => import('./components/faq/Faq'));
 
-const stripePromise = loadStripe('pk_test_51IarEuAFyb1kAVtidDxjDpeHAQ3DprarSyD2Iqw8SED8aHlfxw2Pq4PQDqVJgiljBON7g3iecBIyaMloukPVD9nx00au4jfT5a');
+const stripePromise = loadStripe('pk_live_51IarEuAFyb1kAVtipNIUbLRMfAjvwN52rgc2Ksm80tC5ZmR0amBBDSTdjIAQOciiDOUEK2bAxYAiCJyyh71IRaXB00a4nWsFGu');
 const history = createBrowserHistory();
 // Initialize google analytics page view tracking
 history.listen(location => {
