@@ -7,7 +7,7 @@ import Modal from '@material-ui/core/Modal';
 import {IconButton, Button, Box, Typography, Paper, Chip, Grid, TextField, Link} from '@material-ui/core'
 import ReCAPTCHA from "react-google-recaptcha";
 import Alert from '@material-ui/lab/Alert';
-import logo from "../images/logo.png";
+import logo from "../../images/logo.png";
 
 
 const LoginModal = ({

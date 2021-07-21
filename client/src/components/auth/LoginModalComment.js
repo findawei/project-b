@@ -8,7 +8,7 @@ import {Button, Box, Typography, Paper, Chip, Grid, TextField, Link, IconButton}
 import ReCAPTCHA from "react-google-recaptcha";
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import Alert from '@material-ui/lab/Alert';
-import logo from "../images/logo.png";
+import logo from "../../images/logo.png";
 
 
 const LoginModalComment = ({
