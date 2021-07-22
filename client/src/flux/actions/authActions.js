@@ -109,13 +109,6 @@ export const register = ({email, password, displayName }) => async(
               type: REGISTER_SUCCESS,
               payload:user
             });
-            ReactGA.event({
-              category: "User",
-              action: "Signed up",
-            })
-            ReactGA.set({
-              userId: user.uid
-            })
             const header = await tokenConfig();
             try{
               axios
@@ -133,6 +126,14 @@ export const register = ({email, password, displayName }) => async(
                     "Something went wrong, we couldn't create your account. Please try again."
                 });
               };
+
+              ReactGA.event({
+                category: "User",
+                action: "Signed up",
+              })
+              ReactGA.set({
+                userId: user.uid
+              })
 
           } else {
             // Signup failed
@@ -279,12 +280,12 @@ export const addStripeCC = (user) => async (dispatch, getState) => {
         dispatch({
             type: USER_UPDATE,
             payload: res.data
-        }),
-        ReactGA.event({
-          category: "Stripe",
-          action: "User added cc",
         })
     ))
+    .then(ReactGA.event({
+      category: "Stripe",
+      action: "User added cc",
+    }))
     }
     catch(err) {
       dispatch(returnErrors(err.response.data, err.response.status, 'AUTH_ERROR'));
