@@ -26,6 +26,9 @@ const Faq = React.lazy(() => import('./components/faq/Faq'));
 const stripePromise = loadStripe('pk_live_51IarEuAFyb1kAVtipNIUbLRMfAjvwN52rgc2Ksm80tC5ZmR0amBBDSTdjIAQOciiDOUEK2bAxYAiCJyyh71IRaXB00a4nWsFGu');
 const history = createBrowserHistory();
 // Initialize google analytics page view tracking
+const trackingId = "UA-187812241-4"; 
+ReactGA.initialize(trackingId);
+
 history.listen(location => {
   ReactGA.set({ page: location.pathname }); // Update the user's current page
   ReactGA.pageview(location.pathname); // Record a pageview for the given page
