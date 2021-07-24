@@ -7,3 +7,44 @@ error: Jul-13-2021 12:47:58: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.
 error: Jul-14-2021 08:27:11: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 error: Jul-14-2021 08:27:11: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - hayhoky@gmail.com - h7ikrjAsPUh6uUtkVs7evGVyFU23
 error: Jul-14-2021 08:28:28: 	Bad Request - /api/auth/captcha - POST - ::ffff:127.0.0.1 - YOU ARE NOT A HUMAN.
+error: Jul-23-2021 12:41:03: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:41:03: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:48:03: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:48:03: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:48:09: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:48:09: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:48:50: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:48:50: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:49:34: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:49:34: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:49:55: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:49:55: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:50:23: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:50:23: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:50:56: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:50:56: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:51:27: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:51:27: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:51:32: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:51:32: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:52:30: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:52:30: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:52:41: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:52:41: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:54:47: 	OK - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:57:22: 	Not Modified - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:57:50: 	OK - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:58:55: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:58:55: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:59:34: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:59:34: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:59:59: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 12:59:59: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 13:00:02: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 13:00:02: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 20:26:33: 	undefined - /api/auth/user - GET - ::ffff:127.0.0.1 - User does not exist - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 20:26:33: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - undefined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 20:35:05: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - uid is not defined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 20:36:04: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - uid is not defined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 20:36:18: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - uid is not defined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-23-2021 20:36:42: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - uid is not defined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1

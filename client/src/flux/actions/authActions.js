@@ -38,7 +38,7 @@ export const loadUser = () => async(dispatch, getState) => {
           type: USER_LOADED,
           payload: user
         });
-  
+                
         // let accessToken = user
         // console.log(accessToken)
         
@@ -47,11 +47,11 @@ export const loadUser = () => async(dispatch, getState) => {
         try{
         axios
         .get('/api/auth/user', header)
-        .then(res =>
-          dispatch({
-            type: USER_LOADED,
-            payload: res.data
-          })
+        .then(res => 
+            dispatch({
+              type: USER_LOADED,
+              payload: res.data
+            })
         )}
         catch(err) {
           dispatch((err.response.data, err.response.status));

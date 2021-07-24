@@ -112,8 +112,16 @@ if(auth){
   try {
     const user = await User.findOne({uid: req.currentUser.uid})
     if (!user) {
-      throw Error('User Does not exist'),
-      usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User does not exist - ${auth.email} - ${auth.uid}`);
+      const newUser = new User({
+        uid: req.currentUser.uid,
+        name: req.currentUser.name,
+        email: req.currentUser.email
+      });
+  
+      const savedUser = await newUser.save();
+      return res.json(savedUser)
+      // throw Error('User Does not exist'),
+      // usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User does not exist - ${auth.email} - ${auth.uid}`);
     };
     res.json(user);
   } catch (e) {
