@@ -12,7 +12,7 @@ sgMail.setApiKey(SENDGRID_API_KEY)
 const { formatDistance, subDays, format, isPast, isFuture } = require ('date-fns')
 
 // @route   GET api/items/
-// @desc    Get all items for a specific user
+// @desc    Get all items that are live and completed
 // @access  Private
 router.get('/', async (req, res) => {
   try {
@@ -24,6 +24,26 @@ router.get('/', async (req, res) => {
         res.status(400).json({ msg: e.message });
         auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`);
     }
+});
+
+// @route   GET api/items/
+// @desc    Get all items for review for a specific user
+// @access  Private
+router.get('/for_review', async (req, res) => {
+  const auth = req.currentUser;
+    if(auth){
+      try {
+      const items = await Item.find({user: req.currentUser.uid, status: "for_review"}).sort({
+        endDate: 1,});
+      if (!items) throw Error('No items');
+        res.status(200).json(items);
+        } catch (e) {
+            res.status(400).json({ msg: e.message });
+            auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`);
+        }
+    } else return (
+      res.status(403).send('Not authorized'),
+      auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
 });
 
 // @route   GET api/item/_id
@@ -163,7 +183,7 @@ router.post('/submit', async (req, res) => {
   auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`);
 }
 }
-return(res.status(403).send('Not authorized'),
+else return(res.status(403).send('Not authorized'),
 auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
 }
 );
@@ -245,7 +265,7 @@ router.put('/endDate/:id', async (req, res) => {
     auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
     }
   }
-  return (
+  else return (
     res.status(403).send('Not authorized'),
     auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
   });
@@ -287,7 +307,7 @@ router.post('/bid/:id', async (req, res) => {
       }
       return
     }
-    return (res.status(403).send('Not authorized'),
+    else return (res.status(403).send('Not authorized'),
     auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
     )
   }
@@ -319,7 +339,7 @@ router.post('/comment/:id', async (req, res) => {
     }
     return
   }
-  return (res.status(403).send('Not authorized'),
+  else return (res.status(403).send('Not authorized'),
   auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
 }
 );

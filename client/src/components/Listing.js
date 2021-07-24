@@ -56,7 +56,7 @@ if (isPast(new Date(item.endDate)) && (item.status === "completed")){
 } else if(isPast(new Date(item.endDate)) && (item.status === "reserve_not_met")){
   boxColor = "gray"
 }
-else if((item.status === "active")){
+else {
   boxColor = "green"
 }
     const Completionist = () => <span>{barText}</span>;

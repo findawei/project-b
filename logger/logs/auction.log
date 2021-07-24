@@ -53,3 +53,4 @@ error: Jul-14-2021 21:10:58: 	Bad Request - /api/items - GET - undefined - Opera
 error: Jul-14-2021 21:26:21: 	Bad Request - /api/items/60ef8870b801f2221ea4a8fb - GET - ::ffff:127.0.0.1 - No item
 error: Jul-14-2021 21:44:11: 	Bad Request - /api/items/60ef8f2c6efa046d7ce3efd8 - GET - ::ffff:127.0.0.1 - No item
 info: Jul-18-2021 19:20:32: 	OK - /api/items/comment/60f31a87c3f7c9d840ded51e - POST - ::ffff:127.0.0.1 - Comment successfully - Comment: Going live soon! - Auction_ID: 60f31a87c3f7c9d840ded51e - alex@nowaitlist.co - fnF5bIUDeFegpObqNi5lr2Ixt5B2
+error: Jul-24-2021 09:06:59: 	Bad Request - /api/items/for_review - GET - ::ffff:127.0.0.1 - items is not defined

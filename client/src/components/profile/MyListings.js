@@ -6,6 +6,7 @@ import {Grid, Paper, Button, Link, Typography, Container} from '@material-ui/cor
 import {getItems} from '../../flux/actions/itemActions'
 import Listing from '../Listing'
 import {isFuture, isPast} from "date-fns";
+import ForReview from './ForReview';
 
 const MyListings = ({getItems, item, auth}) => {
 
@@ -35,8 +36,9 @@ useEffect(() => {
         setHaveListings(true)
     }
 }, []);
- 
+
   const { items } = item;
+
 
   return (
     <div className={classes.root}>
@@ -44,8 +46,10 @@ useEffect(() => {
             <Typography component="div" variant="h4">
             My Listings
             </Typography>
+            <ForReview/>
             {haveListings ?
                 <div>
+                <h1>Live</h1>
                 <Grid container spacing={2}>
                 {items.filter(opt => isFuture(new Date(opt.endDate)) & auth.user.uid === opt.user).map(item => <Listing 
                     item={item} 
@@ -53,19 +57,19 @@ useEffect(() => {
                     )}
                 </Grid>
 
-                {items.filter(opt => isPast(new Date(opt.endDate))).length === 0 ?
-                ''
-                :
-                <div>
-                <h1>Ended</h1>
-                <Grid container spacing={2}>
-                {items.filter(opt => isPast(new Date(opt.endDate))& auth.user.uid === opt.user).map(item => <Listing 
-                    item={item} 
-                    key={item._id}/>
-                    )}
-                </Grid>
-                </div>
-                }
+                    {items.filter(opt => isPast(new Date(opt.endDate))).length === 0 ?
+                    ''
+                    :
+                    <div>
+                    <h1>Ended</h1>
+                    <Grid container spacing={2}>
+                    {items.filter(opt => isPast(new Date(opt.endDate))& auth.user.uid === opt.user).map(item => <Listing 
+                        item={item} 
+                        key={item._id}/>
+                        )}
+                    </Grid>
+                    </div>
+                    }
                 </div>
                 :
                 <div>

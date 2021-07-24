@@ -1,7 +1,8 @@
-import {GET_ITEMS, GET_ITEM, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING, UPDATE_ITEM, SET_CURRENTITEM, BID_ITEM, CLEAR_CURRENT, ITEM_ERROR, COMMENT_ITEM, SUBMIT_ITEM} from '../actions/types';
+import {GET_ITEMS, GET_ITEM, ADD_ITEM, DELETE_ITEM, ITEMS_LOADING, UPDATE_ITEM, SET_CURRENTITEM, BID_ITEM, CLEAR_CURRENT, ITEM_ERROR, COMMENT_ITEM, SUBMIT_ITEM, GET_ITEMS_REVIEW} from '../actions/types';
 
 const initialState = {
     items: [],
+    items_review: [],
     currentItem: [],
     loading: false
 };
@@ -12,6 +13,12 @@ export default function(state=initialState, action){
             return{
                 ...state,
                 items: action.payload,
+                loading: false
+            };
+        case GET_ITEMS_REVIEW:
+            return{
+                ...state,
+                items_review: action.payload,
                 loading: false
             };
         case GET_ITEM:
