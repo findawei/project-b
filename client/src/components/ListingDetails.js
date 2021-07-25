@@ -195,7 +195,7 @@ useEffect(() => {
       textAlign: 'center',
       color: bidBarText,
       background: bidBarBg,
-      height: 40,
+      // height: 40,
     },
     bidbartext: {
       color: "#FFFFFF"
