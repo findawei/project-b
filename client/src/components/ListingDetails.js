@@ -468,8 +468,11 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                   <Paper className={classes.bidbar}>
                   <Grid container spacing={0}>
                     <Grid item xs>
-                      <Grid container  justifyContent="center"
-                        alignItems="center">
+                      <Grid 
+                      container
+                      justifyContent="center"
+                      // alignItems="center"
+                      >
                       <TimerIcon/>&nbsp;
                       <Typography 
                       // variant="subtitle1" 
@@ -499,7 +502,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                         } displayType={'text'} thousandSeparator={true} prefix={'$'}/>
                       </Typography>
                     </Grid>
-                    <Grid item xs={3}>
+                    <Grid item xs>
                       <Typography 
                       // variant="h6" 
                       color="inherit" 
