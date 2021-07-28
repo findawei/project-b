@@ -280,7 +280,7 @@ router.post('/bid/:id', async (req, res) => {
       const item = await Item.findById({_id: req.params.id});
       
       try {
-        if (isFuture(item.endDate) && (req.body.bid > item.bidHistory[0].bid)){
+        if (isFuture(item.endDate)){
          
         const newBid = {
           bid: req.body.bid,
