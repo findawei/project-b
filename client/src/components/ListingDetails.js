@@ -871,17 +871,19 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             </p>
           </Grid>
         </Grid> 
-          <Grid item xs={12}>
+          {/* <Grid item xs={12}> */}
             <Paper variant="outlined" className={classes.info}>
-            <Grid container>
+            <Grid container direction="row"
+  justifyContent="center"
+  alignItems="flex-start">
             <Grid item xs={6}>
-              <Typography fontWeight="fontWeightBold" variant="h5" display="inline">
+              <Typography fontWeight="fontWeightBold" >
               {auctionEndText}
               &nbsp;
               {currentItem.bidHistory && currentItem.bidHistory.length? currentItem.bidHistory[0].name : 0}
               </Typography>
               <br/>
-              <Typography variant="h2" display="inline">
+              <Typography variant="h4" >
                 <NumberFormat value={
                   currentItem.bidHistory && currentItem.bidHistory.length? 
                   currentItem.bidHistory[0].bid : 0
@@ -891,28 +893,28 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             
             <Grid xs={6}>
               <div className={classes.paper}>
-              <Paper elevation="0" className={classes.background}>
+              {/* <Paper elevation="0" className={classes.background}> */}
                 <Typography color="inherit" display="inline">
                   <Box fontWeight="fontWeightBold" m={0.5}>
                     Seller
                   </Box>
                 </Typography>
-              </Paper>
-              <Paper elevation="0">
+              {/* </Paper> */}
+              {/* <Paper elevation="0"> */}
                 <Typography color="inherit" display="inline">
                   <Box  m={0.5}>
                   {currentItem.name}
                   </Box> 
                 </Typography>
-              </Paper>
-              <Paper elevation="0" className={classes.background}>
+              {/* </Paper> */}
+              {/* <Paper elevation="0" className={classes.background}> */}
                 <Typography color="inherit" display="inline">
                   <Box fontWeight="fontWeightBold" m={0.5}>
                     Ending
                   </Box>
                 </Typography>
-              </Paper>
-              <Paper elevation="0">
+              {/* </Paper> */}
+              {/* <Paper elevation="0"> */}
                 <Typography color="inherit" display="inline">
                   <Box  m={0.5}>
                   {currentItem && currentItem.endDate? 
@@ -920,26 +922,26 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
               : <div></div>}
                   </Box> 
                 </Typography>
-              </Paper>
-              <Paper elevation="0" className={classes.background}>
+              {/* </Paper> */}
+              {/* <Paper elevation="0" className={classes.background}> */}
                 <Typography color="inherit" display="inline">
                   <Box fontWeight="fontWeightBold" m={0.5}>
                     Bids
                   </Box>
                 </Typography>
-              </Paper>
-              <Paper elevation="0">
+              {/* </Paper> */}
+              {/* <Paper elevation="0"> */}
                 <Typography color="inherit" display="inline">
                   <Box  m={0.5}>
                   {currentItem && currentItem.bidHistory? currentItem.bidHistory.length : <div></div>}
                   </Box> 
                 </Typography>
-              </Paper>
+              {/* </Paper> */}
               </div>
             </Grid>
             </Grid>
             </Paper>
-          </Grid>
+          {/* </Grid> */}
           <br/>
           {/* Comment Section */}
           <Grid item xs={12}>

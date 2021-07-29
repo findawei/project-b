@@ -65,3 +65,11 @@ error: Jul-27-2021 20:51:23: 	Bad Request - /api/items/bid/60f0e2aad6e9bd942959f
 error: Jul-27-2021 20:54:19: 	Bad Request - /api/items/bid/60f310d5c3f7c9d840ded51c - POST - ::ffff:127.0.0.1 - Cannot read property 'bid' of undefined - Auction_ID: 60f310d5c3f7c9d840ded51c - alex@nowaitlist.co - fnF5bIUDeFegpObqNi5lr2Ixt5B2
 error: Jul-27-2021 20:58:18: 	Bad Request - /api/items/bid/60f310d5c3f7c9d840ded51c - POST - ::ffff:127.0.0.1 - Cannot read property 'bid' of undefined - Auction_ID: 60f310d5c3f7c9d840ded51c - alex@nowaitlist.co - fnF5bIUDeFegpObqNi5lr2Ixt5B2
 info: Jul-27-2021 20:58:50: 	OK - /api/items/bid/60f310d5c3f7c9d840ded51c - POST - ::ffff:127.0.0.1 - Bid successfully - Bid: 100 - Auction_ID: 60f310d5c3f7c9d840ded51c - alex@nowaitlist.co - fnF5bIUDeFegpObqNi5lr2Ixt5B2
+error: Jul-27-2021 21:04:27: 	Bad Request - /api/items/6050c9bd7eade8231fb9d76a - GET - ::ffff:127.0.0.1 - No item
+error: Jul-27-2021 21:19:09: 	Bad Request - /api/items/submit - POST - ::ffff:127.0.0.1 - {(intermediate value)(intermediate value)(intermediate value)(intermediate value)(intermediate value)(intermediate value)} is not a function - alex@nowaitlist.co - fnF5bIUDeFegpObqNi5lr2Ixt5B2
+error: Jul-27-2021 21:20:53: 	Bad Request - /api/items/submit - POST - ::ffff:127.0.0.1 - Bad Request (400)
+  Each email address in the personalization block should be unique between to, cc, and bcc. We found the first duplicate instance of [alex@nowaitlist.co] in the personalizations.0.cc field.
+    personalizations.0
+    http://sendgrid.com/docs/API_Reference/Web_API_v3/Mail/errors.html#message.recipient-errors - alex@nowaitlist.co - fnF5bIUDeFegpObqNi5lr2Ixt5B2
+info: Jul-27-2021 21:22:43: 	OK - /api/items/submit - POST - ::ffff:127.0.0.1 - Submitted successfully - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Jul-27-2021 21:23:40: 	Bad Request - /api/items/submit - POST - ::ffff:127.0.0.1 - {(intermediate value)(intermediate value)(intermediate value)(intermediate value)(intermediate value)(intermediate value)} is not a function - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
