@@ -29,6 +29,7 @@
     "mongoose": "^5.13.2",
     "multiparty": "^4.2.2",
     "node-fetch": "^2.6.1",
+    "nodemailer": "^6.6.3",
     "rate-limiter-flexible": "^2.2.2",
     "stripe": "^8.160.0",
     "toobusy-js": "^0.5.1",

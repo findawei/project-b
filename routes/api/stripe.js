@@ -5,11 +5,9 @@ const User = require('../../models/User');
 const auth = require('../../middleware/auth');
 const Item = require('../../models/item');
 const config =require( '../../config');
-const sgMail = require('@sendgrid/mail')
 const {usersLogger, transactionLogger} = require('../../logger/logger');
 
-const { SENDGRID_API_KEY } = config;
-sgMail.setApiKey(SENDGRID_API_KEY)
+
 
 router.get("/public-key", (req, res) => {
   res.send({ publicKey: process.env.STRIPE_PUBLISHABLE_KEY });

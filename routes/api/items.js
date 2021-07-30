@@ -4,12 +4,22 @@ const auth = require('../../middleware/auth')
 const user = require('../../models/User');
 const Item = require('../../models/item');
 const config =require( '../../config');
-const sgMail = require('@sendgrid/mail')
-const {usersLogger, transactionLogger, auctionsLogger} = require('../../logger/logger');
-const { SENDGRID_API_KEY } = config;
-sgMail.setApiKey(SENDGRID_API_KEY)
+var nodemailer = require('nodemailer');
 
+const {usersLogger, transactionLogger, auctionsLogger} = require('../../logger/logger');
 const { formatDistance, subDays, format, isPast, isFuture } = require ('date-fns')
+
+const { EMAIL_PW } = config;
+
+var transport = nodemailer.createTransport({
+  host: "mail.nowaitlist.co",
+  port: 465,
+  secure: true,
+  auth: {
+    user: "alex@nowaitlist.co",
+    pass: `${EMAIL_PW}`
+  }
+});
 
 // @route   GET api/items/
 // @desc    Get all items that are live and completed
@@ -133,12 +143,31 @@ router.post('/submit', async (req, res) => {
       auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Something went wrong saving the item - ${auth.email} - ${auth.uid}`);
     }
     //Send email to site admin
+
+    var mailOptions = {
+      from: '"No Wait List" <alex@nowaitlist.co>',
+      to: `${req.currentUser.email}`,
+      cc: "alex@nowaitlist.co",
+      subject: 'Nice Nodemailer test',
+      text: 'Hey there, it’s our first message sent with Nodemailer ',
+      html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br /><img src="cid:uniq-mailtrap.png" alt="mailtrap" />',
+    };
+    
+    // transport.sendMail(mailOptions, (error, info) => {
+    //   if (error) {
+    //     return console.log(error);
+    //   }
+    //   console.log('Message sent: %s', info.messageId);
+    // });
+
+    //remove sendgrid code
+
       templates = {
         Watch_submission: "d-b739df9df01445b5bbca796bf0b1b37d"
       };
     const msg = {
-      to:'alex@nowaitlist.co',
-      cc: `${req.currentUser.email}`, // Change to your recipient
+      to:`${req.currentUser.email}`, // Change to your recipient
+      cc: 'alex@nowaitlist.co',
       from: 'alex@nowaitlist.co', // Change to your verified sender
       name: "Alex from No Wait List",
       
