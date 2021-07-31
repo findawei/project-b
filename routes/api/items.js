@@ -185,7 +185,6 @@ router.post('/submit', async (req, res) => {
       to: auth.email,
       cc: 'alex@nowaitlist.co',
       subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,        
-      text: 'Hey there, it’s our first message sent with Nodemailer ',
       html: htmlToSend
     }
     mailer.transport.sendMail(mailOptions, (error, info) => {
@@ -365,78 +364,77 @@ router.post('/comment/:id', async (req, res) => {
 }
 );
 
-router.post('/email-test', async (req, res) => {
-  const auth = req.currentUser;
-  if(auth){
-    try{
-      const filePath = path.join(__dirname, '../../email/template_submit.html');
-      const source = fs.readFileSync(filePath, 'utf-8').toString();
-      const template = handlebars.compile(source);
-      const replacements = {
-        //Test data
-        // name: "Tira",
-        // email: "tira@gmail.com",
-        // dealership: "MM Watch Dealers",
-        // dealerwebsite: "www.mmwatchdealers.com",
-        // link: "www.mmwatchdealers.com/seiko6105",
-        // date: "2019-11-20",
-        // description: " Seiko 6105-8110 - 1977",
-        // amount: "500",
-        // brand:"Seiko",
-        // model:"Willard",
-        // reference_number: "6105-8110",
-        // year:"1977",
-        // fee: "$115",
-        // location: "California, US",
-        // service: "June 2018",
-        // phone: "614-234-2346",
-        // referral: "JonB",
-        // reserve: "6600",
-        // receipt_details:[{
-        //       description: "Seiko 6105-8110 - 1977",
-        //       reserve: "6600"
-        //   }]
-        date: format(new Date(), 'PP - ppp'),
-        name: newItem.name,
-        email: req.currentUser.email,
-        dealership: newItem.dealership,
-        dealerwebsite: newItem.dealerwebsite,
-        fees: newItem.fees,
-        link: newItem.link,
-        brand: newItem.brand,
-        model: newItem.model,
-        reference_number: newItem.reference_number,
-        year: newItem.year,   
-        reserve: (newItem.reserve === null? 0 : newItem.reserve),
-        location: newItem.location,
-        service: format(new Date(newItem.service), 'yyyy/MM/dd'),
-        phone: newItem.phone,
-        referral: newItem.referral,  
-      };
-      const htmlToSend = template(replacements);
+// router.post('/email-test', async (req, res) => {
+//   const auth = req.currentUser;
+//   if(auth){
+//     try{
+//       const filePath = path.join(__dirname, '../../email/template_submit.html');
+//       const source = fs.readFileSync(filePath, 'utf-8').toString();
+//       const template = handlebars.compile(source);
+//       const replacements = {
+//         //Test data
+//         name: "Tira",
+//         email: "tira@gmail.com",
+//         dealership: "MM Watch Dealers",
+//         dealerwebsite: "www.mmwatchdealers.com",
+//         link: "www.mmwatchdealers.com/seiko6105",
+//         date: "2019-11-20",
+//         description: " Seiko 6105-8110 - 1977",
+//         amount: "500",
+//         brand:"Seiko",
+//         model:"Willard",
+//         reference_number: "6105-8110",
+//         year:"1977",
+//         fee: "$115",
+//         location: "California, US",
+//         service: "June 2018",
+//         phone: "614-234-2346",
+//         referral: "JonB",
+//         reserve: "6600",
+//         receipt_details:[{
+//               description: "Seiko 6105-8110 - 1977",
+//               reserve: "6600"
+//           }]
+//         // date: format(new Date(), 'PP - ppp'),
+//         // name: newItem.name,
+//         // email: req.currentUser.email,
+//         // dealership: newItem.dealership,
+//         // dealerwebsite: newItem.dealerwebsite,
+//         // fees: newItem.fees,
+//         // link: newItem.link,
+//         // brand: newItem.brand,
+//         // model: newItem.model,
+//         // reference_number: newItem.reference_number,
+//         // year: newItem.year,   
+//         // reserve: (newItem.reserve === null? 0 : newItem.reserve),
+//         // location: newItem.location,
+//         // service: format(new Date(newItem.service), 'yyyy/MM/dd'),
+//         // phone: newItem.phone,
+//         // referral: newItem.referral,  
+//       };
+//       const htmlToSend = template(replacements);
 
-      mailOptions = {
-        from: '"No Wait List" <alex@nowaitlist.co>',
-        to: auth.email,
-        cc: 'alex@nowaitlist.co',
-        subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,        
-        text: 'Hey there, it’s our first message sent with Nodemailer ',
-        html: htmlToSend
-      }
-      mailer.transport.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          return console.log(error);
-        }
-        res.status(200).send(`Email sent to ${auth.email}`)
-        console.log('Message sent: %s', info.messageId);
-      });
-    }catch (err){
-      res.status(403).send(err)
-    }
-  } else {
-    return res.status(403).send("Email didn't send")
-  }
-})
+//       mailOptions = {
+//         from: '"No Wait List" <alex@nowaitlist.co>',
+//         to: auth.email,
+//         cc: 'alex@nowaitlist.co',
+//         subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,        
+//         html: htmlToSend
+//       }
+//       mailer.transport.sendMail(mailOptions, (error, info) => {
+//         if (error) {
+//           return console.log(error);
+//         }
+//         res.status(200).send(`Email sent to ${auth.email}`)
+//         console.log('Message sent: %s', info.messageId);
+//       });
+//     }catch (err){
+//       res.status(403).send(err)
+//     }
+//   } else {
+//     return res.status(403).send("Email didn't send")
+//   }
+// })
 
 
 // // @route   DELETE api/items/:id

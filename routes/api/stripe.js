@@ -4,6 +4,10 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const User = require('../../models/User');
 const auth = require('../../middleware/auth');
 const Item = require('../../models/item');
+const mailer = require('../../email/mailer');
+const path = require('path');
+const handlebars = require('handlebars');
+const fs = require('fs');
 const config =require( '../../config');
 const {usersLogger, transactionLogger} = require('../../logger/logger');
 
@@ -169,54 +173,52 @@ router.post('/processPayment', async (req, res) =>{
                   transactionLogger.info(`Payment Successful - ${req.originalUrl} - ${req.method} - Fee(/100): ${paymentIntent.amount_received} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`)
                   //Send email to buyer
                 const auctionSeller = await User.findOne({uid: updateItem.user})
+                
+                const filePath = path.join(__dirname, '../../email/template_won.html');
+                const source = fs.readFileSync(filePath, 'utf-8').toString();
+                const template = handlebars.compile(source);
+                const replacements = {
+                  name: user.name,
+                  email: user.email,
+                  brand: updateItem.brand,
+                  model: updateItem.model,
+                  item_image: updateItem.img[0].url,
+                  reference: updateItem.reference_number,
+                  year: updateItem.year,
+                  endDate: updateItem.endDate.toISOString().substring(0, 10),
+                  fee: `$${auction.bid*0.05}`,
+                  receipt_id: auction.auction_id.substring(0,8),
+                  auction_id: auction.auction_id,
+                  amount_due: `$${auction.bid}`,
+                  seller_username: auctionSeller.name,
+                  seller_email: auctionSeller.email,
+                  seller_phone: auctionSeller.phone,
+                  receipt_details: [{
+                    description: `${updateItem.brand} ${updateItem.reference_number} ${updateItem.reference_number} - ${updateItem.year}`,
+                    amount: `$${auction.bid}`,
+                  }]
+                };
+                const htmlToSend = template(replacements);
 
-                templates = {
-                  Auction_Won: "d-e5d27a992b014284aa678ea222d843de"
-              };
-                const msg = {
-                  to: `${user.email}`, // Change to your recipient
-                  from: 'alex@nowaitlist.co', // Change to your verified sender
-                  name: "Alex from No Wait List",
-                  
-                  template_id:"d-e5d27a992b014284aa678ea222d843de",
-        
-                  dynamic_template_data: {
-                    subject: `Hey ${user.name}, you won the ${updateItem.brand} ${updateItem.reference_number} - ${updateItem.year} 🎉`,
-                    name: user.name,
-                    email: user.email,
-                    brand: updateItem.brand,
-                    model: updateItem.model,
-                    item_image: updateItem.img[0].url,
-                    reference: updateItem.reference_number,
-                    year: updateItem.year,
-                    endDate: updateItem.endDate.toISOString().substring(0, 10),
-                    fee: `$${auction.bid*0.05}`,
-                    receipt_id: auction.auction_id.substring(0,8),
-                    auction_id: auction.auction_id,
-                    amount_due: `$${auction.bid}`,
-                    seller_username: auctionSeller.name,
-                    seller_email: auctionSeller.email,
-                    seller_phone: auctionSeller.phone,
-                    receipt_details: [{
-                      description: `${updateItem.brand} ${updateItem.reference_number} ${updateItem.reference_number} - ${updateItem.year}`,
-                      amount: `$${auction.bid}`,
-                    }]
-
-                   }
+                mailOptions = {
+                  from: '"No Wait List" <alex@nowaitlist.co>',
+                  to: user.email,
+                  cc: 'alex@nowaitlist.co',
+                  subject: `You won the ${replacements.brand} ${replacements.reference} - ${replacements.year}`,
+                  html: htmlToSend
                 }
-                sgMail
-                  .send(msg)
-                  .then(() => {
-                    console.log('Email sent')
-                    // res.status(200).json('Email sent')
-                  })
-                  .catch((error) => {
-                    console.error(error)
+                mailer.transport.sendMail(mailOptions, (error, info) => {
+                  if (error) {
+                    console.log(error);
                     res.status(400).json('Something went wrong.')
-                    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${auction.bid} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`)
-                  })
+                    transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${auction.bid} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`);
+                  }
+                  res.status(200).send('Payment sent!')
+                  transactionLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Email sent successfully - ${user.email} - ${user.uid}`);
+                });  
                 }
                 res.status(200).json(paymentIntent);
+                transactionLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Payment sent successfully - ${user.email} - ${user.uid}`);
             } else {
               res.status(400).json('Something went wrong.')
               transactionLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - Bid: ${auction.bid} - Auction_ID: ${auction.auction_id} - ${user.email} - ${user.uid}`);
@@ -298,5 +300,79 @@ router.post('/test', async (req, res) =>{
   }
 //}
 });
+
+// router.post('/email-test', async (req, res) => {
+//   const auth = req.currentUser;
+//   if(auth){
+//     try{
+//       const filePath = path.join(__dirname, '../../email/template_won.html');
+//       const source = fs.readFileSync(filePath, 'utf-8').toString();
+//       const template = handlebars.compile(source);
+//       const replacements = {
+//         //Test data
+//         name: "Tira",
+//         email: "recipient@example.com",
+//         amount: "500",
+//         brand:"Seiko",
+//         reference:"6105-8110",
+//         model: "Willard",
+//         year:"1977",
+//         fee: "$115",
+//         item_image: "https://i.imgur.com/cIDmiwi.jpg",
+//         endDate: "July 4, 2021",
+//         auction_id: "12421512512",
+//         seller_username:"BobF43",
+//         seller_email:"bob43@gmail.com",
+//         seller_phone: "412-123-1251",
+//         receipt_id: "b9d769",
+//         receipt_details:[{
+//               description: " Seiko 6105-8110 - 1977",
+//               amount: "$1,200",
+//               fee: "$115"
+//           }],
+//           amount_due:"$1,200"
+//           // name: user.name,
+//           // email: user.email,
+//           // brand: updateItem.brand,
+//           // model: updateItem.model,
+//           // item_image: updateItem.img[0].url,
+//           // reference: updateItem.reference_number,
+//           // year: updateItem.year,
+//           // endDate: updateItem.endDate.toISOString().substring(0, 10),
+//           // fee: `$${auction.bid*0.05}`,
+//           // receipt_id: auction.auction_id.substring(0,8),
+//           // auction_id: auction.auction_id,
+//           // amount_due: `$${auction.bid}`,
+//           // seller_username: auctionSeller.name,
+//           // seller_email: auctionSeller.email,
+//           // seller_phone: auctionSeller.phone,
+//           // receipt_details: [{
+//           //   description: `${updateItem.brand} ${updateItem.reference_number} ${updateItem.reference_number} - ${updateItem.year}`,
+//           //   amount: `$${auction.bid}`,
+//           // }]
+//       };
+//       const htmlToSend = template(replacements);
+
+//       mailOptions = {
+//         from: '"No Wait List" <alex@nowaitlist.co>',
+//         to: 'winner@gmail.com',
+//         cc: 'alex@nowaitlist.co',
+//         subject: `You won the ${replacements.brand} ${replacements.reference} - ${replacements.year}`,        
+//         html: htmlToSend
+//       }
+//       mailer.transport.sendMail(mailOptions, (error, info) => {
+//         if (error) {
+//           return console.log(error);
+//         }
+//         res.status(200).send(`Email sent!`)
+//         console.log('Message sent: %s', info.messageId);
+//       });
+//     }catch (err){
+//       res.status(403).send(err)
+//     }
+//   } else {
+//     return res.status(403).send("Email didn't send")
+//   }
+// })
 
 module.exports = router;
