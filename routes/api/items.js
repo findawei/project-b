@@ -1,25 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth')
+const auth = require('../../middleware/auth');
 const user = require('../../models/User');
 const Item = require('../../models/item');
-const config =require( '../../config');
-var nodemailer = require('nodemailer');
-
+const mailer = require('../../email/mailer');
+const path = require('path');
+const handlebars = require('handlebars');
+const fs = require('fs');
 const {usersLogger, transactionLogger, auctionsLogger} = require('../../logger/logger');
-const { formatDistance, subDays, format, isPast, isFuture } = require ('date-fns')
+const { formatDistance, subDays, format, isPast, isFuture } = require ('date-fns');
 
-const { EMAIL_PW } = config;
 
-var transport = nodemailer.createTransport({
-  host: "mail.nowaitlist.co",
-  port: 465,
-  secure: true,
-  auth: {
-    user: "alex@nowaitlist.co",
-    pass: `${EMAIL_PW}`
-  }
-});
 
 // @route   GET api/items/
 // @desc    Get all items that are live and completed
@@ -143,68 +134,69 @@ router.post('/submit', async (req, res) => {
       auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Something went wrong saving the item - ${auth.email} - ${auth.uid}`);
     }
     //Send email to site admin
-
-    var mailOptions = {
-      from: '"No Wait List" <alex@nowaitlist.co>',
-      to: `${req.currentUser.email}`,
-      cc: "alex@nowaitlist.co",
-      subject: 'Nice Nodemailer test',
-      text: 'Hey there, it’s our first message sent with Nodemailer ',
-      html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br /><img src="cid:uniq-mailtrap.png" alt="mailtrap" />',
+    const filePath = path.join(__dirname, '../../email/template_submit.html');
+    const source = fs.readFileSync(filePath, 'utf-8').toString();
+    const template = handlebars.compile(source);
+    const replacements = {
+      //Test data
+      // name: "Tira",
+      // email: "tira@gmail.com",
+      // dealership: "MM Watch Dealers",
+      // dealerwebsite: "www.mmwatchdealers.com",
+      // link: "www.mmwatchdealers.com/seiko6105",
+      // date: "2019-11-20",
+      // description: " Seiko 6105-8110 - 1977",
+      // amount: "500",
+      // brand:"Seiko",
+      // model:"Willard",
+      // reference_number: "6105-8110",
+      // year:"1977",
+      // fee: "$115",
+      // location: "California, US",
+      // service: "June 2018",
+      // phone: "614-234-2346",
+      // referral: "JonB",
+      // reserve: "6600",
+      // receipt_details:[{
+      //       description: "Seiko 6105-8110 - 1977",
+      //       reserve: "6600"
+      //   }]
+      date: format(new Date(), 'PP - ppp'),
+      name: newItem.name,
+      email: req.currentUser.email,
+      dealership: newItem.dealership,
+      dealerwebsite: newItem.dealerwebsite,
+      fees: newItem.fees,
+      link: newItem.link,
+      brand: newItem.brand,
+      model: newItem.model,
+      reference_number: newItem.reference_number,
+      year: newItem.year,   
+      reserve: (newItem.reserve === null? 0 : newItem.reserve),
+      location: newItem.location,
+      service: format(new Date(newItem.service), 'yyyy/MM/dd'),
+      phone: newItem.phone,
+      referral: newItem.referral,  
     };
-    
-    // transport.sendMail(mailOptions, (error, info) => {
-    //   if (error) {
-    //     return console.log(error);
-    //   }
-    //   console.log('Message sent: %s', info.messageId);
-    // });
+    const htmlToSend = template(replacements);
 
-    //remove sendgrid code
-
-      templates = {
-        Watch_submission: "d-b739df9df01445b5bbca796bf0b1b37d"
-      };
-    const msg = {
-      to:`${req.currentUser.email}`, // Change to your recipient
+    mailOptions = {
+      from: '"No Wait List" <alex@nowaitlist.co>',
+      to: auth.email,
       cc: 'alex@nowaitlist.co',
-      from: 'alex@nowaitlist.co', // Change to your verified sender
-      name: "Alex from No Wait List",
-      
-      template_id:"d-b739df9df01445b5bbca796bf0b1b37d",
-
-      dynamic_template_data: {
-        date: format(new Date(), 'PP - ppp'),
-        name: newItem.name,
-        email: req.currentUser.email,
-        dealership: newItem.dealership,
-        dealerwebsite: newItem.dealerwebsite,
-        fees: newItem.fees,
-        link: newItem.link,
-        brand: newItem.brand,
-        model: newItem.model,
-        reference_number: newItem.reference_number,
-        year: newItem.year,   
-        reserve: (newItem.reserve === null? 0 : newItem.reserve),
-        location: newItem.location,
-        service: format(new Date(newItem.service), 'yyyy/MM/dd'),
-        phone: newItem.phone,
-        referral: newItem.referral,
-       }
+      subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,        
+      text: 'Hey there, it’s our first message sent with Nodemailer ',
+      html: htmlToSend
     }
-    sgMail
-      .send(msg)
-      .then(() => {
-        console.log('Email sent')
-        res.status(200).json(item)
-        auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Submitted successfully - ${auth.email} - ${auth.uid}`);
-      })
-      .catch((error) => {
-        console.error(error)
+    mailer.transport.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.log(error);
         res.status(400).json('Something went wrong.')
         auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`);
-      })
-    
+      }
+      res.status(200).send(item)
+      auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Submitted successfully - ${auth.email} - ${auth.uid}`);
+    });    
     return
     } 
   catch (e) {
@@ -372,6 +364,80 @@ router.post('/comment/:id', async (req, res) => {
   auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
 }
 );
+
+router.post('/email-test', async (req, res) => {
+  const auth = req.currentUser;
+  if(auth){
+    try{
+      const filePath = path.join(__dirname, '../../email/template_submit.html');
+      const source = fs.readFileSync(filePath, 'utf-8').toString();
+      const template = handlebars.compile(source);
+      const replacements = {
+        //Test data
+        // name: "Tira",
+        // email: "tira@gmail.com",
+        // dealership: "MM Watch Dealers",
+        // dealerwebsite: "www.mmwatchdealers.com",
+        // link: "www.mmwatchdealers.com/seiko6105",
+        // date: "2019-11-20",
+        // description: " Seiko 6105-8110 - 1977",
+        // amount: "500",
+        // brand:"Seiko",
+        // model:"Willard",
+        // reference_number: "6105-8110",
+        // year:"1977",
+        // fee: "$115",
+        // location: "California, US",
+        // service: "June 2018",
+        // phone: "614-234-2346",
+        // referral: "JonB",
+        // reserve: "6600",
+        // receipt_details:[{
+        //       description: "Seiko 6105-8110 - 1977",
+        //       reserve: "6600"
+        //   }]
+        date: format(new Date(), 'PP - ppp'),
+        name: newItem.name,
+        email: req.currentUser.email,
+        dealership: newItem.dealership,
+        dealerwebsite: newItem.dealerwebsite,
+        fees: newItem.fees,
+        link: newItem.link,
+        brand: newItem.brand,
+        model: newItem.model,
+        reference_number: newItem.reference_number,
+        year: newItem.year,   
+        reserve: (newItem.reserve === null? 0 : newItem.reserve),
+        location: newItem.location,
+        service: format(new Date(newItem.service), 'yyyy/MM/dd'),
+        phone: newItem.phone,
+        referral: newItem.referral,  
+      };
+      const htmlToSend = template(replacements);
+
+      mailOptions = {
+        from: '"No Wait List" <alex@nowaitlist.co>',
+        to: auth.email,
+        cc: 'alex@nowaitlist.co',
+        subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,        
+        text: 'Hey there, it’s our first message sent with Nodemailer ',
+        html: htmlToSend
+      }
+      mailer.transport.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          return console.log(error);
+        }
+        res.status(200).send(`Email sent to ${auth.email}`)
+        console.log('Message sent: %s', info.messageId);
+      });
+    }catch (err){
+      res.status(403).send(err)
+    }
+  } else {
+    return res.status(403).send("Email didn't send")
+  }
+})
+
 
 // // @route   DELETE api/items/:id
 // // @desc    DELETE items

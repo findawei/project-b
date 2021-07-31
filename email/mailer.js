@@ -1,37 +1,38 @@
-const config =require( '../../config');
+const config =require( '../config');
 var nodemailer = require('nodemailer');
+const path = require('path');
 
 const { EMAIL_PW } = config;
+let mailConfig
+let mailOptions
 
-var transport = nodemailer.createTransport({
-  host: "mail.nowaitlist.co",
-  port: 465,
-  secure: true,
-  auth: {
-    user: "alex@nowaitlist.co",
-    pass: `${EMAIL_PW}`
-  }
-});
+if (process.env.NODE_ENV === 'production'){
+  // all emails are delivered to destination
+  mailConfig = {
+    host: "mail.nowaitlist.co",
+    port: 465,
+    secure: true,
+    auth: {
+      user: "alex@nowaitlist.co",
+      pass: `${EMAIL_PW}`
+    }
+};
 
-var mailOptions = {
-    from: '"No Wait List" <alex@nowaitlist.co>',
-    to: `${req.currentUser.email}`,
-    cc: "alex@nowaitlist.co",
-    subject: 'Nice Nodemailer test',
-    text: 'Hey there, it’s our first message sent with Nodemailer ',
-    html: '<b>Hey there! </b><br> This is our first message sent with Nodemailer<br /><img src="cid:uniq-mailtrap.png" alt="mailtrap" />',
-  };
+} else {
+  // all emails are catched by ethereal.email
+  mailConfig = {
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+        user: 'winona.ullrich67@ethereal.email',
+        pass: 'YZAzVVqeyxE38YfaEp'
+    }
+  };  
+}
+
+let transport = nodemailer.createTransport(mailConfig);
   
-  // transport.sendMail(mailOptions, (error, info) => {
-  //   if (error) {
-  //     return console.log(error);
-  //   }
-  //   console.log('Message sent: %s', info.messageId);
-  // });
-
-
-
 module.exports = {
-  template,
-  mailOptions
+  transport,
+  mailOptions,
 };

@@ -5,7 +5,11 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 export default function Loading() {
 
   return (
-    <div style={{display: 'flex', justifyContent: 'center'}}>
+    <div style={{
+      display: 'flex', 
+      justifyContent: 'center',
+      alignContent: 'center'
+      }}>
       <CircularProgress />
     </div>
   );
