@@ -41,7 +41,7 @@ const classes = useStyles();
     <div>
     <h1>Ended</h1>
     <Grid container spacing={2}>
-      {items.filter(opt => isPast(new Date(opt.endDate))).map(item => <Listing 
+      {items.filter(opt => isPast(new Date(opt.endDate))).sort((a, b) => (new Date(b.endDate)) - (new Date(a.endDate))).map(item => <Listing 
           item={item} 
           key={item._id}/>
           )}
