@@ -144,7 +144,7 @@ useEffect(() => {
     else {
       bidBarBg = 'grey';
       bidBarText = "white"
-      auctionEndText = <b>Highest bidder</b>
+      auctionEndText = <b>Reserve not met, bid to</b>
     }
 
   } else {
@@ -879,8 +879,14 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             <Grid item xs={6}>
               <Typography fontWeight="fontWeightBold" >
               {auctionEndText}
-              &nbsp;
-              {currentItem.bidHistory && currentItem.bidHistory.length? currentItem.bidHistory[0].name : 0}
+              {currentItem.status === "completed" ?
+              <div>
+                &nbsp;
+                {currentItem.bidHistory && currentItem.bidHistory.length? currentItem.bidHistory[0].name : 0}
+              </div>
+              :
+              ''
+              }
               </Typography>
               <br/>
               <Typography variant="h4" >
