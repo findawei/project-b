@@ -30,7 +30,7 @@ const Gallery = ({img}) => {
 const [clickedImg, setClickedImg] = useState()
 
 useEffect(()=>{
-  if(img){
+  if(img && img[0]){
     setClickedImg(img[0].url)
   }
 },[img])

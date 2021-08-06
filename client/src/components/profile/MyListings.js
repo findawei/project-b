@@ -73,7 +73,7 @@ useEffect(() => {
                 </div>
                 :
                 <div>
-                <p>You have not submitted any watches yet. Want to sell your watch?</p>
+                <p>Want to sell your watch?</p>
                 <Link 
                     className={classes.link}
                     component={RouterLink}

@@ -44,10 +44,11 @@ export const getItemsForReview = () => async (
             })
         )
         .catch(err => {
-          dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
+          // dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
           dispatch({
             type: ITEM_ERROR
           });
+          console.log(err)
         });
 };
 
@@ -67,10 +68,11 @@ export const getItemById = (id) => async (
             })
         )
         .catch(err => {
-          dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
+          // dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
           dispatch({
             type: ITEM_ERROR
           });
+          console.log(err)
         });
 };
 

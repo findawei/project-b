@@ -303,7 +303,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
     // Modal Body
     const body = (
       <div style={modalStyle} className={classes.papermodal}>
-        <img src={currentItem.img && currentItem.img[0].url} alt={currentItem.brand} 
+        <img src={currentItem.img && currentItem.img[0] ? currentItem.img[0].url : ''} alt={currentItem.brand} 
         className={classes.image}/>
         <Typography variant="h5">
         {currentItem.brand} {currentItem.model} {currentItem.reference_number} - {currentItem.year}
@@ -446,7 +446,11 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
           {/* <img src={currentItem.img} alt={currentItem.brand} 
           className={classes.image} 
           /> */}
+          {img? 
           <Gallery img={img}/>
+          :
+          'No pics yet'  
+          }
           
           <Grid container 
             direction="row"

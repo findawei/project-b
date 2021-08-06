@@ -101,7 +101,7 @@ return (
             <CardActionArea>
             <CardMedia
                 className={classes.media}
-                image={item.img[0].url}
+                image={item.img[0] ? item.img[0].url :''}
                 title={item.reference_number}
             >
             <Box
