@@ -49,16 +49,22 @@ useEffect(() => {
             <ForReview/>
             {haveListings ?
                 <div>
-                <h1>Live</h1>
+                {/* <h1>Live</h1>
                 <Grid container spacing={2}>
                 {items.filter(opt => isFuture(new Date(opt.endDate)) & auth.user.uid === opt.user).map(item => <Listing 
                     item={item} 
                     key={item._id}/>
                     )}
-                </Grid>
-
+                </Grid> */}
                     {items.filter(opt => isPast(new Date(opt.endDate))).length === 0 ?
-                    ''
+                    <div><h1>Live</h1>
+                    <Grid container spacing={2}>
+                    {items.filter(opt => isFuture(new Date(opt.endDate)) & auth.user.uid === opt.user).map(item => <Listing 
+                        item={item} 
+                        key={item._id}/>
+                        )}
+                    </Grid>
+                    </div>
                     :
                     <div>
                     <h1>Ended</h1>

@@ -125,7 +125,14 @@ return (
             top={10}
             right={10}
             >
-            {item.reserve? "" :
+            {item.reserve? 
+              <Chip 
+              size="small" 
+              label="Reserve"
+              // variant="outlined"
+              color="primary"
+              />
+            :
               <Chip 
                 size="small" 
                 label="No Reserve"
