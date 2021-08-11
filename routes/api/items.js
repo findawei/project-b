@@ -307,12 +307,16 @@ router.post('/bid/:id', async (req, res) => {
           name: req.currentUser.name,
           user: req.currentUser.uid
         };
-
         item.bidHistory.unshift(newBid);
         
         await item.save();
 
         res.json(item.bidHistory);
+
+        //email previous highest bidder let them know they've been outbid
+        // if(item.bidHistory[1]){
+        //   console.log(item.bidHistory[1])
+        // }
 
         auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid successfully - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
       } else {

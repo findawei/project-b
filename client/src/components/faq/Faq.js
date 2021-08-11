@@ -2,20 +2,13 @@ import React , { useEffect, useState } from 'react';
 import {connect} from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography, Divider, Box, Grid, Button, Menu, useScrollTrigger, Container } from '@material-ui/core';
-import MenuItem from '@material-ui/core/MenuItem';
 import About from './About';
 import BuyFaq from './BuyFaq';
 import SellFaq from './SellFaq';
 import Buying from './Buying';
 import Selling from './Selling'
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import { HashLink as Link } from 'react-router-hash-link';
 import './Faq.css';
-import HowToMenu from './HowToMenu';
-import FAQMenu from './FAQMenu';
 import { positions } from '@material-ui/system';
-
 
 const Faq = () => {
 
@@ -27,7 +20,7 @@ const useStyles = makeStyles(() => ({
         margin: 10,
     },
     bgcolor: {
-        backgroundColor:"lightgrey",
+        backgroundColor:"white",
         color:"black"
     },
     link: {
@@ -52,16 +45,6 @@ const trigger = useScrollTrigger()
 
 return (
     <div className={classes.root}>
-      <AppBar position="sticky">
-        <Toolbar className={classes.bgcolor}>
-        <Button edge="start">
-            <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#about'}>About
-            </Link>
-        </Button>
-        <HowToMenu />
-        <FAQMenu />
-        </Toolbar>
-      </AppBar>
     <Container>
     <Grid 
     container
@@ -70,12 +53,6 @@ return (
     alignItems="center">
         <Grid item xs={12} md={10} lg={8}>
         <div className={classes.body}>
-            {/* <Typography component="div">
-                <h1>What's No Wait List?</h1>
-                <Divider />
-                <Box fontWeight="fontWeightBold" py={1}>Cool Watch Auctions</Box>
-            </Typography> */}
-        {/* <Divider/> */}
         <br/>
         <a id="about" class="anchor" />
         <About/>
