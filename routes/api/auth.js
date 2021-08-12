@@ -119,7 +119,7 @@ if(auth){
       });
   
       const savedUser = await newUser.save();
-      return res.json(savedUser)
+      res.json(savedUser)
       // throw Error('User Does not exist'),
       // usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - User does not exist - ${auth.email} - ${auth.uid}`);
     };
@@ -193,23 +193,23 @@ const humanKey = req.body.captcha
   }
 });
 
-router.post('/test', async (req, res) =>{
-  const auth = req.currentUser;
-  if(auth){
-  const newBid = {
-    auction_id: req.body._id,
-    bid: req.body.bid,
-    name: req.currentUser.name,
-    user_uid: req.currentUser.uid
-  };
-  if (newBid.bid && newBid.auction_id){
-    res.status(200).json(newBid)
-    usersLogger.info(`Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
-  } else {
-    res.status(400).json('Something went wrong');
-    usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
-  }
-}
-});
+// router.post('/test', async (req, res) =>{
+//   const auth = req.currentUser;
+//   if(auth){
+//   const newBid = {
+//     auction_id: req.body._id,
+//     bid: req.body.bid,
+//     name: req.currentUser.name,
+//     user_uid: req.currentUser.uid
+//   };
+//   if (newBid.bid && newBid.auction_id){
+//     res.status(200).json(newBid)
+//     usersLogger.info(`Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
+//   } else {
+//     res.status(400).json('Something went wrong');
+//     usersLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`)
+//   }
+// }
+// });
 
 module.exports = router;

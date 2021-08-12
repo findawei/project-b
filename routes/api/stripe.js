@@ -194,7 +194,7 @@ router.post('/processPayment', async (req, res) =>{
                   seller_email: auctionSeller.email,
                   seller_phone: auctionSeller.phone,
                   receipt_details: [{
-                    description: `${updateItem.brand} ${updateItem.reference_number} ${updateItem.reference_number} - ${updateItem.year}`,
+                    description: `${updateItem.brand} ${updateItem.model} ${updateItem.reference_number} - ${updateItem.year}`,
                     amount: `$${auction.bid}`,
                   }]
                 };

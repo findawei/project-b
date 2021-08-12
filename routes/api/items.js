@@ -138,29 +138,6 @@ router.post('/submit', async (req, res) => {
     const source = fs.readFileSync(filePath, 'utf-8').toString();
     const template = handlebars.compile(source);
     const replacements = {
-      //Test data
-      // name: "Tira",
-      // email: "tira@gmail.com",
-      // dealership: "MM Watch Dealers",
-      // dealerwebsite: "www.mmwatchdealers.com",
-      // link: "www.mmwatchdealers.com/seiko6105",
-      // date: "2019-11-20",
-      // description: " Seiko 6105-8110 - 1977",
-      // amount: "500",
-      // brand:"Seiko",
-      // model:"Willard",
-      // reference_number: "6105-8110",
-      // year:"1977",
-      // fee: "$115",
-      // location: "California, US",
-      // service: "June 2018",
-      // phone: "614-234-2346",
-      // referral: "JonB",
-      // reserve: "6600",
-      // receipt_details:[{
-      //       description: "Seiko 6105-8110 - 1977",
-      //       reserve: "6600"
-      //   }]
       date: format(new Date(), 'PP - ppp'),
       name: newItem.name,
       email: req.currentUser.email,
@@ -313,11 +290,43 @@ router.post('/bid/:id', async (req, res) => {
 
         res.json(item.bidHistory);
 
-        //email previous highest bidder let them know they've been outbid
-        // if(item.bidHistory[1]){
-        //   console.log(item.bidHistory[1])
-        // }
+        // email previous highest bidder let them know they've been outbid
+        if(item.bidHistory[1]){
+          //get previous bidder email
+          const previousBidder = await user.findOne({uid: item.bidHistory[1].user});
+          //Send email to site admin
+          const filePath = path.join(__dirname, '../../email/template_outbid.html');
+          const source = fs.readFileSync(filePath, 'utf-8').toString();
+          const template = handlebars.compile(source);
+          const replacements = {
+            name: previousBidder.name,
+            brand: item.brand,
+            model: item.model,
+            item_image: item.img[0].url,
+            amount: item.bidHistory[0].bid,
+            reference: item.reference_number,
+            year: item.year,
+            endDate: item.endDate.toISOString().substring(0, 10),
+            // receipt_id: item._id.substring(0,8),
+            auction_id: item._id,
+            description: `${item.brand} ${item.model} ${item.reference_number} - ${item.year}`,
+          };
+          const htmlToSend = template(replacements);
 
+          mailOptions = {
+            from: '"No Wait List" <alex@nowaitlist.co>',
+            to: previousBidder.email,
+            subject: `Outbid notice: Bid again on the ${replacements.brand} ${replacements.model}`,        
+            html: htmlToSend
+          }
+          mailer.transport.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              console.log(error);
+              res.status(400).json('Something went wrong.')
+              auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`);
+            }
+        });
+      }
         auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid successfully - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
       } else {
         console.log('Cannot bid on closed auction.')

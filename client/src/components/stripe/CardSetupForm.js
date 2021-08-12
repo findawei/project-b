@@ -180,8 +180,8 @@ useEffect(()=>{
           </IconButton>
         }
         >
-          {alertMsg}
-          {error && <div>{error.message}</div>}
+          {/* {alertMsg} */}
+          {(error || alertMsg) && <div>{error.message}</div>}
         </Alert>
         </Collapse>
         </div>
