@@ -150,7 +150,7 @@ return (
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                     Located in: {item.location}
-                    {item.ship?
+                    {item.ship.length?
                     <div>
                     Ships to: {item.ship.map((location, index) => {
                     return(

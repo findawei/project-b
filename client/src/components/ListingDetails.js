@@ -603,7 +603,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                 </Typography>
               </Paper>
             </div>
-            {currentItem.ship ?
+            {currentItem.ship.length ?
             <div className={classes.paper}>
               <Paper variant="outlined" square="true" className={classes.background}>
                 <Typography color="inherit" display="inline">
