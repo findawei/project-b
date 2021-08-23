@@ -80,6 +80,13 @@ const ItemSchema = new Schema ({
     location: {
         type: String,
     },
+    ship:[
+        {
+            location: {
+                type: String
+            }
+        }
+    ],
     service: {
         type: Date,
     },

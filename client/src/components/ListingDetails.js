@@ -421,11 +421,16 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
             alignContent="center"
             >
               <Grid item>
+                
                 {currentItem.reserve? 
-              ""
+               <Chip 
+               size="small" 
+               label="Reserve"
+               color="primary"
+               />
               :
                <Chip 
-               className={classes.chip}
+               color="secondary"
                size="small" label="No Reserve"/>
               }
               </Grid>
@@ -556,16 +561,14 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                       {body}
                     </Modal>
                 </Grid>
-          
-          
-
            {/* Description Table */}
+           <Typography variant="h5">Watch Details</Typography>
           <Grid
             container 
             direction="row"
             justify="left"
             alignItems="center"
-            alignContent="center"
+            alignItems="flex-start"
           >
             <Grid item xs={12} md={6} >  
             <div className={classes.paper}>
@@ -600,6 +603,30 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
                 </Typography>
               </Paper>
             </div>
+            {currentItem.ship ?
+            <div className={classes.paper}>
+              <Paper variant="outlined" square="true" className={classes.background}>
+                <Typography color="inherit" display="inline">
+                <Box fontWeight="fontWeightBold" m={0.5}>
+                    Ships to
+                  </Box>
+                </Typography>
+              </Paper>
+              <Paper variant="outlined" square="true">
+                <Typography color="inherit" display="inline">
+                <Box  m={0.5}>
+                {currentItem.ship.map((location, index) => {
+                    return(
+                    <span key={index}>{ (index ? ', ' : '') + location.location }</span>
+                    )}
+                      )}
+                  </Box>
+                </Typography>
+              </Paper>
+            </div>
+            :
+            ''
+            }
              <div className={classes.paper}>
               <Paper variant="outlined" square="true" className={classes.background}>
                 <Typography color="inherit" display="inline" fontWeight="fontWeightBold">
@@ -869,7 +896,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
           </Grid>
           {/* Description */}
           <Grid item xs={12}>
-            <h2>Description</h2>
+            <Typography variant="h5">Description</Typography>
             <p>
             {currentItem.description}
             </p>
@@ -955,7 +982,7 @@ if(currentItem.bidHistory && currentItem.bidHistory.length && currentItem.bidHis
           <br/>
           {/* Comment Section */}
           <Grid item xs={12}>
-            <h2>Comments & Bids</h2>
+          <Typography variant="h5">Comments & Bids</Typography>
               <form onSubmit={handleSubmit2(commentSubmit)}>
                 <div hidden="true">
                 <TextField          
