@@ -86,3 +86,13 @@ info: Aug-11-2021 20:41:15: 	OK - /api/items/bid/60ef8e426efa046d7ce3efd7 - POST
 info: Aug-11-2021 20:41:47: 	OK - /api/items/bid/60ef8e426efa046d7ce3efd7 - POST - ::ffff:127.0.0.1 - Bid successfully - Bid: 313 - Auction_ID: 60ef8e426efa046d7ce3efd7 - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
 info: Aug-11-2021 21:30:14: 	OK - /api/items/bid/60ef8e426efa046d7ce3efd7 - POST - ::ffff:127.0.0.1 - Bid successfully - Bid: 122 - Auction_ID: 60ef8e426efa046d7ce3efd7 - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
 info: Aug-11-2021 21:34:42: 	OK - /api/items/bid/60ef8e426efa046d7ce3efd7 - POST - ::ffff:127.0.0.1 - Bid successfully - Bid: 1202 - Auction_ID: 60ef8e426efa046d7ce3efd7 - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Aug-25-2021 20:42:18: 	Bad Request - /api/items/chartdata - GET - ::ffff:127.0.0.1 - fetch is not defined
+error: Aug-25-2021 20:46:13: 	Bad Request - /api/items/chartdata - GET - ::ffff:127.0.0.1 - res.status is not a function
+error: Aug-26-2021 17:07:45: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::1 - chart is not defined
+error: Aug-26-2021 17:11:18: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::1 - chart is not defined
+error: Aug-26-2021 17:15:18: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::1 - Assignment to constant variable.
+error: Aug-26-2021 17:30:16: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::1 - item.push is not a function
+error: Aug-26-2021 17:55:12: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::1 - newItem is not defined
+error: Aug-26-2021 21:42:14: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - item is not defined
+error: Aug-26-2021 21:42:19: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - item is not defined
+error: Aug-26-2021 21:42:40: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Assignment to constant variable.

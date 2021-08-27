@@ -1,64 +1,105 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('../../middleware/auth');
-const user = require('../../models/User');
-const Item = require('../../models/item');
-const mailer = require('../../email/mailer');
-const path = require('path');
-const handlebars = require('handlebars');
-const fs = require('fs');
-const {usersLogger, transactionLogger, auctionsLogger} = require('../../logger/logger');
-const { formatDistance, subDays, format, isPast, isFuture } = require ('date-fns');
-
-
+const auth = require("../../middleware/auth");
+const user = require("../../models/User");
+const Item = require("../../models/item");
+const mailer = require("../../email/mailer");
+const path = require("path");
+const handlebars = require("handlebars");
+const fs = require("fs");
+const fetch = require("node-fetch");
+const {
+  usersLogger,
+  transactionLogger,
+  auctionsLogger,
+} = require("../../logger/logger");
+const {
+  formatDistance,
+  subDays,
+  format,
+  isPast,
+  isFuture,
+} = require("date-fns");
 
 // @route   GET api/items/
 // @desc    Get all items that are live and completed
 // @access  Private
-router.get('/', async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-  const items = await Item.find({$or:[{status: "active"},{status:"completed"},{status:"reserve_not_met"}]}).sort({
-    endDate: 1,});
-  if (!items) throw Error('No items');
+    const items = await Item.find({
+      $or: [
+        { status: "active" },
+        { status: "completed" },
+        { status: "reserve_not_met" },
+      ],
+    }).sort({
+      endDate: 1,
+    });
+    if (!items) throw Error("No items");
     res.status(200).json(items);
-    } catch (e) {
-        res.status(400).json({ msg: e.message });
-        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`);
-    }
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+    auctionsLogger.error(
+      `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`
+    );
+  }
 });
 
 // @route   GET api/items/
 // @desc    Get all items for review for a specific user
 // @access  Private
-router.get('/for_review', async (req, res) => {
+router.get("/for_review", async (req, res) => {
   const auth = req.currentUser;
-    if(auth){
-      try {
-      const items = await Item.find({user: req.currentUser.uid, status: "for_review"}).sort({
-        endDate: 1,});
-      if (!items) throw Error('No items');
-        res.status(200).json(items);
-        } catch (e) {
-            res.status(400).json({ msg: e.message });
-            auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`);
-        }
-    } else return (
-      res.status(403).send('Not authorized'),
-      auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
+  if (auth) {
+    try {
+      const items = await Item.find({
+        user: req.currentUser.uid,
+        status: "for_review",
+      }).sort({
+        endDate: 1,
+      });
+      if (!items) throw Error("No items");
+      res.status(200).json(items);
+    } catch (e) {
+      res.status(400).json({ msg: e.message });
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`
+      );
+    }
+  } else
+    return (
+      res.status(403).send("Not authorized"),
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+      )
+    );
 });
 
 // @route   GET api/item/_id
 // @desc    Get 1 item
 // @access  Private
-router.get('/:id', async (req, res) => {
+router.get("/:id", async (req, res) => {
   try {
-  const item = await Item.findById(req.params.id);
-  if (!item) throw Error('No item');
+    var item = await Item.findById(req.params.id);
+    if (!item) throw Error("No item");
+
+    const fetchdata = await fetch(
+      "https://watchcharts.com/watches/chart/643.json?type=listings&_=1629926673682"
+    );
+    const data = await fetchdata.json();
+    // console.log(data);
+    if (!data) throw Error("No items");
+
+    item = Object.assign({ chart: data.data }, item._doc);
+    // console.log(item);
+
     res.status(200).json(item);
-    } catch (e) {
-        res.status(400).json({ msg: e.message });
-        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`);
-    }
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+    auctionsLogger.error(
+      `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message}`
+    );
+  }
 });
 
 // // @route   POST api/items/
@@ -73,10 +114,10 @@ router.get('/:id', async (req, res) => {
 //       img: req.body.img,
 //       reference_number: req.body.reference_number,
 //       movement: req.body.movement,
-//       year: req.body.year,   
+//       year: req.body.year,
 //       case_diameter: req.body.case_diameter,
 //       lug_width: req.body.lug_width,
-//       thickness: req.body.thickness,    
+//       thickness: req.body.thickness,
 //       description: req.body.description,
 //       bid: req.body.bid,
 //       reserve: req.body.reserve,
@@ -91,11 +132,11 @@ router.get('/:id', async (req, res) => {
 //       wr: req.body.wr,
 //       tested: req.body.tested,
 //   });
-//   try{ 
+//   try{
 //     const item = await newItem.save();
 //     if (!item) throw Error('Something went wrong saving the item');
 //     res.status(200).json(item);
-//     } 
+//     }
 //   catch (e) {
 //   res.status(400).json({ msg: e.message, success: false });
 // }
@@ -104,11 +145,10 @@ router.get('/:id', async (req, res) => {
 // @route   POST api/items/
 // @desc    POST item
 // @access  Private
-router.post('/submit', async (req, res) => {
-
+router.post("/submit", async (req, res) => {
   const auth = req.currentUser;
-    if(auth){
-  const newItem = new Item({
+  if (auth) {
+    const newItem = new Item({
       name: req.currentUser.name,
       user: req.currentUser.uid,
       dealership: req.body.dealership,
@@ -118,79 +158,89 @@ router.post('/submit', async (req, res) => {
       brand: req.body.brand,
       model: req.body.model,
       reference_number: req.body.reference_number,
-      year: req.body.year,   
+      year: req.body.year,
       reserve: req.body.reserve,
       location: req.body.location,
       service: req.body.service,
       phone: req.body.phone,
       referral: req.body.referral,
-      status: 'for_review'
-  });
-  //  console.log(newItem)
-  try{ 
-    const item = await newItem.save();
-    if(!item) {
-      res.status(400).json('Something went wrong saving the item');
-      auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Something went wrong saving the item - ${auth.email} - ${auth.uid}`);
-    }
-    //Send email to site admin
-    const filePath = path.join(__dirname, '../../email/template_submit.html');
-    const source = fs.readFileSync(filePath, 'utf-8').toString();
-    const template = handlebars.compile(source);
-    const replacements = {
-      date: format(new Date(), 'PP - ppp'),
-      name: newItem.name,
-      email: req.currentUser.email,
-      dealership: newItem.dealership,
-      dealerwebsite: newItem.dealerwebsite,
-      fees: newItem.fees,
-      link: newItem.link,
-      brand: newItem.brand,
-      model: newItem.model,
-      reference_number: newItem.reference_number,
-      year: newItem.year,   
-      reserve: (newItem.reserve === null? 0 : newItem.reserve),
-      location: newItem.location,
-      service: format(new Date(newItem.service), 'yyyy/MM/dd'),
-      phone: newItem.phone,
-      referral: newItem.referral,  
-    };
-    const htmlToSend = template(replacements);
-
-    mailOptions = {
-      from: '"No Wait List" <alex@nowaitlist.co>',
-      to: auth.email,
-      cc: 'alex@nowaitlist.co',
-      subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,        
-      html: htmlToSend
-    }
-    mailer.transport.sendMail(mailOptions, (error, info) => {
-      if (error) {
-        console.log(error);
-        res.status(400).json('Something went wrong.')
-        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`);
+      status: "for_review",
+    });
+    //  console.log(newItem)
+    try {
+      const item = await newItem.save();
+      if (!item) {
+        res.status(400).json("Something went wrong saving the item");
+        auctionsLogger.error(
+          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Something went wrong saving the item - ${auth.email} - ${auth.uid}`
+        );
       }
-      res.status(200).send(item)
-      auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Submitted successfully - ${auth.email} - ${auth.uid}`);
-    });    
-    return
-    } 
-  catch (e) {
-  res.status(400).json({ msg: e.message, success: false });
-  auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`);
-}
-}
-else return(res.status(403).send('Not authorized'),
-auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
-}
-);
+      //Send email to site admin
+      const filePath = path.join(__dirname, "../../email/template_submit.html");
+      const source = fs.readFileSync(filePath, "utf-8").toString();
+      const template = handlebars.compile(source);
+      const replacements = {
+        date: format(new Date(), "PP - ppp"),
+        name: newItem.name,
+        email: req.currentUser.email,
+        dealership: newItem.dealership,
+        dealerwebsite: newItem.dealerwebsite,
+        fees: newItem.fees,
+        link: newItem.link,
+        brand: newItem.brand,
+        model: newItem.model,
+        reference_number: newItem.reference_number,
+        year: newItem.year,
+        reserve: newItem.reserve === null ? 0 : newItem.reserve,
+        location: newItem.location,
+        service: format(new Date(newItem.service), "yyyy/MM/dd"),
+        phone: newItem.phone,
+        referral: newItem.referral,
+      };
+      const htmlToSend = template(replacements);
+
+      mailOptions = {
+        from: '"No Wait List" <alex@nowaitlist.co>',
+        to: auth.email,
+        cc: "alex@nowaitlist.co",
+        subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,
+        html: htmlToSend,
+      };
+      mailer.transport.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          res.status(400).json("Something went wrong.");
+          auctionsLogger.error(
+            `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`
+          );
+        }
+        res.status(200).send(item);
+        auctionsLogger.info(
+          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Submitted successfully - ${auth.email} - ${auth.uid}`
+        );
+      });
+      return;
+    } catch (e) {
+      res.status(400).json({ msg: e.message, success: false });
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`
+      );
+    }
+  } else
+    return (
+      res.status(403).send("Not authorized"),
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+      )
+    );
+});
 
 // // @route   PUT api/items/:id
 // // @desc    Update specific item
 // // @access  Private
 // router.put('/update/:id', async (req, res) => {
-//   try{ 
-//     const updateItem = await 
+//   try{
+//     const updateItem = await
 //   Item.findOneAndUpdate({_id: req.params.id}, {
 //     name: req.body.name,
 //     user: req.body.uid,
@@ -199,7 +249,7 @@ auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} 
 //     img: req.body.img,
 //     reference_number: req.body.reference_number,
 //     movement: req.body.movement,
-//     year: req.body.year,   
+//     year: req.body.year,
 //     case_diameter: req.body.case_diameter,
 //     lug_width: req.body.lug_width,
 //     thickness: req.body.thickness,
@@ -227,8 +277,8 @@ auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} 
 // // @desc    Update item bid price
 // // @access  Private
 // router.put('/:id', async (req, res) => {
-//   try{ 
-//     const updateItemBid = await 
+//   try{
+//     const updateItemBid = await
 //   Item.findOneAndUpdate({_id: req.params.id}, {
 //     $set:{
 //     bid: req.body.bid,
@@ -243,60 +293,75 @@ auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} 
 // @route   PUT api/items/:id
 // @desc    Update item endTime
 // @access  Private
-router.put('/endDate/:id', async (req, res) => {
+router.put("/endDate/:id", async (req, res) => {
   const auth = req.currentUser;
 
-  if(auth){
-    try{ 
-    const updateItemEndDate = await 
-  Item.findOneAndUpdate({_id: req.params.id}, {
-    $set:{
-    endDate: req.body.endDate,
+  if (auth) {
+    try {
+      const updateItemEndDate = await Item.findOneAndUpdate(
+        { _id: req.params.id },
+        {
+          $set: {
+            endDate: req.body.endDate,
+          },
+        },
+        { upsert: true, new: true }
+      );
+      return (
+        res.status(200).json(updateItemEndDate),
+        auctionsLogger.info(
+          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Extended Auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+        )
+      );
+    } catch (e) {
+      res.status(400).json({ msg: e.message, success: false });
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+      );
     }
-    },{upsert: true, new: true});
+  } else
     return (
-      res.status(200).json(updateItemEndDate), 
-      auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Extended Auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`));
-    } catch(e){
-    res.status(400).json({ msg: e.message, success: false })
-    auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
-    }
-  }
-  else return (
-    res.status(403).send('Not authorized'),
-    auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
-  });
-  
+      res.status(403).send("Not authorized"),
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+      )
+    );
+});
+
 // @route    POST api/items/bid/:id
 // @desc     Bid history on an auction
 // @access   Private
-router.post('/bid/:id', async (req, res) => {
-    const auth = req.currentUser;
+router.post("/bid/:id", async (req, res) => {
+  const auth = req.currentUser;
 
-    if(auth){
-      const item = await Item.findById({_id: req.params.id});
-      
-      try {
-        if (isFuture(item.endDate)){
-         
+  if (auth) {
+    const item = await Item.findById({ _id: req.params.id });
+
+    try {
+      if (isFuture(item.endDate)) {
         const newBid = {
           bid: req.body.bid,
           name: req.currentUser.name,
-          user: req.currentUser.uid
+          user: req.currentUser.uid,
         };
         item.bidHistory.unshift(newBid);
-        
+
         await item.save();
 
         res.json(item.bidHistory);
 
         // email previous highest bidder let them know they've been outbid
-        if(item.bidHistory[1]){
+        if (item.bidHistory[1]) {
           //get previous bidder email
-          const previousBidder = await user.findOne({uid: item.bidHistory[1].user});
+          const previousBidder = await user.findOne({
+            uid: item.bidHistory[1].user,
+          });
           //Send email to site admin
-          const filePath = path.join(__dirname, '../../email/template_outbid.html');
-          const source = fs.readFileSync(filePath, 'utf-8').toString();
+          const filePath = path.join(
+            __dirname,
+            "../../email/template_outbid.html"
+          );
+          const source = fs.readFileSync(filePath, "utf-8").toString();
           const template = handlebars.compile(source);
           const replacements = {
             name: previousBidder.name,
@@ -316,66 +381,83 @@ router.post('/bid/:id', async (req, res) => {
           mailOptions = {
             from: '"No Wait List" <alex@nowaitlist.co>',
             to: previousBidder.email,
-            subject: `Outbid notice: Bid again on the ${replacements.brand} ${replacements.model}`,        
-            html: htmlToSend
-          }
+            subject: `Outbid notice: Bid again on the ${replacements.brand} ${replacements.model}`,
+            html: htmlToSend,
+          };
           mailer.transport.sendMail(mailOptions, (error, info) => {
             if (error) {
               console.log(error);
-              res.status(400).json('Something went wrong.')
-              auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`);
+              res.status(400).json("Something went wrong.");
+              auctionsLogger.error(
+                `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`
+              );
             }
-        });
-      }
-        auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid successfully - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
+          });
+        }
+        auctionsLogger.info(
+          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid successfully - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+        );
       } else {
-        console.log('Cannot bid on closed auction.')
-        res.status(400).send('Cannot bid on closed auction.')
-        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Cannot bid on closed auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
+        console.log("Cannot bid on closed auction.");
+        res.status(400).send("Cannot bid on closed auction.");
+        auctionsLogger.error(
+          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Cannot bid on closed auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+        );
       }
-      } catch (err) {
-        console.error(err.message);
-        res.status(400).send('Server Error');
-        auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
-      }
-      return
+    } catch (err) {
+      console.error(err.message);
+      res.status(400).send("Server Error");
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+      );
     }
-    else return (res.status(403).send('Not authorized'),
-    auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`)
-    )
-  }
-);
+    return;
+  } else
+    return (
+      res.status(403).send("Not authorized"),
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+      )
+    );
+});
 
 // @route    POST api/items/comment/:id
 // @desc     Bid history on an auction
 // @access   Private
-router.post('/comment/:id', async (req, res) => {
+router.post("/comment/:id", async (req, res) => {
   const auth = req.currentUser;
-  if(auth){
+  if (auth) {
     try {
-      const item = await Item.findById({_id: req.params.id});
+      const item = await Item.findById({ _id: req.params.id });
 
       const newComment = {
         text: req.body.text,
         name: req.currentUser.name,
-        user: req.currentUser.uid
+        user: req.currentUser.uid,
       };
 
       item.comments.unshift(newComment);
       await item.save();
       res.json(item.comments);
-      auctionsLogger.info(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Comment successfully - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
+      auctionsLogger.info(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Comment successfully - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+      );
     } catch (err) {
       console.error(err.message);
-      res.status(400).send('Server Error');
-      auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`);
+      res.status(400).send("Server Error");
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+      );
     }
-    return
-  }
-  else return (res.status(403).send('Not authorized'),
-  auctionsLogger.error(`${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`))
-}
-);
+    return;
+  } else
+    return (
+      res.status(403).send("Not authorized"),
+      auctionsLogger.error(
+        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+      )
+    );
+});
 
 // router.post('/email-test', async (req, res) => {
 //   const auth = req.currentUser;
@@ -418,12 +500,12 @@ router.post('/comment/:id', async (req, res) => {
 //         // brand: newItem.brand,
 //         // model: newItem.model,
 //         // reference_number: newItem.reference_number,
-//         // year: newItem.year,   
+//         // year: newItem.year,
 //         // reserve: (newItem.reserve === null? 0 : newItem.reserve),
 //         // location: newItem.location,
 //         // service: format(new Date(newItem.service), 'yyyy/MM/dd'),
 //         // phone: newItem.phone,
-//         // referral: newItem.referral,  
+//         // referral: newItem.referral,
 //       };
 //       const htmlToSend = template(replacements);
 
@@ -431,7 +513,7 @@ router.post('/comment/:id', async (req, res) => {
 //         from: '"No Wait List" <alex@nowaitlist.co>',
 //         to: auth.email,
 //         cc: 'alex@nowaitlist.co',
-//         subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,        
+//         subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,
 //         html: htmlToSend
 //       }
 //       mailer.transport.sendMail(mailOptions, (error, info) => {
@@ -449,12 +531,11 @@ router.post('/comment/:id', async (req, res) => {
 //   }
 // })
 
-
 // // @route   DELETE api/items/:id
 // // @desc    DELETE items
 // // @access  Private
 // router.delete('/:id', async (req, res) => {
-//   try {  
+//   try {
 //   const item = await Item.findById(req.params.id);
 //   if (!item) throw Error('No item found');
 
