@@ -5,6 +5,7 @@ import {
   Grid,
   List,
   ListItem,
+  Container,
   ListItemIcon,
   ListItemText,
   Divider,
@@ -18,10 +19,12 @@ import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 
 const About = () => {
   const useStyles = makeStyles((theme) => ({
-    // root: {
-    //     flexGrow: 1,
-    //     margin: 20,
-    // },
+    root: {
+      flexGrow: 1,
+    },
+    body: {
+      margin: 10,
+    },
     image: {
       width: "100%",
       maxWidth: 500,
@@ -52,95 +55,110 @@ const About = () => {
   const classes = useStyles();
 
   return (
-    <div>
-      <Typography variant="h4">About us</Typography>
-      <br />
-      <Typography>
-        <b>Our story began with frustration.</b> All the selling outlets had
-        their issues. As a buyer on forums, you have to research the seller,
-        setup your account etc. Ebay, known for it's high fees. Chrono24, where
-        people ask top dollar for lesser examples. Auction houses that require
-        consignment & very high fees.
-        <br />
-        <br />
-        After a couple of years of experiencing these platforms,{" "}
-        <b>change was needed & we were going to be part of it.</b> Gathering a
-        team of developers, markets & most important of all, watch enthusiasts
-        we began work on NoWaitList. At NoWaitList,{" "}
-        <u>
-          <b>we focus on you.</b>
-        </u>{" "}
-        There's nothing more important.
-        <br />
-        <br />
-        <b>Our goal:</b> be the only place you'd consider auctioning your watch.
-        <br /> <br />
-        <Divider />
-        {/* <Typography variant="h6" className={classes.title}>
-          A bit more on Alex Benjamignan
-        </Typography>
-        <Grid container spacing={2}>
-          <Grid item xs={12} sm={6}>
+    <div className={classes.root}>
+      <Container>
+        <Grid
+          container
+          // direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item xs={12} md={10} lg={8}>
+            <div className={classes.body}>
+              <Typography variant="h4">About us</Typography>
+              <br />
+              <Typography>
+                Our story began with frustration: how come there isn't a place
+                to buy/sell that ticks all the boxes? We saw what was working
+                with the usual platforms (forums, auction houses, eBay etc). We
+                also noticed areas in need of desperate improvement. Combining
+                it all, we came up with NoWaitList.
+                <br />
+                <br />
+                <Divider />
+                {/* <Typography variant="h5" className={classes.title}>
+                  Why No Wait List?
+                </Typography>
+                <List>
+                  <Grid
+                    container
+                    alignItems="flex-start"
+                    direction="row"
+                    spacing={2}
+                  >
+                    <Grid item xs={12} sm={6}>
+                      <ListItem alignItems="flex-start">
+                        <ListItemIcon className={classes.focus}>
+                          <CenterFocusStrongIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Focused"
+                          secondary="Sports & tool watches excites us the most."
+                        />
+                      </ListItem>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <ListItem alignItems="flex-start">
+                        <ListItemIcon className={classes.fees}>
+                          <AttachMoneyIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Value"
+                          secondary="Buyer’s fee of 5%, capped at $5,000. Seller’s fee of $49 for a no-reserve auction, $89 with a reserve auction. Pay the listing fee ONLY if your watch sells."
+                        />
+                      </ListItem>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <ListItem alignItems="flex-start">
+                        <ListItemIcon className={classes.timer}>
+                          <TimerIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Sold in 7 days"
+                          secondary="We move fast. After you submit your watch, we aim to auction it off within a week."
+                        />
+                      </ListItem>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                      <ListItem alignItems="flex-start">
+                        <ListItemIcon className={classes.badge}>
+                          <VerifiedUserIcon fontSize="large" />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary="Clear & Concise"
+                          secondary="Simplified auctions that tell you exactly what you need to know."
+                        />
+                      </ListItem>
+                    </Grid>
+                  </Grid>
+                </List> */}
+                <Typography variant="h5" className={classes.title}>
+                  Founder
+                </Typography>
+                <Grid
+                  container
+                  alignItems="flex-start"
+                  direction="row"
+                  spacing={2}
+                >
+                  <Grid item xs={12} sm={6}>
+                    <Typography variant="h6">Alex Benjamignan</Typography>
+                  </Grid>
+                  {/* <Grid item xs={12} sm={6}>
             <img src={portait} alt="portait" className={classes.image} />
+          </Grid> */}
+                  <Grid item xs={12} sm={6}>
+                    Alex got into watches in 2013. Technical aspects of
+                    watchmaking were very interesting to him. He got his hands
+                    dirty restoring vintage seiko divers. He's journeyed to
+                    Japan many times to hunt for watches.
+                  </Grid>
+                </Grid>
+              </Typography>
+            </div>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            Watches have provided him with so much. A means to share a passion.
-            Learning about technology and innovation. Creating strong
-            relationships with fellow enthusiasts & collectors. This and the
-            reasons above are why NoWaitList was born.
-          </Grid>
-        </Grid> */}
-        <Typography variant="h6" className={classes.title}>
-          Why No Wait List?
-        </Typography>
-        <List>
-          <ListItem>
-            <ListItemIcon className={classes.focus}>
-              <CenterFocusStrongIcon fontSize="large" />
-            </ListItemIcon>
-            <ListItemText
-              primary="Focused"
-              secondary="Sports & tool watches are what excites us the most."
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon className={classes.fees}>
-              <AttachMoneyIcon fontSize="large" />
-            </ListItemIcon>
-            <ListItemText
-              primary="Value"
-              secondary="The buyer’s fee is 5%, with a maximum of $5,000. Our seller’s fee range from $49 for a no-reserve auction to $89 for a seller with a reserve auction. This gets you social media coverage, copywriting of your listing & photo coaching."
-            />
-          </ListItem>
-          <ListItem>
-            <ListItemIcon className={classes.timer}>
-              <TimerIcon fontSize="large" />
-            </ListItemIcon>
-            <ListItemText
-              primary="Sold in 7 days"
-              secondary="We move fast. After you submit your watch, we aim to have your watch up for auction within a week."
-            />
-          </ListItem>
-          {/* <ListItem>
-            <ListItemIcon className={classes.publish}>
-              <PublishIcon fontSize="large" />
-            </ListItemIcon>
-            <ListItemText
-              primary="No Wait List makes it easy to submit your watch for sale."
-              secondary="We value your time by asking for only a few crucial details before letting you know whether or not we’re accepting your watch. That means you don’t have to waste your time providing initial information only to have your watch rejected."
-            />
-          </ListItem> */}
-          <ListItem>
-            <ListItemIcon className={classes.badge}>
-              <VerifiedUserIcon fontSize="large" />
-            </ListItemIcon>
-            <ListItemText
-              primary="Clear & Easy to use"
-              secondary="with easy sorting and searching – and simplified auctions that tell you exactly what you need to know about each watch."
-            />
-          </ListItem>
-        </List>
-      </Typography>
+        </Grid>
+      </Container>
     </div>
   );
 };

@@ -1019,7 +1019,7 @@ const ListingDetails = ({
                 <Grid item xs={12}>
                   <Typography variant="h5">Description</Typography>
                   <p>{currentItem.description}</p>
-                  <Chart />
+                  {/* <Chart /> */}
                 </Grid>
               </Grid>
               {/* <Grid item xs={12}> */}

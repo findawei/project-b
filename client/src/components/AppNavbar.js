@@ -1,34 +1,47 @@
-import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import {AppBar, Toolbar, Typography, Button, Modal, Menu, MenuItem, IconButton } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import LoginModal from './auth/LoginModal';
-import SellLoginModal from './auth/SellLoginModal';
-import { connect } from 'react-redux';
-import LoggedInMenu from './LoggedInMenu'
-import {Dialog, DialogTitle, DialogActions, DialogContentText, DialogContent } from '@material-ui/core/'
-import { verifyEmail } from '../flux/actions/authActions';
+import React, { useEffect } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Modal,
+  Menu,
+  MenuItem,
+  IconButton,
+} from "@material-ui/core";
+import { Link } from "react-router-dom";
+import LoginModal from "./auth/LoginModal";
+import SellLoginModal from "./auth/SellLoginModal";
+import { connect } from "react-redux";
+import LoggedInMenu from "./LoggedInMenu";
+import {
+  Dialog,
+  DialogTitle,
+  DialogActions,
+  DialogContentText,
+  DialogContent,
+} from "@material-ui/core/";
+import { verifyEmail } from "../flux/actions/authActions";
 import logo from "../images/logo.png";
-import MenuIcon from '@material-ui/icons/Menu';
-import { HashLink } from 'react-router-hash-link';
+import MenuIcon from "@material-ui/icons/Menu";
+import { HashLink } from "react-router-hash-link";
 
-
-const AppNavbar = ({auth, verifyEmail}) =>{
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginRight: theme.spacing(2),
-  },
-  title: {
-    flexGrow: 1,
-  },
-  logo: {
-    maxWidth: 100,
-  }
-}));
+const AppNavbar = ({ auth, verifyEmail }) => {
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginRight: theme.spacing(2),
+    },
+    title: {
+      flexGrow: 1,
+    },
+    logo: {
+      maxWidth: 100,
+    },
+  }));
 
   const classes = useStyles();
 
@@ -41,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
   const isHowToMenuOpen = Boolean(HowToAnchorEl);
   const isMenuOpen = Boolean(anchorEl);
 
-  useEffect(() => { 
-    if(auth.authMsg == "You haven't verified your e-mail address."){
+  useEffect(() => {
+    if (auth.authMsg == "You haven't verified your e-mail address.") {
       setOpen(true);
     } else {
       setOpen(false);
@@ -51,16 +64,16 @@ const useStyles = makeStyles((theme) => ({
 
   const handleClose = () => {
     setOpen(false);
-  }
+  };
 
   const sendConfirmation = () => {
-    verifyEmail()
-    setOpen(false)
-  }
+    verifyEmail();
+    setOpen(false);
+  };
 
   const refreshPage = () => {
-    window.location.reload()
-  }
+    window.location.reload();
+  };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -86,52 +99,60 @@ const useStyles = makeStyles((theme) => ({
 
   const handleHowToMenuOpen = (event) => {
     setHowToAnchorEl(event.currentTarget);
-  }
+  };
 
-  
-
-  const menuId = 'primary-search-account-menu';
+  const menuId = "primary-search-account-menu";
 
   const renderFaqMenu = (
     <Menu
       anchorEl={FaqAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isFaqMenuOpen}
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <HashLink className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#about'}>
+        <HashLink
+          className={classes.link}
+          style={{ textDecoration: "none", color: "inherit" }}
+          to={"/about"}
+        >
           About
         </HashLink>
       </MenuItem>
-      <MenuItem onClick={handleHowToMenuOpen}>
-        How To
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        FAQ
-      </MenuItem>
+      <MenuItem onClick={handleHowToMenuOpen}>How To</MenuItem>
+      <MenuItem onClick={handleProfileMenuOpen}>FAQ</MenuItem>
     </Menu>
   );
 
   const renderHowToMenu = (
     <Menu
       anchorEl={HowToAnchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isHowToMenuOpen}
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <HashLink className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#buying'}>Buy
+        <HashLink
+          className={classes.link}
+          style={{ textDecoration: "none", color: "inherit" }}
+          to={"/faq#buying"}
+        >
+          Buy
         </HashLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-        <HashLink className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#selling'}>Sell
+        <HashLink
+          className={classes.link}
+          style={{ textDecoration: "none", color: "inherit" }}
+          to={"/faq#selling"}
+        >
+          Sell
         </HashLink>
       </MenuItem>
     </Menu>
@@ -140,19 +161,29 @@ const useStyles = makeStyles((theme) => ({
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
       id={menuId}
       keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+      transformOrigin={{ vertical: "top", horizontal: "right" }}
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>
-        <HashLink className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#buyfaq'}>For Buyers
+        <HashLink
+          className={classes.link}
+          style={{ textDecoration: "none", color: "inherit" }}
+          to={"/faq#buyfaq"}
+        >
+          For Buyers
         </HashLink>
       </MenuItem>
       <MenuItem onClick={handleMenuClose}>
-        <HashLink className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/faq#sellfaq'}>For Sellers
+        <HashLink
+          className={classes.link}
+          style={{ textDecoration: "none", color: "inherit" }}
+          to={"/faq#sellfaq"}
+        >
+          For Sellers
         </HashLink>
       </MenuItem>
     </Menu>
@@ -162,31 +193,30 @@ const useStyles = makeStyles((theme) => ({
     <div className={classes.root}>
       <AppBar position="fixed" color="white">
         <Toolbar>
-          <IconButton 
-            edge="start" 
-            className={classes.menuButton} 
-            color="inherit" 
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
             aria-label="menu"
             onClick={handleFaqMenuOpen}
           >
             <MenuIcon />
           </IconButton>
-          <div  className={classes.title}>
-            <Link to={'/'} style={{ textDecoration: 'none' }}>
-            <img src={logo} alt="logo" className={classes.logo}/>
-          </Link>    
+          <div className={classes.title}>
+            <Link to={"/"} style={{ textDecoration: "none" }}>
+              <img src={logo} alt="logo" className={classes.logo} />
+            </Link>
           </div>
-          <Button variant="contained"
-            color="primary">
-            <Link className={classes.link} style={{ textDecoration: 'none', color: 'inherit'}} to={'/sell-a-watch'}>
-            Sell your Watch
+          <Button variant="contained" color="primary">
+            <Link
+              className={classes.link}
+              style={{ textDecoration: "none", color: "inherit" }}
+              to={"/sell-a-watch"}
+            >
+              Sell your Watch
             </Link>
           </Button>
-          {auth && auth.isAuthenticated ? 
-          <LoggedInMenu/> 
-          :         
-          <LoginModal/>
-          }
+          {auth && auth.isAuthenticated ? <LoggedInMenu /> : <LoginModal />}
           {/* <Button onClick={handleClickOpen}>Test</Button> */}
           <Dialog
             open={open}
@@ -196,22 +226,25 @@ const useStyles = makeStyles((theme) => ({
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            <DialogTitle id="alert-dialog-title">{"Email Verification"}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">
+              {"Email Verification"}
+            </DialogTitle>
             <DialogContent>
               <DialogContentText id="alert-dialog-description">
-                Please verify your email before continuing. Check you emails (spam folder included) for a confirmation email or send another one.
+                Please verify your email before continuing. Check you emails
+                (spam folder included) for a confirmation email or send another
+                one.
               </DialogContentText>
             </DialogContent>
             <DialogActions>
               {/* <Button  onClick={refreshPage} color="primary">
                 Refresh Once Confirmed
               </Button> */}
-              <Button  onClick={sendConfirmation} color="primary" autoFocus>
+              <Button onClick={sendConfirmation} color="primary" autoFocus>
                 Send Confirmation Email
               </Button>
             </DialogActions>
           </Dialog>
-
         </Toolbar>
       </AppBar>
       {renderFaqMenu}
@@ -219,10 +252,10 @@ const useStyles = makeStyles((theme) => ({
       {renderHowToMenu}
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
+  auth: state.auth,
 });
 
-export default connect(mapStateToProps, {verifyEmail})(AppNavbar);
+export default connect(mapStateToProps, { verifyEmail })(AppNavbar);

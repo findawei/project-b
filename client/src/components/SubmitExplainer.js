@@ -5,6 +5,10 @@ import {
   Container,
   Card,
   CardActions,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
   CardContent,
   Grid,
   Button,
@@ -21,16 +25,23 @@ import SellLoginModal from "./auth/SellLoginModal";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
-import picture from "../images/dive-watches-dark.jpg";
+import picture from "../images/dive-watches-dark-blur.png";
+import CenterFocusStrongIcon from "@material-ui/icons/CenterFocusStrong";
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import TimerIcon from "@material-ui/icons/Timer";
+import PublishIcon from "@material-ui/icons/Publish";
+import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+  },
+  body: {
     margin: 10,
   },
   card: {
-    // maxWidth: 350,
-    height: 170,
+    // maxWidth: 250,
+    // height: 170,
   },
   title: {
     fontSize: 14,
@@ -43,6 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     color: "green",
+    align: "right",
   },
   background: {
     maxWidth: "100%",
@@ -56,15 +68,29 @@ const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center center",
     backgroundSize: "cover",
   },
+  focus: {
+    color: "orange",
+  },
+  fees: {
+    color: "green",
+  },
+  timer: {
+    color: "purple",
+  },
+  publish: {
+    color: "navy",
+  },
+  badge: {
+    color: "gold",
+  },
 }));
 
 const steps = getSteps();
 function getSteps() {
   return [
-    "Submit Your Watch",
-    "Prep Your Listing",
-    "Review and Approve",
-    "Participate in the auction",
+    "Submit your watch",
+    "Review and approve",
+    "Auction goes live",
     "Conclude the transaction",
   ];
 }
@@ -80,16 +106,16 @@ const SubmitExplainer = ({ auth }) => {
 
   return (
     <div>
-      <Paper className={classes.paperContainer}>
+      <Paper className={classes.paperContainer} square elevation={0}>
         <br />
         <br />
         <br />
         <br />
         <Typography variant="h3" align="center" className={classes.textTitle}>
-          Sell on NoWaitList
+          NoWaitList
         </Typography>
         <Typography variant="h5" align="center" className={classes.textTitle}>
-          Made by enthusiasts for enthusiasts.
+          Your watch sold in 7 days or it’s FREE
         </Typography>
         <br />
         <br />
@@ -99,107 +125,164 @@ const SubmitExplainer = ({ auth }) => {
 
       <div className={classes.root}>
         <Container>
-          <br />
-          <Typography variant="h4" align="center">
-            Why sell with us?
-          </Typography>
-          <br />
-          <br />
           <Grid
             container
-            spacing={2}
-            direction="row"
-            justify="space-evenly"
+            // direction="column"
+            justify="center"
             alignItems="center"
           >
-            <Grid item xs={6} md={5}>
-              <Card className={classes.card} variant="outlined">
-                <CardContent>
-                  <Grid container direction="row" alignItems="center">
-                    <CheckCircleOutlineIcon className={classes.text} />
-                    &nbsp;
-                    <Typography
-                      variant="h5"
-                      component="h2"
-                      className={classes.text}
-                    >
-                      {" "}
-                      <b>List for FREE </b>
-                    </Typography>
+            <Grid item xs={12} md={10} lg={8}>
+              <br />
+              <Typography variant="h4" align="center">
+                <b>Why sell with us?</b>
+              </Typography>
+              <br />
+              <List>
+                <Grid
+                  container
+                  alignItems="flex-start"
+                  direction="row"
+                  spacing={2}
+                >
+                  <Grid item xs={12} sm={6}>
+                    <ListItem alignItems="flex-start">
+                      <ListItemIcon className={classes.focus}>
+                        <CenterFocusStrongIcon fontSize="large" />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary="Focused"
+                        secondary="Sports & tool watches excites us the most."
+                      />
+                    </ListItem>
                   </Grid>
-                  <br />
-                  <Typography variant="body" component="p">
-                    FREE to list without reserve!
-                  </Typography>
-
-                  <Typography variant="subtitle2" component="p">
-                    Only $49 with reserve.
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-            <Grid item xs={6} md={5}>
-              <Card className={classes.card} variant="outlined">
-                <CardContent>
-                  <Grid container direction="row" alignItems="center">
-                    <MonetizationOnOutlinedIcon className={classes.text} />
-                    &nbsp;
-                    <Typography
-                      variant="h5"
-                      component="h2"
-                      className={classes.text}
-                    >
-                      {" "}
-                      <b>Get top dollar</b>
-                    </Typography>
+                  <Grid item xs={12} sm={6}>
+                    <ListItem alignItems="flex-start">
+                      <ListItemIcon className={classes.fees}>
+                        <AttachMoneyIcon fontSize="large" />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary="Value"
+                        secondary="Get 100% of the sale price. Pay the listing fee ONLY if your watch sells."
+                      />
+                    </ListItem>
                   </Grid>
-                  <br />
+                  <Grid item xs={12} sm={6}>
+                    <ListItem alignItems="flex-start">
+                      <ListItemIcon className={classes.timer}>
+                        <TimerIcon fontSize="large" />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary="Sold in 7 days"
+                        secondary="We move fast. After you submit your watch, we aim to auction it off within a week."
+                      />
+                    </ListItem>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <ListItem alignItems="flex-start">
+                      <ListItemIcon className={classes.badge}>
+                        <VerifiedUserIcon fontSize="large" />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary="Clear & Concise"
+                        secondary="Simple auctions that tell you exactly what you need to know."
+                      />
+                    </ListItem>
+                  </Grid>
+                </Grid>
+              </List>
+              <br />
+              <Grid
+                container
+                spacing={2}
+                direction="row"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Grid item xs={6} sm={4}>
+                  <Card className={classes.card} variant="outlined">
+                    <CardContent>
+                      <Grid container>
+                        <Typography variant="h3" className={classes.text}>
+                          <b>$49</b>
+                        </Typography>
+                      </Grid>
+                      <br />
+                      <Typography variant="h6">
+                        No reserve listing
+                        <br />
+                        Social media coverage
+                        <br />
+                        Copywriting
+                        <br />
+                        Photo coaching
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+                <Grid item xs={6} sm={4}>
+                  <Card className={classes.card} variant="outlined">
+                    <CardContent>
+                      <Grid container>
+                        <Typography variant="h3" className={classes.text}>
+                          <b>$89</b>
+                        </Typography>
+                      </Grid>
+                      <br />
+                      <Typography variant="h6">
+                        <b>Reserve listing</b>
+                        <br />
+                        Social media coverage
+                        <br />
+                        Copywriting
+                        <br />
+                        Photo coaching
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              </Grid>
+              <br />
+              <br />
+              <Typography variant="h4" align="center">
+                <b>How it works</b>
+              </Typography>
+              <br />
+              <Stepper alternativeLabel activeStep={activeStep}>
+                {steps.map((label) => (
+                  <Step key={label} active={true}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                ))}
+              </Stepper>
+              <br />
+              {auth && auth.isAuthenticated ? (
+                <div>
+                  <Link
+                    className={classes.link}
+                    style={{ textDecoration: "none" }}
+                    to={"/submit"}
+                  >
+                    <Box textAlign="center">
+                      <Button variant="contained" color="primary">
+                        Submit your Watch
+                      </Button>
+                    </Box>
+                  </Link>
+                </div>
+              ) : (
+                <div>
+                  <Box textAlign="center">
+                    <SellLoginModal />
+                  </Box>
+                </div>
+              )}
+              <br />
 
-                  <Typography variant="body" component="p">
-                    With our anti-snipe system, your auction will stay active as
-                    long as people keep bidding.
-                  </Typography>
-                </CardContent>
-              </Card>
+              <Typography align="center" variant="subtitle2">
+                Takes less than 5 minutes & it's FREE
+              </Typography>
             </Grid>
           </Grid>
-          <br />
-          <br />
-          <br />
-
-          <Typography variant="h4" align="center">
-            How it works
-          </Typography>
-          <br />
-          <Stepper alternativeLabel activeStep={activeStep}>
-            {steps.map((label) => (
-              <Step key={label} active={true}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <br />
-          {auth && auth.isAuthenticated ? (
-            <div>
-              <Link
-                className={classes.link}
-                style={{ textDecoration: "none" }}
-                to={"/submit"}
-              >
-                <Box textAlign="center">
-                  <Button variant="contained" color="primary">
-                    Submit your Watch
-                  </Button>
-                </Box>
-              </Link>
-            </div>
-          ) : (
-            <div>
-              <Box textAlign="center">
-                <SellLoginModal />
-              </Box>
-            </div>
-          )}
         </Container>
       </div>
     </div>
