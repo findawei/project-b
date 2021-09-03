@@ -1,40 +1,67 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import { connect } from "react-redux";
 import { getItemById } from "../flux/actions/itemActions";
 
-const LineChart = ({ getItemById, match, item }) => {
+const LineChart = ({ getItemById, match, item, currentItem }) => {
   const [chartData, setChartData] = useState("");
 
   useEffect(() => {
-    getItemById(match.params.id);
+    if (currentItem && currentItem.chart) {
+      var chartArray = Object.entries(currentItem.chart).map((e) => ({
+        [e[0]]: e[1],
+      }));
 
-    setChartData({
-      labels: item.chart.map((watch) => watch.id),
-      datasets: [
-        {
-          label: "Price in USD",
-          data: item.chart.map((watch) => watch.price),
-          // backgroundColor: [
-          //   "#ffbb11",
-          //   "#ecf0f1",
-          //   "#50AF95",
-          //   "#f3ba2f",
-          //   "#2a71d0",
-          // ],
-        },
-      ],
-    });
-  }, []);
+      const newMap = chartArray.map((e, index) => {
+        let topThing = Object.values(chartArray)[index];
+        let objectWanted = Object.values(topThing)[0];
+        // console.log(objectWanted);
+        var watch = {
+          sellDate: Number(Object.keys(e)[0]),
+          id: objectWanted.id,
+          price: objectWanted.price,
+          display_price: objectWanted.display_price,
+          sold: objectWanted.sold,
+          source: objectWanted.source,
+        };
+        return watch;
+      });
+
+      if (newMap && newMap.length > 0) {
+        setChartData({
+          // labels: chartArray.map((watch) => Object.keys(watch)),
+          datasets: [
+            {
+              label: "Price in USD",
+              data: newMap.map((watch) => {
+                var newArray = {
+                  y: Math.round(watch.price) * 0.79,
+                  x: Number(watch.sellDate),
+                };
+                return newArray;
+              }),
+            },
+          ],
+          // options: {},
+        });
+      }
+    }
+  }, [currentItem]);
 
   const options = {
+    // parsing: {
+    //   xAxisKey: "sellDate",
+    //   yAxisKey: "price",
+    // },
     scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
+      x: {
+        type: "time",
+        time: {
+          displayFormats: {
+            quarter: "MMM YYYY",
           },
         },
-      ],
+      },
     },
   };
 
@@ -49,4 +76,9 @@ const LineChart = ({ getItemById, match, item }) => {
   );
 };
 
-export default LineChart;
+const mapStateToProps = (state) => ({
+  item: state.item,
+  currentItem: state.item.currentItem,
+});
+
+export default connect(mapStateToProps, { getItemById })(LineChart);

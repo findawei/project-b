@@ -14,7 +14,6 @@
   "author": "A. Benjamignan",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^7.4.6",
     "abstract-syntax-tree": "^2.20.1",
     "aws-sdk": "^2.976.0",
     "axios": "^0.21.1",

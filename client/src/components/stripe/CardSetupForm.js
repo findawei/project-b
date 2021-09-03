@@ -1,14 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
-import {connect} from 'react-redux';
-import CardSection from './CardSection';
-import { makeStyles } from '@material-ui/core/styles';
-import {IconButton, Collapse, Button, Grid, Box, TextField} from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close';
-import Alert from '@material-ui/lab/Alert';
-import {createIntent, createCustomer} from "../../flux/actions/stripeActions"
-import {addStripeCC} from "../../flux/actions/authActions"
-
+import React, { useEffect, useState } from "react";
+import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
+import { connect } from "react-redux";
+import CardSection from "./CardSection";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+  IconButton,
+  Collapse,
+  Button,
+  Grid,
+  Box,
+  TextField,
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import Alert from "@material-ui/lab/Alert";
+import { createIntent, createCustomer } from "../../flux/actions/stripeActions";
+import { addStripeCC } from "../../flux/actions/authActions";
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -29,16 +35,23 @@ const CARD_ELEMENT_OPTIONS = {
 };
 
 const CardField = ({ onChange }) => (
-<div className="FormRow">
+  <div className="FormRow">
     <CardElement options={CARD_ELEMENT_OPTIONS} onChange={onChange} />
-</div>
-)
+  </div>
+);
 
-const CardSetupForm = ({createIntent, getPublicStripeKey, stripeRedux, auth, createCustomer, addStripeCC}) => {
+const CardSetupForm = ({
+  createIntent,
+  getPublicStripeKey,
+  stripeRedux,
+  auth,
+  createCustomer,
+  addStripeCC,
+}) => {
   const useStyles = makeStyles((theme) => ({
     root: {
-      width: '100%',
-      '& > * + *': {
+      width: "100%",
+      "& > * + *": {
         marginTop: theme.spacing(2),
       },
     },
@@ -49,39 +62,39 @@ const CardSetupForm = ({createIntent, getPublicStripeKey, stripeRedux, auth, cre
 
   const [error, setError] = useState(null);
   const [open, setOpen] = useState(false);
-  const [alertMsg, setAlertMsg] = useState('');
-  const [severity, setSeverity] = useState('')
-  const [buttonMsg, setButtonMsg] = useState('Submit Card')
+  const [alertMsg, setAlertMsg] = useState("");
+  const [severity, setSeverity] = useState("");
+  const [buttonMsg, setButtonMsg] = useState("Submit Card");
 
-  const [cardComplete, setCardComplete] = useState('');
+  const [cardComplete, setCardComplete] = useState("");
   const [processing, setProcessing] = useState(false);
   const [paymentMethod, setPaymentMethod] = useState(null);
 
-// useEffect(()=>{
-//   if(paymentMethod){
-//       console.log(paymentMethod)
-//   }
-// },[paymentMethod])
+  // useEffect(()=>{
+  //   if(paymentMethod){
+  //       console.log(paymentMethod)
+  //   }
+  // },[paymentMethod])
 
-useEffect(()=>{
-  if(auth.user && auth.user.stripe_id){
-    console.log('stripe id exists')
-    if(stripeRedux && stripeRedux.intent === null){
-      createIntent()
-    } 
-  } else {
-    createCustomer(); 
-    if(stripeRedux && stripeRedux.intent === null){
-      createIntent()
-    } 
-    console.log('create stripeid')
-  }
-},[auth])
+  useEffect(() => {
+    if (auth.user && auth.user.stripe_id) {
+      console.log("stripe id exists");
+      if (stripeRedux && stripeRedux.intent === null) {
+        createIntent();
+      }
+    } else {
+      createCustomer();
+      if (stripeRedux && stripeRedux.intent === null) {
+        createIntent();
+      }
+      console.log("create stripeid");
+    }
+  }, [auth]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setOpen(false)
-    if(!stripe || !elements) {
+    setOpen(false);
+    if (!stripe || !elements) {
       return;
     }
 
@@ -92,37 +105,41 @@ useEffect(()=>{
 
     // if(stripeRedux && stripeRedux.intent === null){
     //   createIntent()
-    // }  
-    
+    // }
+
     if (cardComplete) {
       setProcessing(true);
-      setButtonMsg('Processing...')
+      setButtonMsg("Processing...");
     }
 
-      if(stripeRedux && stripeRedux.intent && stripeRedux.intent.client_secret){
-        const result = await stripe.confirmCardSetup(stripeRedux.intent.client_secret, {
+    if (stripeRedux && stripeRedux.intent && stripeRedux.intent.client_secret) {
+      const result = await stripe.confirmCardSetup(
+        stripeRedux.intent.client_secret,
+        {
           payment_method: {
             card: elements.getElement(CardElement),
-          }})
-        if (result.error) {
-          setOpen(true)
-          setSeverity("error")
-          setAlertMsg(result.error.message)
-        } else { 
-            setOpen(true)
-            setSeverity("success")
-            setAlertMsg("Card added!")
-            setPaymentMethod(true);
-
-            //Save card result
-            let stripeCC = {
-              stripe_cc: result.setupIntent.payment_method
-            }
-            addStripeCC(stripeCC)
+          },
         }
+      );
+      if (result.error) {
+        setOpen(true);
+        setSeverity("error");
+        setAlertMsg(result.error.message);
+      } else {
+        setOpen(true);
+        setSeverity("success");
+        setAlertMsg("Card added!");
+        setPaymentMethod(true);
+
+        //Save card result
+        let stripeCC = {
+          stripe_cc: result.setupIntent.payment_method,
+        };
+        addStripeCC(stripeCC);
       }
-      setProcessing(false);
-  }
+    }
+    setProcessing(false);
+  };
 
   const SubmitButton = ({ processing, error, children, disabled }) => (
     <Button
@@ -139,69 +156,78 @@ useEffect(()=>{
 
   return (
     <div>
-    {paymentMethod ? 
-      <div className="Result">
-        <div className="ResultTitle" role="alert">
-          Payment successful
+      {paymentMethod ? (
+        <div className="Result">
+          <div className="ResultTitle" role="alert">
+            Payment successful
+          </div>
+          <div className="ResultMessage">
+            Thanks for trying Stripe Elements. No money was charged, but we
+            generated a PaymentMethod: {paymentMethod.id}
+          </div>
         </div>
-        <div className="ResultMessage">
-          Thanks for trying Stripe Elements. No money was charged, but we
-          generated a PaymentMethod: {paymentMethod.id}
-        </div>
-      </div>
-    :
-    <form className="Form" onSubmit={handleSubmit}>
-      <CardField
-          onChange={(e) => {
-            setCardComplete(e.complete);
-            setError(e.error);
-            if(e.error){
-              setOpen(true)
-              setSeverity("error")
-            }
-          }}
-        />
-      <div 
-      className={classes.root}
-      >
-      <Collapse in={open}>
-      <Alert
-        severity={severity}
-        action={
-          <IconButton
-            aria-label="close"
-            color="inherit"
-            size="small"
-            onClick={() => {
-              setOpen(false);
+      ) : (
+        <form className="Form" onSubmit={handleSubmit}>
+          <CardField
+            onChange={(e) => {
+              setCardComplete(e.complete);
+              setError(e.error);
+              if (e.error) {
+                setOpen(true);
+                setSeverity("error");
+              }
             }}
-            >
-            <CloseIcon fontSize="inherit" />
-          </IconButton>
-        }
-        >
-          {/* {alertMsg} */}
-          {(error || alertMsg) && <div>{error.message}</div>}
-        </Alert>
-        </Collapse>
-        </div>
-        <SubmitButton
-        processing={processing} 
-        error={error} 
-        disabled={!stripe || error}
-      >
-        {/* {buttonMsg} */}
-        Submit Card
-      </SubmitButton>      
-    </form>
-    }
+          />
+          <div className={classes.root}>
+            <Collapse in={open}>
+              <Alert
+                severity={severity}
+                action={
+                  <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                      setOpen(false);
+                    }}
+                  >
+                    <CloseIcon fontSize="inherit" />
+                  </IconButton>
+                }
+              >
+                {/* {alertMsg} */}
+                {/* {(error || alertMsg) && <div>{error.message}</div>} */}
+                {error ? (
+                  <div>{error.message}</div>
+                ) : alertMsg ? (
+                  <div>{alertMsg}</div>
+                ) : (
+                  ""
+                )}
+              </Alert>
+            </Collapse>
+          </div>
+          <SubmitButton
+            processing={processing}
+            error={error}
+            disabled={!stripe || error}
+          >
+            {/* {buttonMsg} */}
+            Submit Card
+          </SubmitButton>
+        </form>
+      )}
     </div>
   );
-}
+};
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  stripeRedux: state.stripeRedux
+  stripeRedux: state.stripeRedux,
 });
 
-export default connect(mapStateToProps, {createIntent, createCustomer, addStripeCC})(CardSetupForm);
+export default connect(mapStateToProps, {
+  createIntent,
+  createCustomer,
+  addStripeCC,
+})(CardSetupForm);
