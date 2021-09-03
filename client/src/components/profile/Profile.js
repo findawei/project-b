@@ -26,7 +26,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import MyListings from "./MyListings";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import { green } from "@material-ui/core/colors";
-import { Helmet } from "react-helmet";
+// import { Helmet } from "react-helmet";
 
 const useStyles = makeStyles((theme) => ({
   root: {
