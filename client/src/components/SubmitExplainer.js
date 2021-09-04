@@ -131,7 +131,7 @@ const SubmitExplainer = ({ auth }) => {
             justify="center"
             alignItems="center"
           >
-            <Grid item xs={12} md={10} lg={8}>
+            <Grid item xs={12} md={10}>
               <br />
               <Typography variant="h4" align="center">
                 <b>Why sell with us?</b>

@@ -145,6 +145,7 @@ const CardSetupForm = ({
     <Button
       variant="contained"
       color="primary"
+      fullWidth
       // disabled={!stripe}
       className={`SubmitButton ${error ? "SubmitButton--error" : ""}`}
       type="submit"
@@ -168,53 +169,65 @@ const CardSetupForm = ({
         </div>
       ) : (
         <form className="Form" onSubmit={handleSubmit}>
-          <CardField
-            onChange={(e) => {
-              setCardComplete(e.complete);
-              setError(e.error);
-              if (e.error) {
-                setOpen(true);
-                setSeverity("error");
-              }
-            }}
-          />
-          <div className={classes.root}>
-            <Collapse in={open}>
-              <Alert
-                severity={severity}
-                action={
-                  <IconButton
-                    aria-label="close"
-                    color="inherit"
-                    size="small"
-                    onClick={() => {
-                      setOpen(false);
-                    }}
-                  >
-                    <CloseIcon fontSize="inherit" />
-                  </IconButton>
-                }
-              >
-                {/* {alertMsg} */}
-                {/* {(error || alertMsg) && <div>{error.message}</div>} */}
-                {error ? (
-                  <div>{error.message}</div>
-                ) : alertMsg ? (
-                  <div>{alertMsg}</div>
-                ) : (
-                  ""
-                )}
-              </Alert>
-            </Collapse>
-          </div>
-          <SubmitButton
-            processing={processing}
-            error={error}
-            disabled={!stripe || error}
+          <Grid
+            container
+            direction="row"
+            spacing={3}
+            justify="space-evenly"
+            alignItems="center"
           >
-            {/* {buttonMsg} */}
-            Submit Card
-          </SubmitButton>
+            <Grid item xs={12} sm={9}>
+              <CardField
+                onChange={(e) => {
+                  setCardComplete(e.complete);
+                  setError(e.error);
+                  if (e.error) {
+                    setOpen(true);
+                    setSeverity("error");
+                  }
+                }}
+              />
+              <div className={classes.root}>
+                <Collapse in={open}>
+                  <Alert
+                    severity={severity}
+                    action={
+                      <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                          setOpen(false);
+                        }}
+                      >
+                        <CloseIcon fontSize="inherit" />
+                      </IconButton>
+                    }
+                  >
+                    {/* {alertMsg} */}
+                    {/* {(error || alertMsg) && <div>{error.message}</div>} */}
+                    {error ? (
+                      <div>{error.message}</div>
+                    ) : alertMsg ? (
+                      <div>{alertMsg}</div>
+                    ) : (
+                      ""
+                    )}
+                  </Alert>
+                </Collapse>
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={3}>
+              <SubmitButton
+                processing={processing}
+                error={error}
+                disabled={!stripe || error}
+              >
+                {/* {buttonMsg} */}
+                Submit Card
+              </SubmitButton>
+            </Grid>
+          </Grid>
         </form>
       )}
     </div>

@@ -10,12 +10,6 @@ import {
   ListItemText,
   Divider,
 } from "@material-ui/core";
-import portait from "../../images/alex-portait.jpg";
-import CenterFocusStrongIcon from "@material-ui/icons/CenterFocusStrong";
-import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
-import TimerIcon from "@material-ui/icons/Timer";
-import PublishIcon from "@material-ui/icons/Publish";
-import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 
 const About = () => {
   const useStyles = makeStyles((theme) => ({
@@ -76,62 +70,6 @@ const About = () => {
                 <br />
                 <br />
                 <Divider />
-                {/* <Typography variant="h5" className={classes.title}>
-                  Why No Wait List?
-                </Typography>
-                <List>
-                  <Grid
-                    container
-                    alignItems="flex-start"
-                    direction="row"
-                    spacing={2}
-                  >
-                    <Grid item xs={12} sm={6}>
-                      <ListItem alignItems="flex-start">
-                        <ListItemIcon className={classes.focus}>
-                          <CenterFocusStrongIcon fontSize="large" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Focused"
-                          secondary="Sports & tool watches excites us the most."
-                        />
-                      </ListItem>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <ListItem alignItems="flex-start">
-                        <ListItemIcon className={classes.fees}>
-                          <AttachMoneyIcon fontSize="large" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Value"
-                          secondary="Buyer’s fee of 5%, capped at $5,000. Seller’s fee of $49 for a no-reserve auction, $89 with a reserve auction. Pay the listing fee ONLY if your watch sells."
-                        />
-                      </ListItem>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <ListItem alignItems="flex-start">
-                        <ListItemIcon className={classes.timer}>
-                          <TimerIcon fontSize="large" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Sold in 7 days"
-                          secondary="We move fast. After you submit your watch, we aim to auction it off within a week."
-                        />
-                      </ListItem>
-                    </Grid>
-                    <Grid item xs={12} sm={6}>
-                      <ListItem alignItems="flex-start">
-                        <ListItemIcon className={classes.badge}>
-                          <VerifiedUserIcon fontSize="large" />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary="Clear & Concise"
-                          secondary="Simplified auctions that tell you exactly what you need to know."
-                        />
-                      </ListItem>
-                    </Grid>
-                  </Grid>
-                </List> */}
                 <Typography variant="h5" className={classes.title}>
                   Founder
                 </Typography>
@@ -144,9 +82,6 @@ const About = () => {
                   <Grid item xs={12} sm={6}>
                     <Typography variant="h6">Alex Benjamignan</Typography>
                   </Grid>
-                  {/* <Grid item xs={12} sm={6}>
-            <img src={portait} alt="portait" className={classes.image} />
-          </Grid> */}
                   <Grid item xs={12} sm={6}>
                     Alex got into watches in 2013. Technical aspects of
                     watchmaking were very interesting to him. He got his hands
