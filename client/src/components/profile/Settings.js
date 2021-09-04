@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
+import { Link as RouterLink } from "react-router-dom";
 import {
   Typography,
   Divider,
   Box,
+  Link,
   Grid,
   Button,
   Container,
@@ -48,11 +50,13 @@ const Settings = ({ getCard, stripeRedux, auth }) => {
           alignItems="center"
         >
           <Grid item xs={12} md={10} lg={8}>
+            <br />
             <Typography component="div" variant="h4">
               Settings
             </Typography>
             <br />
             <Divider />
+            <br />
             <Grid
               container
               alignItems="center"
@@ -108,7 +112,29 @@ const Settings = ({ getCard, stripeRedux, auth }) => {
       </Grid> */}
               <Grid item xs={12}>
                 <br />
-                {/* <Divider /> */}
+                <br />
+                <Divider />
+                <br />
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography component="div">
+                  <Box fontWeight="fontWeightBold" py={1}>
+                    Referral Program
+                  </Box>
+                </Typography>
+              </Grid>
+              <Grid item xs={12}>
+                <Link
+                  className={classes.link}
+                  component={RouterLink}
+                  to="/invite-friends"
+                >
+                  Invite Friends
+                </Link>
+              </Grid>
+              <Grid item xs={12}>
+                Referral Bonuses
               </Grid>
               {/* <Grid item xs={6} sm={6}>
           <Typography>Your phone number
