@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 import {
   USER_LOADED,
   USER_LOADING,
@@ -12,164 +12,165 @@ import {
   RESET_SUCCESS,
   RESET_ERROR,
   CAPTCHA_SUBMIT,
-  CAPTCHA_ERROR
-} from './types';
-import firebase from '../../firebase';
-import { config } from 'process';
-import { returnErrors } from './errorActions';
-import ReactGA from 'react-ga';
+  CAPTCHA_ERROR,
+} from "./types";
+import firebase from "../../firebase";
+import { config } from "process";
+import { returnErrors } from "./errorActions";
+import ReactGA from "react-ga";
 
-
-export var accessToken = '';
+export var accessToken = "";
 // Check token & load user
-export const loadUser = () => async(dispatch, getState) => {
+export const loadUser = () => async (dispatch, getState) => {
   // User loading
-  try{
+  try {
     dispatch({ type: USER_LOADING });
     firebase.auth().onAuthStateChanged(async (user) => {
-      if(user && !user.emailVerified) {
+      if (user && !user.emailVerified) {
         dispatch({
           type: REGISTER_FAIL,
-          payload: "You haven't verified your e-mail address."
+          payload: "You haven't verified your e-mail address.",
         });
-      }
-      else if (user && user.emailVerified){
+      } else if (user && user.emailVerified) {
         dispatch({
           type: USER_LOADED,
-          payload: user
+          payload: user,
         });
-                
+
         // let accessToken = user
         // console.log(accessToken)
-        
+
         // Get mongodb userID and set as user
         const header = await tokenConfig();
-        try{
-        axios
-        .get('/api/auth/user', header)
-        .then(res => 
+        try {
+          axios.get("/api/auth/user", header).then((res) =>
             dispatch({
               type: USER_LOADED,
-              payload: res.data
+              payload: res.data,
             })
-        )}
-        catch(err) {
+          );
+        } catch (err) {
           dispatch((err.response.data, err.response.status));
           dispatch({
-            type: AUTH_ERROR
+            type: AUTH_ERROR,
           });
-        };
+        }
       } else {
         dispatch({
           type: AUTH_ERROR,
-          payload: "No user signed in."
-        })
+          payload: "No user signed in.",
+        });
       }
     });
-} catch (err) {
-  dispatch({
-          type: AUTH_ERROR
-        });
-  console.log(err);
-}};
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+    console.log(err);
+  }
+};
 
 //Re-send email verification email
-export const verifyEmail = () => async(dispatch, getState) => {
+export const verifyEmail = () => async (dispatch, getState) => {
   // User loading
-  try{
-    firebase.auth().onAuthStateChanged(function(user) {
-      user.sendEmailVerification()
-    })
-} catch (err) {
-  dispatch({
-          type: AUTH_ERROR
-        });
-  console.log(err);
-}};
+  try {
+    firebase.auth().onAuthStateChanged(function (user) {
+      user.sendEmailVerification();
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+    console.log(err);
+  }
+};
 
 // Register User
-export const register = ({email, password, displayName }) => async(
-  dispatch
-) => {
-  try {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(dataBeforeEmail => {
-        firebase.auth().onAuthStateChanged(function(user) {
-          user.sendEmailVerification();
-          user.updateProfile({displayName: displayName})
-        });
-      })
-      .then(dataAfterEmail => {
-        firebase.auth().onAuthStateChanged(async function(user) {
-          if (user) {
-            // Sign up successful
-            dispatch({
-              type: REGISTER_SUCCESS,
-              payload:user
-            });
-            const header = await tokenConfig();
-            try{
-              axios
-              .post('/api/auth/',{}, header)
-              .then(res=>
-                dispatch({
-                  type: REGISTER_SUCCESS,
-                  payload: res.data
-                }))
-            }
-            catch(err) {
+export const register =
+  ({ email, password, displayName }) =>
+  async (dispatch) => {
+    try {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(email, password)
+        .then((dataBeforeEmail) => {
+          firebase.auth().onAuthStateChanged(function (user) {
+            user.sendEmailVerification();
+            user.updateProfile({ displayName: displayName });
+          });
+        })
+        .then((dataAfterEmail) => {
+          firebase.auth().onAuthStateChanged(async function (user) {
+            if (user) {
+              // Sign up successful
               dispatch({
-                type: REGISTER_FAIL,
-                payload:
-                    "Something went wrong, we couldn't create your account. Please try again."
+                type: REGISTER_SUCCESS,
+                payload: user,
+              });
+
+              let growsurf;
+              if (window.growsurf) {
+                growsurf.addParticipant(user.email);
+              }
+
+              const header = await tokenConfig();
+              try {
+                axios.post("/api/auth/", {}, header).then((res) =>
+                  dispatch({
+                    type: REGISTER_SUCCESS,
+                    payload: res.data,
+                  })
+                );
+              } catch (err) {
+                dispatch({
+                  type: REGISTER_FAIL,
+                  payload:
+                    "Something went wrong, we couldn't create your account. Please try again.",
                 });
-              };
+              }
 
               ReactGA.event({
                 category: "User",
                 action: "Signed up",
-              })
+              });
               ReactGA.set({
-                userId: user.uid
-              })
-
-          } else {
-            // Signup failed
-            dispatch({
-              type: REGISTER_FAIL,
-              payload:
-                "Something went wrong, we couldn't create your account. Please try again."
-            });
-          }
+                userId: user.uid,
+              });
+            } else {
+              // Signup failed
+              dispatch({
+                type: REGISTER_FAIL,
+                payload:
+                  "Something went wrong, we couldn't create your account. Please try again.",
+              });
+            }
+          });
+        })
+        .catch(() => {
+          dispatch({
+            type: REGISTER_FAIL,
+            payload:
+              "Something went wrong, we couldn't create your account. Please try again.",
+          });
         });
-      })
-      .catch(() => {
-        dispatch({
-          type: REGISTER_FAIL,
-          payload:
-            "Something went wrong, we couldn't create your account. Please try again."
-        });
+    } catch (err) {
+      dispatch({
+        type: REGISTER_FAIL,
+        payload:
+          "Something went wrong, we couldn't create your account. Please try again.",
       });
-  } catch(err) {
-    dispatch({
-      type: REGISTER_FAIL,
-      payload:
-        "Something went wrong, we couldn't create your account. Please try again."
-    });
-  }
-}
+    }
+  };
 
 // Login User
-export const login = ( {email, password}) => async(
-  dispatch
-) => {
-  try{
-    firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(data => {
+export const login =
+  ({ email, password }) =>
+  async (dispatch) => {
+    try {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then((data) => {
           if (data.user.emailVerified) {
             // console.log("IF", data.user.emailVerified);
             dispatch({ type: LOGIN_SUCCESS });
@@ -178,36 +179,36 @@ export const login = ( {email, password}) => async(
               action: "User logged in",
             });
             ReactGA.set({
-              userId: data.user.uid
+              userId: data.user.uid,
             });
           } else {
             // console.log("ELSE", data.user.emailVerified);
             dispatch({
               type: REGISTER_FAIL,
-              payload: "You haven't verified your e-mail address."
+              payload: "You haven't verified your e-mail address.",
             });
           }
         })
-    .catch(err =>{
-      // dispatch(
-        // returnErrors(err.message, err.code, 'LOGIN_FAIL')
-    
+        .catch((err) => {
+          // dispatch(
+          // returnErrors(err.message, err.code, 'LOGIN_FAIL')
+
+          dispatch({
+            type: LOGIN_FAIL,
+            payload: "Invalid login credentials",
+          });
+        });
+    } catch (err) {
       dispatch({
         type: LOGIN_FAIL,
-        payload: "Invalid login credentials"
-      })
-    })
-  } catch(err) {
-        dispatch({
-        type: LOGIN_FAIL,
-        payload: "Invalid login credentials"
-          // returnErrors(err.message, err.code, 'LOGIN_FAIL')
-        });
-        // dispatch({
-        //   type: LOGIN_FAIL
-        // });
-      }
-};
+        payload: "Invalid login credentials",
+        // returnErrors(err.message, err.code, 'LOGIN_FAIL')
+      });
+      // dispatch({
+      //   type: LOGIN_FAIL
+      // });
+    }
+  };
 
 export const resetPassword = (email) => async (dispatch) => {
   try {
@@ -218,14 +219,14 @@ export const resetPassword = (email) => async (dispatch) => {
         dispatch({
           type: RESET_SUCCESS,
           payload:
-            "Check your inbox. We've sent you a secured reset link by e-mail."
+            "Check your inbox. We've sent you a secured reset link by e-mail.",
         })
       )
       .catch(() => {
         dispatch({
           type: RESET_ERROR,
           payload:
-            "Oops, something went wrong we couldn't send you the e-mail. Try again and if the error persists, contact admin."
+            "Oops, something went wrong we couldn't send you the e-mail. Try again and if the error persists, contact admin.",
         });
       });
   } catch (err) {
@@ -234,11 +235,11 @@ export const resetPassword = (email) => async (dispatch) => {
 };
 
 // Logout User
-export const logout = () => async (dispatch) =>{
+export const logout = () => async (dispatch) => {
   try {
     await firebase.auth().signOut();
     dispatch({
-      type: LOGOUT_SUCCESS
+      type: LOGOUT_SUCCESS,
     });
   } catch (err) {
     console.log(err);
@@ -248,51 +249,50 @@ export const logout = () => async (dispatch) =>{
 //Captcha Submit
 
 export const captchaSubmit = (captcha) => async (dispatch, getState) => {
-  
   // const header = await tokenConfig();
-  try{
-  axios
-  .post('/api/auth/captcha', captcha)
-  .then(res=>
+  try {
+    axios.post("/api/auth/captcha", captcha).then((res) =>
       dispatch({
-          type: CAPTCHA_SUBMIT,
-          payload: res.data
+        type: CAPTCHA_SUBMIT,
+        payload: res.data,
       })
-  )
-  }
-  catch(err) {
-    dispatch(returnErrors(err.response.data, err.response.status, 'CAPTCHA_ERROR'));
+    );
+  } catch (err) {
+    dispatch(
+      returnErrors(err.response.data, err.response.status, "CAPTCHA_ERROR")
+    );
     dispatch({
       type: CAPTCHA_ERROR,
-      });
-    };
+    });
+  }
 };
-
 
 //Add stripe_cc to user
 export const addStripeCC = (user) => async (dispatch, getState) => {
-  
-    const header = await tokenConfig();
-    try{
+  const header = await tokenConfig();
+  try {
     axios
-    .put('/api/auth/addStripeCC', user, header)
-    .then(res=> (
+      .put("/api/auth/addStripeCC", user, header)
+      .then((res) =>
         dispatch({
-            type: USER_UPDATE,
-            payload: res.data
+          type: USER_UPDATE,
+          payload: res.data,
         })
-    ))
-    .then(ReactGA.event({
-      category: "Stripe",
-      action: "User added cc",
-    }))
-    }
-    catch(err) {
-      dispatch(returnErrors(err.response.data, err.response.status, 'AUTH_ERROR'));
-      dispatch({
-        type: AUTH_ERROR,
-        });
-      };
+      )
+      .then(
+        ReactGA.event({
+          category: "Stripe",
+          action: "User added cc",
+        })
+      );
+  } catch (err) {
+    dispatch(
+      returnErrors(err.response.data, err.response.status, "AUTH_ERROR")
+    );
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
 };
 
 // Setup config/headers and token
@@ -301,14 +301,14 @@ export const tokenConfig = async () => {
   // const token = user && (await user.getIdToken());
 
   // if(registered) {
-    const token = user && (await user.getIdToken(/* forceRefresh */ true))
+  const token = user && (await user.getIdToken(/* forceRefresh */ true));
   // } else {
   //   const token = user && (await user.getIdToken());
   // }
 
   const config = {
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       Authorization: `Bearer ${token}`,
     },
   };
