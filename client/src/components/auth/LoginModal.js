@@ -88,7 +88,7 @@ const LoginModal = ({
   });
 
   const [user, setUser] = useState();
-  const [newUser, setNewUser] = useState(false);
+  const [newUser, setNewUser] = useState(true);
   const [showToast1, setShowToast1] = useState(false);
   const [pwreset, SetReset] = useState(false);
   const [resetButton, setButton] = useState("Reset Password");

@@ -229,7 +229,7 @@ router.post("/processPayment", async (req, res) => {
             const htmlToSend = template(replacements);
 
             mailOptions = {
-              from: '"No Wait List" <alex@nowaitlist.co>',
+              from: '"No Wait List" <info@nowaitlist.co>',
               to: user.email,
               cc: "alex@nowaitlist.co",
               subject: `You won the ${replacements.brand} ${replacements.reference} - ${replacements.year}`,

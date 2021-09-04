@@ -200,7 +200,7 @@ router.post("/submit", async (req, res) => {
       const htmlToSend = template(replacements);
 
       mailOptions = {
-        from: '"No Wait List" <alex@nowaitlist.co>',
+        from: '"No Wait List" <info@nowaitlist.co>',
         to: auth.email,
         cc: "alex@nowaitlist.co",
         subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,
@@ -379,7 +379,7 @@ router.post("/bid/:id", async (req, res) => {
           const htmlToSend = template(replacements);
 
           mailOptions = {
-            from: '"No Wait List" <alex@nowaitlist.co>',
+            from: '"No Wait List" <info@nowaitlist.co>',
             to: previousBidder.email,
             subject: `Outbid notice: Bid again on the ${replacements.brand} ${replacements.model}`,
             html: htmlToSend,
