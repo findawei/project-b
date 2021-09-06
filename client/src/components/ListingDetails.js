@@ -633,85 +633,11 @@ const ListingDetails = ({
                   </Modal>
                 </Grid>
                 {/* Description Table */}
-                <Typography variant="h5">Watch Details</Typography>
-                <Grid
-                  container
-                  direction="row"
-                  justify="left"
-                  alignItems="center"
-                  alignItems="flex-start"
-                >
+                <Grid item xs={12}>
+                  <Typography variant="h5">Watch Details</Typography>
+                </Grid>
+                <Grid container style={{ padding: 8 }}>
                   <Grid item xs={12} md={6}>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography
-                          color="inherit"
-                          display="inline"
-                          fontWeight="fontWeightBold"
-                        >
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Seller
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.name}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Location
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.location}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    {currentItem.ship && currentItem.ship.length ? (
-                      <div className={classes.paper}>
-                        <Paper
-                          variant="outlined"
-                          square="true"
-                          className={classes.background}
-                        >
-                          <Typography color="inherit" display="inline">
-                            <Box fontWeight="fontWeightBold" m={0.5}>
-                              Ships to
-                            </Box>
-                          </Typography>
-                        </Paper>
-                        <Paper variant="outlined" square="true">
-                          <Typography color="inherit" display="inline">
-                            <Box m={0.5}>
-                              {currentItem.ship.map((location, index) => {
-                                return (
-                                  <span key={index}>
-                                    {(index ? ", " : "") + location.location}
-                                  </span>
-                                );
-                              })}
-                            </Box>
-                          </Typography>
-                        </Paper>
-                      </div>
-                    ) : (
-                      ""
-                    )}
                     <div className={classes.paper}>
                       <Paper
                         variant="outlined"
@@ -842,11 +768,6 @@ const ListingDetails = ({
                         </Typography>
                       </Paper>
                     </div>
-                  </Grid>
-
-                  {/* Grid Break */}
-
-                  <Grid item xs={12} md={6}>
                     <div className={classes.paper}>
                       <Paper
                         variant="outlined"
@@ -865,6 +786,11 @@ const ListingDetails = ({
                         </Typography>
                       </Paper>
                     </div>
+                  </Grid>
+
+                  {/* Grid Break */}
+
+                  <Grid item xs={12} md={6}>
                     <div className={classes.paper}>
                       <Paper
                         variant="outlined"
@@ -1014,6 +940,112 @@ const ListingDetails = ({
                       </Paper>
                     </div>
                   </Grid>
+                </Grid>
+                {/* Seller's details */}
+                <Grid item xs={12}>
+                  <Typography variant="h5">Seller's Details</Typography>
+                </Grid>
+                <Grid item xs={12}>
+                  <div className={classes.paper}>
+                    <Paper
+                      variant="outlined"
+                      square="true"
+                      className={classes.background}
+                    >
+                      <Typography
+                        color="inherit"
+                        display="inline"
+                        fontWeight="fontWeightBold"
+                      >
+                        <Box fontWeight="fontWeightBold" m={0.5}>
+                          Seller
+                        </Box>
+                      </Typography>
+                    </Paper>
+                    <Paper variant="outlined" square="true">
+                      <Typography color="inherit" display="inline">
+                        <Box m={0.5}>{currentItem.name}</Box>
+                      </Typography>
+                    </Paper>
+                  </div>
+                  <div className={classes.paper}>
+                    <Paper
+                      variant="outlined"
+                      square="true"
+                      className={classes.background}
+                    >
+                      <Typography color="inherit" display="inline">
+                        <Box fontWeight="fontWeightBold" m={0.5}>
+                          Location
+                        </Box>
+                      </Typography>
+                    </Paper>
+                    <Paper variant="outlined" square="true">
+                      <Typography color="inherit" display="inline">
+                        <Box m={0.5}>{currentItem.location}</Box>
+                      </Typography>
+                    </Paper>
+                  </div>
+                  {currentItem.ship && currentItem.ship.length ? (
+                    <div className={classes.paper}>
+                      <Paper
+                        variant="outlined"
+                        square="true"
+                        className={classes.background}
+                      >
+                        <Typography color="inherit" display="inline">
+                          <Box fontWeight="fontWeightBold" m={0.5}>
+                            Ships to
+                          </Box>
+                        </Typography>
+                      </Paper>
+                      <Paper variant="outlined" square="true">
+                        <Typography color="inherit" display="inline">
+                          <Box m={0.5}>
+                            {currentItem.ship.map((location, index) => {
+                              return (
+                                <span key={index}>
+                                  {(index ? ", " : "") + location.location}
+                                </span>
+                              );
+                            })}
+                          </Box>
+                        </Typography>
+                      </Paper>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  {currentItem.payment && currentItem.payment.length ? (
+                    <div className={classes.paper}>
+                      <Paper
+                        variant="outlined"
+                        square="true"
+                        className={classes.background}
+                      >
+                        <Typography color="inherit" display="inline">
+                          <Box fontWeight="fontWeightBold" m={0.5}>
+                            Payment
+                          </Box>
+                        </Typography>
+                      </Paper>
+                      <Paper variant="outlined" square="true">
+                        <Typography color="inherit" display="inline">
+                          <Box m={0.5}>
+                            {currentItem.payment.map((location, index) => {
+                              return (
+                                <span key={index}>
+                                  {(index ? ", " : "") + location.option}
+                                </span>
+                              );
+                            })}
+                          </Box>
+                        </Typography>
+                      </Paper>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                 </Grid>
                 {/* Description */}
                 <Grid item xs={12}>
