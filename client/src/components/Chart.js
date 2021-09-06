@@ -1,10 +1,42 @@
 import React, { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
+import { Scatter } from "react-chartjs-2";
 import { connect } from "react-redux";
 import { getItemById } from "../flux/actions/itemActions";
+import "chartjs-adapter-date-fns";
+import { fromUnixTime } from "date-fns";
+import chartTrendline from "chartjs-plugin-trendline";
+import { makeStyles } from "@material-ui/core/styles";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormHelperText from "@material-ui/core/FormHelperText";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import NativeSelect from "@material-ui/core/NativeSelect";
+
+const useStyles = makeStyles((theme) => ({
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 const LineChart = ({ getItemById, match, item, currentItem }) => {
+  const classes = useStyles();
   const [chartData, setChartData] = useState("");
+
+  const [state, setState] = useState({
+    show: "25",
+  });
+
+  const handleChange = (event) => {
+    const name = event.target.name;
+    setState({
+      ...state,
+      [name]: event.target.value,
+    });
+  };
 
   useEffect(() => {
     if (currentItem && currentItem.chart) {
@@ -36,10 +68,15 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
               data: newMap.map((watch) => {
                 var newArray = {
                   y: Math.round(watch.price) * 0.79,
-                  x: Number(watch.sellDate),
+                  x: fromUnixTime(watch.sellDate),
                 };
                 return newArray;
               }),
+              trendlineLinear: {
+                style: "rgba(255,105,180, .8)",
+                lineStyle: "dotted|solid",
+                width: 2,
+              },
             },
           ],
           // options: {},
@@ -56,11 +93,7 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
     scales: {
       x: {
         type: "time",
-        time: {
-          displayFormats: {
-            quarter: "MMM YYYY",
-          },
-        },
+        min: fromUnixTime(1609477200),
       },
     },
   };
@@ -68,9 +101,37 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
   return (
     <div>
       <div className="header">
-        <h1 className="title">Line Chart</h1>
+        <h1 className="title">Watch Data</h1>
       </div>
-      <Line data={chartData} options={options} />
+
+      <FormControl
+        variant="outlined"
+        size="small"
+        className={classes.formControl}
+      >
+        <InputLabel htmlFor="outlined-age-native-simple">Show</InputLabel>
+        <Select
+          native
+          value={state.show}
+          onChange={handleChange}
+          label="Last"
+          inputProps={{
+            name: "show",
+            id: "outlined-age-native-simple",
+          }}
+        >
+          <option value={25}>25</option>
+          <option value={50}>50</option>
+          <option value={75}>75</option>
+          <option value={100}>100</option>
+        </Select>
+      </FormControl>
+
+      <Scatter
+        data={chartData}
+        options={options}
+        // plugins={[chartTrendline]}
+      />
       <br />
     </div>
   );

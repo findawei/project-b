@@ -45,34 +45,46 @@ const Profile = ({ auth }) => {
   return (
     <div className={classes.root}>
       <Container>
-        <Typography variant="h4" className={classes.radio}>
-          {auth && auth.user ? auth.user.name : "User loaded"}
-        </Typography>
+        <Grid
+          container
+          // direction="column"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item xs={12} md={10} lg={8}>
+            <br />
+            <Typography variant="h4" className={classes.radio}>
+              {auth && auth.user ? auth.user.name : "User loaded"}
+            </Typography>
 
-        {auth && auth.user.stripe_cc ? (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              flexWrap: "wrap",
-            }}
-          >
-            <CheckCircleIcon color="primary" />
-            &nbsp;
-            <Typography className={classes.radio}>Registered Bidder</Typography>
-          </div>
-        ) : (
-          <></>
-        )}
-        <Typography className={classes.radio}>
-          Joined{" "}
-          {auth && auth.user.date
-            ? format(new Date(auth.user.date), "MMM Y")
-            : ""}
-        </Typography>
-        {/* <Button variant="outlined">
+            {auth && auth.user.stripe_cc ? (
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  flexWrap: "wrap",
+                }}
+              >
+                <CheckCircleIcon color="primary" />
+                &nbsp;
+                <Typography className={classes.radio}>
+                  Registered Bidder
+                </Typography>
+              </div>
+            ) : (
+              <></>
+            )}
+            <Typography className={classes.radio}>
+              Joined{" "}
+              {auth && auth.user.date
+                ? format(new Date(auth.user.date), "MMM Y")
+                : ""}
+            </Typography>
+            {/* <Button variant="outlined">
             Edit Profile
             </Button> */}
+          </Grid>
+        </Grid>
       </Container>
     </div>
   );

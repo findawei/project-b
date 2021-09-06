@@ -6,6 +6,7 @@ import Settings from "../profile/Settings";
 import SubmitListing from "../SubmitListing";
 import Profile from "../profile/Profile";
 import PrivateRoute from "./PrivateRoute";
+import InviteFriends from "../profile/InviteFriends";
 
 const Routes = (props) => {
   return (
@@ -17,6 +18,7 @@ const Routes = (props) => {
         <PrivateRoute exact path="/mylistings" component={MyListings} />
         <PrivateRoute exact path="/submit" component={SubmitListing} />
         <PrivateRoute exact path="/profile" component={Profile} />
+        <PrivateRoute exact path="/invite-friends" component={InviteFriends} />
         <Route render={() => <Redirect to={{ pathname: "/" }} />} />
       </Switch>
     </section>
