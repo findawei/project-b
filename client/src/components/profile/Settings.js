@@ -124,7 +124,7 @@ const Settings = ({ getCard, stripeRedux, auth }) => {
                   </Box>
                 </Typography>
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Link
                   className={classes.link}
                   component={RouterLink}
@@ -135,7 +135,8 @@ const Settings = ({ getCard, stripeRedux, auth }) => {
               </Grid>
               <Grid item xs={12}>
                 Referral Bonuses
-              </Grid>
+              </Grid> */}
+
               {/* <Grid item xs={6} sm={6}>
           <Typography>Your phone number
             <br />
