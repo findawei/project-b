@@ -109,7 +109,7 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
         size="small"
         className={classes.formControl}
       >
-        <InputLabel htmlFor="outlined-age-native-simple">Show</InputLabel>
+        <InputLabel htmlFor="outlined-show-native-simple">Show</InputLabel>
         <Select
           native
           value={state.show}
@@ -117,7 +117,7 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
           label="Last"
           inputProps={{
             name: "show",
-            id: "outlined-age-native-simple",
+            id: "outlined-show-native-simple",
           }}
         >
           <option value={25}>25</option>
