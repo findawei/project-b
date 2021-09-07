@@ -972,7 +972,7 @@ const ListingDetails = ({
                 {/* Seller's details */}
                 <Grid item xs={12}>
                   <Typography variant="h5">
-                    <b>Seller's Details</b>
+                    <b>Seller Details</b>
                   </Typography>
                 </Grid>
                 <br />
