@@ -66,7 +66,7 @@ const ItemSchema = new Schema({
     default: Date.now,
   },
   description: {
-    type: String,
+    type: Object,
   },
   bid: {
     type: Number,

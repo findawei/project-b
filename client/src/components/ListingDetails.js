@@ -634,7 +634,9 @@ const ListingDetails = ({
                 </Grid>
                 {/* Description Table */}
                 <Grid item xs={12}>
-                  <Typography variant="h5">Watch Details</Typography>
+                  <Typography variant="h5">
+                    <b>Watch Details</b>
+                  </Typography>
                 </Grid>
                 <Grid container style={{ padding: 8 }}>
                   <Grid item xs={12} md={6}>
@@ -941,10 +943,39 @@ const ListingDetails = ({
                     </div>
                   </Grid>
                 </Grid>
+                {/* Description */}
+                <Grid item xs={12}>
+                  <Typography variant="h5">
+                    <b>Description</b>
+                  </Typography>
+                  <Typography variant="h6">Condition</Typography>
+                  {/* <p>{currentItem.description}</p> */}
+                  {currentItem.description ? (
+                    <div>
+                      <p>{currentItem.description.condition}</p>
+                      <Typography variant="h6">Why I bought it</Typography>
+                      <p>{currentItem.description.why}</p>
+                      <Typography variant="h6">What's included</Typography>
+                      <p>{currentItem.description.included}</p>
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
+
+                {/* <Grid item xs={12}>
+                  <Typography variant="h5">
+                    <b>Sales Data</b>
+                  </Typography>
+                </Grid>
+                <Chart /> */}
                 {/* Seller's details */}
                 <Grid item xs={12}>
-                  <Typography variant="h5">Seller's Details</Typography>
+                  <Typography variant="h5">
+                    <b>Seller's Details</b>
+                  </Typography>
                 </Grid>
+                <br />
                 <Grid item xs={12}>
                   <div className={classes.paper}>
                     <Paper
@@ -1047,13 +1078,8 @@ const ListingDetails = ({
                     ""
                   )}
                 </Grid>
-                {/* Description */}
-                <Grid item xs={12}>
-                  <Typography variant="h5">Description</Typography>
-                  <p>{currentItem.description}</p>
-                  {/* <Chart /> */}
-                </Grid>
               </Grid>
+              <br />
               {/* <Grid item xs={12}> */}
               <Paper variant="outlined" className={classes.info}>
                 <Grid
@@ -1067,7 +1093,6 @@ const ListingDetails = ({
                       {auctionEndText}
                       {currentItem.status === "completed" ? (
                         <div>
-                          &nbsp;
                           {currentItem.bidHistory &&
                           currentItem.bidHistory.length
                             ? currentItem.bidHistory[0].name
@@ -1095,19 +1120,6 @@ const ListingDetails = ({
 
                   <Grid xs={6}>
                     <div className={classes.paper}>
-                      {/* <Paper elevation="0" className={classes.background}> */}
-                      <Typography color="inherit" display="inline">
-                        <Box fontWeight="fontWeightBold" m={0.5}>
-                          Seller
-                        </Box>
-                      </Typography>
-                      {/* </Paper> */}
-                      {/* <Paper elevation="0"> */}
-                      <Typography color="inherit" display="inline">
-                        <Box m={0.5}>{currentItem.name}</Box>
-                      </Typography>
-                      {/* </Paper> */}
-                      {/* <Paper elevation="0" className={classes.background}> */}
                       <Typography color="inherit" display="inline">
                         <Box fontWeight="fontWeightBold" m={0.5}>
                           Ending
@@ -1121,7 +1133,7 @@ const ListingDetails = ({
                             <>
                               {format(
                                 new Date(currentItem.endDate),
-                                "E, MMM d hh:mm aaa"
+                                "MMM d hh:mm aaa"
                               )}
                             </>
                           ) : (
@@ -1156,7 +1168,9 @@ const ListingDetails = ({
               <br />
               {/* Comment Section */}
               <Grid item xs={12}>
-                <Typography variant="h5">Comments & Bids</Typography>
+                <Typography variant="h5">
+                  <b>Comments & Bids</b>
+                </Typography>
                 <form onSubmit={handleSubmit2(commentSubmit)}>
                   <div hidden="true">
                     <TextField
