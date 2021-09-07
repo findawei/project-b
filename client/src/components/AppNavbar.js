@@ -193,7 +193,7 @@ const AppNavbar = ({ auth, verifyEmail }) => {
     <div className={classes.root}>
       <AppBar position="fixed" color="white">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color="inherit"
@@ -201,13 +201,13 @@ const AppNavbar = ({ auth, verifyEmail }) => {
             onClick={handleFaqMenuOpen}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
           <div className={classes.title}>
             <Link to={"/"} style={{ textDecoration: "none" }}>
               <img src={logo} alt="logo" className={classes.logo} />
             </Link>
           </div>
-          <Button variant="contained" color="primary">
+          <Button variant="contained" color="primary" size="small">
             <Link
               className={classes.link}
               style={{ textDecoration: "none", color: "inherit" }}

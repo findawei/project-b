@@ -311,7 +311,7 @@ const LoginModal = ({
 
   return (
     <div>
-      <Button type="button" onClick={handleOpen}>
+      <Button type="button" onClick={handleOpen} size="small">
         Sign Up
       </Button>
       <Modal open={open} onClose={handleClose}>
