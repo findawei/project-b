@@ -39,24 +39,6 @@ const Gallery = ({ img }) => {
 
   return (
     <div className={classes.root}>
-      {/* <img src={clickedImg} className={classes.hero}/>
-      <Grid 
-       container
-       direction="row"
-       justify="space-between"
-       alignItems="center"
-      >
-           {img && img.map(tile => (
-          <Grid item  key={tile.id} >
-            <img 
-              src={tile.url} 
-              alt={tile.title} 
-              className={classes.thumbnail}
-              onClick={()=>setClickedImg(tile.url)}
-              />
-          </Grid>
-        ))}
-      </Grid> */}
       <Carousel infiniteLoop emulateTouch useKeyboardArrows>
         {img &&
           img.map((tile) => (

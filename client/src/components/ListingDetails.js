@@ -1118,7 +1118,7 @@ const ListingDetails = ({
                     </Typography>
                   </Grid>
 
-                  <Grid xs={6}>
+                  <Grid item xs={6}>
                     <div className={classes.paper}>
                       <Typography color="inherit" display="inline">
                         <Box fontWeight="fontWeightBold" m={0.5}>
