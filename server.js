@@ -17,7 +17,6 @@ const fileType = require("file-type");
 // const sgMail = require('@sendgrid/mail')
 const DATA_DIR = path.join(__dirname, "tmp");
 const { serverLogger } = require("./logger/logger");
-const helmet = require("helmet");
 var toobusy = require("toobusy-js");
 var hpp = require("hpp");
 var nodemailer = require("nodemailer");
@@ -27,7 +26,6 @@ const app = express();
 
 app.use(express.json());
 app.use(decodeIDToken);
-app.use(helmet());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(hpp()); // <- THIS IS THE NEW LINE
