@@ -6,6 +6,7 @@ import Routes from "./components/routes/Routes";
 import Toolbar from "@material-ui/core/Toolbar";
 import { createBrowserHistory } from "history";
 import ReactGA from "react-ga";
+import "./App.css";
 
 //Redux
 import { Provider } from "react-redux";
@@ -47,26 +48,36 @@ function App() {
         <CssBaseline />
         <Router history={history}>
           <Fragment>
-            <Suspense
-              fallback={
-                <div>
-                  <Loading />
-                </div>
-              }
-            >
-              <AppNavbar />
-              <Toolbar />
-              <Switch>
-                <Route exact path="/" component={Auctions} />
-                <Route exact path="/faq" component={Faq} />
-                <Route exact path="/about" component={About} />
-                <Route exact path="/terms-of-use" component={Terms} />
-                <Route exact path="/privacy-policy" component={Privacy} />
-                <Route exact path="/sell-a-watch" component={SubmitExplainer} />
-                <Route component={Routes} />
-              </Switch>
-              <Footer />
-            </Suspense>
+            <body>
+              <Suspense
+                fallback={
+                  <div>
+                    <Loading />
+                  </div>
+                }
+              >
+                <header>
+                  <AppNavbar />
+                </header>
+                <Toolbar />
+                <Switch>
+                  <Route exact path="/" component={Auctions} />
+                  <Route exact path="/faq" component={Faq} />
+                  <Route exact path="/about" component={About} />
+                  <Route exact path="/terms-of-use" component={Terms} />
+                  <Route exact path="/privacy-policy" component={Privacy} />
+                  <Route
+                    exact
+                    path="/sell-a-watch"
+                    component={SubmitExplainer}
+                  />
+                  <Route component={Routes} />
+                </Switch>
+                <footer>
+                  <Footer />
+                </footer>
+              </Suspense>
+            </body>
           </Fragment>
         </Router>
       </Elements>

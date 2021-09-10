@@ -7,6 +7,7 @@ import SubmitListing from "../SubmitListing";
 import Profile from "../profile/Profile";
 import PrivateRoute from "./PrivateRoute";
 import InviteFriends from "../profile/InviteFriends";
+import PurchaseHistory from "../profile/PurchaseHistory";
 
 const Routes = (props) => {
   return (
@@ -16,6 +17,11 @@ const Routes = (props) => {
         <Route exact path="/item/:id" component={ListingDetails} />
         <PrivateRoute exact path="/settings" component={Settings} />
         <PrivateRoute exact path="/mylistings" component={MyListings} />
+        <PrivateRoute
+          exact
+          path="/purchasehistory"
+          component={PurchaseHistory}
+        />
         <PrivateRoute exact path="/submit" component={SubmitListing} />
         <PrivateRoute exact path="/profile" component={Profile} />
         <PrivateRoute exact path="/invite-friends" component={InviteFriends} />
