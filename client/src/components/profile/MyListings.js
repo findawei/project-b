@@ -54,7 +54,7 @@ const MyListings = ({ getItems, item, auth }) => {
           justify="center"
           alignItems="center"
         >
-          <Grid item xs={12} md={10} lg={8}>
+          <Grid item xs={12}>
             <br />
             <Typography component="div" variant="h4">
               My Listings

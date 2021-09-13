@@ -70,12 +70,12 @@ const LoggedInMenu = ({ logout }) => {
           </ListItemIcon>
           <ListItemText primary="My Listings" />
         </ListItem>
-        {/* <ListItem button component={RouterLink} to="/purchasehistory">
+        <ListItem button component={RouterLink} to="/purchasehistory">
           <ListItemIcon>
             <HistoryIcon />
           </ListItemIcon>
           <ListItemText primary="Purchase History" />
-        </ListItem> */}
+        </ListItem>
         <ListItem button component={RouterLink} to="/settings">
           <ListItemIcon>
             <SettingsIcon />

@@ -19,7 +19,7 @@ const Auctions = ({ getItems, item }) => {
   const classes = useStyles();
 
   useEffect(() => {
-    getItems();
+    if (items.length === 0) getItems();
   }, [getItems]);
 
   const { items } = item;

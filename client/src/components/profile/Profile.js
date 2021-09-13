@@ -51,7 +51,7 @@ const Profile = ({ auth }) => {
           justify="center"
           alignItems="center"
         >
-          <Grid item xs={12} md={10} lg={8}>
+          <Grid item xs={12}>
             <br />
             <Typography variant="h4" className={classes.radio}>
               {auth && auth.user ? auth.user.name : "User loaded"}
