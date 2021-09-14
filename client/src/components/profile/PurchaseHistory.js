@@ -69,9 +69,10 @@ const PurchaseHistory = ({ auth, item, setCurrentItem }) => {
     setCurrentItem(item);
   };
 
-  // function ItemView() {
-  //   setCurrent(item);
-  // }
+  let renderItems = items.filter(
+    (opt) =>
+      opt.status === "completed" && opt.bidHistory[0].user === auth.user.uid
+  );
 
   return (
     <div className={classes.root}>
@@ -88,9 +89,8 @@ const PurchaseHistory = ({ auth, item, setCurrentItem }) => {
             <br />
             <Divider />
             <Grid container direction="column">
-              {items
-                .filter((opt) => (opt.status = "completed"))
-                .map((item) => (
+              {renderItems && renderItems.length > 0 ? (
+                renderItems.map((item) => (
                   <div item={item} key={item._id}>
                     {/* Item block */}
                     <Grid item xs={12} onClick={() => setCurrent(item)}>
@@ -141,27 +141,45 @@ const PurchaseHistory = ({ auth, item, setCurrentItem }) => {
                               ></CardMedia>
                             </Card>
                           </Grid>
-                          <Grid item xs={8} sm={4}>
+                          <Grid item xs={4} sm={4}>
                             <Typography>
                               {item.brand} {item.model} {item.reference_number}{" "}
                               - {item.year}
                             </Typography>
                           </Grid>
-                          <Grid item xs={4} sm={4}>
-                            <Typography
-                              variant="overline"
-                              className={classes.title}
-                            >
-                              Price
-                            </Typography>
-                            <Typography>
-                              <b>
-                                $
-                                {item.bidHistory && item.bidHistory.length
-                                  ? item.bidHistory[0].bid
-                                  : 0}
-                              </b>
-                            </Typography>
+                          <Grid container item xs={8} sm={4}>
+                            <Grid item xs={6} sm={12}>
+                              <Typography
+                                variant="overline"
+                                className={classes.title}
+                              >
+                                Item Price
+                              </Typography>
+                              <Typography>
+                                <b>
+                                  $
+                                  {item.bidHistory && item.bidHistory.length
+                                    ? item.bidHistory[0].bid.toFixed(2)
+                                    : 0}
+                                </b>
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={6} sm={12}>
+                              <Typography
+                                variant="overline"
+                                className={classes.title}
+                              >
+                                Order Total
+                              </Typography>
+                              <Typography>
+                                <b>
+                                  $
+                                  {item.bidHistory && item.bidHistory.length
+                                    ? (item.bidHistory[0].bid * 1.05).toFixed(2)
+                                    : 0}
+                                </b>
+                              </Typography>
+                            </Grid>
                           </Grid>
                         </Grid>
                         <br />
@@ -170,7 +188,13 @@ const PurchaseHistory = ({ auth, item, setCurrentItem }) => {
                     </Grid>
                     {/* Item block ends */}
                   </div>
-                ))}
+                ))
+              ) : (
+                <div>
+                  <br />
+                  <Typography>No purchases yet.</Typography>
+                </div>
+              )}
             </Grid>
           </Grid>
         </Grid>

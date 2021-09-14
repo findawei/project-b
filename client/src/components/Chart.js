@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { Scatter } from "react-chartjs-2";
+import { Scatter, Chart } from "react-chartjs-2";
 import { connect } from "react-redux";
 import { getItemById } from "../flux/actions/itemActions";
 import "chartjs-adapter-date-fns";
 import { fromUnixTime } from "date-fns";
 import chartTrendline from "chartjs-plugin-trendline";
 import { makeStyles } from "@material-ui/core/styles";
+import FormatAlignLeftIcon from "@material-ui/icons/FormatAlignLeft";
+import FormatAlignCenterIcon from "@material-ui/icons/FormatAlignCenter";
+import FormatAlignRightIcon from "@material-ui/icons/FormatAlignRight";
+import FormatAlignJustifyIcon from "@material-ui/icons/FormatAlignJustify";
+import ToggleButton from "@material-ui/lab/ToggleButton";
+import ToggleButtonGroup from "@material-ui/lab/ToggleButtonGroup";
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -21,6 +27,11 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
   const classes = useStyles();
 
   const [chartData, setChartData] = useState("");
+  const [alignment, setAlignment] = useState("forums");
+
+  const handleAlignment = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
 
   useEffect(() => {
     if (currentItem && currentItem.chart) {
@@ -44,13 +55,22 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
           return watch;
         });
       }
-      if (newMap && newMap.length > 0) {
+      let filteredArray;
+      if (alignment !== "eBay") {
+        filteredArray = newMap.filter((watch) => watch.source !== "eBay");
+      } else {
+        filteredArray = newMap.filter((watch) => watch.source === "eBay");
+      }
+
+      if (filteredArray && filteredArray.length > 0) {
         setChartData({
-          // labels: chartArray.map((watch) => Object.keys(watch)),
           datasets: [
             {
-              label: "Price in USD",
-              data: newMap
+              label: "Sold",
+              borderColor: "#f67019",
+              backgroundColor: "#f67019",
+              data: filteredArray
+                .filter((item) => item.is_sold === true)
                 .map((watch) => {
                   var newArray = {
                     y: Math.round(watch.price_converted) * 0.79,
@@ -58,29 +78,76 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
                   };
                   return newArray;
                 })
-                .slice(-100),
+                .slice(-50),
+            },
+            {
+              label: "Unsold",
+              borderColor: "#4dc9f6",
+              backgroundColor: "#4dc9f6",
+
+              data: filteredArray
+                .filter((item) => item.is_sold === false)
+                .map((watch) => {
+                  var newArray = {
+                    y: Math.round(watch.price_converted) * 0.79,
+                    x: fromUnixTime(watch.sellDate),
+                  };
+                  return newArray;
+                })
+                .slice(-50),
             },
           ],
         });
       }
     }
-  }, [currentItem, item]);
+  }, [currentItem, item, alignment]);
 
   const options = {
-    // parsing: {
-    //   xAxisKey: "sellDate",
-    //   yAxisKey: "price",
-    // },
     scales: {
       x: {
         type: "time",
-        // min: fromUnixTime(1609477200),
+      },
+      y: {
+        ticks: {
+          callback: function (label, index, labels) {
+            return "$" + label;
+          },
+        },
+      },
+    },
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            var label = context.dataset.label || "";
+
+            if (label) {
+              label += ": ";
+            }
+            if (context.parsed.y !== null) {
+              label += new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+              }).format(context.parsed.y);
+            }
+            return label;
+          },
+        },
       },
     },
   };
 
   return (
     <div style={{ position: "relative", margin: "auto", width: "80vw" }}>
+      <ToggleButtonGroup
+        size="small"
+        value={alignment}
+        exclusive
+        onChange={handleAlignment}
+      >
+        <ToggleButton value="forums">Forums</ToggleButton>
+        <ToggleButton value="eBay">eBay</ToggleButton>
+      </ToggleButtonGroup>
       <Scatter data={chartData} options={options} />
       <br />
     </div>
