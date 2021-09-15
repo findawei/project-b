@@ -5,7 +5,7 @@ import { Grid, Paper, Container } from "@material-ui/core/";
 import Listing from "../Listing";
 import { getItemsForReview } from "../../flux/actions/itemActions";
 
-const ForReview = ({ getItemsForReview, item_review }) => {
+const ForReview = ({ getItemsForReview, item }) => {
   const [haveListings, setHaveListings] = useState(false);
 
   const useStyles = makeStyles((theme) => ({
@@ -22,7 +22,7 @@ const ForReview = ({ getItemsForReview, item_review }) => {
     getItemsForReview();
   }, [getItemsForReview]);
 
-  const { items_review } = item_review;
+  const { items_review } = item;
 
   return (
     <div className={classes.root}>
@@ -35,8 +35,8 @@ const ForReview = ({ getItemsForReview, item_review }) => {
       )}
 
       <Grid container spacing={2}>
-        {items_review.map((item_review) => (
-          <Listing item={item_review} key={item_review._id} />
+        {items_review.map((items_review) => (
+          <Listing item={items_review} key={items_review._id} />
         ))}
       </Grid>
     </div>
@@ -44,7 +44,7 @@ const ForReview = ({ getItemsForReview, item_review }) => {
 };
 
 const mapStateToProps = (state) => ({
-  item_review: state.item_review,
+  item: state.item,
   // auth: state.auth
 });
 

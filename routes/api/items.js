@@ -164,7 +164,7 @@ router.post("/submit", async (req, res) => {
       service: req.body.service,
       phone: req.body.phone,
       referral: req.body.referral,
-      status: "for_review",
+      status: "submitted",
     });
     //  console.log(newItem)
     try {

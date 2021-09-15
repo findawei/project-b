@@ -17,6 +17,15 @@ import {
   ListItemAvatar,
   Avatar,
   Container,
+  Card,
+  CardHeader,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Tooltip,
 } from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {
@@ -638,325 +647,277 @@ const ListingDetails = ({
                     <b>Watch Details</b>
                   </Typography>
                 </Grid>
+
                 <Grid container style={{ padding: 8 }}>
                   <Grid item xs={12} md={6}>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography
-                          color="inherit"
-                          display="inline"
-                          fontWeight="fontWeightBold"
-                        >
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Brand
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.brand}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Model
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.model}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Ref. Number
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.reference_number}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Year
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.year}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Movement
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.movement}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Case Material
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.material}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Crystal
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.crystal}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Crown
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.crown}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
+                    <Card square>
+                      <Box display={{ xs: "none", sm: "none", md: "block" }}>
+                        <Table size="small">
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>
+                                <b>Brand</b>
+                              </TableCell>
+                              <TableCell>{currentItem.brand}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Model</b>
+                              </TableCell>
+                              <TableCell>{currentItem.model}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Ref. Number</b>
+                              </TableCell>
+                              <TableCell>
+                                {currentItem.reference_number}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Year</b>
+                              </TableCell>
+                              <TableCell>{currentItem.year}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Movement</b>
+                              </TableCell>
+                              <TableCell>{currentItem.movement}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Case Material</b>
+                              </TableCell>
+                              <TableCell>{currentItem.material}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Crystal</b>
+                              </TableCell>
+                              <TableCell>{currentItem.crystal}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Crown</b>
+                              </TableCell>
+                              <TableCell>{currentItem.crown}</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </Box>
+                      <Box display={{ xs: "block", sm: "block", md: "none" }}>
+                        <Table size="small">
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>
+                                <b>Brand</b>
+                              </TableCell>
+                              <TableCell>{currentItem.brand}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Model</b>
+                              </TableCell>
+                              <TableCell>{currentItem.model}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Ref. Number</b>
+                              </TableCell>
+                              <TableCell>
+                                {currentItem.reference_number}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Year</b>
+                              </TableCell>
+                              <TableCell>{currentItem.year}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Movement</b>
+                              </TableCell>
+                              <TableCell>{currentItem.movement}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Case Material</b>
+                              </TableCell>
+                              <TableCell>{currentItem.material}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Crystal</b>
+                              </TableCell>
+                              <TableCell>{currentItem.crystal}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Crown</b>
+                              </TableCell>
+                              <TableCell>{currentItem.crown}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Bezel</b>
+                              </TableCell>
+                              <TableCell>{currentItem.bezel}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Diameter</b>
+                              </TableCell>
+                              <TableCell>
+                                {currentItem.case_diameter} mm
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Thickness</b>
+                              </TableCell>
+                              <TableCell>{currentItem.thickness} mm</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Lug Width</b>
+                              </TableCell>
+                              <TableCell>{currentItem.lug_width} mm</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Water Resistance</b>
+                              </TableCell>
+                              <TableCell>{currentItem.wr} m</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Pressure Tested</b>
+                              </TableCell>
+                              <TableCell>{currentItem.tested}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Serviced</b>
+                              </TableCell>
+                              <TableCell>
+                                {currentItem.service
+                                  ? format(
+                                      new Date(currentItem.service),
+                                      "MMM Y"
+                                    )
+                                  : "N/A"}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Box & Papers</b>
+                              </TableCell>
+                              <TableCell>{currentItem.boxpapers}</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </Box>
+                    </Card>
                   </Grid>
 
-                  {/* Grid Break */}
-
-                  <Grid item xs={12} md={6}>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Bezel
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.bezel}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Diameter
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.case_diameter} mm</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Thickness
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.thickness} mm</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Lug Width
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.lug_width} mm</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Water Resistance
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.wr} m</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Pressure Tested
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.tested}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Serviced
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>
-                            {currentItem.service
-                              ? format(new Date(currentItem.service), "MMM Y")
-                              : "N/A"}
-                          </Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Box & papers
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>{currentItem.boxpapers}</Box>
-                        </Typography>
-                      </Paper>
-                    </div>
+                  <Grid item md={6}>
+                    <Box display={{ xs: "none", sm: "none", md: "block" }}>
+                      <Card square>
+                        <Table size="small">
+                          <TableBody>
+                            <TableRow>
+                              <TableCell>
+                                <b>Bezel</b>
+                              </TableCell>
+                              <TableCell>{currentItem.bezel}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Diameter</b>
+                              </TableCell>
+                              <TableCell>
+                                {currentItem.case_diameter} mm
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Thickness</b>
+                              </TableCell>
+                              <TableCell>{currentItem.thickness} mm</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Lug Width</b>
+                              </TableCell>
+                              <TableCell>{currentItem.lug_width} mm</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Water Resistance</b>
+                              </TableCell>
+                              <TableCell>{currentItem.wr} m</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Pressure Tested</b>
+                              </TableCell>
+                              <TableCell>{currentItem.tested}</TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Serviced</b>
+                              </TableCell>
+                              <TableCell>
+                                {currentItem.service
+                                  ? format(
+                                      new Date(currentItem.service),
+                                      "MMM Y"
+                                    )
+                                  : "N/A"}
+                              </TableCell>
+                            </TableRow>
+                            <TableRow>
+                              <TableCell>
+                                <b>Box & Papers</b>
+                              </TableCell>
+                              <TableCell>{currentItem.boxpapers}</TableCell>
+                            </TableRow>
+                          </TableBody>
+                        </Table>
+                      </Card>
+                    </Box>
                   </Grid>
                 </Grid>
+
                 {/* Description */}
                 <Grid item xs={12}>
                   <Typography variant="h5">
-                    <b>Description</b>
+                    <b>Condition</b>
                   </Typography>
-                  <Typography variant="h6">Condition</Typography>
-                  {/* <p>{currentItem.description}</p> */}
+                  <br />
                   {currentItem.description ? (
                     <div>
-                      <p>{currentItem.description.condition}</p>
-                      <Typography variant="h6">Why I bought it</Typography>
-                      <p>{currentItem.description.why}</p>
-                      <Typography variant="h6">What's included</Typography>
-                      <p>{currentItem.description.included}</p>
+                      <Typography>
+                        {currentItem.description.condition}
+                      </Typography>
+                      <br />
+                      <Typography variant="h5">
+                        <b>Why I bought it</b>
+                      </Typography>
+                      <br />
+                      {/* <Typography variant="h6">Why I bought it</Typography> */}
+                      <Typography>{currentItem.description.why}</Typography>
+                      <br />
+                      <Typography variant="h5">
+                        <b>What's included</b>
+                      </Typography>
+                      <br />
+                      <Typography>
+                        {currentItem.description.included}
+                      </Typography>
                     </div>
                   ) : (
                     ""
@@ -970,6 +931,7 @@ const ListingDetails = ({
                 </Grid>
                 <Chart /> */}
                 {/* Seller's details */}
+
                 <Grid item xs={12}>
                   <Typography variant="h5">
                     <b>Seller Details</b>
@@ -977,111 +939,67 @@ const ListingDetails = ({
                 </Grid>
                 <br />
                 <Grid item xs={12}>
-                  <div className={classes.paper}>
-                    <Paper
-                      variant="outlined"
-                      square="true"
-                      className={classes.background}
-                    >
-                      <Typography
-                        color="inherit"
-                        display="inline"
-                        fontWeight="fontWeightBold"
-                      >
-                        <Box fontWeight="fontWeightBold" m={0.5}>
-                          Seller
-                        </Box>
-                      </Typography>
-                    </Paper>
-                    <Paper variant="outlined" square="true">
-                      <Typography color="inherit" display="inline">
-                        <Box m={0.5}>{currentItem.name}</Box>
-                      </Typography>
-                    </Paper>
-                  </div>
-                  <div className={classes.paper}>
-                    <Paper
-                      variant="outlined"
-                      square="true"
-                      className={classes.background}
-                    >
-                      <Typography color="inherit" display="inline">
-                        <Box fontWeight="fontWeightBold" m={0.5}>
-                          Location
-                        </Box>
-                      </Typography>
-                    </Paper>
-                    <Paper variant="outlined" square="true">
-                      <Typography color="inherit" display="inline">
-                        <Box m={0.5}>{currentItem.location}</Box>
-                      </Typography>
-                    </Paper>
-                  </div>
-                  {currentItem.ship && currentItem.ship.length ? (
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Ships to
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>
-                            {currentItem.ship.map((location, index) => {
-                              return (
-                                <span key={index}>
-                                  {(index ? ", " : "") + location.location}
-                                </span>
-                              );
-                            })}
-                          </Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                  ) : (
-                    ""
-                  )}
-                  {currentItem.payment && currentItem.payment.length ? (
-                    <div className={classes.paper}>
-                      <Paper
-                        variant="outlined"
-                        square="true"
-                        className={classes.background}
-                      >
-                        <Typography color="inherit" display="inline">
-                          <Box fontWeight="fontWeightBold" m={0.5}>
-                            Payment
-                          </Box>
-                        </Typography>
-                      </Paper>
-                      <Paper variant="outlined" square="true">
-                        <Typography color="inherit" display="inline">
-                          <Box m={0.5}>
-                            {currentItem.payment.map((location, index) => {
-                              return (
-                                <span key={index}>
-                                  {(index ? ", " : "") + location.option}
-                                </span>
-                              );
-                            })}
-                          </Box>
-                        </Typography>
-                      </Paper>
-                    </div>
-                  ) : (
-                    ""
-                  )}
+                  <Card>
+                    <Box>
+                      <Table size="small">
+                        <TableBody>
+                          <TableRow>
+                            <TableCell>
+                              <b>Seller</b>
+                            </TableCell>
+                            <TableCell>{currentItem.name}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell>
+                              <b>Location</b>
+                            </TableCell>
+                            <TableCell>{currentItem.location}</TableCell>
+                          </TableRow>
+                          {currentItem.ship && currentItem.ship.length ? (
+                            <TableRow>
+                              <TableCell>
+                                <b>Ships to</b>
+                              </TableCell>
+                              <TableCell>
+                                {currentItem.ship.map((location, index) => {
+                                  return (
+                                    <span key={index}>
+                                      {(index ? ", " : "") + location.location}
+                                    </span>
+                                  );
+                                })}
+                              </TableCell>
+                            </TableRow>
+                          ) : (
+                            ""
+                          )}
+                          {currentItem.payment && currentItem.payment.length ? (
+                            <TableRow>
+                              <TableCell>
+                                <b>Payment</b>
+                              </TableCell>
+                              <TableCell>
+                                {currentItem.payment.map((location, index) => {
+                                  return (
+                                    <span key={index}>
+                                      {(index ? ", " : "") + location.option}
+                                    </span>
+                                  );
+                                })}
+                              </TableCell>
+                            </TableRow>
+                          ) : (
+                            ""
+                          )}
+                        </TableBody>
+                      </Table>
+                    </Box>
+                  </Card>
                 </Grid>
               </Grid>
               <br />
               {/* <Grid item xs={12}> */}
-              <Paper variant="outlined" className={classes.info}>
+              <Paper className={classes.info}>
                 <Grid
                   container
                   direction="row"
