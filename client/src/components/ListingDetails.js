@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { DataGrid } from "@material-ui/data-grid";
+import { purple } from "@material-ui/core/colors";
+
 import {
   Button,
   Box,
@@ -260,6 +261,17 @@ const ListingDetails = ({
     chip: {
       color: "white",
       backgroundColor: "#f50057",
+    },
+    chipShip: {
+      margin: theme.spacing(0.5),
+      // backgroundColor: "#11cb5f",
+      backgroundColor: purple[500],
+      color: "white",
+    },
+    chipPay: {
+      margin: theme.spacing(0.5),
+      backgroundColor: "#11cb5f",
+      color: "white",
     },
     info: {
       padding: theme.spacing(1),
@@ -964,7 +976,12 @@ const ListingDetails = ({
                                 {currentItem.ship.map((location, index) => {
                                   return (
                                     <span key={index}>
-                                      {(index ? ", " : "") + location.location}
+                                      {/* //   {(index ? ", " : "") + location.location} */}
+                                      <Chip
+                                        size="small"
+                                        label={location.location}
+                                        className={classes.chipShip}
+                                      />
                                     </span>
                                   );
                                 })}
@@ -982,7 +999,11 @@ const ListingDetails = ({
                                 {currentItem.payment.map((location, index) => {
                                   return (
                                     <span key={index}>
-                                      {(index ? ", " : "") + location.option}
+                                      <Chip
+                                        size="small"
+                                        label={location.option}
+                                        className={classes.chipPay}
+                                      />
                                     </span>
                                   );
                                 })}
