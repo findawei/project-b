@@ -73,7 +73,7 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
                 .filter((item) => item.is_sold === true)
                 .map((watch) => {
                   var newArray = {
-                    y: Math.round(watch.price_converted) * 0.79,
+                    y: Math.round(watch.price_converted),
                     x: fromUnixTime(watch.sellDate),
                   };
                   return newArray;
@@ -89,7 +89,7 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
                 .filter((item) => item.is_sold === false)
                 .map((watch) => {
                   var newArray = {
-                    y: Math.round(watch.price_converted) * 0.79,
+                    y: Math.round(watch.price_converted),
                     x: fromUnixTime(watch.sellDate),
                   };
                   return newArray;
@@ -112,6 +112,10 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
           callback: function (label, index, labels) {
             return "$" + label;
           },
+        },
+        title: {
+          display: true,
+          text: "USD",
         },
       },
     },
