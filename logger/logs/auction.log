@@ -114,3 +114,30 @@ error: Sep-01-2021 16:34:51: 	Bad Request - /api/items/undefined - GET - ::ffff:
 error: Sep-01-2021 16:37:31: 	Bad Request - /api/items/undefined - GET - ::ffff:127.0.0.1 - Cast to ObjectId failed for value "undefined" (type string) at path "_id" for model "item"
 error: Sep-10-2021 13:25:20: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms
 error: Sep-10-2021 13:26:11: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms
+error: Sep-15-2021 17:53:16: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-15-2021 17:54:15: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-15-2021 17:55:19: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-15-2021 17:55:45: 	Bad Request - /api/items/60ef8e426efa046d7ce3efd7 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:17:19: 	Bad Request - /api/items/60f31a87c3f7c9d840ded51e - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:17:21: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:17:30: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:17:57: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:18:37: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:18:42: 	Bad Request - /api/items/60f0e2aad6e9bd942959fa8a - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:19:48: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:19:50: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:38:43: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:40:28: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:40:31: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:44:25: 	Bad Request - /api/items/60f0e2aad6e9bd942959fa8a - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:44:27: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:44:34: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:45:04: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:45:36: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:45:38: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:45:50: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:47:35: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:47:38: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:47:44: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:51:52: 	Bad Request - /api/items/612d5684424eb900166debf8 - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
+error: Sep-16-2021 19:51:57: 	Bad Request - /api/items/612d5684424eb900166debf8/ - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined

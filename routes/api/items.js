@@ -83,15 +83,24 @@ router.get("/:id", async (req, res) => {
     var item = await Item.findById(req.params.id);
     if (!item) throw Error("No item");
 
-    const fetchdata = await fetch(
-      "https://watchcharts.com/watches/chart/643.json?type=listings&_=1629926673682"
-    );
-    const data = await fetchdata.json();
-    // console.log(data);
-    if (!data) throw Error("No items");
+    //Scenario 1
+    //Watch chart exists
+    // const fetchdata = await fetch(
+    //   "https://watchcharts.com/watches/chart/643.json?type=listings&_=1629926673682"
+    // );
 
-    item = Object.assign({ chart: data.data }, item._doc);
-    // console.log(item);
+    // item = Object.assign({ chart: data.data }, item._doc);
+
+    // const fetchdata = await fetch(`${item.chart.url}`);
+    // const data = await fetchdata.json();
+    // // console.log(data);
+    // if (!data) throw Error("No chart data");
+
+    // item.chart.data = data.data;
+
+    //Scenario 2
+    //Watch chart doesn't exist
+    //Provide own data
 
     res.status(200).json(item);
   } catch (e) {

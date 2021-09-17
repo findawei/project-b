@@ -34,8 +34,8 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
   };
 
   useEffect(() => {
-    if (currentItem && currentItem.chart) {
-      var chartArray = Object.entries(currentItem.chart).map((e) => ({
+    if (currentItem && currentItem.chart && currentItem.chart.data) {
+      var chartArray = Object.entries(currentItem.chart.data).map((e) => ({
         [e[0]]: e[1],
       }));
       let newMap;

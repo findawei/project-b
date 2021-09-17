@@ -935,14 +935,18 @@ const ListingDetails = ({
                     ""
                   )}
                 </Grid>
-
-                {/* <Grid item xs={12}>
-                  <Typography variant="h5">
-                    <b>Sales Data</b>
-                  </Typography>
-                </Grid>
-                <Chart /> */}
-                {/* Seller's details */}
+                {currentItem.chart && currentItem.chart.data ? (
+                  <div>
+                    <Grid item xs={12}>
+                      <Typography variant="h5">
+                        <b>Sales Data</b>
+                      </Typography>
+                    </Grid>
+                    <Chart />
+                  </div>
+                ) : (
+                  ""
+                )}
 
                 <Grid item xs={12}>
                   <Typography variant="h5">
@@ -986,6 +990,16 @@ const ListingDetails = ({
                                   );
                                 })}
                               </TableCell>
+                            </TableRow>
+                          ) : (
+                            ""
+                          )}
+                          {currentItem.shipping ? (
+                            <TableRow>
+                              <TableCell>
+                                <b>Shipping</b>
+                              </TableCell>
+                              <TableCell>{currentItem.shipping}</TableCell>
                             </TableRow>
                           ) : (
                             ""

@@ -130,6 +130,9 @@ const ItemSchema = new Schema({
   phone: {
     type: Number,
   },
+  chart: {
+    type: Object,
+  },
   bidHistory: [
     {
       user: {
