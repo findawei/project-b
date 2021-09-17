@@ -1086,8 +1086,9 @@ const ListingDetails = ({
                             <>
                               {format(
                                 new Date(currentItem.endDate),
-                                "MMM d hh:mm aaa"
-                              )}
+                                "MMM d, hh:mmaaa"
+                              )}{" "}
+                              EST
                             </>
                           ) : (
                             <div></div>
