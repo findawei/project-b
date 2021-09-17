@@ -20,6 +20,7 @@ const {
   isPast,
   isFuture,
 } = require("date-fns");
+const { AsyncLocalStorage } = require("async_hooks");
 
 // @route   GET api/items/
 // @desc    Get all items that are live and completed
@@ -36,6 +37,20 @@ router.get("/", async (req, res) => {
       endDate: 1,
     });
     if (!items) throw Error("No items");
+
+    await Promise.all(
+      items.map(async (item) => {
+        if (item.chart) {
+          const fetchdata = await fetch(`${item.chart.url}`);
+          const data = await fetchdata.json();
+          // // console.log(data);
+          if (!data) throw Error("No chart data");
+          // console.log(fetchdata);
+          item.chart.data = data.data;
+        }
+      })
+    );
+
     res.status(200).json(items);
   } catch (e) {
     res.status(400).json({ msg: e.message });
