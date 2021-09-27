@@ -21,6 +21,7 @@ var toobusy = require("toobusy-js");
 var hpp = require("hpp");
 var nodemailer = require("nodemailer");
 const scraper = require("./scraper/scraper");
+const helmet = require("helmet");
 
 const app = express();
 
@@ -71,7 +72,8 @@ const rateLimiterMiddleware = (req, res, next, err) => {
 };
 app.use(rateLimiterMiddleware);
 
-// scraper.main();
+//For security
+app.use(helmet());
 
 //Use Routes
 app.use("/api/items", items);

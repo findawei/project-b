@@ -48,3 +48,4 @@ error: Jul-23-2021 20:35:05: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.
 error: Jul-23-2021 20:36:04: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - uid is not defined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
 error: Jul-23-2021 20:36:18: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - uid is not defined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
 error: Jul-23-2021 20:36:42: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - uid is not defined - tantakian@gmail.com - s9tSZqz4m9ZxxN3h0nNhWl1yhoi1
+error: Sep-25-2021 15:13:50: 	Bad Request - /api/auth/user - GET - ::ffff:127.0.0.1 - Operation `users.findOne()` buffering timed out after 10000ms - alex@nowaitlist.co - fnF5bIUDeFegpObqNi5lr2Ixt5B2

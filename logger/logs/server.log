@@ -4662,3 +4662,107 @@ info: Sep-17-2021 16:54:32: 	Server started and running on http://localhost:5000
 info: Sep-17-2021 16:55:21: 	Server started and running on http://localhost:5000
 info: Sep-17-2021 16:56:03: 	Server started and running on http://localhost:5000
 info: Sep-17-2021 16:56:26: 	Server started and running on http://localhost:5000
+info: Sep-17-2021 17:07:00: 	Server started and running on http://localhost:5000
+info: Sep-17-2021 17:07:19: 	Server started and running on http://localhost:5000
+error: Sep-17-2021 17:07:26: 	400 || Not Found - /api/users/ - GET - ::ffff:127.0.0.1
+error: Sep-17-2021 17:07:28: 	400 || Not Found - /api/users/ - GET - ::ffff:127.0.0.1
+error: Sep-17-2021 17:07:28: 	400 || Not Found - /api/users/ - GET - ::ffff:127.0.0.1
+error: Sep-17-2021 17:07:29: 	400 || Not Found - /api/users/ - GET - ::ffff:127.0.0.1
+error: Sep-17-2021 17:07:29: 	400 || Not Found - /api/users/ - GET - ::ffff:127.0.0.1
+error: Sep-17-2021 17:07:29: 	400 || Not Found - /api/users/ - GET - ::ffff:127.0.0.1
+info: Sep-17-2021 17:07:41: 	Server started and running on http://localhost:5000
+info: Sep-17-2021 17:08:47: 	Server started and running on http://localhost:5000
+error: Sep-17-2021 17:08:50: 	400 || Not Found - /api/auth - GET - ::ffff:127.0.0.1
+info: Sep-17-2021 17:08:54: 	Server started and running on http://localhost:5000
+error: Sep-17-2021 17:08:56: 	400 || Not Found - /api/auth - GET - ::ffff:127.0.0.1
+error: Sep-17-2021 17:08:56: 	400 || Not Found - /api/auth - GET - ::ffff:127.0.0.1
+info: Sep-17-2021 17:09:17: 	Server started and running on http://localhost:5000
+info: Sep-17-2021 17:09:27: 	Server started and running on http://localhost:5000
+info: Sep-17-2021 17:09:30: 	Server started and running on http://localhost:5000
+info: Sep-17-2021 20:52:24: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:40:22: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+info: Sep-20-2021 20:40:33: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:41:31: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:42:30: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:43:07: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:43:49: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:44:20: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:44:22: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:44:27: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:44:42: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:45:22: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:45:29: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:46:05: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:46:30: 	Server started and running on http://localhost:5000
+info: Sep-20-2021 20:46:46: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:32:56: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:35:19: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:36:08: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:36:42: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:36:57: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:37:46: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:38:13: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:38:22: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:38:46: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:38:59: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:41:35: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:43:48: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:44:04: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:44:19: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:44:32: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:45:04: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:45:38: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:45:56: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:49:22: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:49:33: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:49:57: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:51:32: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:52:09: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:52:13: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:54:17: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:54:22: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 17:56:47: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:05:20: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:10:35: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:11:02: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:11:27: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:11:51: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:12:26: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:12:41: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:12:54: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:13:06: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:13:19: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:13:30: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:13:40: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:13:55: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:19:32: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:20:25: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:20:55: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:21:18: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:21:58: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:22:01: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:22:15: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:22:27: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:22:32: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:31:20: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:32:49: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:32:54: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:33:17: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:33:31: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:33:39: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:33:44: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:33:49: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:34:03: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:34:15: 	Server started and running on http://localhost:5000
+info: Sep-23-2021 20:34:32: 	Server started and running on http://localhost:5000
+info: Sep-24-2021 10:17:12: 	Server started and running on http://localhost:5000
+info: Sep-24-2021 10:26:12: 	Server started and running on http://localhost:5000
+info: Sep-24-2021 10:27:07: 	Server started and running on http://localhost:5000
+info: Sep-24-2021 10:27:20: 	Server started and running on http://localhost:5000
+info: Sep-25-2021 15:13:12: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+info: Sep-25-2021 15:13:24: 	Server started and running on http://localhost:5000
+info: Sep-25-2021 15:14:01: 	Server started and running on http://localhost:5000
+info: Sep-27-2021 18:06:01: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+info: Sep-27-2021 18:06:21: 	Server started and running on http://localhost:5000
+info: Sep-27-2021 18:07:29: 	Server started and running on http://localhost:5000
+info: Sep-27-2021 18:08:16: 	Server started and running on http://localhost:5000

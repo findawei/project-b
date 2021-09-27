@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { purple } from "@material-ui/core/colors";
-
+import Share from "./Share";
 import {
   Button,
   Box,
@@ -10,6 +10,7 @@ import {
   Paper,
   Chip,
   Grid,
+  InputAdornment,
   IconButton,
   List,
   ListItem,
@@ -396,19 +397,24 @@ const ListingDetails = ({
 
       {/* <Divider /> */}
       {/* <Box component="span"> */}
-      <Grid container direction="row" justify="center" alignItems="center">
-        {auth.user && auth.user.stripe_cc ? (
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div hidden="true">
-              <TextField
-                name="_id"
-                id="_id"
-                defaultValue={currentItem._id}
-                inputRef={register}
-              />
-            </div>
-            <div>
-              ${" "}
+
+      {auth.user && auth.user.stripe_cc ? (
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div hidden="true">
+            <TextField
+              name="_id"
+              id="_id"
+              defaultValue={currentItem._id}
+              inputRef={register}
+            />
+          </div>
+          <Grid
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Grid item xs={8}>
               <TextField
                 name="bid"
                 id="bid"
@@ -426,12 +432,17 @@ const ListingDetails = ({
                   valueAsNumber: true,
                 })}
                 variant="outlined"
-                placeholder="Bid"
                 InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">$</InputAdornment>
+                  ),
                   className: classes.bidinput,
                 }}
+                placeholder="Bid"
                 error={!!errors.bid}
               />
+            </Grid>
+            <Grid item xs={4}>
               {isPast(new Date(currentItem.endDate)) ? (
                 <Button
                   variant="contained"
@@ -453,12 +464,12 @@ const ListingDetails = ({
                   Bid
                 </Button>
               )}
-            </div>
-          </form>
-        ) : (
-          "Please add a method of payment."
-        )}
-      </Grid>
+            </Grid>
+          </Grid>
+        </form>
+      ) : (
+        "Please add a method of payment."
+      )}
       {errors.bid && (
         <span
           style={{ color: "red", fontWeight: "bold" }}
@@ -653,13 +664,15 @@ const ListingDetails = ({
                     {body}
                   </Modal>
                 </Grid>
+                <Grid item xs={12}>
+                  {/* <Share /> */}
+                </Grid>
                 {/* Description Table */}
                 <Grid item xs={12}>
                   <Typography variant="h5">
                     <b>Watch Details</b>
                   </Typography>
                 </Grid>
-
                 <Grid container style={{ padding: 8 }}>
                   <Grid item xs={12} md={6}>
                     <Card square>
@@ -903,7 +916,6 @@ const ListingDetails = ({
                     </Box>
                   </Grid>
                 </Grid>
-
                 {/* Description */}
                 <Grid item xs={12}>
                   <Typography variant="h5">
@@ -934,20 +946,20 @@ const ListingDetails = ({
                   ) : (
                     ""
                   )}
-                </Grid>
-                {currentItem.chart && currentItem.chart.data ? (
-                  <div>
-                    <Grid item xs={12}>
+                </Grid>{" "}
+                <Grid item xs={12}>
+                  {currentItem.chart && currentItem.chart.data ? (
+                    <div>
                       <Typography variant="h5">
                         <b>Sales Data</b>
                       </Typography>
-                    </Grid>
-                    <Chart />
-                  </div>
-                ) : (
-                  ""
-                )}
 
+                      <Chart />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                </Grid>
                 <Grid item xs={12}>
                   <Typography variant="h5">
                     <b>Seller Details</b>

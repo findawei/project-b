@@ -15,8 +15,8 @@ import { Link as RouterLink } from "react-router-dom";
 import PersonIcon from "@material-ui/icons/Person";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import SettingsIcon from "@material-ui/icons/Settings";
-import FolderIcon from "@material-ui/icons/Folder";
-import HistoryIcon from "@material-ui/icons/History";
+import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
+import ShoppingBasketIcon from "@material-ui/icons//ShoppingBasket";
 
 const LoggedInMenu = ({ logout }) => {
   const useStyles = makeStyles({
@@ -66,13 +66,13 @@ const LoggedInMenu = ({ logout }) => {
         </ListItem>
         <ListItem button component={RouterLink} to="/mylistings">
           <ListItemIcon>
-            <FolderIcon />
+            <FormatListBulletedIcon />
           </ListItemIcon>
           <ListItemText primary="My Listings" />
         </ListItem>
         <ListItem button component={RouterLink} to="/purchasehistory">
           <ListItemIcon>
-            <HistoryIcon />
+            <ShoppingBasketIcon />
           </ListItemIcon>
           <ListItemText primary="Purchase History" />
         </ListItem>

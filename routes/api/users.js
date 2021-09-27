@@ -1,8 +1,7 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 // User Model
-const User = require('../../models/User');
-
+const User = require("../../models/User");
 
 // /**
 //  * @route   GET api/users

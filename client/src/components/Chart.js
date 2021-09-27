@@ -82,8 +82,8 @@ const LineChart = ({ getItemById, match, item, currentItem }) => {
             },
             {
               label: "Unsold",
-              borderColor: "#4dc9f6",
-              backgroundColor: "#4dc9f6",
+              // borderColor: "#000000",
+              // backgroundColor: "#4dc9f6",
 
               data: filteredArray
                 .filter((item) => item.is_sold === false)
