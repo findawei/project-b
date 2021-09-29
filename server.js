@@ -72,8 +72,8 @@ const rateLimiterMiddleware = (req, res, next, err) => {
 };
 app.use(rateLimiterMiddleware);
 
-//For security
-app.use(helmet());
+// //For security -> doesn't work on heroku
+// app.use(helmet());
 
 //Use Routes
 app.use("/api/items", items);
