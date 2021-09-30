@@ -17,6 +17,23 @@ import {
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 import ReactGA from "react-ga";
+import io from "socket.io-client";
+
+const socket = io.connect("/");
+
+// export const createSocketConnection = () => {
+//   // dispatch(setItemsLoading());
+//   socket.on("connect", function (socket) {});
+// };
+
+export const getItemsSocket = () => {
+  socket.on("get_items", (data) => {
+    console.log(data);
+  });
+};
+// export const getItemsSocket = () => async (dispatch, getState) => {
+
+// }
 
 export const getItems = () => async (dispatch, getState) => {
   const header = await tokenConfig();
@@ -39,6 +56,28 @@ export const getItems = () => async (dispatch, getState) => {
       });
     });
 };
+
+// export const getItems = () => async (dispatch, getState) => {
+//   const header = await tokenConfig();
+
+//   dispatch(setItemsLoading());
+//   axios
+//     .get("/api/items", header)
+//     .then((res) =>
+//       dispatch({
+//         type: GET_ITEMS,
+//         payload: res.data,
+//       })
+//     )
+//     .catch((err) => {
+//       dispatch(
+//         returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
+//       );
+//       dispatch({
+//         type: ITEM_ERROR,
+//       });
+//     });
+// };
 
 export const getItemsForReview = () => async (dispatch, getState) => {
   const header = await tokenConfig();

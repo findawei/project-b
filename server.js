@@ -23,6 +23,9 @@ var nodemailer = require("nodemailer");
 const scraper = require("./scraper/scraper");
 const helmet = require("helmet");
 
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+
 const app = express();
 
 app.use(express.json());
@@ -130,9 +133,25 @@ app.get("/", function (req, res) {
   res.send("I counted to " + i);
 });
 
+//Socket
+const itemsSocket = require("./routes/api/itemsSocket");
+
+const httpServer = createServer(app);
+const io = new Server(httpServer);
+
+io.on("connection", (socket) => {
+  console.log(`a user connected ${socket.id}`);
+
+  itemsSocket(io, socket);
+
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+  });
+});
+
 //Connect on PORT
 const { PORT, HOST } = config;
-const server = app.listen(PORT, () => {
+httpServer.listen(PORT, () => {
   console.log(`Server started and running on http://${HOST}:${PORT}`);
   serverLogger.info(`Server started and running on http://${HOST}:${PORT}`);
 });
