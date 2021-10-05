@@ -12,7 +12,6 @@ import "./App.css";
 import { Provider } from "react-redux";
 import store from "./flux/store";
 import { loadUser } from "./flux/actions/authActions";
-import { getItemsSocket } from "./flux/actions/itemActions";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Loading from "./components/Loading";
@@ -40,7 +39,7 @@ history.listen((location) => {
 });
 function App() {
   useEffect(() => {
-    store.dispatch(loadUser(), getItemsSocket());
+    store.dispatch(loadUser());
   }, []);
 
   return (

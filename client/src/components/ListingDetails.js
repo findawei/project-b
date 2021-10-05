@@ -309,6 +309,7 @@ const ListingDetails = ({
     }
   }
 
+  //FIX THIS WITH SOCKET
   async function commentSubmit(data, e) {
     try {
       const result = await commentItem(data);

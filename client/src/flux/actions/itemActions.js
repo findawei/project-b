@@ -21,20 +21,6 @@ import io from "socket.io-client";
 
 const socket = io.connect("/");
 
-// export const createSocketConnection = () => {
-//   // dispatch(setItemsLoading());
-//   socket.on("connect", function (socket) {});
-// };
-
-export const getItemsSocket = () => {
-  socket.on("get_items", (data) => {
-    console.log(data);
-  });
-};
-// export const getItemsSocket = () => async (dispatch, getState) => {
-
-// }
-
 export const getItems = () => async (dispatch, getState) => {
   const header = await tokenConfig();
 
@@ -243,27 +229,29 @@ export const bidOnItem = (item) => async (dispatch, getState) => {
 export const commentItem = (item) => async (dispatch, getState) => {
   const header = await tokenConfig();
 
-  axios
-    .post(`/api/items/comment/${item._id}`, item, header)
-    .then(
-      (res) =>
-        dispatch({
-          type: COMMENT_ITEM,
-          payload: res.data,
-        }),
-      ReactGA.event({
-        category: "Auction",
-        action: "User commented on auction",
-      })
-    )
-    .catch((err) => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
-      );
-      dispatch({
-        type: ITEM_ERROR,
-      });
-    });
+  socket.emit("commentItem", "test");
+
+  // axios
+  //   .post(`/api/items/comment/${item._id}`, item, header)
+  //   .then(
+  //     (res) =>
+  //       dispatch({
+  //         type: COMMENT_ITEM,
+  //         payload: res.data,
+  //       }),
+  //     ReactGA.event({
+  //       category: "Auction",
+  //       action: "User commented on auction",
+  //     })
+  //   )
+  //   .catch((err) => {
+  //     dispatch(
+  //       returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
+  //     );
+  //     dispatch({
+  //       type: ITEM_ERROR,
+  //     });
+  //   });
 };
 
 //   export const deleteItem = (id) => (

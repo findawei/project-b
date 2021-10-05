@@ -24,26 +24,6 @@ const { AsyncLocalStorage } = require("async_hooks");
 
 module.exports = function (io, socket) {
   // @route   GET api/items/
-  // @desc    Get all items that are live and completed
-  // @access  Private
-  socket.emit("get_items", "tits");
-  //  => {
-  //   data = "farts";
-  // const items = Item.find({
-  //   $or: [
-  //     { status: "active" },
-  //     { status: "completed" },
-  //     { status: "reserve_not_met" },
-  //   ],
-  // }).sort({
-  //   endDate: 1,
-  // });
-  // if (!items) throw Error("No items");
-
-  // return items;
-  // });
-
-  // @route   GET api/items/
   // @desc    Get all items for review for a specific user
   // @access  Private
   router.get("/for_review", async (req, res) => {
@@ -430,7 +410,11 @@ module.exports = function (io, socket) {
   // @route    POST api/items/comment/:id
   // @desc     Bid history on an auction
   // @access   Private
-  router.post("/comment/:id", async (req, res) => {
+  socket.on("commentItem", (data) => {
+    console.log(data);
+  });
+
+  socket.on("commentItemSSSS", async (req, res) => {
     const auth = req.currentUser;
     if (auth) {
       try {
@@ -441,9 +425,12 @@ module.exports = function (io, socket) {
           name: req.currentUser.name,
           user: req.currentUser.uid,
         };
-
         item.comments.unshift(newComment);
         await item.save();
+
+        //Added this
+        socket.emit("commentItem_Emit", newComment);
+
         res.json(item.comments);
         auctionsLogger.info(
           `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Comment successfully - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
