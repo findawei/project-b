@@ -299,7 +299,6 @@ export const tokenConfig = async () => {
   // } else {
   //   const token = user && (await user.getIdToken());
   // }
-
   const config = {
     headers: {
       "Content-Type": "application/json",

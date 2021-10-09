@@ -85,142 +85,6 @@ module.exports = function (io, socket) {
     }
   });
 
-  // // @route   POST api/items/
-  // // @desc    POST item
-  // // @access  Private
-  // router.post('/', async (req, res) => {
-  //   const newItem = new Item({
-  //       name: req.currentUser.name,
-  //       user: req.currentUser.uid,
-  //       brand: req.body.brand,
-  //       model: req.body.model,
-  //       img: req.body.img,
-  //       reference_number: req.body.reference_number,
-  //       movement: req.body.movement,
-  //       year: req.body.year,
-  //       case_diameter: req.body.case_diameter,
-  //       lug_width: req.body.lug_width,
-  //       thickness: req.body.thickness,
-  //       description: req.body.description,
-  //       bid: req.body.bid,
-  //       reserve: req.body.reserve,
-  //       endDate: req.body.endDate,
-  //       location: req.body.location,
-  //       service: req.body.service,
-  //       material: req.body.material,
-  //       boxpapers: req.body.boxpapers,
-  //       crystal: req.body.crystal,
-  //       crown: req.body.crown,
-  //       bezel: req.body.bezel,
-  //       wr: req.body.wr,
-  //       tested: req.body.tested,
-  //   });
-  //   try{
-  //     const item = await newItem.save();
-  //     if (!item) throw Error('Something went wrong saving the item');
-  //     res.status(200).json(item);
-  //     }
-  //   catch (e) {
-  //   res.status(400).json({ msg: e.message, success: false });
-  // }
-  // });
-
-  // @route   POST api/items/
-  // @desc    POST item
-  // @access  Private
-  router.post("/submit", async (req, res) => {
-    const auth = req.currentUser;
-    if (auth) {
-      const newItem = new Item({
-        name: req.currentUser.name,
-        user: req.currentUser.uid,
-        dealership: req.body.dealership,
-        dealerwebsite: req.body.dealerwebsite,
-        fees: req.body.fees,
-        link: req.body.link,
-        brand: req.body.brand,
-        model: req.body.model,
-        reference_number: req.body.reference_number,
-        year: req.body.year,
-        reserve: req.body.reserve,
-        location: req.body.location,
-        service: req.body.service,
-        phone: req.body.phone,
-        referral: req.body.referral,
-        status: "submitted",
-      });
-      //  console.log(newItem)
-      try {
-        const item = await newItem.save();
-        if (!item) {
-          res.status(400).json("Something went wrong saving the item");
-          auctionsLogger.error(
-            `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Something went wrong saving the item - ${auth.email} - ${auth.uid}`
-          );
-        }
-        //Send email to site admin
-        const filePath = path.join(
-          __dirname,
-          "../../email/template_submit.html"
-        );
-        const source = fs.readFileSync(filePath, "utf-8").toString();
-        const template = handlebars.compile(source);
-        const replacements = {
-          date: format(new Date(), "PP - ppp"),
-          name: newItem.name,
-          email: req.currentUser.email,
-          dealership: newItem.dealership,
-          dealerwebsite: newItem.dealerwebsite,
-          fees: newItem.fees,
-          link: newItem.link,
-          brand: newItem.brand,
-          model: newItem.model,
-          reference_number: newItem.reference_number,
-          year: newItem.year,
-          reserve: newItem.reserve === null ? 0 : newItem.reserve,
-          location: newItem.location,
-          service: format(new Date(newItem.service), "yyyy/MM/dd"),
-          phone: newItem.phone,
-          referral: newItem.referral,
-        };
-        const htmlToSend = template(replacements);
-
-        mailOptions = {
-          from: '"No Wait List" <info@nowaitlist.co>',
-          to: auth.email,
-          cc: "alex@nowaitlist.co",
-          subject: `${replacements.name} submitted a ${replacements.brand} ${replacements.model} for review`,
-          html: htmlToSend,
-        };
-        mailer.transport.sendMail(mailOptions, (error, info) => {
-          if (error) {
-            console.log(error);
-            res.status(400).json("Something went wrong.");
-            auctionsLogger.error(
-              `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`
-            );
-          }
-          res.status(200).send(item);
-          auctionsLogger.info(
-            `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Submitted successfully - ${auth.email} - ${auth.uid}`
-          );
-        });
-        return;
-      } catch (e) {
-        res.status(400).json({ msg: e.message, success: false });
-        auctionsLogger.error(
-          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`
-        );
-      }
-    } else
-      return (
-        res.status(403).send("Not authorized"),
-        auctionsLogger.error(
-          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
-        )
-      );
-  });
-
   // // @route   PUT api/items/:id
   // // @desc    Update specific item
   // // @access  Private
@@ -410,8 +274,15 @@ module.exports = function (io, socket) {
   // @route    POST api/items/comment/:id
   // @desc     Bid history on an auction
   // @access   Private
-  socket.on("commentItem", (data) => {
-    console.log(data);
+  io.use((socket, next) => {
+    const err = new Error("not authorized");
+    err.data = { content: "Please retry later" }; // additional details
+    next(err);
+  });
+
+  socket.on("commentItem", (item) => {
+    console.log(item);
+    // console.log(data);
   });
 
   socket.on("commentItemSSSS", async (req, res) => {

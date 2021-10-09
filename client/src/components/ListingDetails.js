@@ -313,7 +313,6 @@ const ListingDetails = ({
   async function commentSubmit(data, e) {
     try {
       const result = await commentItem(data);
-      const newresult = await getItemById(match.params.id);
       const finalresult = await e.target.reset();
     } catch (error) {
       console.log(error);

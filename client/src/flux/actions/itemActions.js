@@ -19,7 +19,10 @@ import { returnErrors } from "./errorActions";
 import ReactGA from "react-ga";
 import io from "socket.io-client";
 
-const socket = io.connect("/");
+// const token = tokenConfig();
+// console.log(token);
+
+const socket = io.connect("http://localhost:3000");
 
 export const getItems = () => async (dispatch, getState) => {
   const header = await tokenConfig();
@@ -227,9 +230,9 @@ export const bidOnItem = (item) => async (dispatch, getState) => {
 };
 
 export const commentItem = (item) => async (dispatch, getState) => {
-  const header = await tokenConfig();
-
-  socket.emit("commentItem", "test");
+  if (socket) {
+    socket.emit("commentItem", item);
+  }
 
   // axios
   //   .post(`/api/items/comment/${item._id}`, item, header)
