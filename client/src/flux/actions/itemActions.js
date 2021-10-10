@@ -22,12 +22,11 @@ import io from "socket.io-client";
 const socket = io.connect("http://localhost:3000");
 
 export const getItems = () => async (dispatch, getState) => {
-  const tokenConfig = await tokenConfig();
-  const header = tokenConfig.config;
+  const responseToken = await tokenConfig();
 
   dispatch(setItemsLoading());
   axios
-    .get("/api/items", header)
+    .get("/api/items", responseToken.config)
     .then((res) =>
       dispatch({
         type: GET_ITEMS,
@@ -67,12 +66,11 @@ export const getItems = () => async (dispatch, getState) => {
 // };
 
 export const getItemsForReview = () => async (dispatch, getState) => {
-  const tokenConfig = await tokenConfig();
-  const header = tokenConfig.config;
+  const responseToken = await tokenConfig();
 
   dispatch(setItemsLoading());
   axios
-    .get("/api/items/for_review", header)
+    .get("/api/items/for_review", responseToken.config)
     .then((res) =>
       dispatch({
         type: GET_ITEMS_REVIEW,
@@ -90,12 +88,11 @@ export const getItemsForReview = () => async (dispatch, getState) => {
 };
 
 export const getItemById = (id) => async (dispatch, getState) => {
-  const tokenConfig = await tokenConfig();
-  const header = tokenConfig.config;
+  const responseToken = await tokenConfig();
 
   dispatch(setItemsLoading());
   axios
-    .get(`/api/items/${id}`, header)
+    .get(`/api/items/${id}`, responseToken.config)
     .then((res) =>
       dispatch({
         type: GET_ITEM,
@@ -134,9 +131,9 @@ export const getItemById = (id) => async (dispatch, getState) => {
 // };
 
 export const submitItem = (item) => async (dispatch, getState) => {
-  const header = await tokenConfig();
+  const responseToken = await tokenConfig();
   axios
-    .post("/api/items/submit", item, header)
+    .post("/api/items/submit", item, responseToken.config)
     .then(
       (res) =>
         dispatch({
@@ -159,11 +156,10 @@ export const submitItem = (item) => async (dispatch, getState) => {
 };
 
 export const updateItemEndDate = (item) => async (dispatch, getState) => {
-  const tokenConfig = await tokenConfig();
-  const header = tokenConfig.config;
+  const responseToken = await tokenConfig();
 
   axios
-    .put(`/api/items/endDate/${item._id}`, item, header)
+    .put(`/api/items/endDate/${item._id}`, item, responseToken.config)
     .then((res) =>
       dispatch({
         type: UPDATE_ITEM,
@@ -203,11 +199,10 @@ export const updateItemEndDate = (item) => async (dispatch, getState) => {
 //   };
 
 export const bidOnItem = (item) => async (dispatch, getState) => {
-  const tokenConfig = await tokenConfig();
-  const header = tokenConfig.config;
+  const responseToken = await tokenConfig();
 
   axios
-    .post(`/api/items/bid/${item._id}`, item, header)
+    .post(`/api/items/bid/${item._id}`, item, responseToken.config)
     // .then(res=>{
     //     let stripe_bid = item;
     //     axios

@@ -39,11 +39,10 @@ export const loadUser = () => async (dispatch, getState) => {
 
         // Get mongodb userID and set as user
 
-        const tokenConfig = await tokenConfig();
-        const header = tokenConfig.config;
+        const responseToken = await tokenConfig();
 
         try {
-          axios.get("/api/auth/user", header).then((res) =>
+          axios.get("/api/auth/user", responseToken.config).then((res) =>
             dispatch({
               type: USER_LOADED,
               payload: res.data,
@@ -107,10 +106,9 @@ export const register =
                 type: REGISTER_SUCCESS,
                 payload: user,
               });
-              const tokenConfig = await tokenConfig();
-              const header = tokenConfig.config;
+              const responseToken = await tokenConfig();
               try {
-                axios.post("/api/auth/", {}, header).then((res) =>
+                axios.post("/api/auth/", {}, responseToken.config).then((res) =>
                   dispatch({
                     type: REGISTER_SUCCESS,
                     payload: res.data,
@@ -264,11 +262,10 @@ export const captchaSubmit = (captcha) => async (dispatch, getState) => {
 
 //Add stripe_cc to user
 export const addStripeCC = (user) => async (dispatch, getState) => {
-  const tokenConfig = await tokenConfig();
-  const header = tokenConfig.config;
+  const responseToken = await tokenConfig();
   try {
     axios
-      .put("/api/auth/addStripeCC", user, header)
+      .put("/api/auth/addStripeCC", user, responseToken.config)
       .then((res) =>
         dispatch({
           type: USER_UPDATE,
