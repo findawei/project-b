@@ -19,13 +19,11 @@ import { returnErrors } from "./errorActions";
 import ReactGA from "react-ga";
 import io from "socket.io-client";
 
-// const token = tokenConfig();
-// console.log(token);
-
 const socket = io.connect("http://localhost:3000");
 
 export const getItems = () => async (dispatch, getState) => {
-  const header = await tokenConfig();
+  const tokenConfig = await tokenConfig();
+  const header = tokenConfig.config;
 
   dispatch(setItemsLoading());
   axios
@@ -69,7 +67,8 @@ export const getItems = () => async (dispatch, getState) => {
 // };
 
 export const getItemsForReview = () => async (dispatch, getState) => {
-  const header = await tokenConfig();
+  const tokenConfig = await tokenConfig();
+  const header = tokenConfig.config;
 
   dispatch(setItemsLoading());
   axios
@@ -91,7 +90,8 @@ export const getItemsForReview = () => async (dispatch, getState) => {
 };
 
 export const getItemById = (id) => async (dispatch, getState) => {
-  const header = await tokenConfig();
+  const tokenConfig = await tokenConfig();
+  const header = tokenConfig.config;
 
   dispatch(setItemsLoading());
   axios
@@ -159,7 +159,8 @@ export const submitItem = (item) => async (dispatch, getState) => {
 };
 
 export const updateItemEndDate = (item) => async (dispatch, getState) => {
-  const header = await tokenConfig();
+  const tokenConfig = await tokenConfig();
+  const header = tokenConfig.config;
 
   axios
     .put(`/api/items/endDate/${item._id}`, item, header)
@@ -202,7 +203,8 @@ export const updateItemEndDate = (item) => async (dispatch, getState) => {
 //   };
 
 export const bidOnItem = (item) => async (dispatch, getState) => {
-  const header = await tokenConfig();
+  const tokenConfig = await tokenConfig();
+  const header = tokenConfig.config;
 
   axios
     .post(`/api/items/bid/${item._id}`, item, header)

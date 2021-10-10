@@ -275,6 +275,8 @@ module.exports = function (io, socket) {
   // @desc     Bid history on an auction
   // @access   Private
   io.use((socket, next) => {
+    const token = socket.handshake.auth.token;
+    console.log(token);
     const err = new Error("not authorized");
     err.data = { content: "Please retry later" }; // additional details
     next(err);

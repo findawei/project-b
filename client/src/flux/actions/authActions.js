@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 import axios from "axios";
 import {
   USER_LOADED,
@@ -19,7 +20,6 @@ import { config } from "process";
 import { returnErrors } from "./errorActions";
 import ReactGA from "react-ga";
 
-export var accessToken = "";
 // Check token & load user
 export const loadUser = () => async (dispatch, getState) => {
   // User loading
@@ -37,11 +37,11 @@ export const loadUser = () => async (dispatch, getState) => {
           payload: user,
         });
 
-        // let accessToken = user
-        // console.log(accessToken)
-
         // Get mongodb userID and set as user
-        const header = await tokenConfig();
+
+        const tokenConfig = await tokenConfig();
+        const header = tokenConfig.config;
+
         try {
           axios.get("/api/auth/user", header).then((res) =>
             dispatch({
@@ -107,7 +107,8 @@ export const register =
                 type: REGISTER_SUCCESS,
                 payload: user,
               });
-              const header = await tokenConfig();
+              const tokenConfig = await tokenConfig();
+              const header = tokenConfig.config;
               try {
                 axios.post("/api/auth/", {}, header).then((res) =>
                   dispatch({
@@ -263,7 +264,8 @@ export const captchaSubmit = (captcha) => async (dispatch, getState) => {
 
 //Add stripe_cc to user
 export const addStripeCC = (user) => async (dispatch, getState) => {
-  const header = await tokenConfig();
+  const tokenConfig = await tokenConfig();
+  const header = tokenConfig.config;
   try {
     axios
       .put("/api/auth/addStripeCC", user, header)
@@ -305,5 +307,6 @@ export const tokenConfig = async () => {
       Authorization: `Bearer ${token}`,
     },
   };
-  return config;
+  return { config, token };
+  // return config;
 };
