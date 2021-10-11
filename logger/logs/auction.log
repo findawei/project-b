@@ -145,3 +145,11 @@ error: Sep-17-2021 09:59:52: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 
 error: Sep-17-2021 10:00:37: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - fetchdata.json is not a function
 error: Sep-17-2021 11:19:15: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Cannot read property 'url' of undefined
 error: Sep-25-2021 15:13:46: 	Bad Request - /api/items - GET - ::ffff:127.0.0.1 - Operation `items.find()` buffering timed out after 10000ms
+error: Oct-10-2021 13:24:21: 	Forbidden - /api/items/for_review - GET - ::ffff:127.0.0.1
+error: Oct-10-2021 13:26:09: 	Bad Request - /api/items/for_review - GET - ::ffff:127.0.0.1 - Converting circular structure to JSON
+    --> starting at object with constructor 'Socket'
+    |     property 'parser' -> object with constructor 'HTTPParser'
+    --- property 'socket' closes the circle
+error: Oct-10-2021 13:29:06: 	Forbidden - /api/items/for_review - GET - ::ffff:127.0.0.1
+error: Oct-10-2021 13:29:08: 	Forbidden - /api/items/for_review - GET - ::ffff:127.0.0.1
+error: Oct-10-2021 13:29:08: 	Forbidden - /api/items/for_review - GET - ::ffff:127.0.0.1

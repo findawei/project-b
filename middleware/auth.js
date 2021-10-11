@@ -1,38 +1,57 @@
-const admin = require('firebase-admin');
+const admin = require("firebase-admin");
 // const serviceAccount = require('../serviceAccount.json');
-const config =require( '../config');
+const config = require("../config");
 
-const {private_key, client_email, project_id} = config;
-
+const { private_key, client_email, project_id } = config;
 
 admin.initializeApp({
   credential: admin.credential.cert({
-    "project_id": project_id,
-    "private_key": private_key.replace(/\\n/g, '\n'),
-    "client_email": client_email,
+    project_id: project_id,
+    private_key: private_key.replace(/\\n/g, "\n"),
+    client_email: client_email,
   }),
-  databaseURL: "https://nowaitlist-7f026.firebaseio.com"
+  databaseURL: "https://nowaitlist-7f026.firebaseio.com",
 });
 
 async function decodeIDToken(req, res, next) {
   const header = req.headers.authorization;
-  if (header !== 'Bearer null' && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
-  const idToken = req.headers.authorization.split('Bearer ')[1];
-
-  try {
+  if (
+    header !== "Bearer null" &&
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer ")
+  ) {
+    const idToken = req.headers.authorization.split("Bearer ")[1];
+    try {
       const decodedToken = await admin.auth().verifyIdToken(idToken);
 
-      req['currentUser'] = decodedToken;
+      req["currentUser"] = decodedToken;
       // console.log(
       // `decodeID username: ${decodedToken.name}`
       // )
-
-  } catch (error) {
-    res.status(error.response)
-    return res.send(error.message);    
+    } catch (error) {
+      res.status(error.response);
+      return res.send(error.message);
+    }
   }
-  }
-next();
+  next();
 }
 
-module.exports = decodeIDToken;
+async function decodeSocketToken(token) {
+  const idToken = token;
+  if (idToken !== null) {
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      // console.log(
+      // `decodeID username: ${decodedToken.name}`
+      // )
+      return decodedToken;
+    } catch (error) {
+      return console.log(error);
+    }
+  }
+}
+
+module.exports = {
+  decodeIDToken,
+  decodeSocketToken,
+};

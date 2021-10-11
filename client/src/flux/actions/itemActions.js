@@ -19,14 +19,17 @@ import { returnErrors } from "./errorActions";
 import ReactGA from "react-ga";
 import io from "socket.io-client";
 
-const socket = io.connect("http://localhost:3000");
+const socket = io({
+  auth: async (b) => {
+    const responseToken = await tokenConfig();
+    b({ token: responseToken.token });
+  },
+}).connect("/");
 
 export const getItems = () => async (dispatch, getState) => {
-  const responseToken = await tokenConfig();
-
   dispatch(setItemsLoading());
   axios
-    .get("/api/items", responseToken.config)
+    .get("/api/items")
     .then((res) =>
       dispatch({
         type: GET_ITEMS,
@@ -42,28 +45,6 @@ export const getItems = () => async (dispatch, getState) => {
       });
     });
 };
-
-// export const getItems = () => async (dispatch, getState) => {
-//   const header = await tokenConfig();
-
-//   dispatch(setItemsLoading());
-//   axios
-//     .get("/api/items", header)
-//     .then((res) =>
-//       dispatch({
-//         type: GET_ITEMS,
-//         payload: res.data,
-//       })
-//     )
-//     .catch((err) => {
-//       dispatch(
-//         returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
-//       );
-//       dispatch({
-//         type: ITEM_ERROR,
-//       });
-//     });
-// };
 
 export const getItemsForReview = () => async (dispatch, getState) => {
   const responseToken = await tokenConfig();
@@ -88,11 +69,9 @@ export const getItemsForReview = () => async (dispatch, getState) => {
 };
 
 export const getItemById = (id) => async (dispatch, getState) => {
-  const responseToken = await tokenConfig();
-
   dispatch(setItemsLoading());
   axios
-    .get(`/api/items/${id}`, responseToken.config)
+    .get(`/api/items/${id}`)
     .then((res) =>
       dispatch({
         type: GET_ITEM,
@@ -227,9 +206,9 @@ export const bidOnItem = (item) => async (dispatch, getState) => {
 };
 
 export const commentItem = (item) => async (dispatch, getState) => {
-  if (socket) {
-    socket.emit("commentItem", item);
-  }
+  // if (socket) {
+  socket.emit("commentItem", item);
+  // }
 
   // axios
   //   .post(`/api/items/comment/${item._id}`, item, header)

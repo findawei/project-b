@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../../middleware/auth");
+const { decodeSocketToken } = require("../../middleware/auth");
 const user = require("../../models/User");
 const Item = require("../../models/item");
 const mailer = require("../../email/mailer");
@@ -22,7 +22,7 @@ const {
 } = require("date-fns");
 const { AsyncLocalStorage } = require("async_hooks");
 
-module.exports = function (io, socket) {
+module.exports = function (io, socket, authUser) {
   // @route   GET api/items/
   // @desc    Get all items for review for a specific user
   // @access  Private
@@ -274,17 +274,10 @@ module.exports = function (io, socket) {
   // @route    POST api/items/comment/:id
   // @desc     Bid history on an auction
   // @access   Private
-  io.use((socket, next) => {
-    const token = socket.handshake.auth.token;
-    console.log(token);
-    const err = new Error("not authorized");
-    err.data = { content: "Please retry later" }; // additional details
-    next(err);
-  });
 
   socket.on("commentItem", (item) => {
     console.log(item);
-    // console.log(data);
+    console.log(authUser.uid);
   });
 
   socket.on("commentItemSSSS", async (req, res) => {

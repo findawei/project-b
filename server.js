@@ -1,7 +1,7 @@
 const express = require("express");
 const { RateLimiterMongo } = require("rate-limiter-flexible");
 const mongoose = require("mongoose");
-const decodeIDToken = require("./middleware/auth");
+const { decodeIDToken, decodeSocketToken } = require("./middleware/auth");
 const path = require("path");
 const cors = require("cors");
 const config = require("./config");
@@ -139,10 +139,21 @@ const itemsSocket = require("./routes/api/itemsSocket");
 const httpServer = createServer(app);
 const io = new Server(httpServer);
 
-io.on("connection", (socket) => {
-  console.log(`a user connected ${socket.id}`);
+io.on("connection", async (socket) => {
+  const token = socket.handshake.auth.token;
+  let authUser;
+  try {
+    authUser = await decodeSocketToken(token);
+  } catch (err) {
+    socket.emit("auth failed");
+    socket.on("disconnect", () => {
+      console.log("user disconnected");
+    });
+  }
+  // console.log(`a user connected ${socket.id}`);
+  // console.log(authUser.uid);
 
-  itemsSocket(io, socket);
+  itemsSocket(io, socket, authUser);
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
