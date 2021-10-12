@@ -26,6 +26,7 @@ import { verifyEmail } from "../flux/actions/authActions";
 import logo from "../images/logo.png";
 import MenuIcon from "@material-ui/icons/Menu";
 import { HashLink } from "react-router-hash-link";
+import { socketConnect } from "../flux/actions/itemActions";
 
 const AppNavbar = ({ auth, verifyEmail }) => {
   const useStyles = makeStyles((theme) => ({
@@ -59,6 +60,12 @@ const AppNavbar = ({ auth, verifyEmail }) => {
       setOpen(true);
     } else {
       setOpen(false);
+    }
+  }, [auth]);
+
+  useEffect(() => {
+    if (auth.user._id) {
+      socketConnect();
     }
   }, [auth]);
 

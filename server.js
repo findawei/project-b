@@ -150,7 +150,7 @@ io.on("connection", async (socket) => {
       console.log("user disconnected");
     });
   }
-  // console.log(`a user connected ${socket.id}`);
+  console.log(`a user connected ${socket.id}`);
   // console.log(authUser.uid);
 
   itemsSocket(io, socket, authUser);

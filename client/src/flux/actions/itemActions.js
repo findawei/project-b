@@ -19,12 +19,23 @@ import { returnErrors } from "./errorActions";
 import ReactGA from "react-ga";
 import io from "socket.io-client";
 
-const socket = io({
-  auth: async (b) => {
-    const responseToken = await tokenConfig();
-    b({ token: responseToken.token });
-  },
-}).connect("/");
+let socket;
+
+export const socketConnect = () => {
+  socket = io({
+    auth: async (b) => {
+      const responseToken = await tokenConfig();
+      b({ token: responseToken.token });
+    },
+  }).connect("/");
+};
+
+// socket = io({
+//   auth: async (b) => {
+//     const responseToken = await tokenConfig();
+//     b({ token: responseToken.token });
+//   },
+// }).connect("/");
 
 export const getItems = () => async (dispatch, getState) => {
   dispatch(setItemsLoading());

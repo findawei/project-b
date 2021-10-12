@@ -26,19 +26,18 @@ const ForReview = ({ getItemsForReview, item }) => {
 
   return (
     <div className={classes.root}>
-      {items_review.length === 0 ? (
-        ""
-      ) : (
+      {items_review && items_review.length > 0 ? (
         <div>
           <h1>For Review (not live)</h1>
+          <Grid container spacing={2}>
+            {items_review.map((items_review) => (
+              <Listing item={items_review} key={items_review._id} />
+            ))}
+          </Grid>
         </div>
+      ) : (
+        ""
       )}
-
-      <Grid container spacing={2}>
-        {items_review.map((items_review) => (
-          <Listing item={items_review} key={items_review._id} />
-        ))}
-      </Grid>
     </div>
   );
 };
