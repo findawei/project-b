@@ -63,6 +63,7 @@ import { paymentIntent } from "../flux/actions/stripeActions";
 import EndingSoon from "./EndingSoon";
 import TimerIcon from "@material-ui/icons/Timer";
 import Chart from "./Chart";
+import { socket } from "../flux/actions/itemActions";
 
 const ListingDetails = ({
   auth,
@@ -172,6 +173,22 @@ const ListingDetails = ({
       getItemById(match.params.id);
     }
   }, [getItemById, match.params.id]);
+
+  useEffect(() => {
+    if (socket) {
+      socket.on("updateComment", (data) => {
+        console.log(data);
+        // if (comments) {
+        //   setComments(comments.unshift(data));
+        // }
+
+        // console.log(comments);
+        // setCommentsandbids(
+        //   [].concat(currentItem.bidHistory, currentItem.comments)
+        // );
+      });
+    }
+  }, [socket]);
 
   let bidBarBg;
   let bidBarText;

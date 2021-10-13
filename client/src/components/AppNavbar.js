@@ -64,7 +64,7 @@ const AppNavbar = ({ auth, verifyEmail }) => {
   }, [auth]);
 
   useEffect(() => {
-    if (auth.user._id) {
+    if (auth && auth.user && auth.user._id) {
       socketConnect();
     }
   }, [auth]);

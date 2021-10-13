@@ -151,11 +151,13 @@ io.on("connection", async (socket) => {
     });
   }
   console.log(`a user connected ${socket.id}`);
-  // console.log(authUser.uid);
 
+  // if (authUser && authUser.uid) {
   itemsSocket(io, socket, authUser);
+  // }
 
   socket.on("disconnect", () => {
+    io.socket.removeAllListeners();
     console.log("user disconnected");
   });
 });

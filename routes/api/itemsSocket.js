@@ -278,11 +278,19 @@ module.exports = function (io, socket, authUser) {
   socket.on("commentItem", (item) => {
     console.log(item);
     console.log(authUser.uid);
+    console.log("Simulate Save to db");
+
+    const newComment = {
+      text: item.text,
+      name: authUser.name,
+      user: authUser.uid,
+    };
+
+    io.emit("updateComment", newComment);
   });
 
-  socket.on("commentItemSSSS", async (req, res) => {
-    const auth = req.currentUser;
-    if (auth) {
+  socket.on("commentItemSSS", async (item) => {
+    if (authUser) {
       try {
         const item = await Item.findById({ _id: req.params.id });
 

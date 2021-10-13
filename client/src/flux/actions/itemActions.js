@@ -30,12 +30,7 @@ export const socketConnect = () => {
   }).connect("/");
 };
 
-// socket = io({
-//   auth: async (b) => {
-//     const responseToken = await tokenConfig();
-//     b({ token: responseToken.token });
-//   },
-// }).connect("/");
+export { socket };
 
 export const getItems = () => async (dispatch, getState) => {
   dispatch(setItemsLoading());
@@ -216,32 +211,8 @@ export const bidOnItem = (item) => async (dispatch, getState) => {
     });
 };
 
-export const commentItem = (item) => async (dispatch, getState) => {
-  // if (socket) {
+export const commentItem = (item) => async () => {
   socket.emit("commentItem", item);
-  // }
-
-  // axios
-  //   .post(`/api/items/comment/${item._id}`, item, header)
-  //   .then(
-  //     (res) =>
-  //       dispatch({
-  //         type: COMMENT_ITEM,
-  //         payload: res.data,
-  //       }),
-  //     ReactGA.event({
-  //       category: "Auction",
-  //       action: "User commented on auction",
-  //     })
-  //   )
-  //   .catch((err) => {
-  //     dispatch(
-  //       returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
-  //     );
-  //     dispatch({
-  //       type: ITEM_ERROR,
-  //     });
-  //   });
 };
 
 //   export const deleteItem = (id) => (
