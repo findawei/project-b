@@ -284,6 +284,7 @@ module.exports = function (io, socket, authUser) {
       text: item.text,
       name: authUser.name,
       user: authUser.uid,
+      date: new Date(),
     };
 
     io.emit("updateComment", newComment);
@@ -298,6 +299,7 @@ module.exports = function (io, socket, authUser) {
           text: req.body.text,
           name: req.currentUser.name,
           user: req.currentUser.uid,
+          date: new Date(),
         };
         item.comments.unshift(newComment);
         await item.save();

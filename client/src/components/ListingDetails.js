@@ -178,14 +178,11 @@ const ListingDetails = ({
     if (socket) {
       socket.on("updateComment", (data) => {
         console.log(data);
-        // if (comments) {
-        //   setComments(comments.unshift(data));
-        // }
-
-        // console.log(comments);
-        // setCommentsandbids(
-        //   [].concat(currentItem.bidHistory, currentItem.comments)
-        // );
+        if (comments) {
+          setComments(comments.unshift(data));
+        }
+        console.log(comments);
+        setCommentsandbids([].concat(currentItem.bidHistory, comments));
       });
     }
   }, [socket]);
