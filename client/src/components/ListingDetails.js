@@ -179,7 +179,7 @@ const ListingDetails = ({
   useEffect(() => {
     if (socket) {
       socket.on("updateComment", (data) => {
-        console.log(data);
+        // console.log(data);
         let newComments;
         if (comments && Array.isArray(comments)) {
           newComments = comments;
@@ -189,7 +189,7 @@ const ListingDetails = ({
         }
       });
       socket.on("updateBid", (data) => {
-        console.log(data);
+        // console.log(data);
         let newBidHistory;
         if (bidHistory && Array.isArray(bidHistory)) {
           newBidHistory = bidHistory;
