@@ -165,33 +165,32 @@ export const bidOnItemOriginal = (item) => async (dispatch, getState) => {
     });
 };
 
-export const bidOnItem = (item) => async () => {
-  socket.emit("bidOnItem", item, async (dispatch) => {
-    try {
-      const responseToken = await tokenConfig();
-      let stripe_bid = item;
-      console.log(stripe_bid);
-      // axios
-      //   .post("/api/stripe/bid", stripe_bid, responseToken.config)
-      //   .then((res) => {
-      //     dispatch({
-      //       type: BID_ITEM,
-      //       payload: res.data,
-      //     });
-      //   });
-      // ReactGA.event({
-      //   category: "Auction",
-      //   action: "User placed a bid",
-      // });
-    } catch (err) {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
-      );
-      dispatch({
-        type: ITEM_ERROR,
+export const bidOnItem = (item) => async (dispatch) => {
+  socket.emit("bidOnItem", item);
+
+  try {
+    const responseToken = await tokenConfig();
+    let stripe_bid = item;
+    axios
+      .post("/api/stripe/bid", stripe_bid, responseToken.config)
+      .then((res) => {
+        dispatch({
+          type: BID_ITEM,
+          payload: res.data,
+        });
       });
-    }
-  });
+    ReactGA.event({
+      category: "Auction",
+      action: "User placed a bid",
+    });
+  } catch (err) {
+    dispatch(
+      returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
+    );
+    dispatch({
+      type: ITEM_ERROR,
+    });
+  }
 };
 
 export const commentItem = (item) => async () => {
