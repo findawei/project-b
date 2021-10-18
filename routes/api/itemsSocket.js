@@ -85,61 +85,6 @@ module.exports = function (io, socket, authUser) {
     }
   });
 
-  // // @route   PUT api/items/:id
-  // // @desc    Update specific item
-  // // @access  Private
-  // router.put('/update/:id', async (req, res) => {
-  //   try{
-  //     const updateItem = await
-  //   Item.findOneAndUpdate({_id: req.params.id}, {
-  //     name: req.body.name,
-  //     user: req.body.uid,
-  //     brand: req.body.brand,
-  //     model: req.body.model,
-  //     img: req.body.img,
-  //     reference_number: req.body.reference_number,
-  //     movement: req.body.movement,
-  //     year: req.body.year,
-  //     case_diameter: req.body.case_diameter,
-  //     lug_width: req.body.lug_width,
-  //     thickness: req.body.thickness,
-  //     description: req.body.description,
-  //     bid: req.body.bid,
-  //     reserve: req.body.reserve,
-  //     endDate: req.body.endDate,
-  //     location: req.body.location,
-  //     service: req.body.service,
-  //     material: req.body.material,
-  //     boxpapers: req.body.boxpapers,
-  //     crystal: req.body.crystal,
-  //     crown: req.body.crown,
-  //     bezel: req.body.bezel,
-  //     wr: req.body.wr,
-  //     tested: req.body.tested
-  //     },{new: true});
-  //     return res.status(200).json(updateItem);
-  //   } catch(e){
-  //     res.status(400).json({ msg: e.message, success: false })
-  //     }
-  //   });
-
-  // // @route   PUT api/items/:id
-  // // @desc    Update item bid price
-  // // @access  Private
-  // router.put('/:id', async (req, res) => {
-  //   try{
-  //     const updateItemBid = await
-  //   Item.findOneAndUpdate({_id: req.params.id}, {
-  //     $set:{
-  //     bid: req.body.bid,
-  //     }
-  //     },{upsert: true, new: true});
-  //     return res.status(200).json(updateItemBid);
-  //   } catch(e){
-  //     res.status(400).json({ msg: e.message, success: false })
-  //     }
-  //   });
-
   // @route   PUT api/items/:id
   // @desc    Update item endTime
   // @access  Private
@@ -178,9 +123,7 @@ module.exports = function (io, socket, authUser) {
       );
   });
 
-  // @route    POST api/items/bid/:id
-  // @desc     Bid history on an auction
-  // @access   Private
+  //original
   router.post("/bid/:id", async (req, res) => {
     const auth = req.currentUser;
 
@@ -271,62 +214,192 @@ module.exports = function (io, socket, authUser) {
       );
   });
 
-  // @route    POST api/items/comment/:id
+  // @route    POST api/items/bid/:id
   // @desc     Bid history on an auction
   // @access   Private
-
-  socket.on("commentItem", (item) => {
-    console.log(item);
-    console.log(authUser.uid);
-    console.log("Simulate Save to db");
-
-    const newComment = {
-      text: item.text,
-      name: authUser.name,
-      user: authUser.uid,
-      date: new Date(),
-    };
-
-    io.emit("updateComment", newComment);
-  });
-
-  socket.on("commentItemSSS", async (item) => {
+  socket.on("bidOnItem", async (itemSocket) => {
+    // console.log(itemSocket);
     if (authUser) {
       try {
-        const item = await Item.findById({ _id: req.params.id });
+        const item = await Item.findById({ _id: itemSocket._id });
+        if (isFuture(item.endDate) && itemSocket.bid > item.bidHistory[0].bid) {
+          const newBid = {
+            bid: itemSocket.bid,
+            name: authUser.name,
+            user: authUser.uid,
+            date: new Date(),
+          };
+          item.bidHistory.unshift(newBid);
+          await item.save();
+
+          io.emit("updateBid", newBid);
+        } else {
+          console.log("Bid not high enough");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  });
+
+  //         // email previous highest bidder let them know they've been outbid
+  //         if (item.bidHistory[1]) {
+  //           //get previous bidder email
+  //           const previousBidder = await user.findOne({
+  //             uid: item.bidHistory[1].user,
+  //           });
+  //           //Send email to site admin
+  //           const filePath = path.join(
+  //             __dirname,
+  //             "../../email/template_outbid.html"
+  //           );
+  //           const source = fs.readFileSync(filePath, "utf-8").toString();
+  //           const template = handlebars.compile(source);
+  //           const replacements = {
+  //             name: previousBidder.name,
+  //             brand: item.brand,
+  //             model: item.model,
+  //             item_image: item.img[0].url,
+  //             amount: item.bidHistory[0].bid,
+  //             reference: item.reference_number,
+  //             year: item.year,
+  //             endDate: item.endDate.toISOString().substring(0, 10),
+  //             // receipt_id: item._id.substring(0,8),
+  //             auction_id: item._id,
+  //             description: `${item.brand} ${item.model} ${item.reference_number} - ${item.year}`,
+  //           };
+  //           const htmlToSend = template(replacements);
+
+  //           mailOptions = {
+  //             from: '"No Wait List" <info@nowaitlist.co>',
+  //             to: previousBidder.email,
+  //             subject: `Outbid notice: Bid again on the ${replacements.brand} ${replacements.model}`,
+  //             html: htmlToSend,
+  //           };
+  //           mailer.transport.sendMail(mailOptions, (error, info) => {
+  //             if (error) {
+  //               console.log(error);
+  //               res.status(400).json("Something went wrong.");
+  //               auctionsLogger.error(
+  //                 `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`
+  //               );
+  //             }
+  //           });
+  //         }
+  //         auctionsLogger.info(
+  //           `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid successfully - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+  //         );
+  //       } else {
+  //         console.log("Cannot bid on closed auction.");
+  //         res.status(400).send("Cannot bid on closed auction.");
+  //         auctionsLogger.error(
+  //           `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Cannot bid on closed auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+  //         );
+  //       }
+  //     } catch (err) {
+  //       console.error(err.message);
+  //       res.status(400).send("Server Error");
+  //       auctionsLogger.error(
+  //         `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+  //       );
+  //     }
+  //     return;
+  //   } else
+  //     return (
+  //       res.status(403).send("Not authorized"),
+  //       auctionsLogger.error(
+  //         `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+  //       )
+  //     );
+  // });
+
+  socket.on("commentItem", async (itemSocket) => {
+    if (authUser) {
+      try {
+        const item = await Item.findById({ _id: itemSocket._id });
 
         const newComment = {
-          text: req.body.text,
-          name: req.currentUser.name,
-          user: req.currentUser.uid,
+          text: itemSocket.text,
+          name: authUser.name,
+          user: authUser.uid,
           date: new Date(),
         };
+
         item.comments.unshift(newComment);
         await item.save();
 
-        //Added this
-        socket.emit("commentItem_Emit", newComment);
+        io.emit("updateComment", newComment);
 
-        res.json(item.comments);
         auctionsLogger.info(
-          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Comment successfully - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+          `${socket.statusMessage} - ${socket.originalUrl} - ${socket.method} - ${socket.ip} - Comment successfully - Comment: ${itemSocket.text} - Auction_ID: ${itemSocket._id} - ${authUser.email} - ${authUser.uid}`
         );
       } catch (err) {
         console.error(err.message);
-        res.status(400).send("Server Error");
-        auctionsLogger.error(
-          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
-        );
+        // auctionsLogger.error(
+        //   `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Comment: ${newComment.text} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+        // );
       }
       return;
-    } else
-      return (
-        res.status(403).send("Not authorized"),
-        auctionsLogger.error(
-          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
-        )
-      );
+    } else return;
+    // auctionsLogger.error(
+    //   `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+    // );
   });
+
+  // // @route   PUT api/items/:id
+  // // @desc    Update specific item
+  // // @access  Private
+  // router.put('/update/:id', async (req, res) => {
+  //   try{
+  //     const updateItem = await
+  //   Item.findOneAndUpdate({_id: req.params.id}, {
+  //     name: req.body.name,
+  //     user: req.body.uid,
+  //     brand: req.body.brand,
+  //     model: req.body.model,
+  //     img: req.body.img,
+  //     reference_number: req.body.reference_number,
+  //     movement: req.body.movement,
+  //     year: req.body.year,
+  //     case_diameter: req.body.case_diameter,
+  //     lug_width: req.body.lug_width,
+  //     thickness: req.body.thickness,
+  //     description: req.body.description,
+  //     bid: req.body.bid,
+  //     reserve: req.body.reserve,
+  //     endDate: req.body.endDate,
+  //     location: req.body.location,
+  //     service: req.body.service,
+  //     material: req.body.material,
+  //     boxpapers: req.body.boxpapers,
+  //     crystal: req.body.crystal,
+  //     crown: req.body.crown,
+  //     bezel: req.body.bezel,
+  //     wr: req.body.wr,
+  //     tested: req.body.tested
+  //     },{new: true});
+  //     return res.status(200).json(updateItem);
+  //   } catch(e){
+  //     res.status(400).json({ msg: e.message, success: false })
+  //     }
+  //   });
+
+  // // @route   PUT api/items/:id
+  // // @desc    Update item bid price
+  // // @access  Private
+  // router.put('/:id', async (req, res) => {
+  //   try{
+  //     const updateItemBid = await
+  //   Item.findOneAndUpdate({_id: req.params.id}, {
+  //     $set:{
+  //     bid: req.body.bid,
+  //     }
+  //     },{upsert: true, new: true});
+  //     return res.status(200).json(updateItemBid);
+  //   } catch(e){
+  //     res.status(400).json({ msg: e.message, success: false })
+  //     }
+  //   });
 
   // router.post('/email-test', async (req, res) => {
   //   const auth = req.currentUser;

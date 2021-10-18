@@ -26,7 +26,9 @@ const Faq = React.lazy(() => import("./components/faq/Faq"));
 const About = React.lazy(() => import("./components/faq/About"));
 
 const stripePromise = loadStripe(
-  "pk_live_51IarEuAFyb1kAVtipNIUbLRMfAjvwN52rgc2Ksm80tC5ZmR0amBBDSTdjIAQOciiDOUEK2bAxYAiCJyyh71IRaXB00a4nWsFGu"
+  // "pk_live_51IarEuAFyb1kAVtipNIUbLRMfAjvwN52rgc2Ksm80tC5ZmR0amBBDSTdjIAQOciiDOUEK2bAxYAiCJyyh71IRaXB00a4nWsFGu"
+
+  "pk_test_51IarEuAFyb1kAVtidDxjDpeHAQ3DprarSyD2Iqw8SED8aHlfxw2Pq4PQDqVJgiljBON7g3iecBIyaMloukPVD9nx00au4jfT5a"
 );
 const history = createBrowserHistory();
 // Initialize google analytics page view tracking

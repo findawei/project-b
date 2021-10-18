@@ -106,3 +106,10 @@ error: 2021-Jul-21 12:15:07 -04:00: 	undefined - /api/stripe/createIntent/ - POS
 info: 2021-Jul-27 20:58:52 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 100 - Auction_ID: 60f310d5c3f7c9d840ded51c - alex@nowaitlist.co - fnF5bIUDeFegpObqNi5lr2Ixt5B2
 error: 2021-Aug-31 13:55:37 -04:00: 	undefined - /api/stripe/createIntent/ - POST - ::ffff:127.0.0.1 - User doesn't have a stripe id - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1
 error: 2021-Aug-31 13:55:37 -04:00: 	undefined - /api/stripe/createIntent/ - POST - ::ffff:127.0.0.1 - [object Object] - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1
+error: 2021-Oct-14 16:51:31 -04:00: 	undefined - /api/stripe/createIntent/ - POST - ::ffff:127.0.0.1 - Error: No such customer: 'cus_K8sxjudz5t80O7'; a similar object exists in live mode, but a test mode key was used to make this request. - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1
+error: 2021-Oct-14 16:53:44 -04:00: 	undefined - /api/stripe/createIntent/ - POST - ::ffff:127.0.0.1 - User doesn't have a stripe id - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1
+error: 2021-Oct-14 16:53:44 -04:00: 	undefined - /api/stripe/createIntent/ - POST - ::ffff:127.0.0.1 - [object Object] - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1
+info: 2021-Oct-14 17:39:40 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1500 - Auction_ID: 1245 - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1
+info: 2021-Oct-14 17:41:46 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1500 - Auction_ID: 1245 - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1
+info: 2021-Oct-14 17:42:53 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 1900 - Auction_ID: 60ef8e426efa046d7ce3efd7 - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1
+info: 2021-Oct-14 17:44:00 -04:00: 	Bid Successful - /api/stripe/bid - POST - Bid: 2000 - Auction_ID: 60ef8e426efa046d7ce3efd7 - winona.ullrich67@ethereal.email - yeAYHSW5kefvR9zFN54a0wTSplk1

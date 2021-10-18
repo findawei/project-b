@@ -105,6 +105,7 @@ const ListingDetails = ({
     register: register2,
     errors: errors2,
     handleSubmit: handleSubmit2,
+    reset,
   } = useForm();
 
   useEffect(() => {
@@ -174,18 +175,31 @@ const ListingDetails = ({
     }
   }, [getItemById, match.params.id]);
 
+  //STATE NOT ALWAYS UPDATING ON THE PAGE WHERE THE COMMENT OR BID WAS MADE
   useEffect(() => {
     if (socket) {
       socket.on("updateComment", (data) => {
         console.log(data);
-        if (comments) {
-          setComments(comments.unshift(data));
+        let newComments;
+        if (comments && Array.isArray(comments)) {
+          newComments = comments;
+          newComments.unshift(data);
+          setComments(newComments);
+          setCommentsandbids([].concat(currentItem.bidHistory, newComments));
         }
-        console.log(comments);
-        setCommentsandbids([].concat(currentItem.bidHistory, comments));
+      });
+      socket.on("updateBid", (data) => {
+        console.log(data);
+        let newBidHistory;
+        if (bidHistory && Array.isArray(bidHistory)) {
+          newBidHistory = bidHistory;
+          newBidHistory.unshift(data);
+          setBidHistory(newBidHistory);
+          setCommentsandbids([].concat(newBidHistory, currentItem.comments));
+        }
       });
     }
-  }, [socket]);
+  }, [socket, comments, bidHistory]);
 
   let bidBarBg;
   let bidBarText;
@@ -312,22 +326,20 @@ const ListingDetails = ({
 
   async function onSubmit(data) {
     try {
-      const result = await setBid(data.bid);
-      const newResult = await (bidOnItem(data), setOpen(false));
-      setTimeout(() => {
-        getItemById(match.params.id);
-      }, 500);
+      setBid(data.bid);
+      bidOnItem(data);
+      setOpen(false);
       // const finalResult = await getItemById(match.params.id);
     } catch (error) {
       console.log(error);
     }
   }
 
-  //FIX THIS WITH SOCKET
   async function commentSubmit(data, e) {
     try {
-      const result = await commentItem(data);
-      const finalresult = await e.target.reset();
+      e.preventDefault();
+      commentItem(data);
+      e.target.reset();
     } catch (error) {
       console.log(error);
     }
@@ -482,7 +494,9 @@ const ListingDetails = ({
           </Grid>
         </form>
       ) : (
-        "Please add a method of payment."
+        <Typography align="center" variant="subtitle1" color="secondary">
+          Please add a method of payment.
+        </Typography>
       )}
       {errors.bid && (
         <span

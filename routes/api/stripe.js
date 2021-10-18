@@ -328,30 +328,6 @@ router.post("/bid", async (req, res) => {
   }
 });
 
-//Place hold on cc with bid amount
-router.post("/test", async (req, res) => {
-  // const auth = req.currentUser;
-  // if(auth){
-  const newBid = {
-    auction_id: req.body.result._id.$oid,
-    bid: req.body.result.bidHistory[0].bid.$numberInt,
-    name: req.body.result.bidHistory[0].name,
-    user_uid: req.body.result.bidHistory[0].user,
-  };
-  if (newBid) {
-    res.status(200).json(newBid);
-    transactionLogger.info(
-      `Bid Successful - ${req.originalUrl} - ${req.method} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${newBid.name} - ${newBid.user_uid}`
-    );
-  } else {
-    res.status(400).json("Something went wrong");
-    transactionLogger.error(
-      `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid: ${newBid.bid} - Auction_ID: ${newBid.auction_id} - ${auth.email} - ${auth.uid}`
-    );
-  }
-  //}
-});
-
 // router.post('/email-test', async (req, res) => {
 //   const auth = req.currentUser;
 //   if(auth){

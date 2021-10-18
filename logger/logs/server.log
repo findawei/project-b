@@ -5377,3 +5377,132 @@ error: Oct-14-2021 13:15:48: 	503 - 'uncaughtException' -  - undefined - undefin
 info: Oct-14-2021 13:16:12: 	Server started and running on http://localhost:5000
 error: Oct-14-2021 13:19:13: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
 info: Oct-14-2021 13:19:23: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 13:50:29: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 13:50:38: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 13:58:40: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 13:59:00: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:04:35: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:04:44: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:08:43: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:08:46: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:09:09: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:10:13: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:10:31: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:10:50: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:11:52: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:12:07: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:15:34: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:15:44: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:16:35: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:16:43: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:21:27: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:22:17: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:22:51: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:30:26: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:32:08: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:32:54: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 14:33:39: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 14:33:42: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 15:02:23: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 16:37:32: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 16:51:00: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 16:51:03: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 16:52:58: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 16:53:27: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 17:40:58: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 17:41:00: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 21:13:03: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-14-2021 21:13:06: 	Server started and running on http://localhost:5000
+error: Oct-14-2021 21:28:21: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 13:52:14: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 14:05:03: 	400 || Not Found - /item/babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Oct-15-2021 14:28:51: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 14:33:52: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 14:38:15: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 14:38:17: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 14:39:19: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 14:39:21: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 14:44:45: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 14:44:47: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 14:56:32: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 16:41:33: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 16:47:51: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 16:47:54: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 16:52:14: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 16:52:29: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 16:55:03: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 16:55:05: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 17:10:07: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 17:10:09: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 17:13:29: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 17:13:31: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 17:15:12: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 17:15:37: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 18:01:55: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 18:02:01: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 18:18:57: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 18:19:00: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 18:27:58: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 18:28:30: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 18:31:12: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 18:31:14: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 18:34:25: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-15-2021 18:34:28: 	Server started and running on http://localhost:5000
+error: Oct-15-2021 18:35:15: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 11:34:27: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 12:28:24: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 12:28:27: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 12:30:37: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Oct-17-2021 12:31:20: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 12:31:23: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 12:39:24: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 12:39:30: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 12:40:27: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Oct-17-2021 12:40:55: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Oct-17-2021 12:41:43: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Oct-17-2021 12:43:00: 	400 || Not Found - /item/%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Oct-17-2021 12:45:59: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 12:46:19: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 13:02:12: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 13:02:47: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 13:09:52: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 13:46:54: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 13:51:38: 	400 || Not Found - /item/babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Oct-17-2021 13:51:42: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 13:51:44: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 13:56:55: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 13:57:02: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 14:06:32: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 14:06:35: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 14:09:28: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 14:09:32: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 14:16:01: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 14:16:15: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 14:28:25: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 14:28:27: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 14:41:56: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-17-2021 14:42:08: 	Server started and running on http://localhost:5000
+error: Oct-17-2021 14:44:08: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:23:31: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+error: Oct-18-2021 13:23:46: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:23:52: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 13:30:35: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:30:45: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 13:32:44: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:33:00: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 13:36:51: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:36:57: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 13:43:22: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:43:36: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 13:49:57: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:50:01: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 13:52:03: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:52:07: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 13:53:30: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:54:31: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 13:56:30: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 13:59:25: 	Server started and running on http://localhost:5000
+error: Oct-18-2021 14:51:19: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 14:51:41: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+error: Oct-18-2021 14:51:48: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Oct-18-2021 14:51:56: 	Server started and running on http://localhost:5000

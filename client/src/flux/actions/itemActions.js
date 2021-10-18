@@ -93,28 +93,6 @@ export const getItemById = (id) => async (dispatch, getState) => {
     });
 };
 
-// export const addItem = (item) => (
-//   dispatch,
-//   getState
-//   ) => {
-//     axios
-//     .post('/api/items', item, tokenConfig(getState))
-//     .then(res=>
-//         dispatch({
-//             type: ADD_ITEM,
-//             payload: res.data
-//         })
-//         )
-//         .catch(err => {
-//           dispatch(
-//             returnErrors(err.response.data, err.response.status, 'ITEM_ERROR')
-//             );
-//           dispatch({
-//             type: ITEM_ERROR
-//           });
-//         });
-// };
-
 export const submitItem = (item) => async (dispatch, getState) => {
   const responseToken = await tokenConfig();
   axios
@@ -161,46 +139,22 @@ export const updateItemEndDate = (item) => async (dispatch, getState) => {
     });
 };
 
-// export const updateItemBid = (item) => async(
-//     dispatch,
-//     getState
-//     ) => {
-
-//     const header = await tokenConfig();
-
-//     axios
-//     .put(`/api/items/${item._id}`, item, header)
-//     .then(res=>
-//       dispatch({
-//         type: BID_ITEM,
-//         payload: res.data
-//       }))
-//       .catch(err => {
-//         dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
-//         dispatch({
-//           type: ITEM_ERROR
-//         });
-//       });
-//   };
-
-export const bidOnItem = (item) => async (dispatch, getState) => {
+export const bidOnItemOriginal = (item) => async (dispatch, getState) => {
   const responseToken = await tokenConfig();
-
   axios
     .post(`/api/items/bid/${item._id}`, item, responseToken.config)
-    // .then(res=>{
-    //     let stripe_bid = item;
-    //     axios
-    //     .post('/api/stripe/bid', stripe_bid, header)
-    //       dispatch({
-    //         type: BID_ITEM,
-    //         payload: res.data
-    //       })
-    //       ReactGA.event({
-    //         category: "Auction",
-    //         action: "User placed a bid",
-    //       })
-    //   })
+    .then((res) => {
+      let stripe_bid = item;
+      axios.post("/api/stripe/bid", stripe_bid, responseToken.config);
+      dispatch({
+        type: BID_ITEM,
+        payload: res.data,
+      });
+      ReactGA.event({
+        category: "Auction",
+        action: "User placed a bid",
+      });
+    })
     .catch((err) => {
       dispatch(
         returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
@@ -211,9 +165,80 @@ export const bidOnItem = (item) => async (dispatch, getState) => {
     });
 };
 
+export const bidOnItem = (item) => async () => {
+  socket.emit("bidOnItem", item, async (dispatch) => {
+    try {
+      const responseToken = await tokenConfig();
+      let stripe_bid = item;
+      console.log(stripe_bid);
+      // axios
+      //   .post("/api/stripe/bid", stripe_bid, responseToken.config)
+      //   .then((res) => {
+      //     dispatch({
+      //       type: BID_ITEM,
+      //       payload: res.data,
+      //     });
+      //   });
+      // ReactGA.event({
+      //   category: "Auction",
+      //   action: "User placed a bid",
+      // });
+    } catch (err) {
+      dispatch(
+        returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
+      );
+      dispatch({
+        type: ITEM_ERROR,
+      });
+    }
+  });
+};
+
 export const commentItem = (item) => async () => {
   socket.emit("commentItem", item);
 };
+
+export const setCurrentItem = (item) => {
+  return {
+    type: SET_CURRENTITEM,
+    payload: item,
+  };
+};
+
+// clear current log
+export const clearCurrentItem = () => {
+  return {
+    type: CLEAR_CURRENTITEM,
+  };
+};
+
+export const setItemsLoading = () => {
+  return {
+    type: ITEMS_LOADING,
+  };
+};
+
+// export const addItem = (item) => (
+//   dispatch,
+//   getState
+//   ) => {
+//     axios
+//     .post('/api/items', item, tokenConfig(getState))
+//     .then(res=>
+//         dispatch({
+//             type: ADD_ITEM,
+//             payload: res.data
+//         })
+//         )
+//         .catch(err => {
+//           dispatch(
+//             returnErrors(err.response.data, err.response.status, 'ITEM_ERROR')
+//             );
+//           dispatch({
+//             type: ITEM_ERROR
+//           });
+//         });
+// };
 
 //   export const deleteItem = (id) => (
 //     dispatch,
@@ -235,22 +260,24 @@ export const commentItem = (item) => async () => {
 //     });
 // };
 
-export const setCurrentItem = (item) => {
-  return {
-    type: SET_CURRENTITEM,
-    payload: item,
-  };
-};
+// export const updateItemBid = (item) => async(
+//     dispatch,
+//     getState
+//     ) => {
 
-// clear current log
-export const clearCurrentItem = () => {
-  return {
-    type: CLEAR_CURRENTITEM,
-  };
-};
+//     const header = await tokenConfig();
 
-export const setItemsLoading = () => {
-  return {
-    type: ITEMS_LOADING,
-  };
-};
+//     axios
+//     .put(`/api/items/${item._id}`, item, header)
+//     .then(res=>
+//       dispatch({
+//         type: BID_ITEM,
+//         payload: res.data
+//       }))
+//       .catch(err => {
+//         dispatch(returnErrors(err.response.data, err.response.status, 'ITEM_ERROR'));
+//         dispatch({
+//           type: ITEM_ERROR
+//         });
+//       });
+//   };

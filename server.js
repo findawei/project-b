@@ -140,6 +140,7 @@ const httpServer = createServer(app);
 const io = new Server(httpServer);
 
 io.on("connection", async (socket) => {
+  // socket.removeAllListeners();
   const token = socket.handshake.auth.token;
   let authUser;
   try {
@@ -157,7 +158,7 @@ io.on("connection", async (socket) => {
   // }
 
   socket.on("disconnect", () => {
-    io.socket.removeAllListeners();
+    socket.removeAllListeners();
     console.log("user disconnected");
   });
 });
