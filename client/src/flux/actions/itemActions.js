@@ -10,6 +10,7 @@ import {
   ADD_ITEM,
   DELETE_ITEM,
   BID_ITEM,
+  SET_SEARCH,
   COMMENT_ITEM,
   SUBMIT_ITEM,
   GET_ITEMS_REVIEW,
@@ -120,7 +121,6 @@ export const submitItem = (item) => async (dispatch, getState) => {
 
 export const updateItemEndDate = (item) => async (dispatch, getState) => {
   const responseToken = await tokenConfig();
-
   axios
     .put(`/api/items/endDate/${item._id}`, item, responseToken.config)
     .then((res) =>
@@ -129,32 +129,6 @@ export const updateItemEndDate = (item) => async (dispatch, getState) => {
         payload: res.data,
       })
     )
-    .catch((err) => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
-      );
-      dispatch({
-        type: ITEM_ERROR,
-      });
-    });
-};
-
-export const bidOnItemOriginal = (item) => async (dispatch, getState) => {
-  const responseToken = await tokenConfig();
-  axios
-    .post(`/api/items/bid/${item._id}`, item, responseToken.config)
-    .then((res) => {
-      let stripe_bid = item;
-      axios.post("/api/stripe/bid", stripe_bid, responseToken.config);
-      dispatch({
-        type: BID_ITEM,
-        payload: res.data,
-      });
-      ReactGA.event({
-        category: "Auction",
-        action: "User placed a bid",
-      });
-    })
     .catch((err) => {
       dispatch(
         returnErrors(err.response.data, err.response.status, "ITEM_ERROR")
@@ -201,6 +175,13 @@ export const setCurrentItem = (item) => {
   return {
     type: SET_CURRENTITEM,
     payload: item,
+  };
+};
+
+export const setSearchTerm = (searchTerm) => {
+  return {
+    type: SET_SEARCH,
+    payload: searchTerm,
   };
 };
 

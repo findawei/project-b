@@ -7,7 +7,7 @@ import Listing from "./Listing";
 import { isFuture, isPast } from "date-fns";
 import FileUpload from "./FileUpload";
 
-const Auctions = ({ getItems, item }) => {
+const Auctions = ({ getItems, item, searchTerm }) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -23,6 +23,8 @@ const Auctions = ({ getItems, item }) => {
   }, [getItems]);
 
   const { items } = item;
+
+  console.log(searchTerm);
 
   return (
     <div className={classes.root}>

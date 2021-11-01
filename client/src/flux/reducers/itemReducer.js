@@ -6,6 +6,7 @@ import {
   ITEMS_LOADING,
   UPDATE_ITEM,
   SET_CURRENTITEM,
+  SET_SEARCH,
   BID_ITEM,
   CLEAR_CURRENT,
   ITEM_ERROR,
@@ -19,6 +20,7 @@ const initialState = {
   items_review: [],
   currentItem: [],
   loading: false,
+  searchTerm: "",
 };
 
 export default function (state = initialState, action) {
@@ -85,6 +87,12 @@ export default function (state = initialState, action) {
         ...state,
         currentItem: action.payload,
       };
+    case SET_SEARCH:
+      return {
+        ...state,
+        searchTerm: action.payload,
+      };
+
     case CLEAR_CURRENT:
       return {
         ...state,

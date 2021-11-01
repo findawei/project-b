@@ -38,18 +38,18 @@ router.get("/", async (req, res) => {
     });
     if (!items) throw Error("No items");
 
-    await Promise.all(
-      items.map(async (item) => {
-        if (item.chart) {
-          const fetchdata = await fetch(`${item.chart.url}`);
-          const data = await fetchdata.json();
-          // // console.log(data);
-          if (!data) throw Error("No chart data");
-          // console.log(fetchdata);
-          item.chart.data = data.data;
-        }
-      })
-    );
+    // await Promise.all(
+    //   items.map(async (item) => {
+    //     if (item.chart) {
+    //       const fetchdata = await fetch(`${item.chart.url}`);
+    //       const data = await fetchdata.json();
+    //       // // console.log(data);
+    //       if (!data) throw Error("No chart data");
+    //       // console.log(fetchdata);
+    //       item.chart.data = data.data;
+    //     }
+    //   })
+    // );
 
     res.status(200).json(items);
   } catch (e) {
