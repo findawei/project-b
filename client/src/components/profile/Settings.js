@@ -117,13 +117,13 @@ const Settings = ({ getCard, stripeRedux, auth }) => {
                 <br />
               </Grid>
 
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <Typography component="div">
                   <Box fontWeight="fontWeightBold" py={1}>
                     Referral Program
                   </Box>
                 </Typography>
-              </Grid>
+              </Grid> */}
               {/* <Grid item xs={12}>
                 <Link
                   className={classes.link}

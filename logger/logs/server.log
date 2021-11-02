@@ -5536,3 +5536,7 @@ info: Nov-01-2021 15:55:34: 	Server started and running on http://localhost:5000
 error: Nov-01-2021 15:59:54: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
 info: Nov-01-2021 16:00:03: 	Server started and running on http://localhost:5000
 error: Nov-01-2021 16:02:07: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-02-2021 10:00:59: 	Server started and running on http://localhost:5000
+error: Nov-02-2021 10:07:37: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-02-2021 10:07:40: 	Server started and running on http://localhost:5000
+error: Nov-02-2021 10:39:29: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined

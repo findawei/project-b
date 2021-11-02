@@ -74,7 +74,7 @@ router.get("/for_review", async (req, res) => {
         endDate: 1,
       });
       if (!items) throw Error("No items");
-      res.status(200).json(auth);
+      res.status(200).json(items);
     } catch (e) {
       res.status(400).json({ msg: e.message });
       auctionsLogger.error(
