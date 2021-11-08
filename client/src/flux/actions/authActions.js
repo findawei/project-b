@@ -85,7 +85,7 @@ export const verifyEmail = () => async (dispatch, getState) => {
 };
 
 // Register User
-export const register =
+export const registerUser =
   ({ email, password, displayName }) =>
   async (dispatch) => {
     try {
@@ -106,6 +106,12 @@ export const register =
                 type: REGISTER_SUCCESS,
                 payload: user,
               });
+
+              //Add new user to growsurf
+              if (window.growsurf) {
+                window.growsurf.addParticipant(email);
+              }
+
               const responseToken = await tokenConfig();
               try {
                 axios.post("/api/auth/", {}, responseToken.config).then((res) =>

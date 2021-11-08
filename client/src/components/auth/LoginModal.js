@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import {
   login,
-  register,
+  registerUser,
   resetPassword,
   captchaSubmit,
 } from "../../flux/actions/authActions";
@@ -29,7 +29,7 @@ const LoginModal = ({
   authMsg,
   auth,
   login,
-  register,
+  registerUser,
   resetPassword,
   captchaSubmit,
   passInButton,
@@ -83,10 +83,12 @@ const LoginModal = ({
     setOpen(false);
   };
 
-  const { control, handleSubmit, formState, reset, errors } = useForm({
-    defaultValues: { ...initialValues },
-    mode: "onChange",
-  });
+  const { register, control, handleSubmit, formState, reset, errors } = useForm(
+    {
+      defaultValues: { ...initialValues },
+      mode: "onChange",
+    }
+  );
 
   const [user, setUser] = useState();
   const [newUser, setNewUser] = useState(true);
@@ -95,24 +97,11 @@ const LoginModal = ({
   const [resetButton, setButton] = useState("Reset Password");
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  /**
-   *
-   * @param _fieldName
-   */
-  const showError = (_fieldName) => {
-    let error = (!!errors)[_fieldName];
-    return error ? (
-      <div style={{ color: "red", fontWeight: "bold" }}>
-        {error.message || "Field Is Required"}
-      </div>
-    ) : null;
-  };
-
   const handleOnSubmit = (user) => {
     // Attempt to login
     if (newUser) {
       // signup
-      register(user);
+      registerUser(user);
     } else {
       if (pwreset) {
         // reset password
@@ -192,51 +181,54 @@ const LoginModal = ({
           )}
         </Box>
         <Box mb={1}>
-          <div>
-            <Controller
-              as={TextField}
-              size="small"
-              fullWidth
-              variant="outlined"
-              type="email"
-              placeholder="Email"
-              control={control}
-              onChange={([selected]) => {
-                return selected.detail.value;
-              }}
-              name="email"
-              rules={{
-                required: true,
-              }}
-            />
-          </div>
-          {showError("email")}
+          <TextField
+            name="email"
+            id="email"
+            variant="outlined"
+            size="small"
+            placeholder="Email"
+            fullWidth
+            inputRef={register({
+              required: "Email cannot be empty",
+            })}
+            InputProps={{ className: classes.textinput }}
+            error={!!errors.email}
+          />
+          {errors.email && (
+            <span
+              style={{ color: "red", fontWeight: "bold" }}
+              className={classes.error}
+            >
+              {errors.email.message}
+            </span>
+          )}
         </Box>
         {/* {authMsg && <p className="auth-message">{authMsg}</p>}
           {console.log(authMsg)} */}
         <Box mb={1}>
           {!pwreset && (
             <div>
-              <div>
-                <Controller
-                  as={TextField}
-                  size="small"
-                  fullWidth
-                  variant="outlined"
-                  type="password"
-                  placeholder="Password"
-                  control={control}
-                  onChangeName="onIonChange"
-                  onChange={([selected]) => {
-                    return selected.detail.value;
-                  }}
-                  name="password"
-                  rules={{
-                    required: true,
-                  }}
-                />
-              </div>
-              {showError("password")}
+              <TextField
+                name="password"
+                id="password"
+                variant="outlined"
+                size="small"
+                placeholder="Password"
+                fullWidth
+                inputRef={register({
+                  required: "Password cannot be empty",
+                })}
+                InputProps={{ className: classes.textinput }}
+                error={!!errors.password}
+              />
+              {errors.password && (
+                <span
+                  style={{ color: "red", fontWeight: "bold" }}
+                  className={classes.error}
+                >
+                  {errors.password.message}
+                </span>
+              )}
             </div>
           )}
         </Box>
@@ -244,31 +236,30 @@ const LoginModal = ({
         <Box mb={1}>
           {!pwreset && newUser && (
             <div>
-              <div>
-                <Controller
-                  as={TextField}
-                  size="small"
-                  fullWidth
-                  defaultValue=""
-                  variant="outlined"
-                  type="displayName"
-                  placeholder="Username"
-                  control={control}
-                  onChangeName="onIonChange"
-                  onChange={([selected]) => {
-                    return selected.detail.value;
-                  }}
-                  name="displayName"
-                  rules={{
-                    required: true,
-                  }}
-                />
-              </div>
-              {showError("displayName")}
+              <TextField
+                name="displayName"
+                id="displayName"
+                variant="outlined"
+                size="small"
+                placeholder="Username"
+                fullWidth
+                inputRef={register({
+                  required: "Username cannot be empty",
+                })}
+                InputProps={{ className: classes.textinput }}
+                error={!!errors.displayName}
+              />
+              {errors.displayName && (
+                <span
+                  style={{ color: "red", fontWeight: "bold" }}
+                  className={classes.error}
+                >
+                  {errors.displayName.message}
+                </span>
+              )}
             </div>
           )}
         </Box>
-
         <Box mb={1}>
           {pwreset ? (
             ""
@@ -285,7 +276,7 @@ const LoginModal = ({
             color="primary"
             variant="contained"
             fullWidth
-            disabled={(newUser && auth.captcha != "success") || buttonDisabled}
+            disabled={(newUser && auth.captcha !== "success") || buttonDisabled}
           >
             {
               //     loading ? (
@@ -297,7 +288,7 @@ const LoginModal = ({
           {!newUser && !pwreset && (
             <div onClick={() => SetReset(true)}>Forgot password?</div>
           )}
-          {auth.authMsg == "Invalid login credentials" ? (
+          {auth.authMsg === "Invalid login credentials" ? (
             <Alert severity={"error"}>Invalid login credentials</Alert>
           ) : (
             ""
@@ -329,6 +320,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   login,
   resetPassword,
-  register,
+  registerUser,
   captchaSubmit,
 })(LoginModal);
