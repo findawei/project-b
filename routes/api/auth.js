@@ -143,7 +143,7 @@ router.get("/user", async (req, res) => {
       }
       res.json(user);
     } catch (e) {
-      res.status(400).json({ msg: e.message });
+      res.status(400).json(e);
       usersLogger.error(
         `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${e.message} - ${auth.email} - ${auth.uid}`
       );

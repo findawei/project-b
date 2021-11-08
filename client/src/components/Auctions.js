@@ -24,7 +24,7 @@ const Auctions = ({ getItems, item, searchTerm }) => {
 
   const { items } = item;
 
-  console.log(searchTerm);
+  // console.log(searchTerm);
 
   return (
     <div className={classes.root}>

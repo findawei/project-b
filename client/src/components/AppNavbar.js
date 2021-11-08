@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import LoginModal from "./auth/LoginModal";
-import SellLoginModal from "./auth/SellLoginModal";
 import { connect } from "react-redux";
 import LoggedInMenu from "./LoggedInMenu";
 import {
@@ -106,7 +105,7 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
     setSearch(searchTerm);
     setSearchTerm(searchTerm);
   };
-  console.log(searchTerm);
+  // console.log(searchTerm);
 
   useEffect(() => {
     if (auth.authMsg === "You haven't verified your e-mail address.") {
@@ -134,6 +133,12 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
   const refreshPage = () => {
     window.location.reload();
   };
+
+  const passInButton = (
+    <Button type="button" size="small">
+      Sign Up
+    </Button>
+  );
 
   return (
     <div className={classes.root}>
@@ -169,7 +174,11 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
                 Sell your Watch
               </Link>
             </Button>
-            {auth && auth.isAuthenticated ? <LoggedInMenu /> : <LoginModal />}
+            {auth && auth.isAuthenticated ? (
+              <LoggedInMenu />
+            ) : (
+              <LoginModal passInButton={passInButton} />
+            )}
             {/* <Button onClick={handleClickOpen}>Test</Button> */}
             <Dialog
               open={open}
@@ -200,8 +209,11 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
             </Dialog>
           </div>
           <div className={classes.sectionMobile}>
-            {auth && auth.isAuthenticated ? <LoggedInMenu /> : <LoginModal />}
-            {/* <Button onClick={handleClickOpen}>Test</Button> */}
+            {auth && auth.isAuthenticated ? (
+              <LoggedInMenu />
+            ) : (
+              <LoginModal passInButton={passInButton} />
+            )}
             <Dialog
               open={open}
               onClose={handleClose}

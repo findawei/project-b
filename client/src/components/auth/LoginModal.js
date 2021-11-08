@@ -32,6 +32,7 @@ const LoginModal = ({
   register,
   resetPassword,
   captchaSubmit,
+  passInButton,
 }) => {
   let initialValues = {
     email: "",
@@ -311,9 +312,7 @@ const LoginModal = ({
 
   return (
     <div>
-      <Button type="button" onClick={handleOpen} size="small">
-        Sign Up
-      </Button>
+      <div onClick={handleOpen}>{passInButton}</div>
       <Modal open={open} onClose={handleClose}>
         {body}
       </Modal>

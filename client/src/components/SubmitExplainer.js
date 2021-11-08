@@ -21,7 +21,7 @@ import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import MoneyOutlinedIcon from "@material-ui/icons/MoneyOutlined";
 import MonetizationOnOutlinedIcon from "@material-ui/icons/MonetizationOnOutlined";
 import { connect } from "react-redux";
-import SellLoginModal from "./auth/SellLoginModal";
+import LoginModal from "./auth/LoginModal";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
 import StepLabel from "@material-ui/core/StepLabel";
@@ -103,6 +103,12 @@ const SubmitExplainer = ({ auth }) => {
   const [activeStep, setActiveStep] = useState(0, 0);
 
   const classes = useStyles();
+
+  const passInButton = (
+    <Button type="button" variant="contained" color="primary">
+      Submit Your Watch
+    </Button>
+  );
 
   return (
     <div>
@@ -272,7 +278,7 @@ const SubmitExplainer = ({ auth }) => {
               ) : (
                 <div>
                   <Box textAlign="center">
-                    <SellLoginModal />
+                    <LoginModal passInButton={passInButton} />
                   </Box>
                 </div>
               )}

@@ -54,10 +54,9 @@ import {
   updateItemEndDate,
 } from "../flux/actions/itemActions";
 import BidHistoryComponent from "./BidHistoryComponent";
-import LoginModalBid from "./auth/LoginModalBid";
+import LoginModal from "./auth/LoginModal";
 import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import CommentsAndBids from "./CommentsAndBids";
-import LoginModalComment from "./auth/LoginModalComment";
 import Gallery from "./Gallery";
 import { paymentIntent } from "../flux/actions/stripeActions";
 import EndingSoon from "./EndingSoon";
@@ -316,6 +315,23 @@ const ListingDetails = ({
       transform: `translate(-${top}%, -${left}%)`,
     };
   }
+
+  const passInButton = (
+    <Button
+      type="button"
+      variant="contained"
+      color="primary"
+      fullWidth
+      size="large"
+    >
+      Place Bid
+    </Button>
+  );
+  const passInButtonComments = (
+    <IconButton color="primary" type="button">
+      <ArrowDownwardIcon />
+    </IconButton>
+  );
 
   const handleOpen = () => {
     setOpen(true);
@@ -679,7 +695,7 @@ const ListingDetails = ({
                           Place Bid
                         </Button>
                       ) : (
-                        <LoginModalBid />
+                        <LoginModal passInButton={passInButton} />
                       )}
                     </div>
                   )}
@@ -1203,7 +1219,9 @@ const ListingDetails = ({
                                   <ArrowDownwardIcon />
                                 </IconButton>
                               ) : (
-                                <LoginModalComment />
+                                <LoginModal
+                                  passInButton={passInButtonComments}
+                                />
                               )}
                             </div>
                           ),

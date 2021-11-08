@@ -89,10 +89,6 @@ const LoggedInMenu = ({ logout }) => {
           <ListItemIcon>{/* <SettingsIcon /> */}</ListItemIcon>
           <ListItemText primary="Invite Friends" />
         </ListItem>
-        <ListItem button component={RouterLink} to="/invite-friends">
-          <ListItemIcon>{/* <SettingsIcon /> */}</ListItemIcon>
-          <ListItemText primary="My Bonuses" />
-        </ListItem>
       </List>
       <Divider />
       <List>

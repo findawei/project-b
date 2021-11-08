@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { format } from "date-fns";
 import {
@@ -65,6 +65,30 @@ const useStyles = makeStyles((theme) => ({
 const InviteFriends = ({ auth }) => {
   const classes = useStyles();
 
+  // const [growsurfActive, setGrowSurf] = useState(false);
+
+  // useEffect(() => {
+  //   if (growsurfActive === false) {
+  //     const script = document.createElement("script");
+  //     script.src = "https://app.growsurf.com/growsurf.js?v=2.0.0";
+  //     script.setAttribute("grsf-campaign", "04tse5");
+  //     script.async = true;
+  //     document.head.appendChild(script);
+
+  //     window.addEventListener("grsfReady", () => {
+  //       console.log("GrowSurf is Ready!");
+  //       // Your code goes here....
+  //       setGrowSurf(true);
+  //     });
+  //   }
+  // }, []);
+
+  const signUpFree = () => {
+    // Then add the new user as a participant in your GrowSurf campaign
+    window.growsurf.addParticipant("phil@gmail.com");
+    console.log("phil@gmail.com");
+  };
+
   return (
     <div>
       <Paper className={classes.paperContainer} square elevation={0}>
@@ -104,7 +128,11 @@ const InviteFriends = ({ auth }) => {
               >
                 <Grid item xs={12}>
                   <Box textAlign="center">
-                    <Button variant="contained" color="primary">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={signUpFree}
+                    >
                       Reveal my referral code
                     </Button>
                   </Box>

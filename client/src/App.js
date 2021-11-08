@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, lazy, Suspense } from "react";
+import React, { Fragment, useEffect, useState, lazy, Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "fontsource-roboto";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -42,6 +42,24 @@ history.listen((location) => {
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
+  }, []);
+
+  const [growsurfActive, setGrowSurf] = useState(false);
+
+  useEffect(() => {
+    if (growsurfActive === false) {
+      const script = document.createElement("script");
+      script.src = "https://app.growsurf.com/growsurf.js?v=2.0.0";
+      script.setAttribute("grsf-campaign", "04tse5");
+      script.async = true;
+      document.head.appendChild(script);
+
+      window.addEventListener("grsfReady", () => {
+        console.log("GrowSurf is Ready!");
+        // Your code goes here....
+        setGrowSurf(true);
+      });
+    }
   }, []);
 
   return (
