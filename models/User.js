@@ -1,35 +1,61 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const dateThirty = new Date();
+dateThirty.setDate(dateThirty.getDate() + 30);
+
 // Create Schema
 const UserSchema = new Schema({
   uid: {
     type: String,
-    required: true
+    required: true,
   },
   name: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   date: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
-  role:{
+  role: {
     type: String,
-    required: false
+    required: false,
   },
-  email:{
+  email: {
     type: String,
-    unique: true
+    unique: true,
   },
   stripe_id: {
-    type: String
+    type: String,
   },
   stripe_cc: {
-    type: String
-  }
+    type: String,
+  },
+  rewards: [
+    {
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+      validUntil: {
+        type: Date,
+        default: () => new Date(+new Date() + 30 * 24 * 60 * 60 * 1000),
+      },
+      dateUsed: Date,
+      isReferrer: Boolean,
+      title: String,
+      description: String,
+      rewardId: String,
+      referredId: String,
+      referrerId: String,
+      status: String,
+      metadata: {
+        amount: Number,
+      },
+    },
+  ],
 });
 
 module.exports = User = mongoose.model("users", UserSchema);

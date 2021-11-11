@@ -2,10 +2,11 @@ import React, { Component } from "react";
 import {
   Divider,
   Typography,
+  Paper,
   Container,
   Toolbar,
-  Grid,
 } from "@material-ui/core/";
+import Grid from "@material-ui/core/grid";
 import { makeStyles } from "@material-ui/styles";
 import InstagramIcon from "@material-ui/icons/Instagram";
 // import { Link as RouterLink} from 'react-router-dom';
@@ -14,7 +15,8 @@ import { HashLink as Link } from "react-router-hash-link";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    margin: 10,
+    // marginTop: 30,
+    backgroundColor: "#d6d1bc",
   },
 }));
 
@@ -24,18 +26,15 @@ export default function Footer() {
   return (
     <div className={classes.root}>
       <br />
-      <Divider />
-      <br />
       <Container>
         <Grid
           container
           spacing={3}
           direction="row"
-          justify="flex-start"
+          justifyContent="space-around"
           alignItems="flex-start"
-          alignContent="center"
         >
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4}>
             <Typography variant="overline">How To</Typography>
             <Typography variant="subtitle2">
               <Link
@@ -74,7 +73,7 @@ export default function Footer() {
               </Link>
             </Typography>
           </Grid>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4}>
             <Typography variant="overline">For Sellers</Typography>
             <Typography variant="subtitle2">
               <Link
@@ -87,7 +86,7 @@ export default function Footer() {
             </Typography>
             {/* <Typography variant="subtitle2">Photography Guide</Typography> */}
           </Grid>
-          <Grid item xs={4} sm={3}>
+          <Grid item xs={4}>
             <Typography variant="overline">Help</Typography>
             <Typography variant="subtitle2">
               <a
@@ -108,8 +107,6 @@ export default function Footer() {
                 About
               </Link>
             </Typography>
-          </Grid>
-          <Grid item xs={12} sm={3}>
             <a
               style={{ textDecoration: "none", color: "inherit" }}
               href="https://www.instagram.com/nowaitlist.co"
@@ -117,13 +114,26 @@ export default function Footer() {
             >
               <InstagramIcon />
             </a>
-            <br />
+          </Grid>
+        </Grid>
+        <br />
+        <Divider />
+        <br />
+        <Grid
+          container
+          direction="row"
+          justifyContent="space-between"
+          alignItems="flex-start"
+        >
+          <Grid item xs={6}>
             <Typography variant="subtitle2" color="inherit">
-              Copyright © {new Date().getFullYear()} NoWaitList. All Rights
-              Reserved
-            </Typography>{" "}
-            <br />
-            <Typography variant="subtitle2" color="inherit">
+              © {new Date().getFullYear()} NoWaitList™. All Rights Reserved.
+              <br />
+              Made with ❤️ from Montreal
+            </Typography>
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="subtitle2" color="inherit" align="right">
               <Link
                 className={classes.link}
                 style={{ textDecoration: "none", color: "inherit" }}
@@ -142,6 +152,7 @@ export default function Footer() {
             </Typography>
           </Grid>
         </Grid>
+        <br />
       </Container>
     </div>
   );

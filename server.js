@@ -20,7 +20,6 @@ const { serverLogger } = require("./logger/logger");
 var toobusy = require("toobusy-js");
 var hpp = require("hpp");
 var nodemailer = require("nodemailer");
-const scraper = require("./scraper/scraper");
 const helmet = require("helmet");
 
 const { createServer } = require("http");

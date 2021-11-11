@@ -228,6 +228,38 @@ router.post("/captcha", async (req, res) => {
   }
 });
 
+//Your webhooks payload endpoint
+router.post("/webhook/growsurf", async (req, res) => {
+  const body = req.body;
+  let result;
+
+  // For double-sided rewards, two events will be sent for both referrer and referee. To discern between the two, use the data.reward.isReferrer property (the referrer will have isReferrer as true).
+
+  //Referrer
+  body.data.reward.isReferrer;
+  //Referred (friend that got invited)
+  body.data.reward.isReferrer === false;
+
+  try {
+    if (body.event === "PARTICIPANT_REACHED_A_GOAL") {
+      // Write code here to do something when a participant wins a reward
+      result = `${body.data.participant.email} just won this reward: ${body.data.reward.description}`;
+
+      //Add reward to user
+    } else if (body.event === "NEW_PARTICIPANT_ADDED") {
+      // Write code here to do something when a new participant is added
+      result = `${body.data.email} just joined via source: ${body.data.referralSource}.`;
+    } else if (body.event === "CAMPAIGN_ENDED") {
+      // Write code here to do something when a campaign ends
+      result = `${body.data.name} just ended with ${body.data.referralCount} total referrals!`;
+    }
+    console.log(result);
+    res.status(200).json(result);
+  } catch (e) {
+    res.status(400).json(e);
+  }
+});
+
 // router.post('/test', async (req, res) =>{
 //   const auth = req.currentUser;
 //   if(auth){

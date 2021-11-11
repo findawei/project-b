@@ -100,14 +100,14 @@ router.get("/:id", async (req, res) => {
 
     //Scenario 1
     //Watch chart exists
-    if (item.chart) {
-      const fetchdata = await fetch(`${item.chart.url}`);
-      const data = await fetchdata.json();
-      // console.log(data);
-      if (!data) throw Error("No chart data");
+    // if (item.chart) {
+    //   const fetchdata = await fetch(`${item.chart.url}`);
+    //   const data = await fetchdata.json();
+    //   // console.log(data);
+    //   if (!data) throw Error("No chart data");
 
-      item.chart.data = data.data;
-    }
+    //   item.chart.data = data.data;
+    // }
 
     //Scenario 2
     //Watch chart doesn't exist
@@ -351,95 +351,95 @@ router.put("/endDate/:id", async (req, res) => {
 // @route    POST api/items/bid/:id
 // @desc     Bid history on an auction
 // @access   Private
-router.post("/bid/:id", async (req, res) => {
-  const auth = req.currentUser;
+// router.post("/bid/:id", async (req, res) => {
+//   const auth = req.currentUser;
 
-  if (auth) {
-    const item = await Item.findById({ _id: req.params.id });
+//   if (auth) {
+//     const item = await Item.findById({ _id: req.params.id });
 
-    try {
-      if (isFuture(item.endDate)) {
-        const newBid = {
-          bid: req.body.bid,
-          name: req.currentUser.name,
-          user: req.currentUser.uid,
-        };
-        item.bidHistory.unshift(newBid);
+//     try {
+//       if (isFuture(item.endDate)) {
+//         const newBid = {
+//           bid: req.body.bid,
+//           name: req.currentUser.name,
+//           user: req.currentUser.uid,
+//         };
+//         item.bidHistory.unshift(newBid);
 
-        await item.save();
+//         await item.save();
 
-        res.json(item.bidHistory);
+//         res.json(item.bidHistory);
 
-        // email previous highest bidder let them know they've been outbid
-        if (item.bidHistory[1]) {
-          //get previous bidder email
-          const previousBidder = await user.findOne({
-            uid: item.bidHistory[1].user,
-          });
-          //Send email to site admin
-          const filePath = path.join(
-            __dirname,
-            "../../email/template_outbid.html"
-          );
-          const source = fs.readFileSync(filePath, "utf-8").toString();
-          const template = handlebars.compile(source);
-          const replacements = {
-            name: previousBidder.name,
-            brand: item.brand,
-            model: item.model,
-            item_image: item.img[0].url,
-            amount: item.bidHistory[0].bid,
-            reference: item.reference_number,
-            year: item.year,
-            endDate: item.endDate.toISOString().substring(0, 10),
-            // receipt_id: item._id.substring(0,8),
-            auction_id: item._id,
-            description: `${item.brand} ${item.model} ${item.reference_number} - ${item.year}`,
-          };
-          const htmlToSend = template(replacements);
+//         // email previous highest bidder let them know they've been outbid
+//         if (item.bidHistory[1]) {
+//           //get previous bidder email
+//           const previousBidder = await user.findOne({
+//             uid: item.bidHistory[1].user,
+//           });
+//           //Send email to site admin
+//           const filePath = path.join(
+//             __dirname,
+//             "../../email/template_outbid.html"
+//           );
+//           const source = fs.readFileSync(filePath, "utf-8").toString();
+//           const template = handlebars.compile(source);
+//           const replacements = {
+//             name: previousBidder.name,
+//             brand: item.brand,
+//             model: item.model,
+//             item_image: item.img[0].url,
+//             amount: item.bidHistory[0].bid,
+//             reference: item.reference_number,
+//             year: item.year,
+//             endDate: item.endDate.toISOString().substring(0, 10),
+//             // receipt_id: item._id.substring(0,8),
+//             auction_id: item._id,
+//             description: `${item.brand} ${item.model} ${item.reference_number} - ${item.year}`,
+//           };
+//           const htmlToSend = template(replacements);
 
-          mailOptions = {
-            from: '"No Wait List" <info@nowaitlist.co>',
-            to: previousBidder.email,
-            subject: `Outbid notice: Bid again on the ${replacements.brand} ${replacements.model}`,
-            html: htmlToSend,
-          };
-          mailer.transport.sendMail(mailOptions, (error, info) => {
-            if (error) {
-              console.log(error);
-              res.status(400).json("Something went wrong.");
-              auctionsLogger.error(
-                `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`
-              );
-            }
-          });
-        }
-        auctionsLogger.info(
-          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid successfully - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
-        );
-      } else {
-        console.log("Cannot bid on closed auction.");
-        res.status(400).send("Cannot bid on closed auction.");
-        auctionsLogger.error(
-          `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Cannot bid on closed auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
-        );
-      }
-    } catch (err) {
-      console.error(err.message);
-      res.status(400).send("Server Error");
-      auctionsLogger.error(
-        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
-      );
-    }
-    return;
-  } else
-    return (
-      res.status(403).send("Not authorized"),
-      auctionsLogger.error(
-        `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
-      )
-    );
-});
+//           mailOptions = {
+//             from: '"No Wait List" <info@nowaitlist.co>',
+//             to: previousBidder.email,
+//             subject: `Outbid notice: Bid again on the ${replacements.brand} ${replacements.model}`,
+//             html: htmlToSend,
+//           };
+//           mailer.transport.sendMail(mailOptions, (error, info) => {
+//             if (error) {
+//               console.log(error);
+//               res.status(400).json("Something went wrong.");
+//               auctionsLogger.error(
+//                 `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${error} - ${auth.email} - ${auth.uid}`
+//               );
+//             }
+//           });
+//         }
+//         auctionsLogger.info(
+//           `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Bid successfully - Bid: ${newBid.bid} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+//         );
+//       } else {
+//         console.log("Cannot bid on closed auction.");
+//         res.status(400).send("Cannot bid on closed auction.");
+//         auctionsLogger.error(
+//           `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - Cannot bid on closed auction - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+//         );
+//       }
+//     } catch (err) {
+//       console.error(err.message);
+//       res.status(400).send("Server Error");
+//       auctionsLogger.error(
+//         `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip} - ${err.message} - Auction_ID: ${req.params.id} - ${auth.email} - ${auth.uid}`
+//       );
+//     }
+//     return;
+//   } else
+//     return (
+//       res.status(403).send("Not authorized"),
+//       auctionsLogger.error(
+//         `${res.statusMessage} - ${req.originalUrl} - ${req.method} - ${req.ip}`
+//       )
+//     );
+// });
 
 // @route    POST api/items/comment/:id
 // @desc     Bid history on an auction

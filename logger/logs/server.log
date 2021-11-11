@@ -5603,3 +5603,32 @@ error: Nov-08-2021 14:01:04: 	503 - 'uncaughtException' -  - undefined - undefin
 info: Nov-08-2021 14:01:15: 	Server started and running on http://localhost:5000
 error: Nov-08-2021 15:00:16: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
 info: Nov-08-2021 15:15:44: 	Server started and running on http://localhost:5000
+error: Nov-08-2021 18:07:01: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-08-2021 18:07:04: 	Server started and running on http://localhost:5000
+error: Nov-08-2021 18:12:34: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-08-2021 18:15:29: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-08-2021 18:17:12: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-08-2021 18:19:06: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-09-2021 16:04:52: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+error: Nov-09-2021 16:05:29: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-09-2021 16:05:35: 	Server started and running on http://localhost:5000
+error: Nov-09-2021 16:52:52: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-10-2021 14:02:57: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+error: Nov-10-2021 14:03:58: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-10-2021 14:04:02: 	Server started and running on http://localhost:5000
+error: Nov-10-2021 19:43:01: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-10-2021 19:43:04: 	Server started and running on http://localhost:5000
+error: Nov-10-2021 19:45:07: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-10-2021 19:45:09: 	Server started and running on http://localhost:5000
+error: Nov-10-2021 19:49:51: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-10-2021 19:49:54: 	Server started and running on http://localhost:5000
+error: Nov-10-2021 19:52:46: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-10-2021 19:52:48: 	Server started and running on http://localhost:5000
+error: Nov-10-2021 19:56:57: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-11-2021 13:54:28: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+error: Nov-11-2021 13:54:35: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-11-2021 13:54:40: 	Server started and running on http://localhost:5000
+error: Nov-11-2021 15:54:06: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-11-2021 17:43:57: 	Server started and running on http://localhost:5000
+error: Nov-11-2021 17:56:14: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-11-2021 17:56:17: 	Server started and running on http://localhost:5000

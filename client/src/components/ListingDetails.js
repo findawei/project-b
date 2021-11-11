@@ -343,7 +343,7 @@ const ListingDetails = ({
   async function onSubmit(data) {
     try {
       setBid(data.bid);
-      bidOnItem(data);
+      bidOnItem(data, auth);
       setOpen(false);
       // const finalResult = await getItemById(match.params.id);
     } catch (error) {

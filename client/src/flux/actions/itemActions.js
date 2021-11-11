@@ -139,7 +139,7 @@ export const updateItemEndDate = (item) => async (dispatch, getState) => {
     });
 };
 
-export const bidOnItem = (item) => async (dispatch) => {
+export const bidOnItem = (item, auth) => async (dispatch) => {
   socket.emit("bidOnItem", item);
 
   try {
@@ -153,6 +153,11 @@ export const bidOnItem = (item) => async (dispatch) => {
           payload: res.data,
         });
       });
+    //Trigger growsurf referral
+    if (window.growsurf) {
+      window.growsurf.triggerReferral(auth.user.email);
+    }
+
     ReactGA.event({
       category: "Auction",
       action: "User placed a bid",

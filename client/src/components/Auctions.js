@@ -26,11 +26,16 @@ const Auctions = ({ getItems, item, searchTerm }) => {
 
   // console.log(searchTerm);
 
+  const filterWatches = ({ brand }) => {
+    return brand.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+  };
+
   return (
     <div className={classes.root}>
       <Container>
         <Grid container spacing={2}>
           {items
+            .filter(filterWatches)
             .filter((opt) => isFuture(new Date(opt.endDate)))
             .map((item) => (
               <Listing item={item} key={item._id} />
@@ -58,6 +63,7 @@ const Auctions = ({ getItems, item, searchTerm }) => {
 
 const mapStateToProps = (state) => ({
   item: state.item,
+  searchTerm: state.item.searchTerm,
   // auth: state.auth
 });
 

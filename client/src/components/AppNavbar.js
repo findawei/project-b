@@ -103,9 +103,10 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
   const handleChange = (e) => {
     searchTerm = e.target.value;
     setSearch(searchTerm);
-    setSearchTerm(searchTerm);
+    setSearchTerm(search);
   };
   // console.log(searchTerm);
+  // console.log(search);
 
   useEffect(() => {
     if (auth.authMsg === "You haven't verified your e-mail address.") {
@@ -147,7 +148,7 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
           <Link to={"/"} style={{ textDecoration: "none" }}>
             <img src={logo} alt="logo" className={classes.logo} />
           </Link>
-          {/* <div className={classes.search}>
+          <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -157,11 +158,10 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
-              // inputProps={{ "aria-label": "search" }}
               value={search}
               onChange={handleChange}
             />
-          </div> */}
+          </div>
           <div className={classes.root} />
 
           <div className={classes.sectionDesktop}>
@@ -250,7 +250,7 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
-  searchTerm: state.item,
+  searchTerm: state.item.searchTerm,
 });
 
 export default connect(mapStateToProps, { verifyEmail, setSearchTerm })(
