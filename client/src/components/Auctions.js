@@ -1,18 +1,25 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Container } from "@material-ui/core/";
-import { getItems } from "../flux/actions/itemActions";
+import { Grid, Paper, Container, Typography, Button } from "@material-ui/core/";
+import { getItems, clearSearch } from "../flux/actions/itemActions";
 import Listing from "./Listing";
 import { isFuture, isPast } from "date-fns";
 import FileUpload from "./FileUpload";
+import Alert from "@material-ui/lab/Alert";
 
-const Auctions = ({ getItems, item, searchTerm }) => {
+const Auctions = ({ getItems, item, searchTerm, clearSearch }) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
       margin: 10,
       paddingTop: 10,
+    },
+    alert: {
+      width: "100%",
+      "& > * + *": {
+        marginTop: theme.spacing(2),
+      },
     },
   }));
 
@@ -24,10 +31,8 @@ const Auctions = ({ getItems, item, searchTerm }) => {
 
   const { items } = item;
 
-  // console.log(searchTerm);
-
-  const filterWatches = ({ brand }) => {
-    return brand.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+  const handleClick = () => {
+    clearSearch();
   };
 
   return (
@@ -35,11 +40,52 @@ const Auctions = ({ getItems, item, searchTerm }) => {
       <Container>
         <Grid container spacing={2}>
           {items
-            .filter(filterWatches)
-            .filter((opt) => isFuture(new Date(opt.endDate)))
-            .map((item) => (
-              <Listing item={item} key={item._id} />
-            ))}
+            .filter((watch) => {
+              return (
+                watch.brand.toLowerCase().indexOf(searchTerm.toLowerCase()) >=
+                  0 ||
+                watch.model.toLowerCase().indexOf(searchTerm.toLowerCase()) >=
+                  0 ||
+                watch.reference_number
+                  .toLowerCase()
+                  .indexOf(searchTerm.toLowerCase()) >= 0
+              );
+            })
+            .filter((opt) => isFuture(new Date(opt.endDate))).length > 0 ? (
+            items
+              .filter((watch) => {
+                return (
+                  watch.brand.toLowerCase().indexOf(searchTerm.toLowerCase()) >=
+                    0 ||
+                  watch.model.toLowerCase().indexOf(searchTerm.toLowerCase()) >=
+                    0 ||
+                  watch.reference_number
+                    .toLowerCase()
+                    .indexOf(searchTerm.toLowerCase()) >= 0
+                );
+              })
+              .filter((opt) => isFuture(new Date(opt.endDate)))
+              .map((item) => <Listing item={item} key={item._id} />)
+          ) : (
+            <div className={classes.alert}>
+              <Alert
+                severity="info"
+                color="info"
+                action={
+                  <Button color="inherit" size="small" onClick={handleClick}>
+                    <a
+                      style={{ textDecoration: "none", color: "inherit" }}
+                      href={`mailto:support@nowaitlist.co?subject=Search%20Request&body=I%20am%20looking%20for%3A%0D%0A${searchTerm}%0D%0A%0D%0AThanks!`}
+                    >
+                      Yes
+                    </a>
+                  </Button>
+                }
+              >
+                We didn't find it, want me to ask around?
+              </Alert>
+            </div>
+          )}
         </Grid>
         {items.filter((opt) => isPast(new Date(opt.endDate))).length === 0 ? (
           ""
@@ -67,4 +113,4 @@ const mapStateToProps = (state) => ({
   // auth: state.auth
 });
 
-export default connect(mapStateToProps, { getItems })(Auctions);
+export default connect(mapStateToProps, { getItems, clearSearch })(Auctions);

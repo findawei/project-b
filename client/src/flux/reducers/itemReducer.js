@@ -13,6 +13,7 @@ import {
   COMMENT_ITEM,
   SUBMIT_ITEM,
   GET_ITEMS_REVIEW,
+  CLEAR_SEARCH,
 } from "../actions/types";
 
 const initialState = {
@@ -92,7 +93,11 @@ export default function (state = initialState, action) {
         ...state,
         searchTerm: action.payload,
       };
-
+    case CLEAR_SEARCH:
+      return {
+        ...state,
+        searchTerm: "",
+      };
     case CLEAR_CURRENT:
       return {
         ...state,

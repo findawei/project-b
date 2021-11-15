@@ -4,6 +4,8 @@ import {
   Typography,
   Paper,
   Container,
+  TextField,
+  Button,
   Toolbar,
 } from "@material-ui/core/";
 import Grid from "@material-ui/core/grid";
@@ -11,12 +13,16 @@ import { makeStyles } from "@material-ui/styles";
 import InstagramIcon from "@material-ui/icons/Instagram";
 // import { Link as RouterLink} from 'react-router-dom';
 import { HashLink as Link } from "react-router-hash-link";
+import logo from "../images/logo-transparent.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     // marginTop: 30,
     backgroundColor: "#d6d1bc",
+  },
+  logo: {
+    maxWidth: 100,
   },
 }));
 
@@ -27,6 +33,68 @@ export default function Footer() {
     <div className={classes.root}>
       <br />
       <Container>
+        {/* <Grid
+          container
+          spacing={3}
+          direction="row"
+          justifyContent="space-around"
+          alignItems="flex-start"
+        >
+          <Grid item xs={12} md={6}>
+            <Typography variant="h6">
+              <b>Stay in the loop</b>
+            </Typography>
+            <Typography variant="body1" gutterBottom>
+              Join our mailing list to stay in the loop with our newest feature
+              releases & auction drops.
+            </Typography>
+            <Grid
+              container
+              spacing={3}
+              direction="row"
+              justifyContent="space-around"
+              alignItems="center"
+            >
+              <Grid item xs={8}>
+                <Paper elevation={0}>
+                  <form>
+                    <TextField
+                      name="email"
+                      id="email"
+                      type="email"
+                      variant="outlined"
+                      size="small"
+                      required
+                      placeholder="Your email address"
+                      fullWidth
+                      // inputRef={register({
+                      //   // min: {
+                      //   // value: 7,
+                      //   // message: 'Cannot enter an empty link'
+                      //   // },
+                      // })}
+                      InputProps={{ className: classes.textinput }}
+                      // error={!!errors.referral}
+                    />
+                  </form>
+                </Paper>
+              </Grid>
+              <Grid item xs={4}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  type="submit"
+                  fullWidth
+                >
+                  Sign Up
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+        <br />
+        <Divider />
+        <br /> */}
         <Grid
           container
           spacing={3}
@@ -34,8 +102,16 @@ export default function Footer() {
           justifyContent="space-around"
           alignItems="flex-start"
         >
-          <Grid item xs={4}>
-            <Typography variant="overline">How To</Typography>
+          <Grid item xs={3}>
+            <img src={logo} alt="logo" className={classes.logo} />
+            <Typography variant="body1">
+              Your watch sold in 7 days or it’s FREE
+            </Typography>
+          </Grid>
+          <Grid item xs={3}>
+            <Typography variant="overline">
+              <b>How To</b>
+            </Typography>
             <Typography variant="subtitle2">
               <Link
                 className={classes.link}
@@ -73,8 +149,10 @@ export default function Footer() {
               </Link>
             </Typography>
           </Grid>
-          <Grid item xs={4}>
-            <Typography variant="overline">For Sellers</Typography>
+          <Grid item xs={3}>
+            <Typography variant="overline">
+              <b>For Sellers</b>
+            </Typography>
             <Typography variant="subtitle2">
               <Link
                 className={classes.link}
@@ -86,8 +164,10 @@ export default function Footer() {
             </Typography>
             {/* <Typography variant="subtitle2">Photography Guide</Typography> */}
           </Grid>
-          <Grid item xs={4}>
-            <Typography variant="overline">Help</Typography>
+          <Grid item xs={3}>
+            <Typography variant="overline">
+              <b>Help</b>
+            </Typography>
             <Typography variant="subtitle2">
               <a
                 style={{ textDecoration: "none", color: "inherit" }}

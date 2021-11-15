@@ -14,6 +14,7 @@ import {
   COMMENT_ITEM,
   SUBMIT_ITEM,
   GET_ITEMS_REVIEW,
+  CLEAR_SEARCH,
 } from "./types";
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
@@ -187,6 +188,12 @@ export const setSearchTerm = (searchTerm) => {
   return {
     type: SET_SEARCH,
     payload: searchTerm,
+  };
+};
+// clear current search
+export const clearSearch = () => {
+  return {
+    type: CLEAR_SEARCH,
   };
 };
 

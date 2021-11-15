@@ -233,6 +233,10 @@ router.post("/webhook/growsurf", async (req, res) => {
   const body = req.body;
   let result;
 
+  //find user in our database
+  const user = await User.findOne({ email: body.data.participant.email });
+  console.log(user);
+
   // For double-sided rewards, two events will be sent for both referrer and referee. To discern between the two, use the data.reward.isReferrer property (the referrer will have isReferrer as true).
 
   //Referrer

@@ -26,11 +26,21 @@ import { verifyEmail } from "../flux/actions/authActions";
 import logo from "../images/logo.png";
 import MenuIcon from "@material-ui/icons/Menu";
 import { HashLink } from "react-router-hash-link";
-import { socketConnect, setSearchTerm } from "../flux/actions/itemActions";
+import {
+  socketConnect,
+  setSearchTerm,
+  clearSearch,
+} from "../flux/actions/itemActions";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 
-const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
+const AppNavbar = ({
+  auth,
+  verifyEmail,
+  searchTerm,
+  setSearchTerm,
+  clearSearch,
+}) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       flexGrow: 1,
@@ -101,12 +111,9 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
   const [search, setSearch] = React.useState("");
 
   const handleChange = (e) => {
-    searchTerm = e.target.value;
-    setSearch(searchTerm);
-    setSearchTerm(search);
+    setSearch(e.target.value);
+    setSearchTerm(e.target.value);
   };
-  // console.log(searchTerm);
-  // console.log(search);
 
   useEffect(() => {
     if (auth.authMsg === "You haven't verified your e-mail address.") {
@@ -121,6 +128,12 @@ const AppNavbar = ({ auth, verifyEmail, searchTerm }) => {
       socketConnect();
     }
   }, [auth]);
+
+  useEffect(() => {
+    if (searchTerm === "") {
+      setSearch("");
+    }
+  }, [searchTerm]);
 
   const handleClose = () => {
     setOpen(false);

@@ -5632,3 +5632,31 @@ error: Nov-11-2021 15:54:06: 	503 - 'uncaughtException' -  - undefined - undefin
 info: Nov-11-2021 17:43:57: 	Server started and running on http://localhost:5000
 error: Nov-11-2021 17:56:14: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
 info: Nov-11-2021 17:56:17: 	Server started and running on http://localhost:5000
+error: Nov-11-2021 18:08:24: 	400 || Not Found - /api/user/webhook/growsurf - POST - ::ffff:127.0.0.1
+error: Nov-11-2021 18:09:32: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-11-2021 18:10:11: 	Server started and running on http://localhost:5000
+error: Nov-11-2021 18:11:17: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-11-2021 18:11:19: 	Server started and running on http://localhost:5000
+error: Nov-11-2021 18:17:03: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-12-2021 12:38:50: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+error: Nov-12-2021 12:43:04: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-12-2021 12:43:11: 	Server started and running on http://localhost:5000
+error: Nov-12-2021 14:28:16: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+info: Nov-15-2021 11:46:15: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+error: Nov-15-2021 11:46:31: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-15-2021 11:46:46: 	Server started and running on http://localhost:5000
+error: Nov-15-2021 11:52:42: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 11:55:58: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-15-2021 12:06:12: 	Server started and running on http://localhost:5000
+error: Nov-15-2021 12:10:48: 	400 || Not Found - /%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 12:10:48: 	400 || Not Found - /%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 13:22:23: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-15-2021 13:22:25: 	Server started and running on http://localhost:5000
+error: Nov-15-2021 13:43:43: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 13:43:43: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 13:43:57: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 13:44:01: 	400 || Not Found - /%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 14:37:34: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 14:37:34: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 14:40:11: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-15-2021 15:48:18: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
