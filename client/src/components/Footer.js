@@ -7,8 +7,8 @@ import {
   TextField,
   Button,
   Toolbar,
+  Grid,
 } from "@material-ui/core/";
-import Grid from "@material-ui/core/grid";
 import { makeStyles } from "@material-ui/styles";
 import InstagramIcon from "@material-ui/icons/Instagram";
 // import { Link as RouterLink} from 'react-router-dom';
