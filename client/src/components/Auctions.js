@@ -51,22 +51,24 @@ const Auctions = ({ getItems, item, searchTerm, clearSearch }) => {
                   .indexOf(searchTerm.toLowerCase()) >= 0
               );
             })
-            .filter((opt) => isFuture(new Date(opt.endDate))).length > 0 ? (
-            items
-              .filter((watch) => {
-                return (
-                  watch.brand.toLowerCase().indexOf(searchTerm.toLowerCase()) >=
-                    0 ||
-                  watch.model.toLowerCase().indexOf(searchTerm.toLowerCase()) >=
-                    0 ||
-                  watch.reference_number
-                    .toLowerCase()
-                    .indexOf(searchTerm.toLowerCase()) >= 0
-                );
-              })
-              .filter((opt) => isFuture(new Date(opt.endDate)))
-              .map((item) => <Listing item={item} key={item._id} />)
-          ) : (
+            .filter((opt) => isFuture(new Date(opt.endDate)))
+            .map((item) => (
+              <Listing item={item} key={item._id} />
+            ))}
+          {searchTerm &&
+          items
+            .filter((watch) => {
+              return (
+                watch.brand.toLowerCase().indexOf(searchTerm.toLowerCase()) >=
+                  0 ||
+                watch.model.toLowerCase().indexOf(searchTerm.toLowerCase()) >=
+                  0 ||
+                watch.reference_number
+                  .toLowerCase()
+                  .indexOf(searchTerm.toLowerCase()) >= 0
+              );
+            })
+            .filter((opt) => isFuture(new Date(opt.endDate))).length === 0 ? (
             <div className={classes.alert}>
               <Alert
                 severity="info"
@@ -85,6 +87,8 @@ const Auctions = ({ getItems, item, searchTerm, clearSearch }) => {
                 We didn't find it, want me to ask around?
               </Alert>
             </div>
+          ) : (
+            ""
           )}
         </Grid>
         {items.filter((opt) => isPast(new Date(opt.endDate))).length === 0 ? (

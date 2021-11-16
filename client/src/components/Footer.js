@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#d6d1bc",
   },
   logo: {
-    maxWidth: 100,
+    maxWidth: 80,
   },
 }));
 

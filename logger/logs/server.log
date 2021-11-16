@@ -5660,3 +5660,14 @@ error: Nov-15-2021 14:37:34: 	400 || Not Found - /babel/parser/lib/index.js - GE
 error: Nov-15-2021 14:37:34: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
 error: Nov-15-2021 14:40:11: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
 error: Nov-15-2021 15:48:18: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-16-2021 14:38:08: 	Server started and running on http://x86_64-apple-darwin13.4.0:5000
+error: Nov-16-2021 14:40:10: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-16-2021 14:40:19: 	Server started and running on http://localhost:5000
+error: Nov-16-2021 14:46:21: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-16-2021 15:00:54: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
+error: Nov-16-2021 15:04:45: 	400 || Not Found - /%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Nov-16-2021 15:04:57: 	400 || Not Found - /%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Nov-16-2021 15:05:25: 	400 || Not Found - /%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Nov-16-2021 15:06:23: 	400 || Not Found - /%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Nov-16-2021 15:06:33: 	400 || Not Found - /%3Canonymous%3E - GET - ::ffff:127.0.0.1
+error: Nov-16-2021 15:14:00: 	400 || Not Found - /babel/parser/lib/index.js - GET - ::ffff:127.0.0.1
