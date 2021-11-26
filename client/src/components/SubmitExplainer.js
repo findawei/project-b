@@ -83,6 +83,23 @@ const useStyles = makeStyles((theme) => ({
   badge: {
     color: "gold",
   },
+  elementSpacing: {
+    paddingTop: theme.spacing(10),
+    paddingBottom: theme.spacing(10),
+  },
+  paperContainer: {
+    width: "100%",
+    // height: "60vh",
+    backgroundColor: "#CDDCCD",
+    backgroundSize: "cover",
+    // display: "flex",
+    // justifyContent: "center",
+    // alignItems: "center",
+    // textAlign: "center",
+    // verticalAlign: "middle",
+    paddingTop: theme.spacing(15),
+    paddingBottom: theme.spacing(15),
+  },
 }));
 
 const steps = getSteps();
@@ -111,186 +128,162 @@ const SubmitExplainer = ({ auth }) => {
   );
 
   return (
-    <div>
-      <Paper className={classes.paperContainer} square elevation={0}>
-        <br />
-        <br />
-        <br />
-        <br />
-        <Typography variant="h3" align="center" className={classes.textTitle}>
-          NoWaitList
-        </Typography>
-        <Typography variant="h5" align="center" className={classes.textTitle}>
-          Your watch sold in 7 days or it’s FREE
-        </Typography>
-        <br />
-        <br />
-        <br />
-        <br />
-      </Paper>
+    <div className={classes.root}>
+      <Container>
+        <div className={classes.elementSpacing}>
+          <Typography variant="h4" align="center">
+            <b>Why sell with us?</b>
+          </Typography>
 
-      <div className={classes.root}>
-        <Container>
+          <br />
+          <List>
+            <Grid container alignItems="flex-start" direction="row" spacing={2}>
+              <Grid item xs={12} sm={6}>
+                <ListItem alignItems="flex-start">
+                  <ListItemIcon className={classes.focus}>
+                    <CenterFocusStrongIcon fontSize="large" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Focused"
+                    secondary="Sports & tool watches excites us the most."
+                  />
+                </ListItem>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ListItem alignItems="flex-start">
+                  <ListItemIcon className={classes.fees}>
+                    <AttachMoneyIcon fontSize="large" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Value"
+                    secondary="Get 100% of the sale price. Pay the listing fee ONLY if your watch sells."
+                  />
+                </ListItem>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ListItem alignItems="flex-start">
+                  <ListItemIcon className={classes.timer}>
+                    <TimerIcon fontSize="large" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Sold in 7 days"
+                    secondary="We move fast. After you submit your watch, we aim to auction it off within a week."
+                  />
+                </ListItem>
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <ListItem alignItems="flex-start">
+                  <ListItemIcon className={classes.badge}>
+                    <VerifiedUserIcon fontSize="large" />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Clear & Concise"
+                    secondary="Simple auctions that tell you exactly what you need to know."
+                  />
+                </ListItem>
+              </Grid>
+            </Grid>
+          </List>
+        </div>
+      </Container>
+      <Paper className={classes.paperContainer} square elevation={0}>
+        <div className={classes.elementSpacing}>
           <Grid
             container
-            // direction="column"
-            justify="center"
+            spacing={2}
+            direction="row"
+            justifyContent="center"
             alignItems="center"
           >
-            <Grid item xs={12} md={10}>
-              <br />
-              <Typography variant="h4" align="center">
-                <b>Why sell with us?</b>
-              </Typography>
-              <br />
-              <List>
-                <Grid
-                  container
-                  alignItems="flex-start"
-                  direction="row"
-                  spacing={2}
-                >
-                  <Grid item xs={12} sm={6}>
-                    <ListItem alignItems="flex-start">
-                      <ListItemIcon className={classes.focus}>
-                        <CenterFocusStrongIcon fontSize="large" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Focused"
-                        secondary="Sports & tool watches excites us the most."
-                      />
-                    </ListItem>
+            <Grid item xs={6} sm={4}>
+              <Card className={classes.card} variant="outlined">
+                <CardContent>
+                  <Grid container>
+                    <Typography variant="h3" className={classes.text}>
+                      <b>$49</b>
+                    </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <ListItem alignItems="flex-start">
-                      <ListItemIcon className={classes.fees}>
-                        <AttachMoneyIcon fontSize="large" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Value"
-                        secondary="Get 100% of the sale price. Pay the listing fee ONLY if your watch sells."
-                      />
-                    </ListItem>
+                  <br />
+                  <Typography variant="h6">
+                    No reserve listing
+                    <br />
+                    Social media coverage
+                    <br />
+                    Copywriting
+                    <br />
+                    Photo coaching
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+            <Grid item xs={6} sm={4}>
+              <Card className={classes.card} variant="outlined">
+                <CardContent>
+                  <Grid container>
+                    <Typography variant="h3" className={classes.text}>
+                      <b>$89</b>
+                    </Typography>
                   </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <ListItem alignItems="flex-start">
-                      <ListItemIcon className={classes.timer}>
-                        <TimerIcon fontSize="large" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Sold in 7 days"
-                        secondary="We move fast. After you submit your watch, we aim to auction it off within a week."
-                      />
-                    </ListItem>
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
-                    <ListItem alignItems="flex-start">
-                      <ListItemIcon className={classes.badge}>
-                        <VerifiedUserIcon fontSize="large" />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary="Clear & Concise"
-                        secondary="Simple auctions that tell you exactly what you need to know."
-                      />
-                    </ListItem>
-                  </Grid>
-                </Grid>
-              </List>
-              <br />
-              <Grid
-                container
-                spacing={2}
-                direction="row"
-                justifyContent="center"
-                alignItems="center"
-              >
-                <Grid item xs={6} sm={4}>
-                  <Card className={classes.card} variant="outlined">
-                    <CardContent>
-                      <Grid container>
-                        <Typography variant="h3" className={classes.text}>
-                          <b>$49</b>
-                        </Typography>
-                      </Grid>
-                      <br />
-                      <Typography variant="h6">
-                        No reserve listing
-                        <br />
-                        Social media coverage
-                        <br />
-                        Copywriting
-                        <br />
-                        Photo coaching
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-                <Grid item xs={6} sm={4}>
-                  <Card className={classes.card} variant="outlined">
-                    <CardContent>
-                      <Grid container>
-                        <Typography variant="h3" className={classes.text}>
-                          <b>$89</b>
-                        </Typography>
-                      </Grid>
-                      <br />
-                      <Typography variant="h6">
-                        <b>Reserve listing</b>
-                        <br />
-                        Social media coverage
-                        <br />
-                        Copywriting
-                        <br />
-                        Photo coaching
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
-              <br />
-              <br />
-              <Typography variant="h4" align="center">
-                <b>How it works</b>
-              </Typography>
-              <br />
-              <Stepper alternativeLabel activeStep={activeStep}>
-                {steps.map((label) => (
-                  <Step key={label} active={true}>
-                    <StepLabel>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-              <br />
-              {auth && auth.isAuthenticated ? (
-                <div>
-                  <Link
-                    className={classes.link}
-                    style={{ textDecoration: "none" }}
-                    to={"/submit"}
-                  >
-                    <Box textAlign="center">
-                      <Button variant="contained" color="primary">
-                        Submit your Watch
-                      </Button>
-                    </Box>
-                  </Link>
-                </div>
-              ) : (
-                <div>
-                  <Box textAlign="center">
-                    <LoginModal passInButton={passInButton} />
-                  </Box>
-                </div>
-              )}
-              <br />
-
-              <Typography align="center" variant="subtitle2">
-                Takes less than 5 minutes & it's FREE
-              </Typography>
+                  <br />
+                  <Typography variant="h6">
+                    <b>Reserve listing</b>
+                    <br />
+                    Social media coverage
+                    <br />
+                    Copywriting
+                    <br />
+                    Photo coaching
+                  </Typography>
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
-        </Container>
-      </div>
+        </div>
+      </Paper>
+
+      <Container>
+        <div className={classes.elementSpacing}>
+          <br />
+          <br />
+          <Typography variant="h4" align="center">
+            <b>How it works</b>
+          </Typography>
+          <br />
+          <Stepper alternativeLabel activeStep={activeStep}>
+            {steps.map((label) => (
+              <Step key={label} active={true}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <br />
+          {auth && auth.isAuthenticated ? (
+            <div>
+              <Link
+                className={classes.link}
+                style={{ textDecoration: "none" }}
+                to={"/submit"}
+              >
+                <Box textAlign="center">
+                  <Button variant="contained" color="primary">
+                    Submit your Watch
+                  </Button>
+                </Box>
+              </Link>
+            </div>
+          ) : (
+            <div>
+              <Box textAlign="center">
+                <LoginModal passInButton={passInButton} />
+              </Box>
+            </div>
+          )}
+          <br />
+          <Typography align="center" variant="subtitle2">
+            Takes less than 5 minutes & it's FREE
+          </Typography>
+        </div>
+      </Container>
     </div>
   );
 };

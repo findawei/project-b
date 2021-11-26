@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import { Grid, Paper, Container, Typography, Button } from "@material-ui/core/";
+import { Grid, Container, Button } from "@material-ui/core/";
 import { getItems, clearSearch } from "../flux/actions/itemActions";
 import Listing from "./Listing";
 import { isFuture, isPast } from "date-fns";
-import FileUpload from "./FileUpload";
 import Alert from "@material-ui/lab/Alert";
+import Hero from "./Hero";
 
 const Auctions = ({ getItems, item, searchTerm, clearSearch }) => {
   const useStyles = makeStyles((theme) => ({
@@ -27,7 +27,7 @@ const Auctions = ({ getItems, item, searchTerm, clearSearch }) => {
 
   useEffect(() => {
     if (items.length === 0) getItems();
-  }, [getItems]);
+  }, []);
 
   const { items } = item;
 
@@ -38,6 +38,7 @@ const Auctions = ({ getItems, item, searchTerm, clearSearch }) => {
   return (
     <div className={classes.root}>
       <Container>
+        <br />
         <Grid container spacing={2}>
           {items
             .filter((watch) => {

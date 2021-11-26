@@ -19,6 +19,7 @@ import Loading from "./components/Loading";
 import Terms from "./components/legal/Terms";
 import Privacy from "./components/legal/Privacy";
 import SubmitExplainer from "./components/SubmitExplainer";
+import Home from "./components/Home";
 
 const AppNavbar = React.lazy(() => import("./components/AppNavbar"));
 const Auctions = React.lazy(() => import("./components/Auctions"));
@@ -69,6 +70,17 @@ function App() {
         main: "#234324",
       },
     },
+    typography: {
+      button: {
+        textTransform: "none",
+      },
+      h3: {
+        fontFamily: '"Montserrat", Open Sans',
+      },
+      h4: {
+        fontFamily: '"Montserrat", Open Sans',
+      },
+    },
   });
 
   return (
@@ -91,7 +103,7 @@ function App() {
                   </header>
                   <Toolbar />
                   <Switch>
-                    <Route exact path="/" component={Auctions} />
+                    <Route exact path="/" component={Home} />
                     <Route exact path="/faq" component={Faq} />
                     <Route exact path="/about" component={About} />
                     <Route exact path="/terms-of-use" component={Terms} />

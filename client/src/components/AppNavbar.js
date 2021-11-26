@@ -1,16 +1,6 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Modal,
-  Menu,
-  MenuItem,
-  TextField,
-  IconButton,
-} from "@material-ui/core";
+import { AppBar, Toolbar, Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import LoginModal from "./auth/LoginModal";
 import { connect } from "react-redux";
@@ -24,13 +14,7 @@ import {
 } from "@material-ui/core/";
 import { verifyEmail } from "../flux/actions/authActions";
 import logo from "../images/logo.png";
-import MenuIcon from "@material-ui/icons/Menu";
-import { HashLink } from "react-router-hash-link";
-import {
-  socketConnect,
-  setSearchTerm,
-  clearSearch,
-} from "../flux/actions/itemActions";
+import { socketConnect, setSearchTerm } from "../flux/actions/itemActions";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 
@@ -105,9 +89,6 @@ const AppNavbar = ({
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [FaqAnchorEl, setFaqAnchorEl] = React.useState(null);
-  const [HowToAnchorEl, setHowToAnchorEl] = React.useState(null);
   const [search, setSearch] = React.useState("");
 
   const handleChange = (e) => {

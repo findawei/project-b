@@ -1,14 +1,5 @@
-import React, { Component } from "react";
-import {
-  Divider,
-  Typography,
-  Paper,
-  Container,
-  TextField,
-  Button,
-  Toolbar,
-  Grid,
-} from "@material-ui/core/";
+import React from "react";
+import { Divider, Typography, Container, Grid } from "@material-ui/core/";
 import { makeStyles } from "@material-ui/styles";
 import InstagramIcon from "@material-ui/icons/Instagram";
 // import { Link as RouterLink} from 'react-router-dom';
@@ -18,8 +9,8 @@ import logo from "../images/logo-transparent.png";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    // marginTop: 30,
-    backgroundColor: "#d6d1bc",
+    marginTop: 30,
+    backgroundColor: "#A7C5A7",
   },
   logo: {
     maxWidth: 80,
