@@ -21,7 +21,8 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import HeadsetMicIcon from "@material-ui/icons/HeadsetMic";
-
+import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 const SellerSection = () => {
   const useStyles = makeStyles((theme) => ({
     paperContainer: {
@@ -92,10 +93,30 @@ const SellerSection = () => {
           <Grid item xs={12} sm={3} component={Card} className={classes.card}>
             {/* <Card variant="outlined"> */}
             <CardContent>
-              <Typography variant="h5" component="h5" gutterBottom>
+              <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+              >
+                <Grid item xs={3}>
+                  <VerifiedUserIcon color="primary" fontSize="large" />
+                </Grid>
+              </Grid>
+              <Typography
+                variant="h5"
+                component="h5"
+                gutterBottom
+                align="center"
+              >
                 Instant Trust
               </Typography>
-              <Typography className={classes.pos} color="textSecondary">
+              <Typography
+                className={classes.pos}
+                color="textSecondary"
+                align="justify"
+              >
                 We import your feedback from other platforms so you can hit the
                 ground running.
               </Typography>
@@ -105,10 +126,30 @@ const SellerSection = () => {
           <Grid item xs={12} sm={3} component={Card} className={classes.card}>
             {/* <Card className={classes.card} variant="outlined"> */}
             <CardContent>
-              <Typography variant="h5" component="h5" gutterBottom>
+              <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+              >
+                <Grid item xs={3}>
+                  <PlaylistAddCheckIcon color="primary" fontSize="large" />
+                </Grid>
+              </Grid>
+              <Typography
+                variant="h5"
+                component="h5"
+                gutterBottom
+                align="center"
+              >
                 Clean & Clear
               </Typography>
-              <Typography className={classes.pos} color="textSecondary">
+              <Typography
+                className={classes.pos}
+                color="textSecondary"
+                align="justify"
+              >
                 Know where the watch is located, accepted payment forms & where
                 the seller will ship to.
               </Typography>
@@ -118,10 +159,31 @@ const SellerSection = () => {
           <Grid item xs={12} sm={3} component={Card} className={classes.card}>
             {/* <Card className={classes.card} variant="outlined"> */}
             <CardContent>
-              <Typography variant="h5" component="h5" gutterBottom>
+              <Grid
+                container
+                spacing={0}
+                direction="column"
+                alignItems="center"
+                justify="center"
+              >
+                <Grid item xs={3}>
+                  <HeadsetMicIcon color="primary" fontSize="large" />
+                </Grid>
+              </Grid>
+
+              <Typography
+                variant="h5"
+                component="h5"
+                gutterBottom
+                align="center"
+              >
                 Customer Service
               </Typography>
-              <Typography className={classes.pos} color="textSecondary">
+              <Typography
+                className={classes.pos}
+                color="textSecondary"
+                align="justify"
+              >
                 We pride ourselves on our customer service. We'll always get
                 back to you within 1 business day.
               </Typography>

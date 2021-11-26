@@ -5748,3 +5748,4 @@ error: Nov-24-2021 15:28:31: 	400 || Not Found - /babel/parser/lib/index.js - GE
 error: Nov-24-2021 20:12:42: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
 info: Nov-26-2021 10:33:32: 	Server started and running on http://localhost:5000
 error: Nov-26-2021 10:34:18: 	503 - 'uncaughtException' -  - undefined - undefined - uncaughtException - undefined
+info: Nov-26-2021 10:45:37: 	Server started and running on http://localhost:5000
