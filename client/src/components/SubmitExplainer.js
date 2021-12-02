@@ -97,8 +97,8 @@ const useStyles = makeStyles((theme) => ({
     // alignItems: "center",
     // textAlign: "center",
     // verticalAlign: "middle",
-    paddingTop: theme.spacing(15),
-    paddingBottom: theme.spacing(15),
+    paddingTop: theme.spacing(8),
+    paddingBottom: theme.spacing(8),
   },
 }));
 
@@ -137,8 +137,14 @@ const SubmitExplainer = ({ auth }) => {
 
           <br />
           <List>
-            <Grid container alignItems="flex-start" direction="row" spacing={2}>
-              <Grid item xs={12} sm={6}>
+            <Grid
+              container
+              alignItems="flex-start"
+              justifyContent="center"
+              direction="row"
+              spacing={2}
+            >
+              <Grid item xs={12} sm={5}>
                 <ListItem alignItems="flex-start">
                   <ListItemIcon className={classes.focus}>
                     <CenterFocusStrongIcon fontSize="large" />
@@ -149,7 +155,7 @@ const SubmitExplainer = ({ auth }) => {
                   />
                 </ListItem>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={5}>
                 <ListItem alignItems="flex-start">
                   <ListItemIcon className={classes.fees}>
                     <AttachMoneyIcon fontSize="large" />
@@ -160,7 +166,7 @@ const SubmitExplainer = ({ auth }) => {
                   />
                 </ListItem>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={5}>
                 <ListItem alignItems="flex-start">
                   <ListItemIcon className={classes.timer}>
                     <TimerIcon fontSize="large" />
@@ -171,7 +177,7 @@ const SubmitExplainer = ({ auth }) => {
                   />
                 </ListItem>
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12} sm={5}>
                 <ListItem alignItems="flex-start">
                   <ListItemIcon className={classes.badge}>
                     <VerifiedUserIcon fontSize="large" />
@@ -195,7 +201,7 @@ const SubmitExplainer = ({ auth }) => {
             justifyContent="center"
             alignItems="center"
           >
-            <Grid item xs={6} sm={4}>
+            <Grid item xs={10} sm={4}>
               <Card className={classes.card} variant="outlined">
                 <CardContent>
                   <Grid container>
@@ -205,18 +211,20 @@ const SubmitExplainer = ({ auth }) => {
                   </Grid>
                   <br />
                   <Typography variant="h6">
-                    No reserve listing
+                    <b>No reserve listing</b>
                     <br />
                     Social media coverage
                     <br />
                     Copywriting
                     <br />
                     Photo coaching
+                    <br />
+                    <br />
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
-            <Grid item xs={6} sm={4}>
+            <Grid item xs={10} sm={4}>
               <Card className={classes.card} variant="outlined">
                 <CardContent>
                   <Grid container>
@@ -233,6 +241,8 @@ const SubmitExplainer = ({ auth }) => {
                     Copywriting
                     <br />
                     Photo coaching
+                    <br />
+                    <b>FREE if not sold</b>
                   </Typography>
                 </CardContent>
               </Card>
